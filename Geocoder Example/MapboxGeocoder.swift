@@ -1,7 +1,7 @@
 import Foundation
 import CoreLocation
 
-public class MBGeocoder: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate {
+public class MBGeocoder {
 
     // MARK: -
     // MARK: Setup
@@ -68,14 +68,14 @@ public class MBGeocoder: NSObject, NSURLConnectionDelegate, NSURLConnectionDataD
     // MARK: -
     // MARK: NSURLConnection Delegates
 
-    public func connection(connection: NSURLConnection!, didFailWithError error: NSError!) {
+    @objc private func connection(connection: NSURLConnection!, didFailWithError error: NSError!) {
         self.connection = nil
         completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
                                         code: MBGeocoderErrorCode.ConnectionError.toRaw(),
                                         userInfo: error.userInfo))
     }
 
-    public func connection(connection: NSURLConnection!, didReceiveResponse response: NSURLResponse!) {
+    @objc private func connection(connection: NSURLConnection!, didReceiveResponse response: NSURLResponse!) {
         let statusCode = (response as NSHTTPURLResponse).statusCode
         if statusCode != 200 {
             connection.cancel()
@@ -88,11 +88,11 @@ public class MBGeocoder: NSObject, NSURLConnectionDelegate, NSURLConnectionDataD
         }
     }
     
-    public func connection(connection: NSURLConnection!, didReceiveData data: NSData!) {
+    @objc private func connection(connection: NSURLConnection!, didReceiveData data: NSData!) {
         receivedData!.appendData(data)
     }
     
-    public func connectionDidFinishLoading(connection: NSURLConnection!) {
+    @objc private func connectionDidFinishLoading(connection: NSURLConnection!) {
         var parseError: NSError?
         let response = NSJSONSerialization.JSONObjectWithData(receivedData!, options: nil, error: &parseError) as NSDictionary
         if parseError != nil {
