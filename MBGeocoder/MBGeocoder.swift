@@ -1,7 +1,7 @@
 import Foundation
 import CoreLocation
 
-public class MBGeocoder {
+public class MBGeocoder: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate {
 
     // MARK: -
     // MARK: Setup
@@ -68,14 +68,14 @@ public class MBGeocoder {
     // MARK: -
     // MARK: NSURLConnection Delegates
 
-    @objc private func connection(connection: NSURLConnection!, didFailWithError error: NSError!) {
+    public func connection(connection: NSURLConnection!, didFailWithError error: NSError!) {
         self.connection = nil
         completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
                                         code: MBGeocoderErrorCode.ConnectionError.toRaw(),
                                         userInfo: error.userInfo))
     }
 
-    @objc private func connection(connection: NSURLConnection!, didReceiveResponse response: NSURLResponse!) {
+    public func connection(connection: NSURLConnection!, didReceiveResponse response: NSURLResponse!) {
         let statusCode = (response as NSHTTPURLResponse).statusCode
         if statusCode != 200 {
             connection.cancel()
@@ -88,11 +88,11 @@ public class MBGeocoder {
         }
     }
     
-    @objc private func connection(connection: NSURLConnection!, didReceiveData data: NSData!) {
+    public func connection(connection: NSURLConnection!, didReceiveData data: NSData!) {
         receivedData!.appendData(data)
     }
     
-    @objc private func connectionDidFinishLoading(connection: NSURLConnection!) {
+    public func connectionDidFinishLoading(connection: NSURLConnection!) {
         var parseError: NSError?
         let response = NSJSONSerialization.JSONObjectWithData(receivedData!, options: nil, error: &parseError) as NSDictionary
         if parseError != nil {
@@ -117,7 +117,7 @@ public class MBGeocoder {
 
 // MARK: -
 
-public class MBPlacemark {
+public class MBPlacemark: NSObject {
     
     private var featureJSON: NSDictionary
     

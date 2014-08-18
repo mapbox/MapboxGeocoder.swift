@@ -17,6 +17,7 @@
 		DDC2473219A1C60E0054B0C0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC2473119A1C60E0054B0C0 /* AppDelegate.m */; };
 		DDC2473519A1C60E0054B0C0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC2473419A1C60E0054B0C0 /* ViewController.m */; };
 		DDC2474F19A1C64D0054B0C0 /* MBGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MBGeocoder.framework */; };
+		DDC2475219A1CBF40054B0C0 /* MBGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MBGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				DDC2471A19A1C3B40054B0C0 /* MBGeocoder.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDC2475119A1CBE20054B0C0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DDC2475219A1CBF40054B0C0 /* MBGeocoder.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,6 +250,7 @@
 				DDC2472619A1C60E0054B0C0 /* Sources */,
 				DDC2472719A1C60E0054B0C0 /* Frameworks */,
 				DDC2472819A1C60E0054B0C0 /* Resources */,
+				DDC2475119A1CBE20054B0C0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

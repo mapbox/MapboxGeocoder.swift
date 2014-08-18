@@ -1,6 +1,10 @@
 GeocoderExample
 ===============
 
-Simple Mapbox geocoder experimentation with Swift. 
+Mapbox geocoder experimentation with Swift. 
 
-The meat of what you want is in [`MapboxGeocoder.swift`](https://github.com/incanus/GeocoderExample/blob/master/MBGeocoder/MBGeocoder.swift). Import that file into your project and then use `MBGeocoder` as a drop-in replacement for Apple's `CLGeocoder` (at least for reverse geocoding... for now). 
+Import `MBGeocoder.framework` into your project, then use `MBGeocoder` as a drop-in replacement for Apple's `CLGeocoder` (at least for reverse geocoding... for now). 
+
+Includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). 
+
+Head straight to [`MBGeocoder.swift`](https://github.com/incanus/GeocoderExample/blob/master/MBGeocoder/MBGeocoder.swift) if you want to see the guts of the library. 

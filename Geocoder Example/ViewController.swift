@@ -7,11 +7,17 @@ let MapboxAccessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6ImFqZFg3Q0UifQ.C44vLEurzqpLt
 
 class ViewController: UIViewController, MKMapViewDelegate {
     
+    // MARK: -
+    // MARK: Variables
+
     var mapView: MKMapView?
     var resultsLabel: UILabel?
 //    var geocoder: CLGeocoder?
     var geocoder: MBGeocoder?
     
+    // MARK: -
+    // MARK: Setup
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,6 +34,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
 //        geocoder = CLGeocoder()
         geocoder = MBGeocoder(accessToken: MapboxAccessToken)
     }
+
+    // MARK: -
+    // MARK: MKMapViewDelegate
 
     func mapView(mapView: MKMapView!, regionWillChangeAnimated animated: Bool) {
         geocoder?.cancelGeocode()
