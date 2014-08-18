@@ -12,7 +12,7 @@
 		DDC2470919A1C3B40054B0C0 /* MBGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = DDC2470819A1C3B40054B0C0 /* MBGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DDC2471819A1C3B40054B0C0 /* MBGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MBGeocoder.framework */; };
 		DDC2471A19A1C3B40054B0C0 /* MBGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MBGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DDC2472319A1C3EE0054B0C0 /* MBGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC246FA19A156320054B0C0 /* MBGeocoder.swift */; };
+		DDC2472519A1C5880054B0C0 /* MBGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC2472419A1C5880054B0C0 /* MBGeocoder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,10 +51,10 @@
 		DD342B5419A140EE00219F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD342B5519A140EE00219F77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD342B5719A140EE00219F77 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		DDC246FA19A156320054B0C0 /* MBGeocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBGeocoder.swift; sourceTree = "<group>"; };
 		DDC2470419A1C3B40054B0C0 /* MBGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MBGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDC2470719A1C3B40054B0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DDC2470819A1C3B40054B0C0 /* MBGeocoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MBGeocoder.h; path = ../MBGeocoder/MBGeocoder.h; sourceTree = "<group>"; };
+		DDC2472419A1C5880054B0C0 /* MBGeocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MBGeocoder.swift; path = MBGeocoder/MBGeocoder.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				DDC2470819A1C3B40054B0C0 /* MBGeocoder.h */,
-				DDC246FA19A156320054B0C0 /* MBGeocoder.swift */,
+				DDC2472419A1C5880054B0C0 /* MBGeocoder.swift */,
 				DDC2470619A1C3B40054B0C0 /* Supporting Files */,
 			);
 			name = "Mapbox Geocoder";
@@ -259,7 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDC2472319A1C3EE0054B0C0 /* MBGeocoder.swift in Sources */,
+				DDC2472519A1C5880054B0C0 /* MBGeocoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
