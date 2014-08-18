@@ -117,7 +117,7 @@ public class MBGeocoder {
 
 // MARK: -
 
-public class MBPlacemark: NSObject {
+public class MBPlacemark {
     
     private var featureJSON: NSDictionary
     
