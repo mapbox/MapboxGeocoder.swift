@@ -1,25 +1,47 @@
-//
-//  ViewController.swift
-//  Geocoder Example
-//
-//  Created by Justin R. Miller on 8/17/14.
-//  Copyright (c) 2014 Mapbox. All rights reserved.
-//
-
 import UIKit
+import MapKit
+import CoreLocation
 
-class ViewController: UIViewController {
-                            
+class ViewController: UIViewController, MKMapViewDelegate {
+    
+    var mapView: MKMapView?
+    var resultsLabel: UILabel?
+//    var geocoder: CLGeocoder?
+    var geocoder: MBGeocoder?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        mapView = MKMapView(frame: view.bounds)
+        mapView!.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        mapView!.delegate = self
+        view.addSubview(mapView!)
+        
+        resultsLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 500, height: 30))
+        resultsLabel!.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+        resultsLabel!.userInteractionEnabled = false
+        view.addSubview(resultsLabel!)
+        
+//        geocoder = CLGeocoder()
+        geocoder = MBGeocoder(accessToken: "pk.eyJ1IjoianVzdGluIiwiYSI6ImFqZFg3Q0UifQ.C44vLEurzqpLtKJXT6c20g")
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func mapView(mapView: MKMapView!, regionWillChangeAnimated animated: Bool) {
+        geocoder?.cancelGeocode()
     }
-
+    
+    func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
+        geocoder?.cancelGeocode()
+        geocoder!.reverseGeocodeLocation(CLLocation(latitude: mapView!.centerCoordinate.latitude, longitude: mapView!.centerCoordinate.longitude)) { (results, error) in
+            if error {
+                NSLog("%@", error)
+            } else if results.count > 0 {
+//                self.resultsLabel!.text = (results[0] as CLPlacemark).name
+                self.resultsLabel!.text = (results[0] as MBPlacemark).name
+            } else {
+                self.resultsLabel!.text = "No results"
+            }
+        }
+    }
 
 }
-
