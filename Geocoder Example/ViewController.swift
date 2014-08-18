@@ -1,6 +1,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import MBGeocoder
 
 let MapboxAccessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6ImFqZFg3Q0UifQ.C44vLEurzqpLtKJXT6c20g"
 
