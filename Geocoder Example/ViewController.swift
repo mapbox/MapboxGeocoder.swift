@@ -2,6 +2,8 @@ import UIKit
 import MapKit
 import CoreLocation
 
+let MapboxAccessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6ImFqZFg3Q0UifQ.C44vLEurzqpLtKJXT6c20g"
+
 class ViewController: UIViewController, MKMapViewDelegate {
     
     var mapView: MKMapView?
@@ -23,7 +25,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         view.addSubview(resultsLabel!)
         
 //        geocoder = CLGeocoder()
-        geocoder = MBGeocoder(accessToken: "pk.eyJ1IjoianVzdGluIiwiYSI6ImFqZFg3Q0UifQ.C44vLEurzqpLtKJXT6c20g")
+        geocoder = MBGeocoder(accessToken: MapboxAccessToken)
     }
 
     func mapView(mapView: MKMapView!, regionWillChangeAnimated animated: Bool) {
