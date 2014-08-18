@@ -95,19 +95,21 @@ public class MBGeocoder: NSObject, NSURLConnectionDelegate, NSURLConnectionDataD
     public func connectionDidFinishLoading(connection: NSURLConnection!) {
         var parseError: NSError?
         let response = NSJSONSerialization.JSONObjectWithData(receivedData!, options: nil, error: &parseError) as NSDictionary
-        let features = response["features"] as NSArray
         if parseError != nil {
             completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
                                             code: MBGeocoderErrorCode.ParseError.toRaw(),
                                             userInfo: [ NSLocalizedDescriptionKey: "Unable to parse results" ]))
-        } else if features.count > 0 {
-            var results = NSMutableArray()
-            for feature in features {
-                results.addObject(MBPlacemark(featureJSON: feature as NSDictionary))
-            }
-            completionHandler?(NSArray(array: results), nil)
         } else {
-            completionHandler?([], nil)
+            let features = response["features"] as NSArray
+            if features.count > 0 {
+                var results = NSMutableArray()
+                for feature in features {
+                    results.addObject(MBPlacemark(featureJSON: feature as NSDictionary))
+                }
+                completionHandler?(NSArray(array: results), nil)
+            } else {
+                completionHandler?([], nil)
+            }
         }
     }
 
