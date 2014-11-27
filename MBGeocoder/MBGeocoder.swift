@@ -138,7 +138,7 @@ public class MBPlacemark: NSObject {
         var coordinates: NSArray?
 
         if (geometry["type"] as String == "Point") {
-            coordinates = geometry["coordinates"] as NSArray
+            coordinates = geometry["coordinates"] as? NSArray
         }
 
         if (coordinates != nil) {
