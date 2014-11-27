@@ -51,7 +51,14 @@ public class MBGeocoder: NSObject, NSURLConnectionDelegate, NSURLConnectionDataD
     
     public func geocodeAddressString(addressString: String!,
         completionHandler: MBGeocodeCompletionHandler!) {
-            
+        if !geocoding {
+            self.completionHandler = completionHandler
+            let requestString = "https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/" +
+                                addressString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)! +
+                                ".json?access_token=" + accessToken
+            let request = NSURLRequest(URL: NSURL(string: requestString)!)
+            connection = NSURLConnection(request: request, delegate: self)
+        }
     }
 
     public func geocodeAddressString(addressString: String!,
