@@ -133,9 +133,20 @@ public class MBPlacemark: NSObject {
     }
     
     public var location: CLLocation! {
-        let coordinates = (self.featureJSON["geometry"] as NSDictionary)["coordinates"] as NSArray
-        return CLLocation(latitude:  coordinates[1].doubleValue,
-                          longitude: coordinates[0].doubleValue)
+        let geometry = self.featureJSON["geometry"] as NSDictionary
+
+        var coordinates: NSArray?
+
+        if (geometry["type"] as String == "Point") {
+            coordinates = geometry["coordinates"] as NSArray
+        }
+
+        if (coordinates != nil) {
+            return CLLocation(latitude:  coordinates![1].doubleValue,
+                              longitude: coordinates![0].doubleValue)
+        }
+
+        return nil
     }
 
     public var name: String! {
