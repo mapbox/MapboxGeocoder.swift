@@ -1,9 +1,9 @@
-GeocoderExample
+MBGeocoder
 ===============
 
-[Mapbox geocoder](https://www.mapbox.com/developers/api/geocoding/) experimentation with Swift. 
+[Mapbox geocoder](https://www.mapbox.com/developers/api/geocoding/) in Swift. 
 
-Import `MBGeocoder.framework` into your project, then use `MBGeocoder` as a drop-in replacement for Apple's `CLGeocoder` (at least for reverse geocoding... for now). 
+Import `MBGeocoder.framework` into your project, then use `MBGeocoder` as a drop-in replacement for Apple's `CLGeocoder`.
 
 Includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). 
 
