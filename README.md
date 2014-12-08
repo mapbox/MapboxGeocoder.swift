@@ -1,5 +1,5 @@
-MBGeocoder
-===============
+MapboxGeocoder.swift
+====================
 
 [Mapbox geocoder](https://www.mapbox.com/developers/api/geocoding/) in Swift. 
 
