@@ -1,18 +1,22 @@
 import Foundation
 import CoreLocation
 
-public class MBGeocoder: NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate {
+public typealias MBGeocodeCompletionHandler = CLGeocodeCompletionHandler // FIXME ObjC
 
-    // MARK: -
-    // MARK: Setup
+// MARK: - Geocoder
 
-    private var accessToken: NSString
+public class MBGeocoder: NSObject,
+                         NSURLConnectionDelegate,
+                         NSURLConnectionDataDelegate {
+
+    // MARK: - Setup
+
+    private let accessToken: NSString
     
     public init(accessToken: NSString) {
         self.accessToken = accessToken
+        super.init()
     }
-    
-    public typealias MBGeocodeCompletionHandler = CLGeocodeCompletionHandler
 
     private var connection: NSURLConnection?
     private var completionHandler: MBGeocodeCompletionHandler?
@@ -20,137 +24,200 @@ public class MBGeocoder: NSObject, NSURLConnectionDelegate, NSURLConnectionDataD
     
     private let MBGeocoderErrorDomain = "MBGeocoderErrorDomain"
 
-    private enum MBGeocoderErrorCode: Int {
+    private enum MBGeocoderErrorCode: Int { // FIXME ObjC
         case ConnectionError = -1000
         case HTTPError       = -1001
         case ParseError      = -1002
     }
     
-    // MARK: -
-    // MARK: Public API
+    // MARK: - Public API
 
     public var geocoding: Bool {
-        return (connection != nil)
+        return (self.connection != nil)
     }
     
-    public func reverseGeocodeLocation(location: CLLocation!, completionHandler: MBGeocodeCompletionHandler!) {
-        if !geocoding {
+    public func reverseGeocodeLocation(location: CLLocation, completionHandler: MBGeocodeCompletionHandler) {
+        if (!self.geocoding) {
             self.completionHandler = completionHandler
             let requestString = "https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/" +
                 "\(location.coordinate.longitude),\(location.coordinate.latitude).json" +
                 "?access_token=" + accessToken
             let request = NSURLRequest(URL: NSURL(string: requestString)!)
-            connection = NSURLConnection(request: request, delegate: self)
+            self.connection = NSURLConnection(request: request, delegate: self)
         }
     }
 
-    public func geocodeAddressDictionary(addressDictionary: [NSObject : AnyObject]!,
-        completionHandler: MBGeocodeCompletionHandler!) {
-
-    }
+//    public func geocodeAddressDictionary(addressDictionary: [NSObject : AnyObject],
+//        completionHandler: MBGeocodeCompletionHandler)
     
-    public func geocodeAddressString(addressString: String!,
-        completionHandler: MBGeocodeCompletionHandler!) {
-        if !geocoding {
+    public func geocodeAddressString(addressString: String, completionHandler: MBGeocodeCompletionHandler) {
+        if (!self.geocoding) {
             self.completionHandler = completionHandler
             let requestString = "https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/" +
                 addressString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)! +
                 ".json?access_token=" + accessToken
             let request = NSURLRequest(URL: NSURL(string: requestString)!)
-            connection = NSURLConnection(request: request, delegate: self)
+            self.connection = NSURLConnection(request: request, delegate: self)
         }
     }
 
-    public func geocodeAddressString(addressString: String!,
-        inRegion region: CLRegion!,
-        completionHandler: MBGeocodeCompletionHandler!) {
-            
-    }
-    
-    public func cancelGeocode() {
-        connection?.cancel()
-        connection = nil
-    }
-    
-    // MARK: -
-    // MARK: NSURLConnection Delegates
+//    public func geocodeAddressString(addressString: String, inRegion region: CLRegion, completionHandler: MBGeocodeCompletionHandler)
 
-    public func connection(connection: NSURLConnection!, didFailWithError error: NSError!) {
+    public func cancelGeocode() {
+        self.connection?.cancel()
         self.connection = nil
-        completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
+    }
+    
+    // MARK: - NSURLConnection Delegates
+
+    public func connection(connection: NSURLConnection, didFailWithError error: NSError) {
+        self.connection = nil
+        self.completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
             code: MBGeocoderErrorCode.ConnectionError.rawValue,
             userInfo: error.userInfo))
     }
 
-    public func connection(connection: NSURLConnection!, didReceiveResponse response: NSURLResponse!) {
+    public func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
         let statusCode = (response as NSHTTPURLResponse).statusCode
-        if statusCode != 200 {
-            connection.cancel()
+        if (statusCode != 200) {
+            self.connection?.cancel()
             self.connection = nil
-            completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
+            self.completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
                 code: MBGeocoderErrorCode.HTTPError.rawValue,
                 userInfo: [ NSLocalizedDescriptionKey: "Received HTTP status code \(statusCode)" ]))
         } else {
-            receivedData = NSMutableData()
+            self.receivedData = NSMutableData()
         }
     }
     
-    public func connection(connection: NSURLConnection!, didReceiveData data: NSData!) {
-        receivedData!.appendData(data)
+    public func connection(connection: NSURLConnection, didReceiveData data: NSData) {
+        self.receivedData!.appendData(data)
     }
     
-    public func connectionDidFinishLoading(connection: NSURLConnection!) {
+    public func connectionDidFinishLoading(connection: NSURLConnection) {
         var parseError: NSError?
-        let response = NSJSONSerialization.JSONObjectWithData(receivedData!, options: nil, error: &parseError) as NSDictionary
-        if parseError != nil {
-            completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
+        let response = NSJSONSerialization.JSONObjectWithData(self.receivedData!, options: nil, error: &parseError) as NSDictionary
+        if (parseError != nil) {
+            self.completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
                 code: MBGeocoderErrorCode.ParseError.rawValue,
                 userInfo: [ NSLocalizedDescriptionKey: "Unable to parse results" ]))
         } else {
             let features = response["features"] as NSArray
-            if features.count > 0 {
+            if (features.count > 0) {
                 var results = NSMutableArray()
                 for feature in features {
-                    results.addObject(MBPlacemark(featureJSON: feature as NSDictionary))
+                    if let placemark = MBPlacemark(featureJSON: feature as NSDictionary) {
+                        results.addObject(placemark)
+                    }
                 }
-                completionHandler?(NSArray(array: results), nil)
+                self.completionHandler?(NSArray(array: results), nil)
             } else {
-                completionHandler?([], nil)
+                self.completionHandler?([], nil)
             }
         }
     }
 
 }
 
-// MARK: -
+// MARK: - Placemark
 
-public class MBPlacemark: NSObject {
-    
-    private var featureJSON: NSDictionary
-    
-    private init(featureJSON: NSDictionary) {
-        self.featureJSON = featureJSON
+public class MBPlacemark: CLPlacemark {
+
+    private var featureJSON: NSDictionary?
+
+    required public init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
-    
-    public var location: CLLocation! {
-        let geometry = self.featureJSON["geometry"] as NSDictionary
 
-        var coordinates: NSArray?
+    override init() {
+        super.init()
+    }
 
-        if (geometry["type"] as String == "Point") {
-            coordinates = geometry["coordinates"] as? NSArray
+    internal convenience init?(featureJSON: NSDictionary) {
+        var valid = false
+        if let geometry = featureJSON["geometry"] as? NSDictionary {
+            if (geometry["type"] as? String == "Point") {
+                if let coordinates = geometry["coordinates"] as? NSArray {
+                    if (featureJSON["place_name"] as? String != nil) {
+                        valid = true
+                    }
+                }
+            }
         }
-
-        if (coordinates != nil) {
-            return CLLocation(latitude:  coordinates![1].doubleValue,
-                longitude: coordinates![0].doubleValue)
+        if (valid) {
+            self.init()
+            self.featureJSON = featureJSON
+        } else {
+            self.init()
+            self.featureJSON = nil
+            return nil
         }
-
-        return nil
     }
 
-    public var name: String! {
-        return featureJSON["place_name"] as NSString
+    override public var location: CLLocation! {
+        let coordinates = (self.featureJSON!["geometry"] as NSDictionary)["coordinates"] as NSArray
+
+        return CLLocation(latitude:  coordinates[1].doubleValue, longitude: coordinates[0].doubleValue)
     }
-    
+
+    override public var name: String! {
+        return self.featureJSON!["place_name"] as String
+    }
+
+    override public var addressDictionary: [NSObject: AnyObject]! {
+        return [:]
+    }
+
+    override public var ISOcountryCode: String! {
+        return ""
+    }
+
+    override public var country: String! {
+        return ""
+    }
+
+    override public var postalCode: String! {
+        return ""
+    }
+
+    override public var administrativeArea: String! {
+        return ""
+    }
+
+    override public var subAdministrativeArea: String! {
+        return ""
+    }
+
+    override public var locality: String! {
+        return ""
+    }
+
+    override public var subLocality: String! {
+        return ""
+    }
+
+    override public var thoroughfare: String! {
+        return ""
+    }
+
+    override public var subThoroughfare: String! {
+        return ""
+    }
+
+    override public var region: CLRegion! {
+        return CLRegion()
+    }
+
+    override public var inlandWater: String! {
+        return ""
+    }
+
+    override public var ocean: String! {
+        return ""
+    }
+
+    override public var areasOfInterest: [AnyObject]! {
+        return []
+    }
+
 }
