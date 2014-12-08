@@ -45,7 +45,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
         geocoder?.cancelGeocode()
         geocoder!.reverseGeocodeLocation(CLLocation(latitude: mapView!.centerCoordinate.latitude, longitude: mapView!.centerCoordinate.longitude)) { (results, error) in
-            if error {
+            if (error != nil) {
                 NSLog("%@", error)
             } else if results.count > 0 {
 //                self.resultsLabel!.text = (results[0] as CLPlacemark).name
