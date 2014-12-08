@@ -9,31 +9,24 @@
 /* Begin PBXBuildFile section */
 		DD342B5619A140EE00219F77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5519A140EE00219F77 /* AppDelegate.swift */; };
 		DD342B5819A140EE00219F77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5719A140EE00219F77 /* ViewController.swift */; };
-		DDC2470919A1C3B40054B0C0 /* MBGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = DDC2470819A1C3B40054B0C0 /* MBGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DDC2471819A1C3B40054B0C0 /* MBGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MBGeocoder.framework */; };
-		DDC2471A19A1C3B40054B0C0 /* MBGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MBGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DDC2472519A1C5880054B0C0 /* MBGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC2472419A1C5880054B0C0 /* MBGeocoder.swift */; };
+		DDC2295C1A36074F006BE405 /* MapboxGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = DDC229581A36073B006BE405 /* MapboxGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DDC2295E1A360843006BE405 /* MapboxGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC229591A36073B006BE405 /* MapboxGeocoder.swift */; };
+		DDC2471819A1C3B40054B0C0 /* MapboxGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; };
+		DDC2471A19A1C3B40054B0C0 /* MapboxGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DDC2472F19A1C60E0054B0C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC2472E19A1C60E0054B0C0 /* main.m */; };
 		DDC2473219A1C60E0054B0C0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC2473119A1C60E0054B0C0 /* AppDelegate.m */; };
 		DDC2473519A1C60E0054B0C0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC2473419A1C60E0054B0C0 /* ViewController.m */; };
-		DDC2474F19A1C64D0054B0C0 /* MBGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MBGeocoder.framework */; };
-		DDC2475219A1CBF40054B0C0 /* MBGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MBGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DDC2474F19A1C64D0054B0C0 /* MapboxGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; };
+		DDC2475219A1CBF40054B0C0 /* MapboxGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		DDC2471619A1C3B40054B0C0 /* PBXContainerItemProxy */ = {
+		DD1772B51A360BAF00C40FDC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DD342B4819A140EE00219F77 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = DDC2470319A1C3B40054B0C0;
-			remoteInfo = MBGeocoder;
-		};
-		DDC2471B19A1C3B40054B0C0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DD342B4819A140EE00219F77 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DDC2470319A1C3B40054B0C0;
-			remoteInfo = MBGeocoder;
+			remoteInfo = MapboxGeocoder;
 		};
 		DDC2474D19A1C6400054B0C0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -51,7 +44,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				DDC2471A19A1C3B40054B0C0 /* MBGeocoder.framework in Embed Frameworks */,
+				DDC2471A19A1C3B40054B0C0 /* MapboxGeocoder.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,7 +55,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				DDC2475219A1CBF40054B0C0 /* MBGeocoder.framework in Embed Frameworks */,
+				DDC2475219A1CBF40054B0C0 /* MapboxGeocoder.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -74,10 +67,10 @@
 		DD342B5419A140EE00219F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD342B5519A140EE00219F77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD342B5719A140EE00219F77 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		DDC2470419A1C3B40054B0C0 /* MBGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MBGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDC229581A36073B006BE405 /* MapboxGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapboxGeocoder.h; path = MBGeocoder/MapboxGeocoder.h; sourceTree = SOURCE_ROOT; };
+		DDC229591A36073B006BE405 /* MapboxGeocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapboxGeocoder.swift; path = MBGeocoder/MapboxGeocoder.swift; sourceTree = SOURCE_ROOT; };
+		DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDC2470719A1C3B40054B0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DDC2470819A1C3B40054B0C0 /* MBGeocoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MBGeocoder.h; path = ../MBGeocoder/MBGeocoder.h; sourceTree = "<group>"; };
-		DDC2472419A1C5880054B0C0 /* MBGeocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MBGeocoder.swift; path = MBGeocoder/MBGeocoder.swift; sourceTree = SOURCE_ROOT; };
 		DDC2472A19A1C60E0054B0C0 /* Geocoder (Objective-C).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geocoder (Objective-C).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDC2472E19A1C60E0054B0C0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DDC2473019A1C60E0054B0C0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -91,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDC2471819A1C3B40054B0C0 /* MBGeocoder.framework in Frameworks */,
+				DDC2471819A1C3B40054B0C0 /* MapboxGeocoder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDC2474F19A1C64D0054B0C0 /* MBGeocoder.framework in Frameworks */,
+				DDC2474F19A1C64D0054B0C0 /* MapboxGeocoder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,7 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				DD342B5019A140EE00219F77 /* Geocoder (Swift).app */,
-				DDC2470419A1C3B40054B0C0 /* MBGeocoder.framework */,
+				DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */,
 				DDC2472A19A1C60E0054B0C0 /* Geocoder (Objective-C).app */,
 			);
 			name = Products;
@@ -153,8 +146,8 @@
 		DDC246FC19A1C2C20054B0C0 /* Mapbox Geocoder */ = {
 			isa = PBXGroup;
 			children = (
-				DDC2470819A1C3B40054B0C0 /* MBGeocoder.h */,
-				DDC2472419A1C5880054B0C0 /* MBGeocoder.swift */,
+				DDC229581A36073B006BE405 /* MapboxGeocoder.h */,
+				DDC229591A36073B006BE405 /* MapboxGeocoder.swift */,
 				DDC2470619A1C3B40054B0C0 /* Supporting Files */,
 			);
 			name = "Mapbox Geocoder";
@@ -198,7 +191,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDC2470919A1C3B40054B0C0 /* MBGeocoder.h in Headers */,
+				DDC2295C1A36074F006BE405 /* MapboxGeocoder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,17 +210,16 @@
 			buildRules = (
 			);
 			dependencies = (
-				DDC2471719A1C3B40054B0C0 /* PBXTargetDependency */,
-				DDC2471C19A1C3B40054B0C0 /* PBXTargetDependency */,
+				DD1772B61A360BAF00C40FDC /* PBXTargetDependency */,
 			);
 			name = "Example (Swift)";
 			productName = "Geocoder Example";
 			productReference = DD342B5019A140EE00219F77 /* Geocoder (Swift).app */;
 			productType = "com.apple.product-type.application";
 		};
-		DDC2470319A1C3B40054B0C0 /* MBGeocoder */ = {
+		DDC2470319A1C3B40054B0C0 /* MapboxGeocoder */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DDC2471D19A1C3B40054B0C0 /* Build configuration list for PBXNativeTarget "MBGeocoder" */;
+			buildConfigurationList = DDC2471D19A1C3B40054B0C0 /* Build configuration list for PBXNativeTarget "MapboxGeocoder" */;
 			buildPhases = (
 				DDC246FF19A1C3B40054B0C0 /* Sources */,
 				DDC2470019A1C3B40054B0C0 /* Frameworks */,
@@ -238,9 +230,9 @@
 			);
 			dependencies = (
 			);
-			name = MBGeocoder;
+			name = MapboxGeocoder;
 			productName = MBGeocoder;
-			productReference = DDC2470419A1C3B40054B0C0 /* MBGeocoder.framework */;
+			productReference = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		DDC2472919A1C60E0054B0C0 /* Example (Objective-C) */ = {
@@ -297,7 +289,7 @@
 			targets = (
 				DD342B4F19A140EE00219F77 /* Example (Swift) */,
 				DDC2472919A1C60E0054B0C0 /* Example (Objective-C) */,
-				DDC2470319A1C3B40054B0C0 /* MBGeocoder */,
+				DDC2470319A1C3B40054B0C0 /* MapboxGeocoder */,
 			);
 		};
 /* End PBXProject section */
@@ -340,7 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDC2472519A1C5880054B0C0 /* MBGeocoder.swift in Sources */,
+				DDC2295E1A360843006BE405 /* MapboxGeocoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,19 +349,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		DDC2471719A1C3B40054B0C0 /* PBXTargetDependency */ = {
+		DD1772B61A360BAF00C40FDC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DDC2470319A1C3B40054B0C0 /* MBGeocoder */;
-			targetProxy = DDC2471619A1C3B40054B0C0 /* PBXContainerItemProxy */;
-		};
-		DDC2471C19A1C3B40054B0C0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DDC2470319A1C3B40054B0C0 /* MBGeocoder */;
-			targetProxy = DDC2471B19A1C3B40054B0C0 /* PBXContainerItemProxy */;
+			target = DDC2470319A1C3B40054B0C0 /* MapboxGeocoder */;
+			targetProxy = DD1772B51A360BAF00C40FDC /* PBXContainerItemProxy */;
 		};
 		DDC2474E19A1C6400054B0C0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DDC2470319A1C3B40054B0C0 /* MBGeocoder */;
+			target = DDC2470319A1C3B40054B0C0 /* MapboxGeocoder */;
 			targetProxy = DDC2474D19A1C6400054B0C0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -563,13 +550,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DDC2471D19A1C3B40054B0C0 /* Build configuration list for PBXNativeTarget "MBGeocoder" */ = {
+		DDC2471D19A1C3B40054B0C0 /* Build configuration list for PBXNativeTarget "MapboxGeocoder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DDC2471E19A1C3B40054B0C0 /* Debug */,
 				DDC2471F19A1C3B40054B0C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DDC2474719A1C60E0054B0C0 /* Build configuration list for PBXNativeTarget "Example (Objective-C)" */ = {
 			isa = XCConfigurationList;
@@ -578,6 +566,7 @@
 				DDC2474919A1C60E0054B0C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

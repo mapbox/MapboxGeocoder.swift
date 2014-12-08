@@ -1,6 +1,6 @@
 @import MapKit;
 @import CoreLocation;
-@import MBGeocoder;
+@import MapboxGeocoder;
 
 #import "ViewController.h"
 
