@@ -41,7 +41,7 @@ public class MBGeocoder: NSObject,
             self.completionHandler = completionHandler
             let requestString = "https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/" +
                 "\(location.coordinate.longitude),\(location.coordinate.latitude).json" +
-                "?access_token=" + accessToken
+                "?access_token=\(accessToken)"
             let request = NSURLRequest(URL: NSURL(string: requestString)!)
             self.connection = NSURLConnection(request: request, delegate: self)
         }
@@ -55,7 +55,7 @@ public class MBGeocoder: NSObject,
             self.completionHandler = completionHandler
             let requestString = "https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/" +
                 addressString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)! +
-                ".json?access_token=" + accessToken
+                ".json?access_token=\(accessToken)"
             let request = NSURLRequest(URL: NSURL(string: requestString)!)
             self.connection = NSURLConnection(request: request, delegate: self)
         }
@@ -78,7 +78,7 @@ public class MBGeocoder: NSObject,
     }
 
     public func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
-        let statusCode = (response as NSHTTPURLResponse).statusCode
+        let statusCode = (response as! NSHTTPURLResponse).statusCode
         if (statusCode != 200) {
             self.connection?.cancel()
             self.connection = nil
@@ -96,21 +96,20 @@ public class MBGeocoder: NSObject,
     
     public func connectionDidFinishLoading(connection: NSURLConnection) {
         var parseError: NSError?
-        let response = NSJSONSerialization.JSONObjectWithData(self.receivedData!, options: nil, error: &parseError) as NSDictionary
+        let response = NSJSONSerialization.JSONObjectWithData(self.receivedData!, options: nil, error: &parseError) as? NSDictionary
         if (parseError != nil) {
             self.completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
                 code: MBGeocoderErrorCode.ParseError.rawValue,
                 userInfo: [ NSLocalizedDescriptionKey: "Unable to parse results" ]))
         } else {
-            let features = response["features"] as NSArray
-            if (features.count > 0) {
-                var results = NSMutableArray()
+            if let features = response?["features"] as? NSArray {
+                var results: [MBPlacemark] = []
                 for feature in features {
-                    if let placemark = MBPlacemark(featureJSON: feature as NSDictionary) {
-                        results.addObject(placemark)
+                    if let placemark = MBPlacemark(featureJSON: feature as! NSDictionary) {
+                        results.append(placemark)
                     }
                 }
-                self.completionHandler?(NSArray(array: results), nil)
+                self.completionHandler?(results, nil)
             } else {
                 self.completionHandler?([], nil)
             }
@@ -155,13 +154,13 @@ public class MBPlacemark: CLPlacemark {
     }
 
     override public var location: CLLocation! {
-        let coordinates = (self.featureJSON!["geometry"] as NSDictionary)["coordinates"] as NSArray
+        let coordinates = (self.featureJSON!["geometry"] as! NSDictionary)["coordinates"] as! NSArray
 
         return CLLocation(latitude:  coordinates[1].doubleValue, longitude: coordinates[0].doubleValue)
     }
 
     override public var name: String! {
-        return self.featureJSON!["place_name"] as String
+        return self.featureJSON!["place_name"] as! String
     }
 
     override public var addressDictionary: [NSObject: AnyObject]! {
