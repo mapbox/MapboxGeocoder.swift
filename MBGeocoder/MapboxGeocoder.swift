@@ -101,18 +101,18 @@ public class MBGeocoder: NSObject,
             self.completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
                 code: MBGeocoderErrorCode.ParseError.rawValue,
                 userInfo: [ NSLocalizedDescriptionKey: "Unable to parse results" ]))
-        } else {
-            if let features = response?["features"] as? NSArray {
-                var results: [MBPlacemark] = []
-                for feature in features {
-                    if let placemark = MBPlacemark(featureJSON: feature as! NSDictionary) {
+        } else if let features = response?["features"] as? NSArray {
+            var results: [MBPlacemark] = []
+            for feature in features {
+                if let feature = feature as? NSDictionary {
+                    if let placemark = MBPlacemark(featureJSON: feature) {
                         results.append(placemark)
                     }
                 }
-                self.completionHandler?(results, nil)
-            } else {
-                self.completionHandler?([], nil)
             }
+            self.completionHandler?(results, nil)
+        } else {
+            self.completionHandler?([], nil)
         }
     }
 
@@ -120,23 +120,29 @@ public class MBGeocoder: NSObject,
 
 // MARK: - Placemark
 
-public class MBPlacemark: CLPlacemark {
+/** @see CLPlacemark */
+public class MBPlacemark: NSObject, NSCopying, NSSecureCoding, NSCoding {
 
     private var featureJSON: NSDictionary?
 
     required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        featureJSON = aDecoder.decodeObjectOfClass(NSDictionary.self, forKey: "featureJSON") as? NSDictionary
+    }
+    
+    public override init() {
+        super.init()
     }
 
-    override init() {
-        super.init()
+    public convenience init!(placemark: MBPlacemark!) {
+        self.init()
+        featureJSON = placemark.featureJSON
     }
 
     internal convenience init?(featureJSON: NSDictionary) {
         var valid = false
         if let geometry = featureJSON["geometry"] as? NSDictionary {
-            if (geometry["type"] as? String == "Point") {
-                if let coordinates = geometry["coordinates"] as? NSArray {
+            if geometry["type"] as? String == "Point" {
+                if geometry["coordinates"] as? NSArray != nil {
                     if (featureJSON["place_name"] as? String != nil) {
                         valid = true
                     }
@@ -152,70 +158,82 @@ public class MBPlacemark: CLPlacemark {
             return nil
         }
     }
+    
+    public class func supportsSecureCoding() -> Bool {
+        return true
+    }
+    
+    public func copyWithZone(zone: NSZone) -> AnyObject {
+        return MBPlacemark(featureJSON: featureJSON!)!
+    }
+    
+    public func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(featureJSON, forKey: "featureJSON")
+    }
 
-    override public var location: CLLocation! {
+    public var location: CLLocation! {
         let coordinates = (self.featureJSON!["geometry"] as! NSDictionary)["coordinates"] as! NSArray
 
         return CLLocation(latitude:  coordinates[1].doubleValue, longitude: coordinates[0].doubleValue)
     }
 
-    override public var name: String! {
+    public var name: String! {
         return self.featureJSON!["place_name"] as! String
     }
 
-    override public var addressDictionary: [NSObject: AnyObject]! {
+    public var addressDictionary: [NSObject: AnyObject]! {
         return [:]
     }
 
-    override public var ISOcountryCode: String! {
+    public var ISOcountryCode: String! {
         return ""
     }
 
-    override public var country: String! {
+    public var country: String! {
         return ""
     }
 
-    override public var postalCode: String! {
+    public var postalCode: String! {
         return ""
     }
 
-    override public var administrativeArea: String! {
+    public var administrativeArea: String! {
         return ""
     }
 
-    override public var subAdministrativeArea: String! {
+    public var subAdministrativeArea: String! {
         return ""
     }
 
-    override public var locality: String! {
+    public var locality: String! {
         return ""
     }
 
-    override public var subLocality: String! {
+    public var subLocality: String! {
         return ""
     }
 
-    override public var thoroughfare: String! {
+    public var thoroughfare: String! {
         return ""
     }
 
-    override public var subThoroughfare: String! {
+    public var subThoroughfare: String! {
         return ""
     }
 
-    override public var region: CLRegion! {
+    public var region: CLRegion! {
         return CLRegion()
     }
 
-    override public var inlandWater: String! {
+    public var inlandWater: String! {
         return ""
     }
 
-    override public var ocean: String! {
+    public var ocean: String! {
         return ""
     }
 
-    override public var areasOfInterest: [AnyObject]! {
+    public var areasOfInterest: [AnyObject]! {
         return []
     }
 
