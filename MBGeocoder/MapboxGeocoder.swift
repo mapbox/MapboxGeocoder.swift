@@ -120,8 +120,9 @@ public class MBGeocoder: NSObject,
 
 // MARK: - Placemark
 
-/** @see CLPlacemark */
-public class MBPlacemark: NSObject, NSCopying, NSSecureCoding, NSCoding {
+// Based on CLPlacemark, which can't be reliably subclassed in Swift.
+
+public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
 
     private var featureJSON: NSDictionary?
 
