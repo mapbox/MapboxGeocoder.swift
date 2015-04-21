@@ -133,7 +133,7 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding, NSCoding {
         super.init()
     }
 
-    public convenience init!(placemark: MBPlacemark!) {
+    public convenience init(placemark: MBPlacemark) {
         self.init()
         featureJSON = placemark.featureJSON
     }
@@ -143,7 +143,7 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding, NSCoding {
         if let geometry = featureJSON["geometry"] as? NSDictionary {
             if geometry["type"] as? String == "Point" {
                 if geometry["coordinates"] as? NSArray != nil {
-                    if (featureJSON["place_name"] as? String != nil) {
+                    if featureJSON["place_name"] as? String != nil {
                         valid = true
                     }
                 }
@@ -171,69 +171,69 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding, NSCoding {
         aCoder.encodeObject(featureJSON, forKey: "featureJSON")
     }
 
-    public var location: CLLocation! {
+    public var location: CLLocation {
         let coordinates = (self.featureJSON!["geometry"] as! NSDictionary)["coordinates"] as! NSArray
 
-        return CLLocation(latitude:  coordinates[1].doubleValue, longitude: coordinates[0].doubleValue)
+        return CLLocation(latitude: coordinates[1].doubleValue, longitude: coordinates[0].doubleValue)
     }
 
-    public var name: String! {
+    public var name: String {
         return self.featureJSON!["place_name"] as! String
     }
 
-    public var addressDictionary: [NSObject: AnyObject]! {
+    public var addressDictionary: [NSObject: AnyObject] {
         return [:]
     }
 
-    public var ISOcountryCode: String! {
+    public var ISOcountryCode: String {
         return ""
     }
 
-    public var country: String! {
+    public var country: String {
         return ""
     }
 
-    public var postalCode: String! {
+    public var postalCode: String {
         return ""
     }
 
-    public var administrativeArea: String! {
+    public var administrativeArea: String {
         return ""
     }
 
-    public var subAdministrativeArea: String! {
+    public var subAdministrativeArea: String {
         return ""
     }
 
-    public var locality: String! {
+    public var locality: String {
         return ""
     }
 
-    public var subLocality: String! {
+    public var subLocality: String {
         return ""
     }
 
-    public var thoroughfare: String! {
+    public var thoroughfare: String {
         return ""
     }
 
-    public var subThoroughfare: String! {
+    public var subThoroughfare: String {
         return ""
     }
 
-    public var region: CLRegion! {
+    public var region: CLRegion {
         return CLRegion()
     }
 
-    public var inlandWater: String! {
+    public var inlandWater: String {
         return ""
     }
 
-    public var ocean: String! {
+    public var ocean: String {
         return ""
     }
 
-    public var areasOfInterest: [AnyObject]! {
+    public var areasOfInterest: [AnyObject] {
         return []
     }
 
