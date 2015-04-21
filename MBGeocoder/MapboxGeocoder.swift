@@ -1,7 +1,7 @@
 import Foundation
 import CoreLocation
 
-public typealias MBGeocodeCompletionHandler = CLGeocodeCompletionHandler // FIXME ObjC
+public typealias MBGeocodeCompletionHandler = CLGeocodeCompletionHandler
 
 // MARK: - Geocoder
 
@@ -24,7 +24,7 @@ public class MBGeocoder: NSObject,
     
     private let MBGeocoderErrorDomain = "MBGeocoderErrorDomain"
 
-    private enum MBGeocoderErrorCode: Int { // FIXME ObjC
+    private enum MBGeocoderErrorCode: Int {
         case ConnectionError = -1000
         case HTTPError       = -1001
         case ParseError      = -1002
