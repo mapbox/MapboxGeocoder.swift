@@ -22,11 +22,13 @@ class ViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         
         mapView = MKMapView(frame: view.bounds)
-        mapView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        mapView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
         mapView.delegate = self
         view.addSubview(mapView)
         
-        resultsLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 500, height: 30))
+        resultsLabel = UILabel(frame: CGRect(x: 10, y: 20, width: view.bounds.size.width - 20, height: 30))
+        resultsLabel.autoresizingMask = .FlexibleWidth
+        resultsLabel.adjustsFontSizeToFitWidth = true
         resultsLabel.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         resultsLabel.userInteractionEnabled = false
         view.addSubview(resultsLabel)

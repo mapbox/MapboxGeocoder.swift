@@ -34,7 +34,9 @@ NSString *const MapboxAccessToken = @"pk.eyJ1IjoianVzdGluIiwiYSI6ImFqZFg3Q0UifQ.
     self.mapView.delegate = self;
     [self.view addSubview:self.mapView];
 
-    self.resultsLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 500, 30)];
+    self.resultsLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, self.view.bounds.size.width - 20, 30)];
+    self.resultsLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth
+    self.resultsLabel.adjustsFontSizeToFitWidth = YES
     self.resultsLabel.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
     self.resultsLabel.userInteractionEnabled = NO;
     [self.view addSubview:self.resultsLabel];
