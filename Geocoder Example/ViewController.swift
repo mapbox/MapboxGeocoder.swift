@@ -49,7 +49,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
                 NSLog("%@", error)
             } else if results.count > 0 {
 //                self.resultsLabel!.text = (results[0] as CLPlacemark).name
-                self.resultsLabel!.text = (results[0] as MBPlacemark).name
+                self.resultsLabel!.text = (results[0] as! MBPlacemark).name
             } else {
                 self.resultsLabel!.text = "No results"
             }
