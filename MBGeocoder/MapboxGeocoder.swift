@@ -50,12 +50,15 @@ public class MBGeocoder: NSObject,
 //    public func geocodeAddressDictionary(addressDictionary: [NSObject : AnyObject],
 //        completionHandler: MBGeocodeCompletionHandler)
     
-    public func geocodeAddressString(addressString: String, completionHandler: MBGeocodeCompletionHandler) {
+    public func geocodeAddressString(addressString: String, proximity: CLLocationCoordinate2D? = nil, completionHandler: MBGeocodeCompletionHandler) {
         if (!self.geocoding) {
             self.completionHandler = completionHandler
             var requestString = "https://api.tiles.mapbox.com/v4/geocode/mapbox.places/" +
                 addressString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)! +
                 ".json?access_token=\(accessToken)"
+            if let proximityCoordinate = proximity {
+                requestString += "&proximity=\(proximityCoordinate.longitude),\(proximityCoordinate.latitude)"
+            }
             let request = NSURLRequest(URL: NSURL(string: requestString)!)
             self.connection = NSURLConnection(request: request, delegate: self)
         }
