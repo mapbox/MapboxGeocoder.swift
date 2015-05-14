@@ -39,7 +39,7 @@ public class MBGeocoder: NSObject,
     public func reverseGeocodeLocation(location: CLLocation, completionHandler: MBGeocodeCompletionHandler) {
         if (!self.geocoding) {
             self.completionHandler = completionHandler
-            let requestString = "https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/" +
+            let requestString = "https://api.tiles.mapbox.com/v4/geocode/mapbox.places/" +
                 "\(location.coordinate.longitude),\(location.coordinate.latitude).json" +
                 "?access_token=\(accessToken)"
             let request = NSURLRequest(URL: NSURL(string: requestString)!)
@@ -53,7 +53,7 @@ public class MBGeocoder: NSObject,
     public func geocodeAddressString(addressString: String, completionHandler: MBGeocodeCompletionHandler) {
         if (!self.geocoding) {
             self.completionHandler = completionHandler
-            let requestString = "https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/" +
+            var requestString = "https://api.tiles.mapbox.com/v4/geocode/mapbox.places/" +
                 addressString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)! +
                 ".json?access_token=\(accessToken)"
             let request = NSURLRequest(URL: NSURL(string: requestString)!)
