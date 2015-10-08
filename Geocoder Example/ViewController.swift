@@ -22,7 +22,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         
         mapView = MKMapView(frame: view.bounds)
-        mapView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        mapView.autoresizingMask = [ .FlexibleWidth, .FlexibleHeight ]
         mapView.delegate = self
         view.addSubview(mapView)
         
@@ -48,11 +48,11 @@ class ViewController: UIViewController, MKMapViewDelegate {
         geocoder.cancelGeocode()
         geocoder.reverseGeocodeLocation(CLLocation(latitude: mapView.centerCoordinate.latitude,
             longitude: mapView.centerCoordinate.longitude)) { [unowned self] (results, error) in
-            if (error != nil) {
+            if let error = error {
                 NSLog("%@", error)
-            } else if results.count > 0 {
+            } else if let results = results where results.count > 0 {
 //                self.resultsLabel.text = (results[0] as CLPlacemark).name
-                self.resultsLabel.text = (results[0] as! MBPlacemark).name
+                self.resultsLabel.text = (results[0] as MBPlacemark).name
             } else {
                 self.resultsLabel.text = "No results"
             }
