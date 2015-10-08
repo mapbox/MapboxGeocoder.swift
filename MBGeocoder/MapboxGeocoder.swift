@@ -132,7 +132,7 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
     private var featureJSON: NSDictionary?
 
     required public init?(coder aDecoder: NSCoder) {
-        featureJSON = aDecoder.decodeObjectOfClass(NSDictionary.self, forKey: "featureJSON") as NSDictionary!
+        featureJSON = aDecoder.decodeObjectOfClass(NSDictionary.self, forKey: "featureJSON") as NSDictionary?
     }
     
     public override init() {
