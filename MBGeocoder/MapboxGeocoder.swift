@@ -3,6 +3,7 @@ import CoreLocation
 
 // like CLGeocodeCompletionHandler
 public typealias MBGeocodeCompletionHandler = ([MBPlacemark]?, NSError?) -> Void
+internal typealias JSON = [String: AnyObject]
 
 // MARK: - Geocoder
 
@@ -99,12 +100,11 @@ public class MBGeocoder: NSObject,
     }
     
     public func connectionDidFinishLoading(connection: NSURLConnection) {
-        if let response = (try? NSJSONSerialization.JSONObjectWithData(self.receivedData!, options: [])) as? NSDictionary {
-            if let features = response["features"] as? NSArray {
+        if let response = (try? NSJSONSerialization.JSONObjectWithData(self.receivedData!, options: [])) as? JSON {
+            if let features = response["features"] as? [JSON] {
                 var results: [MBPlacemark] = []
                 for feature in features {
-                    if let feature = feature as? NSDictionary,
-                      let placemark = MBPlacemark(featureJSON: feature) {
+                    if let placemark = MBPlacemark(featureJSON: feature) {
                         results.append(placemark)
                     }
                 }
@@ -127,10 +127,10 @@ public class MBGeocoder: NSObject,
 
 public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
 
-    private var featureJSON: NSDictionary?
+    private var featureJSON: JSON?
 
     required public init?(coder aDecoder: NSCoder) {
-        featureJSON = aDecoder.decodeObjectOfClass(NSDictionary.self, forKey: "featureJSON") as NSDictionary?
+        featureJSON = aDecoder.decodeObjectOfClass(NSDictionary.self, forKey: "featureJSON") as! JSON?
     }
     
     public override init() {
@@ -142,7 +142,7 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
         featureJSON = placemark.featureJSON
     }
 
-    internal convenience init?(featureJSON: NSDictionary) {
+    internal convenience init?(featureJSON: JSON) {
         if let geometry = featureJSON["geometry"] as? NSDictionary,
           type = geometry["type"] as? String where type == "Point",
           let _ = geometry["coordinates"] as? NSArray,
