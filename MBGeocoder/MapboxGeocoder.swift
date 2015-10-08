@@ -99,10 +99,8 @@ public class MBGeocoder: NSObject,
     }
     
     public func connectionDidFinishLoading(connection: NSURLConnection) {
-        var response: NSDictionary?
-        do {
-            response = try NSJSONSerialization.JSONObjectWithData(self.receivedData!, options: []) as? NSDictionary
-            if let features = response?["features"] as? NSArray {
+        if let response = (try? NSJSONSerialization.JSONObjectWithData(self.receivedData!, options: [])) as? NSDictionary {
+            if let features = response["features"] as? NSArray {
                 var results: [MBPlacemark] = []
                 for feature in features {
                     if let feature = feature as? NSDictionary,
@@ -114,7 +112,7 @@ public class MBGeocoder: NSObject,
             } else {
                 self.completionHandler?([], nil)
             }
-        } catch {
+        } else {
             self.completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
                 code: MBGeocoderErrorCode.ParseError.rawValue,
                 userInfo: [ NSLocalizedDescriptionKey: "Unable to parse results" ]))
