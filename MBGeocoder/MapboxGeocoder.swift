@@ -42,7 +42,7 @@ public class MBGeocoder: NSObject,
         if !self.geocoding {
             self.completionHandler = completionHandler
             let requestString = String(format: "https://api.mapbox.com/geocoding/v5/mapbox.places/%.5f,%.5f.json?access_token=%@",
-                location.coordinate.longitude, location.coordinate.latitude, accessToken)
+                round(location.coordinate.longitude), round(location.coordinate.latitude), accessToken)
             let request = NSURLRequest(URL: NSURL(string: requestString)!)
             self.connection = NSURLConnection(request: request, delegate: self)
         }
@@ -58,7 +58,8 @@ public class MBGeocoder: NSObject,
                 addressString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet())! +
                 ".json?access_token=\(accessToken)"
             if let proximityCoordinate = proximity {
-                requestString += String(format: "&proximity=%.3f,%.3f", proximityCoordinate.longitude, proximityCoordinate.latitude)
+                requestString += String(format: "&proximity=%.3f,%.3f",
+                    round(proximityCoordinate.longitude), round(proximityCoordinate.latitude))
             }
             let request = NSURLRequest(URL: NSURL(string: requestString)!)
             self.connection = NSURLConnection(request: request, delegate: self)
