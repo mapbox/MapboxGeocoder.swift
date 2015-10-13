@@ -41,9 +41,8 @@ public class MBGeocoder: NSObject,
     public func reverseGeocodeLocation(location: CLLocation, completionHandler: MBGeocodeCompletionHandler) {
         if !self.geocoding {
             self.completionHandler = completionHandler
-            let requestString = "https://api.mapbox.com/v4/geocode/mapbox.places/" +
-                "\(location.coordinate.longitude),\(location.coordinate.latitude).json" +
-                "?access_token=\(accessToken)"
+            let requestString = String(format: "https://api.mapbox.com/geocoding/v5/mapbox.places/%.5f,%.5f.json?access_token=%@",
+                location.coordinate.longitude, location.coordinate.latitude, accessToken)
             let request = NSURLRequest(URL: NSURL(string: requestString)!)
             self.connection = NSURLConnection(request: request, delegate: self)
         }
@@ -55,11 +54,11 @@ public class MBGeocoder: NSObject,
     public func geocodeAddressString(addressString: String, proximity: CLLocationCoordinate2D? = nil, completionHandler: MBGeocodeCompletionHandler) {
         if !self.geocoding {
             self.completionHandler = completionHandler
-            var requestString = "https://api.mapbox.com/v4/geocode/mapbox.places/" +
+            var requestString = "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
                 addressString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet())! +
                 ".json?access_token=\(accessToken)"
             if let proximityCoordinate = proximity {
-                requestString += "&proximity=\(proximityCoordinate.longitude),\(proximityCoordinate.latitude)"
+                requestString += String(format: "&proximity=%.3f,%.3f", proximityCoordinate.longitude, proximityCoordinate.latitude)
             }
             let request = NSURLRequest(URL: NSURL(string: requestString)!)
             self.connection = NSURLConnection(request: request, delegate: self)
