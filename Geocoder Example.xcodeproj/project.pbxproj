@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F3DBC44F4AD709379B41DEB /* Pods_Unit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9281D748078BEB61AACF246 /* Pods_Unit_Tests.framework */; };
 		DD342B5619A140EE00219F77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5519A140EE00219F77 /* AppDelegate.swift */; };
 		DD342B5819A140EE00219F77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5719A140EE00219F77 /* ViewController.swift */; };
 		DDC2295C1A36074F006BE405 /* MapboxGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = DDC229581A36073B006BE405 /* MapboxGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -18,6 +19,10 @@
 		DDC2473519A1C60E0054B0C0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC2473419A1C60E0054B0C0 /* ViewController.m */; };
 		DDC2474F19A1C64D0054B0C0 /* MapboxGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; };
 		DDC2475219A1CBF40054B0C0 /* MapboxGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DDF1E84D1BD6F7BA00C40C78 /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF1E84C1BD6F7BA00C40C78 /* UnitTests.swift */; };
+		DDF1E84F1BD6F7BA00C40C78 /* MapboxGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; settings = {ASSET_TAGS = (); }; };
+		DDF1E85C1BD70E4C00C40C78 /* reverse_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */; settings = {ASSET_TAGS = (); }; };
+		DDF1E85D1BD70E4C00C40C78 /* reverse_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +39,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = DDC2470319A1C3B40054B0C0;
 			remoteInfo = MBGeocoder;
+		};
+		DDF1E8501BD6F7BA00C40C78 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD342B4819A140EE00219F77 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DDC2470319A1C3B40054B0C0;
+			remoteInfo = MapboxGeocoder;
+		};
+		DDF1E85E1BD8435800C40C78 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD342B4819A140EE00219F77 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD342B4F19A140EE00219F77;
+			remoteInfo = "Example (Swift)";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -63,6 +82,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		045C1E17B01F46F0A4474B78 /* Pods-Unit Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unit Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		D9281D748078BEB61AACF246 /* Pods_Unit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD342B5019A140EE00219F77 /* Geocoder (Swift).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geocoder (Swift).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD342B5419A140EE00219F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD342B5519A140EE00219F77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +98,12 @@
 		DDC2473119A1C60E0054B0C0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DDC2473319A1C60E0054B0C0 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		DDC2473419A1C60E0054B0C0 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		DDF1E84A1BD6F7BA00C40C78 /* Unit Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDF1E84C1BD6F7BA00C40C78 /* UnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTests.swift; sourceTree = "<group>"; };
+		DDF1E84E1BD6F7BA00C40C78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = reverse_invalid.json; path = fixtures/reverse_invalid.json; sourceTree = "<group>"; };
+		DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = reverse_valid.json; path = fixtures/reverse_valid.json; sourceTree = "<group>"; };
+		FEF1C362A84DCF91463C3181 /* Pods-Unit Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unit Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,15 +130,44 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DDF1E8471BD6F7BA00C40C78 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDF1E84F1BD6F7BA00C40C78 /* MapboxGeocoder.framework in Frameworks */,
+				3F3DBC44F4AD709379B41DEB /* Pods_Unit_Tests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		35099EC49328A9D78984B007 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				045C1E17B01F46F0A4474B78 /* Pods-Unit Tests.debug.xcconfig */,
+				FEF1C362A84DCF91463C3181 /* Pods-Unit Tests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		4CFB56C6CFCDF74D848CC98C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9281D748078BEB61AACF246 /* Pods_Unit_Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DD342B4719A140EE00219F77 = {
 			isa = PBXGroup;
 			children = (
 				DD342B5219A140EE00219F77 /* Geocoder Example */,
 				DDC246FC19A1C2C20054B0C0 /* Mapbox Geocoder */,
+				DDF1E84B1BD6F7BA00C40C78 /* Unit Tests */,
 				DD342B5119A140EE00219F77 /* Products */,
+				35099EC49328A9D78984B007 /* Pods */,
+				4CFB56C6CFCDF74D848CC98C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,6 +177,7 @@
 				DD342B5019A140EE00219F77 /* Geocoder (Swift).app */,
 				DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */,
 				DDC2472A19A1C60E0054B0C0 /* Geocoder (Objective-C).app */,
+				DDF1E84A1BD6F7BA00C40C78 /* Unit Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -182,6 +239,25 @@
 				DDC2473419A1C60E0054B0C0 /* ViewController.m */,
 			);
 			name = "Objective-C";
+			sourceTree = "<group>";
+		};
+		DDF1E84B1BD6F7BA00C40C78 /* Unit Tests */ = {
+			isa = PBXGroup;
+			children = (
+				DDF1E84C1BD6F7BA00C40C78 /* UnitTests.swift */,
+				DDF1E84E1BD6F7BA00C40C78 /* Info.plist */,
+				DDF1E8571BD700EB00C40C78 /* Fixtures */,
+			);
+			path = "Unit Tests";
+			sourceTree = "<group>";
+		};
+		DDF1E8571BD700EB00C40C78 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */,
+				DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */,
+			);
+			name = Fixtures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,6 +330,28 @@
 			productReference = DDC2472A19A1C60E0054B0C0 /* Geocoder (Objective-C).app */;
 			productType = "com.apple.product-type.application";
 		};
+		DDF1E8491BD6F7BA00C40C78 /* Unit Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDF1E8521BD6F7BA00C40C78 /* Build configuration list for PBXNativeTarget "Unit Tests" */;
+			buildPhases = (
+				2BC2E733E28B4AFC37463667 /* Check Pods Manifest.lock */,
+				DDF1E8461BD6F7BA00C40C78 /* Sources */,
+				DDF1E8471BD6F7BA00C40C78 /* Frameworks */,
+				DDF1E8481BD6F7BA00C40C78 /* Resources */,
+				CD3F1CAEDE243BEE7EC3EFEF /* Embed Pods Frameworks */,
+				35B986A50265E4DF19BF7E14 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DDF1E8511BD6F7BA00C40C78 /* PBXTargetDependency */,
+				DDF1E85F1BD8435800C40C78 /* PBXTargetDependency */,
+			);
+			name = "Unit Tests";
+			productName = "Unit Tests";
+			productReference = DDF1E84A1BD6F7BA00C40C78 /* Unit Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -274,6 +372,10 @@
 					DDC2472919A1C60E0054B0C0 = {
 						CreatedOnToolsVersion = 6.0;
 					};
+					DDF1E8491BD6F7BA00C40C78 = {
+						CreatedOnToolsVersion = 7.0.1;
+						TestTargetID = DD342B4F19A140EE00219F77;
+					};
 				};
 			};
 			buildConfigurationList = DD342B4B19A140EE00219F77 /* Build configuration list for PBXProject "Geocoder Example" */;
@@ -292,6 +394,7 @@
 				DD342B4F19A140EE00219F77 /* Example (Swift) */,
 				DDC2472919A1C60E0054B0C0 /* Example (Objective-C) */,
 				DDC2470319A1C3B40054B0C0 /* MapboxGeocoder */,
+				DDF1E8491BD6F7BA00C40C78 /* Unit Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -318,7 +421,64 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DDF1E8481BD6F7BA00C40C78 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDF1E85C1BD70E4C00C40C78 /* reverse_invalid.json in Resources */,
+				DDF1E85D1BD70E4C00C40C78 /* reverse_valid.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2BC2E733E28B4AFC37463667 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		35B986A50265E4DF19BF7E14 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CD3F1CAEDE243BEE7EC3EFEF /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DD342B4C19A140EE00219F77 /* Sources */ = {
@@ -348,6 +508,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DDF1E8461BD6F7BA00C40C78 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDF1E84D1BD6F7BA00C40C78 /* UnitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -360,6 +528,16 @@
 			isa = PBXTargetDependency;
 			target = DDC2470319A1C3B40054B0C0 /* MapboxGeocoder */;
 			targetProxy = DDC2474D19A1C6400054B0C0 /* PBXContainerItemProxy */;
+		};
+		DDF1E8511BD6F7BA00C40C78 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DDC2470319A1C3B40054B0C0 /* MapboxGeocoder */;
+			targetProxy = DDF1E8501BD6F7BA00C40C78 /* PBXContainerItemProxy */;
+		};
+		DDF1E85F1BD8435800C40C78 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD342B4F19A140EE00219F77 /* Example (Swift) */;
+			targetProxy = DDF1E85E1BD8435800C40C78 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -538,6 +716,37 @@
 			};
 			name = Release;
 		};
+		DDF1E8531BD6F7BA00C40C78 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 045C1E17B01F46F0A4474B78 /* Pods-Unit Tests.debug.xcconfig */;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Unit Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mapbox.Unit-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Geocoder (Swift).app/Geocoder (Swift)";
+			};
+			name = Debug;
+		};
+		DDF1E8541BD6F7BA00C40C78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FEF1C362A84DCF91463C3181 /* Pods-Unit Tests.release.xcconfig */;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Unit Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mapbox.Unit-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Geocoder (Swift).app/Geocoder (Swift)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -573,6 +782,15 @@
 			buildConfigurations = (
 				DDC2474819A1C60E0054B0C0 /* Debug */,
 				DDC2474919A1C60E0054B0C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DDF1E8521BD6F7BA00C40C78 /* Build configuration list for PBXNativeTarget "Unit Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDF1E8531BD6F7BA00C40C78 /* Debug */,
+				DDF1E8541BD6F7BA00C40C78 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

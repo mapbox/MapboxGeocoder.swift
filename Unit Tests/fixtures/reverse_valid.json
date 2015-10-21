@@ -1,0 +1,184 @@
+{
+    "attribution": "NOTICE: \u00a9 2015 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained.",
+    "features": [
+        {
+            "address": 3099,
+            "bbox": [
+                -95.78336499999997,
+                37.10940499999999,
+                -95.78181099999998,
+                37.20864299999999
+            ],
+            "center": [
+                -95.783074,
+                37.12787
+            ],
+            "context": [
+                {
+                    "id": "place.25340",
+                    "text": "Independence"
+                },
+                {
+                    "id": "postcode.1050526798",
+                    "text": "67301"
+                },
+                {
+                    "id": "region.1877798576",
+                    "text": "Kansas"
+                },
+                {
+                    "id": "country.4150104525",
+                    "text": "United States"
+                }
+            ],
+            "geometry": {
+                "coordinates": [
+                    -95.783074,
+                    37.12787
+                ],
+                "type": "Point"
+            },
+            "id": "address.147762859513423",
+            "place_name": "3099 3100 Rd, Independence, Kansas 67301, United States",
+            "properties": {},
+            "relevance": 1,
+            "text": "3100 Rd",
+            "type": "Feature"
+        },
+        {
+            "bbox": [
+                -95.92799000564513,
+                37.03322999289267,
+                -95.59462899267074,
+                37.35632800705983
+            ],
+            "center": [
+                -95.7083,
+                37.2242
+            ],
+            "context": [
+                {
+                    "id": "postcode.1050526798",
+                    "text": "67301"
+                },
+                {
+                    "id": "region.1877798576",
+                    "text": "Kansas"
+                },
+                {
+                    "id": "country.4150104525",
+                    "text": "United States"
+                }
+            ],
+            "geometry": {
+                "coordinates": [
+                    -95.7083,
+                    37.2242
+                ],
+                "type": "Point"
+            },
+            "id": "place.25340",
+            "place_name": "Independence, Kansas, United States",
+            "properties": {},
+            "relevance": 1,
+            "text": "Independence",
+            "type": "Feature"
+        },
+        {
+            "bbox": [
+                -95.92799,
+                37.033229999999996,
+                -95.594629,
+                37.356328
+            ],
+            "center": [
+                -95.761294,
+                37.189473
+            ],
+            "context": [
+                {
+                    "id": "region.1877798576",
+                    "text": "Kansas"
+                },
+                {
+                    "id": "country.4150104525",
+                    "text": "United States"
+                }
+            ],
+            "geometry": {
+                "coordinates": [
+                    -95.761294,
+                    37.189473
+                ],
+                "type": "Point"
+            },
+            "id": "postcode.1050526798",
+            "place_name": "67301, Kansas, United States",
+            "properties": {},
+            "relevance": 1,
+            "text": "67301",
+            "type": "Feature"
+        },
+        {
+            "bbox": [
+                -102.05174399999997,
+                36.99301599999999,
+                -94.58865799999997,
+                40.00307799999999
+            ],
+            "center": [
+                -98.329372,
+                38.057927
+            ],
+            "context": [
+                {
+                    "id": "country.4150104525",
+                    "text": "United States"
+                }
+            ],
+            "geometry": {
+                "coordinates": [
+                    -98.329372,
+                    38.057927
+                ],
+                "type": "Point"
+            },
+            "id": "region.1877798576",
+            "place_name": "Kansas, United States",
+            "properties": {},
+            "relevance": 1,
+            "text": "Kansas",
+            "type": "Feature"
+        },
+        {
+            "bbox": [
+                -179.23023299999997,
+                18.866158999999996,
+                179.85968099999994,
+                71.43776899999999
+            ],
+            "center": [
+                -98.958425,
+                36.778951
+            ],
+            "geometry": {
+                "coordinates": [
+                    -98.958425,
+                    36.778951
+                ],
+                "type": "Point"
+            },
+            "id": "country.4150104525",
+            "place_name": "United States",
+            "properties": {},
+            "relevance": 1,
+            "text": "United States",
+            "type": "Feature"
+        }
+    ],
+    "query": [
+        -95.78558,
+        37.13284
+    ],
+    "type": "FeatureCollection"
+}
