@@ -17,4 +17,4 @@ To run the included unit tests, you need to use [CocoaPods](http://cocoapods.org
 
 1. `pod install`
 1. `open Geocoder Example.xcworkspace`
-1. `Command+U`
+1. `Command+U` or `xcodebuild test`
