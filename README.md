@@ -3,7 +3,7 @@ MapboxGeocoder.swift
 
 [![Build Status](https://www.bitrise.io/app/6cae401ec4c1d406.svg?token=MJnXK0c2x2tmTnmHSPtcFA&branch=master)](https://www.bitrise.io/app/6cae401ec4c1d406)
 
-[Mapbox geocoder](https://www.mapbox.com/developers/api/geocoding/) in Swift. 
+[Mapbox Geocoder](https://www.mapbox.com/developers/api/geocoding/) in Swift. 
 
 Import `MapboxGeocoder.framework` into your project, then use `MBGeocoder` as a drop-in replacement for Apple's `CLGeocoder`.
 
