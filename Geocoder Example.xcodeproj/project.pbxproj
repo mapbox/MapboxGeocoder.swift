@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F3DBC44F4AD709379B41DEB /* Pods_Unit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9281D748078BEB61AACF246 /* Pods_Unit_Tests.framework */; };
+		3B97FF3478E9FA7ACDCBAB34 /* Pods_Unit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9281D748078BEB61AACF246 /* Pods_Unit_Tests.framework */; };
 		DD342B5619A140EE00219F77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5519A140EE00219F77 /* AppDelegate.swift */; };
 		DD342B5819A140EE00219F77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5719A140EE00219F77 /* ViewController.swift */; };
 		DDC2295C1A36074F006BE405 /* MapboxGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = DDC229581A36073B006BE405 /* MapboxGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -20,9 +20,8 @@
 		DDC2474F19A1C64D0054B0C0 /* MapboxGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; };
 		DDC2475219A1CBF40054B0C0 /* MapboxGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DDF1E84D1BD6F7BA00C40C78 /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF1E84C1BD6F7BA00C40C78 /* UnitTests.swift */; };
-		DDF1E84F1BD6F7BA00C40C78 /* MapboxGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; settings = {ASSET_TAGS = (); }; };
-		DDF1E85C1BD70E4C00C40C78 /* reverse_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */; settings = {ASSET_TAGS = (); }; };
-		DDF1E85D1BD70E4C00C40C78 /* reverse_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */; settings = {ASSET_TAGS = (); }; };
+		DDF1E85C1BD70E4C00C40C78 /* reverse_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */; };
+		DDF1E85D1BD70E4C00C40C78 /* reverse_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +82,9 @@
 
 /* Begin PBXFileReference section */
 		045C1E17B01F46F0A4474B78 /* Pods-Unit Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unit Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		6953F60F050AE274E006CB85 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7FEE3C3AC9D553F9763CB06 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		CC09570CD1A6D11014400590 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D9281D748078BEB61AACF246 /* Pods_Unit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD342B5019A140EE00219F77 /* Geocoder (Swift).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geocoder (Swift).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD342B5419A140EE00219F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -134,8 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDF1E84F1BD6F7BA00C40C78 /* MapboxGeocoder.framework in Frameworks */,
-				3F3DBC44F4AD709379B41DEB /* Pods_Unit_Tests.framework in Frameworks */,
+				3B97FF3478E9FA7ACDCBAB34 /* Pods_Unit_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +148,8 @@
 			children = (
 				045C1E17B01F46F0A4474B78 /* Pods-Unit Tests.debug.xcconfig */,
 				FEF1C362A84DCF91463C3181 /* Pods-Unit Tests.release.xcconfig */,
+				A7FEE3C3AC9D553F9763CB06 /* Pods.debug.xcconfig */,
+				CC09570CD1A6D11014400590 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				D9281D748078BEB61AACF246 /* Pods_Unit_Tests.framework */,
+				6953F60F050AE274E006CB85 /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
