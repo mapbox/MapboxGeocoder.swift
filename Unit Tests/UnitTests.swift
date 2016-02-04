@@ -29,8 +29,8 @@ class UnitTests: XCTestCase {
                 if result.name == "3099 3100 Rd, Independence, Kansas 67301, United States" {
                     nameExpectation.fulfill()
                 }
-                if result.location.coordinate.latitude == 37.12787 &&
-                  result.location.coordinate.longitude == -95.783074 {
+                if let location = result.location where location.coordinate.latitude == 37.12787 &&
+                  location.coordinate.longitude == -95.783074 {
                     locationExpectation.fulfill()
                 }
             }
