@@ -170,70 +170,106 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
         aCoder.encodeObject(featureJSON, forKey: "featureJSON")
     }
 
-    public var location: CLLocation! {
-        let coordinates = (self.featureJSON!["geometry"] as! NSDictionary)["coordinates"] as! NSArray
-
-        return CLLocation(latitude: coordinates[1].doubleValue, longitude: coordinates[0].doubleValue)
+    public var location: CLLocation? {
+        if let feature = featureJSON?["geometry"] as? JSON, coordinates = feature["coordinates"] as? [Double] {
+            return CLLocation(latitude: coordinates.last!, longitude: coordinates.first!)
+        }
+        return nil
     }
 
-    public var name: String! {
-        return self.featureJSON!["place_name"] as! String
+    public var name: String? {
+        return featureJSON?["place_name"] as? String
     }
 
-    public var addressDictionary: [NSObject: AnyObject]! {
+    public var addressDictionary: [NSObject: AnyObject]? {
         return [:]
     }
-
-    public var ISOcountryCode: String! {
-        return ""
+    
+    var context: [JSON]? {
+        return featureJSON?["context"] as? [JSON]
+    }
+    
+    func contextItemsWithType(type: String) -> [JSON]? {
+        return context?.filter({
+            ($0["id"] as? String)?.hasPrefix("\(type).") ?? false
+        })
+    }
+    
+    public var ISOcountryCode: String? {
+        if let country = contextItemsWithType("country")?.first {
+            return (country["short_code"] as? String)?.uppercaseString
+        }
+        return nil
     }
 
-    public var country: String! {
-        return ""
+    public var country: String? {
+        if let country = contextItemsWithType("country")?.first {
+            return country["text"] as? String
+        }
+        return nil
     }
 
-    public var postalCode: String! {
-        return ""
+    public var postalCode: String? {
+        if let country = contextItemsWithType("postcode")?.first {
+            return country["text"] as? String
+        }
+        return nil
     }
 
-    public var administrativeArea: String! {
-        return ""
+    public var administrativeArea: String? {
+        if let country = contextItemsWithType("region")?.last {
+            return country["text"] as? String
+        }
+        return nil
     }
 
-    public var subAdministrativeArea: String! {
-        return ""
+    public var subAdministrativeArea: String? {
+        if let country = contextItemsWithType("place")?.last {
+            return country["text"] as? String
+        }
+        return nil
     }
 
-    public var locality: String! {
-        return ""
+    public var locality: String? {
+        if let country = contextItemsWithType("place")?.last {
+            return country["text"] as? String
+        }
+        return nil
     }
 
-    public var subLocality: String! {
-        return ""
+    public var subLocality: String? {
+        if let country = contextItemsWithType("neighborhood")?.last {
+            return country["text"] as? String
+        }
+        return nil
     }
 
-    public var thoroughfare: String! {
-        return ""
+    public var thoroughfare: String? {
+        return featureJSON?["text"] as? String
     }
 
-    public var subThoroughfare: String! {
-        return ""
+    public var subThoroughfare: String? {
+        return featureJSON?["address"] as? String
     }
 
-    public var region: CLRegion! {
-        return CLRegion()
+    public var region: CLRegion? {
+        return nil
+    }
+    
+    public var timeZone: NSTimeZone? {
+        return nil
     }
 
-    public var inlandWater: String! {
-        return ""
+    public var inlandWater: String? {
+        return nil
     }
 
-    public var ocean: String! {
-        return ""
+    public var ocean: String? {
+        return nil
     }
 
-    public var areasOfInterest: [AnyObject]! {
-        return []
+    public var areasOfInterest: [String]? {
+        return nil
     }
 
 }
