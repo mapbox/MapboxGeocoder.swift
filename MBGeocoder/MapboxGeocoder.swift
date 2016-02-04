@@ -195,9 +195,10 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
     
     public var scope: Scope? {
         if let identifier = featureJSON?["id"] as? String {
-            let scopeString = String(identifier.characters.split(".").first)
-            if let scope = Scope(rawValue: scopeString) {
-                return scope
+            if let scopeCharacters = identifier.characters.split(".").first {
+                if let scope = Scope(rawValue: String(scopeCharacters)) {
+                    return scope
+                }
             }
         }
         return nil
