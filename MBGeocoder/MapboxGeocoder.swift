@@ -130,6 +130,18 @@ public class MBGeocoder: NSObject,
 public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
 
     private var featureJSON: JSON?
+    
+    public enum Scope: String {
+        case Address = "address"
+        case AdministrativeArea = "region"
+        case Country = "country"
+        case District = "district"
+        case Locality = "locality"
+        case Neighborhood = "neighborhood"
+        case Place = "place"
+        case PointOfInterest = "poi"
+        case PostalCode = "postcode"
+    }
 
     required public init?(coder aDecoder: NSCoder) {
         featureJSON = aDecoder.decodeObjectOfClass(NSDictionary.self, forKey: "featureJSON") as! JSON?
@@ -179,6 +191,16 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
 
     public var name: String? {
         return featureJSON?["place_name"] as? String
+    }
+    
+    public var scope: Scope? {
+        if let identifier = featureJSON?["id"] as? String {
+            let scopeString = String(identifier.characters.split(".").first)
+            if let scope = Scope(rawValue: scopeString) {
+                return scope
+            }
+        }
+        return nil
     }
 
     public var addressDictionary: [NSObject: AnyObject]? {

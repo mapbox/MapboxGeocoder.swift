@@ -16,6 +16,7 @@ class UnitTests: XCTestCase {
         let resultsExpectation = expectationWithDescription("reverse geocode should return results")
         let nameExpectation = expectationWithDescription("reverse geocode should populate name")
         let locationExpectation = expectationWithDescription("reverse geocode should populate location")
+        let scopeExpectation = expectationWithDescription("reverse geocode should populate scope")
 
         stub(isHost("api.mapbox.com")) { _ in
             let path = NSBundle(forClass: self.dynamicType).pathForResource("reverse_valid", ofType: "json")
@@ -32,6 +33,9 @@ class UnitTests: XCTestCase {
                 if let location = result.location where location.coordinate.latitude == 37.12787 &&
                   location.coordinate.longitude == -95.783074 {
                     locationExpectation.fulfill()
+                }
+                if result.scope == .Address {
+                    scopeExpectation.fulfill()
                 }
             }
         }
