@@ -4,7 +4,9 @@
 
 #import "ViewController.h"
 
-NSString *const MapboxAccessToken = @"pk.eyJ1IjoianVzdGluIiwiYSI6ImFqZFg3Q0UifQ.C44vLEurzqpLtKJXT6c20g";
+// A Mapbox access token is required to use the Geocoding API.
+// https://www.mapbox.com/help/create-api-access-token/
+NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 
 @interface ViewController () <MKMapViewDelegate>
 
