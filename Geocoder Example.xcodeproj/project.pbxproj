@@ -378,7 +378,6 @@
 					};
 					DDF1E8491BD6F7BA00C40C78 = {
 						CreatedOnToolsVersion = 7.0.1;
-						TestTargetID = DD342B4F19A140EE00219F77;
 					};
 				};
 			};
@@ -732,7 +731,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mapbox.Unit-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Geocoder (Swift).app/Geocoder (Swift)";
 			};
 			name = Debug;
 		};
@@ -747,7 +745,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mapbox.Unit-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Geocoder (Swift).app/Geocoder (Swift)";
 			};
 			name = Release;
 		};
