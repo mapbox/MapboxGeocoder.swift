@@ -286,6 +286,7 @@
 				DD342B4D19A140EE00219F77 /* Frameworks */,
 				DD342B4E19A140EE00219F77 /* Resources */,
 				DDC2471919A1C3B40054B0C0 /* Embed Frameworks */,
+				DA7705901C66AAFD003AB296 /* Insert Mapbox Access Token */,
 			);
 			buildRules = (
 			);
@@ -323,6 +324,7 @@
 				DDC2472719A1C60E0054B0C0 /* Frameworks */,
 				DDC2472819A1C60E0054B0C0 /* Resources */,
 				DDC2475119A1CBE20054B0C0 /* Embed Frameworks */,
+				DA7705911C66AC6E003AB296 /* Insert Mapbox Access Token */,
 			);
 			buildRules = (
 			);
@@ -480,6 +482,34 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		DA7705901C66AAFD003AB296 /* Insert Mapbox Access Token */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Insert Mapbox Access Token";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "token_file=~/.mapbox\ntoken=\"$(cat $token_file)\"\nif [ \"$token\" ]; then\nplutil -replace MGLMapboxAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\necho 'error: Missing Mapbox access token'\nopen 'https://www.mapbox.com/studio/account/tokens/'\necho \"error: Get an access token from <https://www.mapbox.com/studio/account/tokens/>, then create a new file at $token_file that contains the access token.\"\nexit 1\nfi";
+		};
+		DA7705911C66AC6E003AB296 /* Insert Mapbox Access Token */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Insert Mapbox Access Token";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "token_file=~/.mapbox\ntoken=\"$(cat $token_file)\"\nif [ \"$token\" ]; then\nplutil -replace MGLMapboxAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\necho 'error: Missing Mapbox access token'\nopen 'https://www.mapbox.com/studio/account/tokens/'\necho \"error: Get an access token from <https://www.mapbox.com/studio/account/tokens/>, then create a new file at $token_file that contains the access token.\"\nexit 1\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
