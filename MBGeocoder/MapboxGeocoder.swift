@@ -5,6 +5,11 @@ import CoreLocation
 public typealias MBGeocodeCompletionHandler = ([MBPlacemark]?, NSError?) -> Void
 internal typealias JSON = [String: AnyObject]
 
+extension CLLocationCoordinate2D: Equatable {}
+public func ==(left: CLLocationCoordinate2D, right: CLLocationCoordinate2D) -> Bool {
+    return (left.latitude == right.latitude && left.longitude == right.longitude)
+}
+
 // MARK: - Geocoder
 
 public class MBGeocoder: NSObject,
@@ -127,12 +132,12 @@ public class MBGeocoder: NSObject,
 
 // Based on CNPostalAddress, the successor to ABPerson, which is used by CLPlacemark.
 
-let MBPostalAddressStreetKey = "street"
-let MBPostalAddressCityKey = "city"
-let MBPostalAddressStateKey = "state"
-let MBPostalAddressPostalCodeKey = "postalCode"
-let MBPostalAddressCountryKey = "country"
-let MBPostalAddressISOCountryCodeKey = "ISOCountryCode"
+public let MBPostalAddressStreetKey = "street"
+public let MBPostalAddressCityKey = "city"
+public let MBPostalAddressStateKey = "state"
+public let MBPostalAddressPostalCodeKey = "postalCode"
+public let MBPostalAddressCountryKey = "country"
+public let MBPostalAddressISOCountryCodeKey = "ISOCountryCode"
 
 // Based on CLPlacemark, which can't be reliably subclassed in Swift.
 
@@ -191,6 +196,17 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
         aCoder.encodeObject(featureJSON, forKey: "featureJSON")
     }
     
+    var identifier: String? {
+        return featureJSON?["id"] as? String
+    }
+    
+    public override func isEqual(object: AnyObject?) -> Bool {
+        if let object = object as? MBPlacemark {
+            return identifier == object.identifier
+        }
+        return false
+    }
+    
     public override var description: String {
         return featureJSON?["place_name"] as? String ?? ""
     }
@@ -203,10 +219,12 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
     }
 
     public var name: String? {
-        let address = (featureJSON?["address"] ?? "")!
-        let street = featureJSON?["text"] as? String ?? ""
-        let name = "\(address) \(street)"
-            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        if scope == .Address {
+            return "\(subThoroughfare ?? "") \(thoroughfare ?? "")"
+                .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        }
+        
+        let name = featureJSON?["text"] as? String ?? ""
         return !name.isEmpty ? name : description
     }
     
@@ -220,6 +238,14 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
         }
         return nil
     }
+    
+    var formattedAddressLines: [String]? {
+        if let name = featureJSON?["place_name"] as? String {
+            let lines = name.componentsSeparatedByString(", ")
+            return scope == .Address ? lines : Array(lines.suffixFrom(1))
+        }
+        return nil
+    }
 
     public var addressDictionary: [NSObject: AnyObject]? {
         guard featureJSON != nil else {
@@ -227,21 +253,22 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
         }
         
         var addressDictionary: [String: AnyObject] = [:]
-        if let address = featureJSON!["address"], street = featureJSON!["text"] {
-            addressDictionary[MBPostalAddressStreetKey] = "\(address ?? "") \(street ?? "")"
-                .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        if scope == .Address {
+            addressDictionary[MBPostalAddressStreetKey] = name
+        } else if let address = properties?["address"] as? String {
+            addressDictionary[MBPostalAddressStreetKey] = address
         }
         addressDictionary[MBPostalAddressCityKey] = locality
         addressDictionary[MBPostalAddressStateKey] = administrativeArea
         addressDictionary[MBPostalAddressPostalCodeKey] = postalCode
         addressDictionary[MBPostalAddressCountryKey] = country
         addressDictionary[MBPostalAddressISOCountryCodeKey] = ISOcountryCode
-        addressDictionary["FormattedAddressLines"] = description.componentsSeparatedByString(", ")
-        addressDictionary["Name"] = name
-        addressDictionary["SubAdministrativeArea"] = subAdministrativeArea
-        addressDictionary["SubLocality"] = subLocality
-        addressDictionary["SubThoroughfare"] = subThoroughfare
-        addressDictionary["Thoroughfare"] = thoroughfare
+        addressDictionary["formattedAddressLines"] = formattedAddressLines
+        addressDictionary["name"] = name
+        addressDictionary["subAdministrativeArea"] = subAdministrativeArea
+        addressDictionary["subLocality"] = subLocality
+        addressDictionary["subThoroughfare"] = subThoroughfare
+        addressDictionary["thoroughfare"] = thoroughfare
         return addressDictionary
     }
     
@@ -253,6 +280,10 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
         return context?.filter({
             ($0["id"] as? String)?.hasPrefix("\(type).") ?? false
         })
+    }
+    
+    var properties: JSON? {
+        return featureJSON?["properties"] as? JSON
     }
     
     public var ISOcountryCode: String? {
@@ -277,22 +308,25 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
     }
 
     public var administrativeArea: String? {
-        if let country = contextItemsWithType("region")?.last {
-            return country["text"] as? String
+        if let region = contextItemsWithType("region")?.last {
+            return region["text"] as? String
         }
         return nil
     }
 
     public var subAdministrativeArea: String? {
-        if let country = contextItemsWithType("place")?.last {
-            return country["text"] as? String
+        if let district = contextItemsWithType("district")?.last {
+            return district["text"] as? String
+        }
+        if let place = contextItemsWithType("place")?.last {
+            return place["text"] as? String
         }
         return nil
     }
 
     public var locality: String? {
-        if let country = contextItemsWithType("place")?.last {
-            return country["text"] as? String
+        if let place = contextItemsWithType("place")?.last {
+            return place["text"] as? String
         }
         return nil
     }
@@ -305,14 +339,24 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
     }
 
     public var thoroughfare: String? {
-        return featureJSON?["text"] as? String
+        if scope == .Address {
+            return featureJSON?["text"] as? String
+        }
+        return nil
     }
 
     public var subThoroughfare: String? {
-        return featureJSON?["address"] as? String
+        if let address = featureJSON?["address"] {
+            return String(address)
+        }
+        return nil
     }
 
-    public var region: CLRegion? {
+    public var region: MBRectangularRegion? {
+        if let boundingBox = featureJSON?["bbox"] as? [Double] {
+            return MBRectangularRegion(southWest: CLLocationCoordinate2D(latitude: boundingBox[1], longitude: boundingBox[0]),
+                northEast: CLLocationCoordinate2D(latitude: boundingBox[3], longitude: boundingBox[2]))
+        }
         return nil
     }
     
@@ -332,4 +376,36 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
         return nil
     }
 
+}
+
+public class MBRectangularRegion: CLRegion {
+    /** Coordinate at the southwest corner. */
+    public var southWest: CLLocationCoordinate2D = CLLocationCoordinate2D()
+    /** Coordinate at the northeast corner. */
+    public var northEast: CLLocationCoordinate2D = CLLocationCoordinate2D()
+    
+    public init(southWest: CLLocationCoordinate2D, northEast: CLLocationCoordinate2D) {
+        self.southWest = southWest
+        self.northEast = northEast
+        super.init()
+    }
+    
+    required public init?(coder decoder: NSCoder) {
+        decoder.decodeValueOfObjCType("{dd}", at: &southWest)
+        decoder.decodeValueOfObjCType("{dd}", at: &northEast)
+        super.init(coder: decoder)
+    }
+    
+    public override func encodeWithCoder(coder: NSCoder) {
+        super.encodeWithCoder(coder)
+        coder.encodeValueOfObjCType("{dd}", at: &southWest)
+        coder.encodeValueOfObjCType("{dd}", at: &northEast)
+    }
+    
+    public override func isEqual(object: AnyObject?) -> Bool {
+        if let object = object as? MBRectangularRegion {
+            return southWest == object.southWest && northEast == object.northEast
+        }
+        return false
+    }
 }
