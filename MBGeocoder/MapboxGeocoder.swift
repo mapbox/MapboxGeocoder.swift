@@ -125,6 +125,15 @@ public class MBGeocoder: NSObject,
 
 // MARK: - Placemark
 
+// Based on CNPostalAddress, the successor to ABPerson, which is used by CLPlacemark.
+
+let MBPostalAddressStreetKey = "street"
+let MBPostalAddressCityKey = "city"
+let MBPostalAddressStateKey = "state"
+let MBPostalAddressPostalCodeKey = "postalCode"
+let MBPostalAddressCountryKey = "country"
+let MBPostalAddressISOCountryCodeKey = "ISOCountryCode"
+
 // Based on CLPlacemark, which can't be reliably subclassed in Swift.
 
 public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
@@ -181,6 +190,10 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
     public func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(featureJSON, forKey: "featureJSON")
     }
+    
+    public override var description: String {
+        return featureJSON?["place_name"] as? String ?? ""
+    }
 
     public var location: CLLocation? {
         if let feature = featureJSON?["geometry"] as? JSON, coordinates = feature["coordinates"] as? [Double] {
@@ -190,7 +203,11 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
     }
 
     public var name: String? {
-        return featureJSON?["place_name"] as? String
+        let address = (featureJSON?["address"] ?? "")!
+        let street = featureJSON?["text"] as? String ?? ""
+        let name = "\(address) \(street)"
+            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        return !name.isEmpty ? name : description
     }
     
     public var scope: Scope? {
@@ -205,7 +222,27 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
     }
 
     public var addressDictionary: [NSObject: AnyObject]? {
-        return [:]
+        guard featureJSON != nil else {
+            return nil
+        }
+        
+        var addressDictionary: [String: AnyObject] = [:]
+        if let address = featureJSON!["address"], street = featureJSON!["text"] {
+            addressDictionary[MBPostalAddressStreetKey] = "\(address ?? "") \(street ?? "")"
+                .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        }
+        addressDictionary[MBPostalAddressCityKey] = locality
+        addressDictionary[MBPostalAddressStateKey] = administrativeArea
+        addressDictionary[MBPostalAddressPostalCodeKey] = postalCode
+        addressDictionary[MBPostalAddressCountryKey] = country
+        addressDictionary[MBPostalAddressISOCountryCodeKey] = ISOcountryCode
+        addressDictionary["FormattedAddressLines"] = description.componentsSeparatedByString(", ")
+        addressDictionary["Name"] = name
+        addressDictionary["SubAdministrativeArea"] = subAdministrativeArea
+        addressDictionary["SubLocality"] = subLocality
+        addressDictionary["SubThoroughfare"] = subThoroughfare
+        addressDictionary["Thoroughfare"] = thoroughfare
+        return addressDictionary
     }
     
     var context: [JSON]? {

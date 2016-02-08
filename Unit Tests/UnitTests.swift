@@ -14,6 +14,7 @@ class UnitTests: XCTestCase {
 
     func testValidReverseGeocode() {
         let resultsExpectation = expectationWithDescription("reverse geocode should return results")
+        let descriptionExpectation = expectationWithDescription("reverse geocode should populate description")
         let nameExpectation = expectationWithDescription("reverse geocode should populate name")
         let locationExpectation = expectationWithDescription("reverse geocode should populate location")
         let scopeExpectation = expectationWithDescription("reverse geocode should populate scope")
@@ -27,7 +28,10 @@ class UnitTests: XCTestCase {
           CLLocation(latitude: 37.13284000, longitude: -95.78558000)) { (placemarks, error) in
             if let result = placemarks?.first where placemarks?.count > 0 {
                 resultsExpectation.fulfill()
-                if result.name == "3099 3100 Rd, Independence, Kansas 67301, United States" {
+                if result.description == "3099 3100 Rd, Independence, Kansas 67301, United States" {
+                    descriptionExpectation.fulfill()
+                }
+                if result.name == "3099 3100 Rd" {
                     nameExpectation.fulfill()
                 }
                 if let location = result.location where location.coordinate.latitude == 37.12787 &&
