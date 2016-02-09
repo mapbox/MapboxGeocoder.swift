@@ -375,7 +375,21 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
     public var areasOfInterest: [String]? {
         return nil
     }
-
+    
+    /// Maki image name. <https://www.mapbox.com/maki/>
+    public var imageName: String? {
+        if let maki = properties?["maki"] as? String {
+            return maki
+        }
+        return nil
+    }
+    
+    public var genres: [String]? {
+        if let category = properties?["category"] as? String {
+            return category.componentsSeparatedByString(", ")
+        }
+        return nil
+    }
 }
 
 public class MBRectangularRegion: CLRegion {
