@@ -272,6 +272,14 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
         return addressDictionary
     }
     
+    /// The phone number to contact a business at this location.
+    public var phoneNumber: String? {
+        if let phoneNumber = properties?["tel"] as? String {
+            return phoneNumber
+        }
+        return nil
+    }
+    
     var context: [JSON]? {
         return featureJSON?["context"] as? [JSON]
     }
