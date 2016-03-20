@@ -1,7 +1,10 @@
 import UIKit
 
-@UIApplicationMain
+// A Mapbox access token is required to use the Geocoding API.
+// https://www.mapbox.com/help/create-api-access-token/
+let MapboxAccessToken = NSBundle.mainBundle().objectForInfoDictionaryKey("MGLMapboxAccessToken") as? String ?? ""
 
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
