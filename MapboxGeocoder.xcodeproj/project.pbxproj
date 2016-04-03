@@ -212,7 +212,7 @@
 				DDC2470619A1C3B40054B0C0 /* Supporting Files */,
 			);
 			name = "Mapbox Geocoder";
-			path = MBGeocoder;
+			path = MapboxGeocoder;
 			sourceTree = "<group>";
 		};
 		DDC246FD19A1C2D20054B0C0 /* Swift */ = {
@@ -660,7 +660,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = MBGeocoder/Info.plist;
+				INFOPLIST_FILE = MapboxGeocoder/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mapbox.$(PRODUCT_NAME:rfc1034identifier)";
@@ -679,7 +679,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MBGeocoder/Info.plist;
+				INFOPLIST_FILE = MapboxGeocoder/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mapbox.$(PRODUCT_NAME:rfc1034identifier)";
