@@ -90,8 +90,8 @@
 		DD342B5419A140EE00219F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD342B5519A140EE00219F77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD342B5719A140EE00219F77 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		DDC229581A36073B006BE405 /* MapboxGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapboxGeocoder.h; path = MBGeocoder/MapboxGeocoder.h; sourceTree = SOURCE_ROOT; };
-		DDC229591A36073B006BE405 /* MapboxGeocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapboxGeocoder.swift; path = MBGeocoder/MapboxGeocoder.swift; sourceTree = SOURCE_ROOT; };
+		DDC229581A36073B006BE405 /* MapboxGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapboxGeocoder.h; sourceTree = "<group>"; };
+		DDC229591A36073B006BE405 /* MapboxGeocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapboxGeocoder.swift; sourceTree = "<group>"; };
 		DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDC2470719A1C3B40054B0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DDC2472A19A1C60E0054B0C0 /* Geocoder (Objective-C).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geocoder (Objective-C).app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -212,7 +212,7 @@
 				DDC2470619A1C3B40054B0C0 /* Supporting Files */,
 			);
 			name = "Mapbox Geocoder";
-			path = "Geocoder Example";
+			path = MBGeocoder;
 			sourceTree = "<group>";
 		};
 		DDC246FD19A1C2D20054B0C0 /* Swift */ = {
@@ -230,7 +230,6 @@
 				DDC2470719A1C3B40054B0C0 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			path = ../MBGeocoder;
 			sourceTree = "<group>";
 		};
 		DDC2475019A1C6660054B0C0 /* Objective-C */ = {
@@ -381,7 +380,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DD342B4B19A140EE00219F77 /* Build configuration list for PBXProject "Geocoder Example" */;
+			buildConfigurationList = DD342B4B19A140EE00219F77 /* Build configuration list for PBXProject "MapboxGeocoder" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -751,7 +750,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DD342B4B19A140EE00219F77 /* Build configuration list for PBXProject "Geocoder Example" */ = {
+		DD342B4B19A140EE00219F77 /* Build configuration list for PBXProject "MapboxGeocoder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DD342B6A19A140EE00219F77 /* Debug */,

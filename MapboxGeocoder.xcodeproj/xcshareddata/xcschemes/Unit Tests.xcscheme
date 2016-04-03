@@ -19,7 +19,7 @@
                BlueprintIdentifier = "DDF1E8491BD6F7BA00C40C78"
                BuildableName = "Unit Tests.xctest"
                BlueprintName = "Unit Tests"
-               ReferencedContainer = "container:Geocoder Example.xcodeproj">
+               ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -29,7 +29,7 @@
             BlueprintIdentifier = "DD342B4F19A140EE00219F77"
             BuildableName = "Geocoder (Swift).app"
             BlueprintName = "Example (Swift)"
-            ReferencedContainer = "container:Geocoder Example.xcodeproj">
+            ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -52,7 +52,7 @@
             BlueprintIdentifier = "DD342B4F19A140EE00219F77"
             BuildableName = "Geocoder (Swift).app"
             BlueprintName = "Example (Swift)"
-            ReferencedContainer = "container:Geocoder Example.xcodeproj">
+            ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,7 +70,7 @@
             BlueprintIdentifier = "DD342B4F19A140EE00219F77"
             BuildableName = "Geocoder (Swift).app"
             BlueprintName = "Example (Swift)"
-            ReferencedContainer = "container:Geocoder Example.xcodeproj">
+            ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

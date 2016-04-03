@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DDC2472919A1C60E0054B0C0"
-               BuildableName = "Geocoder (Objective-C).app"
-               BlueprintName = "Example (Objective-C)"
-               ReferencedContainer = "container:Geocoder Example.xcodeproj">
+               BlueprintIdentifier = "DD342B4F19A140EE00219F77"
+               BuildableName = "Geocoder (Swift).app"
+               BlueprintName = "Example (Swift)"
+               ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,14 +28,24 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DDF1E8491BD6F7BA00C40C78"
+               BuildableName = "Unit Tests.xctest"
+               BlueprintName = "Unit Tests"
+               ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DDC2472919A1C60E0054B0C0"
-            BuildableName = "Geocoder (Objective-C).app"
-            BlueprintName = "Example (Objective-C)"
-            ReferencedContainer = "container:Geocoder Example.xcodeproj">
+            BlueprintIdentifier = "DD342B4F19A140EE00219F77"
+            BuildableName = "Geocoder (Swift).app"
+            BlueprintName = "Example (Swift)"
+            ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +65,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DDC2472919A1C60E0054B0C0"
-            BuildableName = "Geocoder (Objective-C).app"
-            BlueprintName = "Example (Objective-C)"
-            ReferencedContainer = "container:Geocoder Example.xcodeproj">
+            BlueprintIdentifier = "DD342B4F19A140EE00219F77"
+            BuildableName = "Geocoder (Swift).app"
+            BlueprintName = "Example (Swift)"
+            ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +84,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DDC2472919A1C60E0054B0C0"
-            BuildableName = "Geocoder (Objective-C).app"
-            BlueprintName = "Example (Objective-C)"
-            ReferencedContainer = "container:Geocoder Example.xcodeproj">
+            BlueprintIdentifier = "DD342B4F19A140EE00219F77"
+            BuildableName = "Geocoder (Swift).app"
+            BlueprintName = "Example (Swift)"
+            ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
