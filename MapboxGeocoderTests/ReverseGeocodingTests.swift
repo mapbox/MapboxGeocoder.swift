@@ -3,7 +3,7 @@ import MapboxGeocoder
 import CoreLocation
 import OHHTTPStubs
 
-class UnitTests: XCTestCase {
+class ReverseGeocodingTests: XCTestCase {
 
     let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
 

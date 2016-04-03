@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DDF1E8491BD6F7BA00C40C78"
+               BuildableName = "MapboxGeocoderTests.xctest"
+               BlueprintName = "MapboxGeocoderTests"
+               ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "DDC2470319A1C3B40054B0C0"
+            BuildableName = "MapboxGeocoder.framework"
+            BlueprintName = "MapboxGeocoder"
+            ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

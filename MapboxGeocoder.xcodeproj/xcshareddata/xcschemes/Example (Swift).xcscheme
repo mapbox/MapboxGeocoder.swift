@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DDF1E8491BD6F7BA00C40C78"
-               BuildableName = "Unit Tests.xctest"
-               BlueprintName = "Unit Tests"
+               BuildableName = "MapboxGeocoderTests.xctest"
+               BlueprintName = "MapboxGeocoderTests"
                ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
             </BuildableReference>
          </TestableReference>
