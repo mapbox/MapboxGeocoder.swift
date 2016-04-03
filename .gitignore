@@ -1,1 +1,12 @@
-*.xcuserdatad
+MapboxGeocoder.xcworkspace
+
+.DS_Store
+
+xcuserdata
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+
+Pods/
+Podfile.lock
