@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
-  s.source       = { :git => "https://github.com/mapbox/MapboxGeocoder.swift.git", :tag => "v#{m.version.to_s}" }
+  s.source       = { :git => "https://github.com/mapbox/MapboxGeocoder.swift.git", :tag => "v#{s.version.to_s}" }
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
