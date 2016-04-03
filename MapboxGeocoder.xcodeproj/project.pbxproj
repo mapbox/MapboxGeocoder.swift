@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		8DF260A67CA4C55F8FA7CAA0 /* Pods_MapboxGeocoderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD6EA86BBE0D7DE16654CB4 /* Pods_MapboxGeocoderTests.framework */; };
+		DA2E03F01CB0FDB400D1269A /* MBPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E03EF1CB0FDB400D1269A /* MBPlacemark.swift */; };
+		DA2E03F21CB0FE0200D1269A /* MBRectangularRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */; };
 		DD342B5619A140EE00219F77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5519A140EE00219F77 /* AppDelegate.swift */; };
 		DD342B5819A140EE00219F77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5719A140EE00219F77 /* ViewController.swift */; };
 		DDC2295C1A36074F006BE405 /* MapboxGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = DDC229581A36073B006BE405 /* MapboxGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DDC2295E1A360843006BE405 /* MapboxGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC229591A36073B006BE405 /* MapboxGeocoder.swift */; };
+		DDC2295E1A360843006BE405 /* MBGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC229591A36073B006BE405 /* MBGeocoder.swift */; };
 		DDC2471819A1C3B40054B0C0 /* MapboxGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; };
 		DDC2471A19A1C3B40054B0C0 /* MapboxGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DDC2472F19A1C60E0054B0C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC2472E19A1C60E0054B0C0 /* main.m */; };
@@ -89,12 +91,14 @@
 		A7FEE3C3AC9D553F9763CB06 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CC09570CD1A6D11014400590 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D9281D748078BEB61AACF246 /* Pods_Unit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA2E03EF1CB0FDB400D1269A /* MBPlacemark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBPlacemark.swift; sourceTree = "<group>"; };
+		DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBRectangularRegion.swift; sourceTree = "<group>"; };
 		DD342B5019A140EE00219F77 /* Geocoder (Swift).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geocoder (Swift).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD342B5419A140EE00219F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD342B5519A140EE00219F77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD342B5719A140EE00219F77 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DDC229581A36073B006BE405 /* MapboxGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapboxGeocoder.h; sourceTree = "<group>"; };
-		DDC229591A36073B006BE405 /* MapboxGeocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapboxGeocoder.swift; sourceTree = "<group>"; };
+		DDC229591A36073B006BE405 /* MBGeocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBGeocoder.swift; sourceTree = "<group>"; };
 		DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDC2470719A1C3B40054B0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DDC2472A19A1C60E0054B0C0 /* Geocoder (Objective-C).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geocoder (Objective-C).app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,7 +218,9 @@
 			isa = PBXGroup;
 			children = (
 				DDC229581A36073B006BE405 /* MapboxGeocoder.h */,
-				DDC229591A36073B006BE405 /* MapboxGeocoder.swift */,
+				DDC229591A36073B006BE405 /* MBGeocoder.swift */,
+				DA2E03EF1CB0FDB400D1269A /* MBPlacemark.swift */,
+				DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */,
 				DDC2470619A1C3B40054B0C0 /* Supporting Files */,
 			);
 			path = MapboxGeocoder;
@@ -502,7 +508,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDC2295E1A360843006BE405 /* MapboxGeocoder.swift in Sources */,
+				DA2E03F21CB0FE0200D1269A /* MBRectangularRegion.swift in Sources */,
+				DDC2295E1A360843006BE405 /* MBGeocoder.swift in Sources */,
+				DA2E03F01CB0FDB400D1269A /* MBPlacemark.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
