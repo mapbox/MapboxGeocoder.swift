@@ -22,7 +22,7 @@ public class MBGeocoder: NSObject {
     
     private var task: NSURLSessionDataTask?
     
-    internal var errorForSimultaneousRequests: NSError {
+    private var errorForSimultaneousRequests: NSError {
         let userInfo = [
             NSLocalizedFailureReasonErrorKey: "Cannot geocode on an MBGeocoder object that is already geocoding.",
         ]
@@ -59,7 +59,7 @@ public class MBGeocoder: NSObject {
 
 //    public func geocodeAddressString(addressString: String, inRegion region: CLRegion, completionHandler: MBGeocodeCompletionHandler)
     
-    internal func taskWithRouter(router: MBGeocoderRouter, completionHandler completion: MBGeocodeCompletionHandler) -> NSURLSessionDataTask? {
+    private func taskWithRouter(router: MBGeocoderRouter, completionHandler completion: MBGeocodeCompletionHandler) -> NSURLSessionDataTask? {
         return router.loadJSON(JSON.self) { [weak self] (json, error) in
             guard let dataTaskSelf = self where dataTaskSelf.task?.state == .Completed
                 else {

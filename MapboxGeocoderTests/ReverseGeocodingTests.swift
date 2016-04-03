@@ -38,7 +38,8 @@ class ReverseGeocodingTests: XCTestCase {
             return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: nil)
         }
 
-        MBGeocoder(accessToken: accessToken).reverseGeocodeLocation(
+        let geocoder = MBGeocoder(accessToken: accessToken)
+        geocoder.reverseGeocodeLocation(
           CLLocation(latitude: 37.13284000, longitude: -95.78558000)) { (placemarks, error) in
             if let result = placemarks?.first where placemarks?.count > 0 {
                 resultsExpectation.fulfill()
@@ -102,7 +103,10 @@ class ReverseGeocodingTests: XCTestCase {
             }
         }
 
-        waitForExpectationsWithTimeout(1, handler: nil)
+        waitForExpectationsWithTimeout(1) { (error) in
+            XCTAssertNil(error, "Error: \(error)")
+            XCTAssertFalse(geocoder.geocoding)
+        }
     }
 
     func testInvalidReverseGeocode() {
@@ -113,12 +117,16 @@ class ReverseGeocodingTests: XCTestCase {
             return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: nil)
         }
 
-        MBGeocoder(accessToken: accessToken).reverseGeocodeLocation(CLLocation(latitude: 0, longitude: 0)) { (placemarks, error) in
+        let geocoder = MBGeocoder(accessToken: accessToken)
+        geocoder.reverseGeocodeLocation(CLLocation(latitude: 0, longitude: 0)) { (placemarks, error) in
             if placemarks?.count == 0 {
                 resultsExpection.fulfill()
             }
         }
 
-        waitForExpectationsWithTimeout(1, handler: nil)
+        waitForExpectationsWithTimeout(1) { (error) in
+            XCTAssertNil(error, "Error: \(error)")
+            XCTAssertFalse(geocoder.geocoding)
+        }
     }
 }
