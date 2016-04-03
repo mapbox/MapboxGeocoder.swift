@@ -1,127 +1,84 @@
 import XCTest
-import MapboxGeocoder
+import Nocilla
 import CoreLocation
-import OHHTTPStubs
+@testable import MapboxGeocoder
 
 class ReverseGeocodingTests: XCTestCase {
 
-    let accessToken = "pk.eyJ1IjoianVzdGluIiwiYSI6IlpDbUJLSUEifQ.4mG8vhelFMju6HpIY-Hi5A"
-
+    override func setUp() {
+        super.setUp()
+        LSNocilla.sharedInstance().start()
+    }
+    
     override func tearDown() {
-        super.tearDown()
-        OHHTTPStubs.removeAllStubs()
+        LSNocilla.sharedInstance().clearStubs()
+        LSNocilla.sharedInstance().stop()
+        super.setUp()
     }
 
     func testValidReverseGeocode() {
-        let resultsExpectation = expectationWithDescription("reverse geocode should return results")
-        let descriptionExpectation = expectationWithDescription("reverse geocode should populate description")
-        let nameExpectation = expectationWithDescription("reverse geocode should populate name")
-        let locationExpectation = expectationWithDescription("reverse geocode should populate location")
-        let scopeExpectation = expectationWithDescription("reverse geocode should populate scope")
-        let countryCodeExpectation = expectationWithDescription("reverse geocode should populate ISO country code")
-        let countryExpectation = expectationWithDescription("reverse geocode should populate country")
-        let postalCodeExpectation = expectationWithDescription("reverse geocode should populate postal code")
-        let administrativeAreaExpectation = expectationWithDescription("reverse geocode should populate administrative area")
-        let subAdministrativeAreaExpectation = expectationWithDescription("reverse geocode should populate sub-administrative area")
-        let localityExpectation = expectationWithDescription("reverse geocode should populate locality")
-        let thoroughfareExpectation = expectationWithDescription("reverse geocode should populate thoroughfare")
-        let subThoroughfareExpectation = expectationWithDescription("reverse geocode should populate sub-thoroughfare")
-        let regionExpectation = expectationWithDescription("reverse geocode should populate region")
-        let addressStreetExpectation = expectationWithDescription("reverse geocode should populate street in address dictionary")
-        let addressCityExpectation = expectationWithDescription("reverse geocode should populate city in address dictionary")
-        let addressStateExpectation = expectationWithDescription("reverse geocode should populate state in address dictionary")
-        let addressCountryExpectation = expectationWithDescription("reverse geocode should populate country in address dictionary")
-        let addressISOCountryCodeExpectation = expectationWithDescription("reverse geocode should populate ISO country code in address dictionary")
+        let expectation = expectationWithDescription("reverse geocode should return results")
         
-        stub(isHost("api.mapbox.com")) { _ in
-            let path = NSBundle(forClass: self.dynamicType).pathForResource("reverse_valid", ofType: "json")
-            return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: nil)
-        }
+        let json = Fixture.stringFromFileNamed("reverse_valid")
+        stubRequest("GET", "https://api.mapbox.com/geocoding/v5/mapbox.places/-95.78558,37.13284.json?access_token=\(BogusToken)").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
 
-        let geocoder = MBGeocoder(accessToken: accessToken)
+        let geocoder = MBGeocoder(accessToken: BogusToken)
+        var addressPlacemark: MBPlacemark! = nil
+        var placePlacemark: MBPlacemark! = nil
         geocoder.reverseGeocodeLocation(
           CLLocation(latitude: 37.13284000, longitude: -95.78558000)) { (placemarks, error) in
-            if let result = placemarks?.first where placemarks?.count > 0 {
-                resultsExpectation.fulfill()
-                if result.description == "3099 3100 Rd, Independence, Kansas 67301, United States" {
-                    descriptionExpectation.fulfill()
-                }
-                if result.name == "3099 3100 Rd" {
-                    nameExpectation.fulfill()
-                }
-                if let location = result.location where location.coordinate.latitude == 37.12787 &&
-                  location.coordinate.longitude == -95.783074 {
-                    locationExpectation.fulfill()
-                }
-                if result.scope == .Address {
-                    scopeExpectation.fulfill()
-                }
-                if result.ISOcountryCode == "US" {
-                    countryCodeExpectation.fulfill()
-                }
-                if result.country == "United States" {
-                    countryExpectation.fulfill()
-                }
-                if result.postalCode == "67301" {
-                    postalCodeExpectation.fulfill()
-                }
-                if result.administrativeArea == "Kansas" {
-                    administrativeAreaExpectation.fulfill()
-                }
-                if result.subAdministrativeArea == "Independence" {
-                    subAdministrativeAreaExpectation.fulfill()
-                }
-                if result.locality == "Independence" {
-                    localityExpectation.fulfill()
-                }
-                if result.thoroughfare == "3100 Rd" {
-                    thoroughfareExpectation.fulfill()
-                }
-                if result.subThoroughfare == "3099" {
-                    subThoroughfareExpectation.fulfill()
-                }
-                let southWest = CLLocationCoordinate2D(latitude: 37.109405, longitude: -95.783365)
-                let northEast = CLLocationCoordinate2D(latitude: 37.208643, longitude: -95.781811)
-                if result.region == MBRectangularRegion(southWest: southWest, northEast: northEast) {
-                    regionExpectation.fulfill()
-                }
-                if let street = result.addressDictionary?[MBPostalAddressStreetKey] as? String where street == "3099 3100 Rd" {
-                    addressStreetExpectation.fulfill()
-                }
-                if let city = result.addressDictionary?[MBPostalAddressCityKey] as? String where city == "Independence" {
-                    addressCityExpectation.fulfill()
-                }
-                if let state = result.addressDictionary?[MBPostalAddressStateKey] as? String where state == "Kansas" {
-                    addressStateExpectation.fulfill()
-                }
-                if let country = result.addressDictionary?[MBPostalAddressCountryKey] as? String where country == "United States" {
-                    addressCountryExpectation.fulfill()
-                }
-                if let countryCode = result.addressDictionary?[MBPostalAddressISOCountryCodeKey] as? String where countryCode == "US" {
-                    addressISOCountryCodeExpectation.fulfill()
-                }
-            }
+            XCTAssertEqual(placemarks?.count, 5, "reverse geocode should have 5 results")
+            addressPlacemark = placemarks![0]
+            placePlacemark = placemarks![1]
+            
+            expectation.fulfill()
         }
 
         waitForExpectationsWithTimeout(1) { (error) in
             XCTAssertNil(error, "Error: \(error)")
             XCTAssertFalse(geocoder.geocoding)
         }
+        
+        XCTAssertEqual(addressPlacemark.description, "3099 3100 Rd, Independence, Kansas 67301, United States", "reverse geocode should populate description")
+        XCTAssertEqual(addressPlacemark.name, "3099 3100 Rd", "reverse geocode should populate name")
+        XCTAssertEqual(addressPlacemark.location?.coordinate, CLLocationCoordinate2D(latitude: 37.12787, longitude: -95.783074), "reverse geocode should populate location")
+        XCTAssertEqual(addressPlacemark.scope, .Address, "reverse geocode should populate scope")
+        XCTAssertEqual(addressPlacemark.ISOcountryCode, "US", "reverse geocode should populate ISO country code")
+        XCTAssertEqual(addressPlacemark.country, "United States", "reverse geocode should populate country")
+        XCTAssertEqual(addressPlacemark.postalCode, "67301", "reverse geocode should populate postal code")
+        XCTAssertEqual(addressPlacemark.administrativeArea, "Kansas", "reverse geocode should populate administrative area")
+        XCTAssertEqual(addressPlacemark.subAdministrativeArea, "Independence", "reverse geocode should populate sub-administrative area")
+        XCTAssertEqual(addressPlacemark.locality, "Independence", "reverse geocode should populate locality")
+        XCTAssertEqual(addressPlacemark.thoroughfare, "3100 Rd", "reverse geocode should populate thoroughfare")
+        XCTAssertEqual(addressPlacemark.subThoroughfare, "3099", "reverse geocode should populate sub-thoroughfare")
+        
+        XCTAssertNotNil(addressPlacemark.addressDictionary)
+        let addressDictionary = addressPlacemark.addressDictionary!
+        XCTAssertEqual(addressDictionary[MBPostalAddressStreetKey] as? String, "3099 3100 Rd", "reverse geocode should populate street in address dictionary")
+        XCTAssertEqual(addressDictionary[MBPostalAddressCityKey] as? String, "Independence", "reverse geocode should populate city in address dictionary")
+        XCTAssertEqual(addressDictionary[MBPostalAddressStateKey] as? String, "Kansas", "reverse geocode should populate state in address dictionary")
+        XCTAssertEqual(addressDictionary[MBPostalAddressCountryKey] as? String, "United States", "reverse geocode should populate country in address dictionary")
+        XCTAssertEqual(addressDictionary[MBPostalAddressISOCountryCodeKey] as? String, "US", "reverse geocode should populate ISO country code in address dictionary")
+        
+        let southWest = CLLocationCoordinate2D(latitude: 37.033229992893, longitude: -95.927990005645)
+        let northEast = CLLocationCoordinate2D(latitude: 37.35632800706, longitude: -95.594628992671)
+        let region = placePlacemark.region
+        XCTAssertNotNil(region, "reverse geocode should populate region")
+        XCTAssertEqualWithAccuracy(region!.southWest.latitude, southWest.latitude, accuracy: 0.000000000001)
+        XCTAssertEqualWithAccuracy(region!.southWest.longitude, southWest.longitude, accuracy: 0.000000000001)
+        XCTAssertEqualWithAccuracy(region!.northEast.latitude, northEast.latitude, accuracy: 0.000000000001)
+        XCTAssertEqualWithAccuracy(region!.northEast.longitude, northEast.longitude, accuracy: 0.000000000001)
     }
 
     func testInvalidReverseGeocode() {
-        let resultsExpection = expectationWithDescription("reverse geocode should return no results for invalid query")
-
-        stub(isHost("api.mapbox.com")) { _ in
-            let path = NSBundle(forClass: self.dynamicType).pathForResource("reverse_invalid", ofType: "json")
-            return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: nil)
-        }
-
-        let geocoder = MBGeocoder(accessToken: accessToken)
+        let json = Fixture.stringFromFileNamed("reverse_invalid")
+        stubRequest("GET", "https://api.mapbox.com/geocoding/v5/mapbox.places/0.00000,0.00000.json?access_token=\(BogusToken)").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+        
+        let expection = expectationWithDescription("reverse geocode execute completion handler for invalid query")
+        let geocoder = MBGeocoder(accessToken: BogusToken)
         geocoder.reverseGeocodeLocation(CLLocation(latitude: 0, longitude: 0)) { (placemarks, error) in
-            if placemarks?.count == 0 {
-                resultsExpection.fulfill()
-            }
+            XCTAssertEqual(placemarks?.count, 0, "reverse geocode should return no results for invalid query")
+            expection.fulfill()
         }
 
         waitForExpectationsWithTimeout(1) { (error) in

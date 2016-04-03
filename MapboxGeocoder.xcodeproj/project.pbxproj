@@ -14,6 +14,8 @@
 		DA2E03F71CB0FFD800D1269A /* MBGeocoderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E03F61CB0FFD800D1269A /* MBGeocoderConfiguration.swift */; };
 		DA2E03F91CB0FFF700D1269A /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2E03F81CB0FFF700D1269A /* RequestKit.framework */; };
 		DA2E03FB1CB1009200D1269A /* MBGeocoderRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E03FA1CB1009200D1269A /* MBGeocoderRouter.swift */; };
+		DA701C011CB1292C00B0E520 /* MBGeocoderConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA701C001CB1292C00B0E520 /* MBGeocoderConfigurationTests.swift */; };
+		DA701C031CB12A1800B0E520 /* Fixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA701C021CB12A1800B0E520 /* Fixture.swift */; };
 		DD342B5619A140EE00219F77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5519A140EE00219F77 /* AppDelegate.swift */; };
 		DD342B5819A140EE00219F77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5719A140EE00219F77 /* ViewController.swift */; };
 		DDC2295C1A36074F006BE405 /* MapboxGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = DDC229581A36073B006BE405 /* MapboxGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -100,6 +102,8 @@
 		DA2E03F61CB0FFD800D1269A /* MBGeocoderConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBGeocoderConfiguration.swift; sourceTree = "<group>"; };
 		DA2E03F81CB0FFF700D1269A /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = "Pods/../build/Debug-iphoneos/RequestKit.framework"; sourceTree = "<group>"; };
 		DA2E03FA1CB1009200D1269A /* MBGeocoderRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBGeocoderRouter.swift; sourceTree = "<group>"; };
+		DA701C001CB1292C00B0E520 /* MBGeocoderConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBGeocoderConfigurationTests.swift; sourceTree = "<group>"; };
+		DA701C021CB12A1800B0E520 /* Fixture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fixture.swift; sourceTree = "<group>"; };
 		DD342B5019A140EE00219F77 /* Geocoder (Swift).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geocoder (Swift).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD342B5419A140EE00219F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD342B5519A140EE00219F77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -278,9 +282,11 @@
 		DDF1E84B1BD6F7BA00C40C78 /* MapboxGeocoderTests */ = {
 			isa = PBXGroup;
 			children = (
+				DA701C001CB1292C00B0E520 /* MBGeocoderConfigurationTests.swift */,
 				DDF1E84C1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift */,
 				DDF1E84E1BD6F7BA00C40C78 /* Info.plist */,
 				DDF1E8571BD700EB00C40C78 /* Fixtures */,
+				DA701C021CB12A1800B0E520 /* Fixture.swift */,
 			);
 			path = MapboxGeocoderTests;
 			sourceTree = "<group>";
@@ -599,6 +605,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDF1E84D1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift in Sources */,
+				DA701C011CB1292C00B0E520 /* MBGeocoderConfigurationTests.swift in Sources */,
+				DA701C031CB12A1800B0E520 /* Fixture.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
