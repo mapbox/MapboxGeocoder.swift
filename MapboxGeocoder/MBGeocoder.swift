@@ -10,120 +10,79 @@ public func ==(left: CLLocationCoordinate2D, right: CLLocationCoordinate2D) -> B
     return (left.latitude == right.latitude && left.longitude == right.longitude)
 }
 
-// MARK: - Geocoder
+public let MBGeocoderErrorDomain = "MBGeocoderErrorDomain"
 
-public class MBGeocoder: NSObject,
-                         NSURLConnectionDelegate,
-                         NSURLConnectionDataDelegate {
+public class MBGeocoder: NSObject {
 
-    // MARK: - Setup
-
-    private let accessToken: NSString
+    private let configuration: MBGeocoderConfiguration
     
-    public init(accessToken: NSString) {
-        self.accessToken = accessToken
-        super.init()
-    }
-
-    private var connection: NSURLConnection?
-    private var completionHandler: MBGeocodeCompletionHandler?
-    private var receivedData: NSMutableData?
-    
-    private let MBGeocoderErrorDomain = "MBGeocoderErrorDomain"
-
-    private enum MBGeocoderErrorCode: Int {
-        case ConnectionError = -1000
-        case HTTPError       = -1001
-        case ParseError      = -1002
+    public init(accessToken: String) {
+        configuration = MBGeocoderConfiguration(accessToken)
     }
     
-    // MARK: - Public API
-
+    private var task: NSURLSessionDataTask?
+    
+    private var errorForSimultaneousRequests: NSError {
+        let userInfo = [
+            NSLocalizedFailureReasonErrorKey: "Cannot geocode on an MBGeocoder object that is already geocoding.",
+        ]
+        return NSError(domain: MBGeocoderErrorDomain, code: -1, userInfo: userInfo)
+    }
+    
     public var geocoding: Bool {
-        return (self.connection != nil)
+        return task?.state == .Running
     }
     
     public func reverseGeocodeLocation(location: CLLocation, completionHandler: MBGeocodeCompletionHandler) {
-        if !self.geocoding {
-            self.completionHandler = completionHandler
-            let requestString = String(format: "https://api.mapbox.com/geocoding/v5/mapbox.places/%.5f,%.5f.json?access_token=%@",
-                round(location.coordinate.longitude * 1e5) / 1e5,
-                round(location.coordinate.latitude * 1e5) / 1e5, accessToken)
-            let request = NSURLRequest(URL: NSURL(string: requestString)!)
-            self.connection = NSURLConnection(request: request, delegate: self)
+        guard !geocoding else {
+            completionHandler(nil, errorForSimultaneousRequests)
+            return
         }
+        
+        let query = String(format: "%.5f,%.5f", location.coordinate.longitude, location.coordinate.latitude)
+        let router = MBGeocoderRouter.V5(configuration, false, query, nil, nil, nil, nil)
+        task = taskWithRouter(router, completionHandler: completionHandler)
     }
 
 //    public func geocodeAddressDictionary(addressDictionary: [NSObject : AnyObject],
 //        completionHandler: MBGeocodeCompletionHandler)
     
-    public func geocodeAddressString(addressString: String, proximity: CLLocationCoordinate2D? = nil, completionHandler: MBGeocodeCompletionHandler) {
-        if !self.geocoding {
-            self.completionHandler = completionHandler
-            var requestString = "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
-                addressString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet())! +
-                ".json?access_token=\(accessToken)"
-            if let proximityCoordinate = proximity {
-                requestString += String(format: "&proximity=%.3f,%.3f",
-                    round(proximityCoordinate.longitude * 1e3) / 1e3,
-                    round(proximityCoordinate.latitude * 1e3) / 1e3)
-            }
-            let request = NSURLRequest(URL: NSURL(string: requestString)!)
-            self.connection = NSURLConnection(request: request, delegate: self)
+    public func geocodeAddressString(addressString: String, nearLocation focusLocation: CLLocation? = nil, inCountries ISOCountryCodes: [String]? = nil, completionHandler: MBGeocodeCompletionHandler) {
+        guard !geocoding else {
+            completionHandler(nil, errorForSimultaneousRequests)
+            return
         }
+        
+        let router = MBGeocoderRouter.V5(configuration, false, addressString, ISOCountryCodes, focusLocation?.coordinate, nil, nil)
+        task = taskWithRouter(router, completionHandler: completionHandler)
     }
 
 //    public func geocodeAddressString(addressString: String, inRegion region: CLRegion, completionHandler: MBGeocodeCompletionHandler)
+    
+    private func taskWithRouter(router: MBGeocoderRouter, completionHandler completion: MBGeocodeCompletionHandler) -> NSURLSessionDataTask? {
+        return router.loadJSON(JSON.self) { [weak self] (json, error) in
+            guard let dataTaskSelf = self where dataTaskSelf.task?.state == .Completed
+                else {
+                    return
+            }
+            
+            guard error == nil && json != nil else {
+                dispatch_sync(dispatch_get_main_queue()) {
+                    completion(nil, error as? NSError)
+                }
+                return
+            }
+            
+            let features = json!["features"] as! [JSON]
+            let placemarks = features.flatMap { MBPlacemark(featureJSON: $0) }
+            
+            dispatch_sync(dispatch_get_main_queue()) {
+                completion(placemarks, error as? NSError)
+            }
+        }
+    }
 
     public func cancelGeocode() {
-        self.connection?.cancel()
-        self.connection = nil
+        task?.cancel()
     }
-    
-    // MARK: - NSURLConnection Delegates
-
-    public func connection(connection: NSURLConnection, didFailWithError error: NSError) {
-        self.connection = nil
-        self.completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
-            code: MBGeocoderErrorCode.ConnectionError.rawValue,
-            userInfo: error.userInfo))
-    }
-
-    public func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {
-        let statusCode = (response as! NSHTTPURLResponse).statusCode
-        if statusCode != 200 {
-            self.connection?.cancel()
-            self.connection = nil
-            self.completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
-                code: MBGeocoderErrorCode.HTTPError.rawValue,
-                userInfo: [ NSLocalizedDescriptionKey: "Received HTTP status code \(statusCode)" ]))
-        } else {
-            self.receivedData = NSMutableData()
-        }
-    }
-    
-    public func connection(connection: NSURLConnection, didReceiveData data: NSData) {
-        self.receivedData!.appendData(data)
-    }
-    
-    public func connectionDidFinishLoading(connection: NSURLConnection) {
-        if let response = (try? NSJSONSerialization.JSONObjectWithData(self.receivedData!, options: [])) as? JSON {
-            if let features = response["features"] as? [JSON] {
-                var results: [MBPlacemark] = []
-                for feature in features {
-                    if let placemark = MBPlacemark(featureJSON: feature) {
-                        results.append(placemark)
-                    }
-                }
-                self.completionHandler?(results, nil)
-            } else {
-                self.completionHandler?([], nil)
-            }
-        } else {
-            self.completionHandler?(nil, NSError(domain: MBGeocoderErrorDomain,
-                code: MBGeocoderErrorCode.ParseError.rawValue,
-                userInfo: [ NSLocalizedDescriptionKey: "Unable to parse results" ]))
-        }
-    }
-
 }
