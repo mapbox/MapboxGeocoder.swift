@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B97FF3478E9FA7ACDCBAB34 /* Pods_Unit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9281D748078BEB61AACF246 /* Pods_Unit_Tests.framework */; };
 		8DF260A67CA4C55F8FA7CAA0 /* Pods_MapboxGeocoderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD6EA86BBE0D7DE16654CB4 /* Pods_MapboxGeocoderTests.framework */; };
 		DD342B5619A140EE00219F77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5519A140EE00219F77 /* AppDelegate.swift */; };
 		DD342B5819A140EE00219F77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5719A140EE00219F77 /* ViewController.swift */; };
@@ -140,7 +139,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B97FF3478E9FA7ACDCBAB34 /* Pods_Unit_Tests.framework in Frameworks */,
 				8DF260A67CA4C55F8FA7CAA0 /* Pods_MapboxGeocoderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
