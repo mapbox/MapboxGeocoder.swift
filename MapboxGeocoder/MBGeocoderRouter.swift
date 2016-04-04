@@ -22,10 +22,8 @@ internal enum MBGeocoderRouter: Router {
     
     var params: [String : String] {
         switch self {
-        case .V5(let config, _, _, let ISOCountryCodes, let focusCoordinate, let scopes, let autocomplete):
-            var params: [String: String] = [
-                "access_token": config.accessToken!,
-            ]
+        case .V5(_, _, _, let ISOCountryCodes, let focusCoordinate, let scopes, let autocomplete):
+            var params: [String: String] = [:]
             if let ISOCountryCodes = ISOCountryCodes {
                 params["country"] = ISOCountryCodes.joinWithSeparator(",")
             }
