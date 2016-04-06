@@ -47,13 +47,13 @@ public class MBGeocoder: NSObject {
 //    public func geocodeAddressDictionary(addressDictionary: [NSObject : AnyObject],
 //        completionHandler: MBGeocodeCompletionHandler)
     
-    public func geocodeAddressString(addressString: String, nearLocation focusLocation: CLLocation? = nil, inCountries ISOCountryCodes: [String]? = nil, completionHandler: MBGeocodeCompletionHandler) {
+    public func geocodeAddressString(addressString: String, withAllowedScopes scopes: [MBPlacemark.Scope]? = nil, nearLocation focusLocation: CLLocation? = nil, inCountries ISOCountryCodes: [String]? = nil, completionHandler: MBGeocodeCompletionHandler) {
         guard !geocoding else {
             completionHandler(nil, errorForSimultaneousRequests)
             return
         }
         
-        let router = MBGeocoderRouter.V5(configuration, false, addressString, ISOCountryCodes, focusLocation?.coordinate, nil, nil)
+        let router = MBGeocoderRouter.V5(configuration, false, addressString, ISOCountryCodes, focusLocation?.coordinate, scopes, nil)
         task = taskWithRouter(router, completionHandler: completionHandler)
     }
 
