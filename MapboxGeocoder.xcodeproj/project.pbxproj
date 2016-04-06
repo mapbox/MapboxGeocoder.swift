@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		8DF260A67CA4C55F8FA7CAA0 /* Pods_MapboxGeocoderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD6EA86BBE0D7DE16654CB4 /* Pods_MapboxGeocoderTests.framework */; };
 		9FB47CA319B32DD7142B5830 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6953F60F050AE274E006CB85 /* Pods.framework */; };
+		DA210BAB1CB4BE73008088FD /* ForwardGeocodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA210BAA1CB4BE73008088FD /* ForwardGeocodingTests.swift */; };
+		DA210BAD1CB4BFF7008088FD /* forward_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = DA210BAC1CB4BFF7008088FD /* forward_valid.json */; };
+		DA210BAF1CB4C5A7008088FD /* forward_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = DA210BAE1CB4C5A7008088FD /* forward_invalid.json */; };
 		DA2E03F01CB0FDB400D1269A /* MBPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E03EF1CB0FDB400D1269A /* MBPlacemark.swift */; };
 		DA2E03F21CB0FE0200D1269A /* MBRectangularRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */; };
 		DA2E03F71CB0FFD800D1269A /* MBGeocoderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E03F61CB0FFD800D1269A /* MBGeocoderConfiguration.swift */; };
@@ -97,6 +100,9 @@
 		A7FEE3C3AC9D553F9763CB06 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CC09570CD1A6D11014400590 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D9281D748078BEB61AACF246 /* Pods_Unit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA210BAA1CB4BE73008088FD /* ForwardGeocodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForwardGeocodingTests.swift; sourceTree = "<group>"; };
+		DA210BAC1CB4BFF7008088FD /* forward_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = forward_valid.json; sourceTree = "<group>"; };
+		DA210BAE1CB4C5A7008088FD /* forward_invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = forward_invalid.json; sourceTree = "<group>"; };
 		DA2E03EF1CB0FDB400D1269A /* MBPlacemark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBPlacemark.swift; sourceTree = "<group>"; };
 		DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBRectangularRegion.swift; sourceTree = "<group>"; };
 		DA2E03F61CB0FFD800D1269A /* MBGeocoderConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBGeocoderConfiguration.swift; sourceTree = "<group>"; };
@@ -283,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				DA701C001CB1292C00B0E520 /* MBGeocoderConfigurationTests.swift */,
+				DA210BAA1CB4BE73008088FD /* ForwardGeocodingTests.swift */,
 				DDF1E84C1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift */,
 				DDF1E84E1BD6F7BA00C40C78 /* Info.plist */,
 				DDF1E8571BD700EB00C40C78 /* Fixtures */,
@@ -294,6 +301,8 @@
 		DDF1E8571BD700EB00C40C78 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				DA210BAC1CB4BFF7008088FD /* forward_valid.json */,
+				DA210BAE1CB4C5A7008088FD /* forward_invalid.json */,
 				DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */,
 				DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */,
 			);
@@ -468,8 +477,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA210BAD1CB4BFF7008088FD /* forward_valid.json in Resources */,
 				DDF1E85C1BD70E4C00C40C78 /* reverse_invalid.json in Resources */,
 				DDF1E85D1BD70E4C00C40C78 /* reverse_valid.json in Resources */,
+				DA210BAF1CB4C5A7008088FD /* forward_invalid.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +616,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDF1E84D1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift in Sources */,
+				DA210BAB1CB4BE73008088FD /* ForwardGeocodingTests.swift in Sources */,
 				DA701C011CB1292C00B0E520 /* MBGeocoderConfigurationTests.swift in Sources */,
 				DA701C031CB12A1800B0E520 /* Fixture.swift in Sources */,
 			);

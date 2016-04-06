@@ -25,7 +25,7 @@ internal enum MBGeocoderRouter: Router {
         case .V5(_, _, _, let ISOCountryCodes, let focusCoordinate, let scopes, let autocomplete):
             var params: [String: String] = [:]
             if let ISOCountryCodes = ISOCountryCodes {
-                params["country"] = ISOCountryCodes.joinWithSeparator(",")
+                params["country"] = ISOCountryCodes.joinWithSeparator(",").lowercaseString
             }
             if let focusCoordinate = focusCoordinate {
                 params["proximity"] = String(format: "%.3f,%.3f", focusCoordinate.longitude, focusCoordinate.latitude)
@@ -43,7 +43,8 @@ internal enum MBGeocoderRouter: Router {
     var path: String {
         switch self {
         case .V5(_, let isPermanent, let query, _, _, _, _):
-            return "geocoding/v5/mapbox.places\(isPermanent ? "-permanent" : "")/\(query).json"
+            let encodedQuery = query.stringByReplacingOccurrencesOfString(" ", withString: "+").stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet())!
+            return "geocoding/v5/mapbox.places\(isPermanent ? "-permanent" : "")/\(encodedQuery).json"
         }
     }
 }
