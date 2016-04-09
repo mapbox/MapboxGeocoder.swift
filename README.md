@@ -5,6 +5,8 @@ MapboxGeocoder.swift
 
 MapboxGeocoder.swift makes it easy to connect your iOS or OS X application to the [Mapbox Geocoding API](https://www.mapbox.com/api-documentation/#geocoding). MapboxGeocoder.swift combines the power of the [Carmen](https://github.com/mapbox/carmen) geocoder with the simplicity of Core Location’s CLGeocoder API.
 
+MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxStatic.swift](https://github.com/mapbox/MapboxStatic.swift), and the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [OS X SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/osx).
+
 ### Getting started
 
 Import `MapboxGeocoder.framework` into your project, then use `MBGeocoder` as a drop-in replacement for Apple's `CLGeocoder`.
