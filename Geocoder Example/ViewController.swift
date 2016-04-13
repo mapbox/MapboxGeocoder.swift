@@ -9,19 +9,19 @@ let MapboxAccessToken = "<# your Mapbox access token #>"
 
 class ViewController: UIViewController, MKMapViewDelegate {
     
-    // MARK: -
-    // MARK: Variables
+    // MARK: - Variables
 
     var mapView: MKMapView!
     var resultsLabel: UILabel!
 //    var geocoder: CLGeocoder!
     var geocoder: MBGeocoder!
     
-    // MARK: -
-    // MARK: Setup
+    // MARK: - Setup
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        assert(MapboxAccessToken != "<# your Mapbox access token #>", "You must set `MapboxAccessToken` to your Mapbox access token.")
         
         mapView = MKMapView(frame: view.bounds)
         mapView.autoresizingMask = [ .FlexibleWidth, .FlexibleHeight ]
@@ -39,8 +39,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         geocoder = MBGeocoder(accessToken: MapboxAccessToken)
     }
 
-    // MARK: -
-    // MARK: MKMapViewDelegate
+    // MARK: - MKMapViewDelegate
 
     func mapView(mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
         geocoder.cancelGeocode()

@@ -10,8 +10,7 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 
 @interface ViewController () <MKMapViewDelegate>
 
-#pragma mark -
-#pragma mark Variables
+#pragma mark - Variables
 
 @property (nonatomic) MKMapView *mapView;
 @property (nonatomic) UILabel *resultsLabel;
@@ -24,12 +23,13 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 
 @implementation ViewController
 
-#pragma mark -
-#pragma mark Setup
+#pragma mark - Setup
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    NSAssert(![MapboxAccessToken isEqualToString:@"<# your Mapbox access token #>"], @"You must set `MapboxAccessToken` to your Mapbox access token.");
 
     self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -47,8 +47,7 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
     self.geocoder = [[MBGeocoder alloc] initWithAccessToken:MapboxAccessToken];
 }
 
-#pragma mark -
-#pragma mark MKMapViewDelegate
+#pragma mark - MKMapViewDelegate
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
     [self.geocoder cancelGeocode];
