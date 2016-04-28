@@ -23,10 +23,7 @@ public class MBGeocoder: NSObject {
      - param host: An optional hostname to the server API. The Mapbox Geocoding API endpoint is used by default.
      */
     public init(accessToken: String, host: String? = nil) {
-        let baseURLComponents = NSURLComponents()
-        baseURLComponents.scheme = "https"
-        baseURLComponents.host = host
-        configuration = MBGeocoderConfiguration(accessToken, apiEndpoint: baseURLComponents.string)
+        configuration = MBGeocoderConfiguration(accessToken, host: host)
     }
     
     private var task: NSURLSessionDataTask?
