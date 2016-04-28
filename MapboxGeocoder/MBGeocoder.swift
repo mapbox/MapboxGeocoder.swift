@@ -16,8 +16,17 @@ public class MBGeocoder: NSObject {
 
     private let configuration: MBGeocoderConfiguration
     
-    public init(accessToken: String) {
-        configuration = MBGeocoderConfiguration(accessToken)
+    /**
+     Initializes a newly created geocoder with the given access token and an optional host.
+     
+     - param accessToken: A Mapbox access token.
+     - param host: An optional hostname to the server API. The Mapbox Geocoding API endpoint is used by default.
+     */
+    public init(accessToken: String, host: String? = nil) {
+        let baseURLComponents = NSURLComponents()
+        baseURLComponents.scheme = "https"
+        baseURLComponents.host = host
+        configuration = MBGeocoderConfiguration(accessToken, apiEndpoint: baseURLComponents.string)
     }
     
     private var task: NSURLSessionDataTask?
