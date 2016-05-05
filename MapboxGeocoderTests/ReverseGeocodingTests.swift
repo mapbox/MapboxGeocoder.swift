@@ -25,7 +25,7 @@ class ReverseGeocodingTests: XCTestCase {
         let geocoder = MBGeocoder(accessToken: BogusToken)
         var addressPlacemark: MBPlacemark! = nil
         var placePlacemark: MBPlacemark! = nil
-        geocoder.reverseGeocodeLocation(
+        let task = geocoder.reverseGeocodeLocation(
           CLLocation(latitude: 37.13284000, longitude: -95.78558000)) { (placemarks, error) in
             XCTAssertEqual(placemarks?.count, 5, "reverse geocode should have 5 results")
             addressPlacemark = placemarks![0]
@@ -33,10 +33,11 @@ class ReverseGeocodingTests: XCTestCase {
             
             expectation.fulfill()
         }
+        XCTAssertNotNil(task)
 
         waitForExpectationsWithTimeout(1) { (error) in
             XCTAssertNil(error, "Error: \(error)")
-            XCTAssertFalse(geocoder.geocoding)
+            XCTAssertEqual(task?.state, .Completed)
         }
         
         XCTAssertEqual(addressPlacemark.description, "3099 3100 Rd, Independence, Kansas 67301, United States", "reverse geocode should populate description")
@@ -76,14 +77,15 @@ class ReverseGeocodingTests: XCTestCase {
         
         let expection = expectationWithDescription("reverse geocode execute completion handler for invalid query")
         let geocoder = MBGeocoder(accessToken: BogusToken)
-        geocoder.reverseGeocodeLocation(CLLocation(latitude: 0, longitude: 0)) { (placemarks, error) in
+        let task = geocoder.reverseGeocodeLocation(CLLocation(latitude: 0, longitude: 0)) { (placemarks, error) in
             XCTAssertEqual(placemarks?.count, 0, "reverse geocode should return no results for invalid query")
             expection.fulfill()
         }
+        XCTAssertNotNil(task)
 
         waitForExpectationsWithTimeout(1) { (error) in
             XCTAssertNil(error, "Error: \(error)")
-            XCTAssertFalse(geocoder.geocoding)
+            XCTAssertEqual(task?.state, .Completed)
         }
     }
 }
