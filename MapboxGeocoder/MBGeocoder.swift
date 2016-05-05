@@ -22,8 +22,17 @@ public class MBGeocoder: NSObject {
      - param accessToken: A Mapbox access token.
      - param host: An optional hostname to the server API. The Mapbox Geocoding API endpoint is used by default.
      */
-    public init(accessToken: String, host: String? = nil) {
+    public init(accessToken: String, host: String?) {
         configuration = MBGeocoderConfiguration(accessToken, host: host)
+    }
+    
+    /**
+     Initializes a newly created geocoder with the given access token and the default host.
+     
+     - param accessToken: A Mapbox access token.
+     */
+    public convenience init(accessToken: String) {
+        self.init(accessToken: accessToken, host: nil)
     }
     
     private var task: NSURLSessionDataTask?
