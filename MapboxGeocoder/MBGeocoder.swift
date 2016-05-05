@@ -35,52 +35,27 @@ public class MBGeocoder: NSObject {
         self.init(accessToken: accessToken, host: nil)
     }
     
-    private var task: NSURLSessionDataTask?
+    private static let sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+    public var session = NSURLSession(configuration: sessionConfiguration)
     
-    private var errorForSimultaneousRequests: NSError {
-        let userInfo = [
-            NSLocalizedFailureReasonErrorKey: "Cannot geocode on an MBGeocoder object that is already geocoding.",
-        ]
-        return NSError(domain: MBGeocoderErrorDomain, code: -1, userInfo: userInfo)
-    }
-    
-    public var geocoding: Bool {
-        return task?.state == .Running
-    }
-    
-    public func reverseGeocodeLocation(location: CLLocation, completionHandler: MBGeocodeCompletionHandler) {
-        guard !geocoding else {
-            completionHandler(nil, errorForSimultaneousRequests)
-            return
-        }
-        
+    public func reverseGeocodeLocation(location: CLLocation, completionHandler: MBGeocodeCompletionHandler) -> NSURLSessionDataTask? {
         let query = String(format: "%.5f,%.5f", location.coordinate.longitude, location.coordinate.latitude)
         let router = MBGeocoderRouter.V5(configuration, false, query, nil, nil, nil, nil)
-        task = taskWithRouter(router, completionHandler: completionHandler)
+        return taskWithRouter(router, completionHandler: completionHandler)
     }
 
 //    public func geocodeAddressDictionary(addressDictionary: [NSObject : AnyObject],
 //        completionHandler: MBGeocodeCompletionHandler)
     
-    public func geocodeAddressString(addressString: String, withAllowedScopes scopes: [MBPlacemark.Scope]? = nil, nearLocation focusLocation: CLLocation? = nil, inCountries ISOCountryCodes: [String]? = nil, completionHandler: MBGeocodeCompletionHandler) {
-        guard !geocoding else {
-            completionHandler(nil, errorForSimultaneousRequests)
-            return
-        }
-        
+    public func geocodeAddressString(addressString: String, withAllowedScopes scopes: [MBPlacemark.Scope]? = nil, nearLocation focusLocation: CLLocation? = nil, inCountries ISOCountryCodes: [String]? = nil, completionHandler: MBGeocodeCompletionHandler) -> NSURLSessionDataTask? {
         let router = MBGeocoderRouter.V5(configuration, false, addressString, ISOCountryCodes, focusLocation?.coordinate, scopes, nil)
-        task = taskWithRouter(router, completionHandler: completionHandler)
+        return taskWithRouter(router, completionHandler: completionHandler)
     }
 
 //    public func geocodeAddressString(addressString: String, inRegion region: CLRegion, completionHandler: MBGeocodeCompletionHandler)
     
     private func taskWithRouter(router: MBGeocoderRouter, completionHandler completion: MBGeocodeCompletionHandler) -> NSURLSessionDataTask? {
-        return router.loadJSON(JSON.self) { [weak self] (json, error) in
-            guard let dataTaskSelf = self where dataTaskSelf.task?.state == .Completed
-                else {
-                    return
-            }
-            
+        return router.loadJSON(session, expectedResultType: JSON.self) { (json, error) in
             guard error == nil && json != nil else {
                 dispatch_sync(dispatch_get_main_queue()) {
                     completion(nil, error as? NSError)
@@ -94,10 +69,11 @@ public class MBGeocoder: NSObject {
             dispatch_sync(dispatch_get_main_queue()) {
                 completion(placemarks, error as? NSError)
             }
-        }
+        } as? NSURLSessionDataTask
     }
 
     public func cancelGeocode() {
-        task?.cancel()
+        session.invalidateAndCancel()
+        session = NSURLSession(configuration: MBGeocoder.sessionConfiguration)
     }
 }

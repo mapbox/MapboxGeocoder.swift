@@ -23,16 +23,17 @@ class ForwardGeocodingTests: XCTestCase {
         
         let geocoder = MBGeocoder(accessToken: BogusToken)
         var addressPlacemark: MBPlacemark! = nil
-        geocoder.geocodeAddressString("1600 pennsylvania ave nw", inCountries: ["CA"]) { (placemarks, error) in
+        let task = geocoder.geocodeAddressString("1600 pennsylvania ave nw", inCountries: ["CA"]) { (placemarks, error) in
             XCTAssertEqual(placemarks?.count, 5, "forward geocode should have 5 results")
             addressPlacemark = placemarks![0]
             
             expectation.fulfill()
         }
+        XCTAssertNotNil(task)
         
         waitForExpectationsWithTimeout(1) { (error) in
             XCTAssertNil(error, "Error: \(error)")
-            XCTAssertFalse(geocoder.geocoding)
+            XCTAssertEqual(task?.state, .Completed)
         }
         
         XCTAssertEqual(addressPlacemark.description, "Pennsylvania Ave, Stellarton, Nova Scotia B0K 1S0, Canada", "forward geocode should populate description")
@@ -63,14 +64,15 @@ class ForwardGeocodingTests: XCTestCase {
         
         let expection = expectationWithDescription("forward geocode execute completion handler for invalid query")
         let geocoder = MBGeocoder(accessToken: BogusToken)
-        geocoder.geocodeAddressString("Sandy Island, New Caledonia", withAllowedScopes: [.AdministrativeArea, .Place, .Locality, .PointOfInterest], inCountries: ["FR"]) { (placemarks, error) in
+        let task = geocoder.geocodeAddressString("Sandy Island, New Caledonia", withAllowedScopes: [.AdministrativeArea, .Place, .Locality, .PointOfInterest], inCountries: ["FR"]) { (placemarks, error) in
             XCTAssertEqual(placemarks?.count, 0, "forward geocode should return no results for invalid query")
             expection.fulfill()
         }
+        XCTAssertNotNil(task)
         
         waitForExpectationsWithTimeout(1) { (error) in
             XCTAssertNil(error, "Error: \(error)")
-            XCTAssertFalse(geocoder.geocoding)
+            XCTAssertEqual(task?.state, .Completed)
         }
     }
 }
