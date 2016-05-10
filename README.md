@@ -9,11 +9,11 @@ MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com
 
 ### Getting started
 
-Import `MapboxGeocoder.framework` into your project, then use `MBGeocoder` as a drop-in replacement for Apple's `CLGeocoder`. Alternatively, for the bleeding-edge version of this framework, specify the following dependencies in your [CocoaPods](http://cocoapods.org/) Podfile:
+Import `MapboxGeocoder.framework` into your project, then use `MBGeocoder` as a drop-in replacement for Apple's `CLGeocoder`. Alternatively, specify the following dependencies in your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
 pod 'NBNRequestKit', :git => 'https://github.com/1ec5/RequestKit.git', :branch => 'mapbox-podspec' # temporarily until nerdishbynature/RequestKit#14 is merged
-pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :branch => 'master'
+pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :tag => 'v0.4.2'
 ```
 
 Includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). 
