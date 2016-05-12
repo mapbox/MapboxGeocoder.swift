@@ -16,7 +16,7 @@ pod 'NBNRequestKit', :git => 'https://github.com/1ec5/RequestKit.git', :branch =
 pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :tag => 'v0.4.2'
 ```
 
-Includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). 
+This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). More examples are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#geocoding).
 
 ### Tests
 
