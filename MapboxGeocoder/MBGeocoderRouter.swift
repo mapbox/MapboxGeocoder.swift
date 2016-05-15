@@ -3,7 +3,7 @@ import CoreLocation
 import RequestKit
 
 internal enum MBGeocoderRouter: Router {
-    case V5(Configuration, Bool, String, [String]?, CLLocationCoordinate2D?, [MBPlacemark.Scope]?, Bool?)
+    case V5(config: Configuration, isPermanent: Bool, query: String, ISOCountryCodes: [String]?, focusCoordinate: CLLocationCoordinate2D?, scopes: [MBPlacemark.Scope]?, autocomplete: Bool?)
     
     var method: HTTPMethod {
         return .GET

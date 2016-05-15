@@ -40,7 +40,7 @@ public class MBGeocoder: NSObject {
     
     public func reverseGeocodeLocation(location: CLLocation, completionHandler: MBGeocodeCompletionHandler) -> NSURLSessionDataTask? {
         let query = String(format: "%.5f,%.5f", location.coordinate.longitude, location.coordinate.latitude)
-        let router = MBGeocoderRouter.V5(configuration, false, query, nil, nil, nil, nil)
+        let router = MBGeocoderRouter.V5(config: configuration, isPermanent: false, query: query, ISOCountryCodes: nil, focusCoordinate: nil, scopes: nil, autocomplete: nil)
         return taskWithRouter(router, completionHandler: completionHandler)
     }
 
@@ -48,7 +48,7 @@ public class MBGeocoder: NSObject {
 //        completionHandler: MBGeocodeCompletionHandler)
     
     public func geocodeAddressString(addressString: String, withAllowedScopes scopes: [MBPlacemark.Scope]? = nil, nearLocation focusLocation: CLLocation? = nil, inCountries ISOCountryCodes: [String]? = nil, completionHandler: MBGeocodeCompletionHandler) -> NSURLSessionDataTask? {
-        let router = MBGeocoderRouter.V5(configuration, false, addressString, ISOCountryCodes, focusLocation?.coordinate, scopes, nil)
+        let router = MBGeocoderRouter.V5(config: configuration, isPermanent: false, query: addressString, ISOCountryCodes: ISOCountryCodes, focusCoordinate: focusLocation?.coordinate, scopes: scopes, autocomplete: nil)
         return taskWithRouter(router, completionHandler: completionHandler)
     }
 
