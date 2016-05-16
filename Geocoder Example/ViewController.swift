@@ -13,7 +13,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
 
     var mapView: MKMapView!
     var resultsLabel: UILabel!
-//    var geocoder: CLGeocoder!
     var geocoder: MBGeocoder!
     
     // MARK: - Setup
@@ -35,7 +34,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
         resultsLabel.userInteractionEnabled = false
         view.addSubview(resultsLabel)
         
-//        geocoder = CLGeocoder()
         geocoder = MBGeocoder(accessToken: MapboxAccessToken)
     }
 
@@ -52,8 +50,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
             if let error = error {
                 NSLog("%@", error)
             } else if let results = results where results.count > 0 {
-//                self.resultsLabel.text = (results[0] as CLPlacemark).name
-                self.resultsLabel.text = (results[0] as MBPlacemark).name
+                self.resultsLabel.text = results[0].name
             } else {
                 self.resultsLabel.text = "No results"
             }

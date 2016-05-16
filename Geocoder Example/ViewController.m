@@ -14,7 +14,6 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 
 @property (nonatomic) MKMapView *mapView;
 @property (nonatomic) UILabel *resultsLabel;
-//@property (nonatomic) CLGeocoder *geocoder;
 @property (nonatomic) MBGeocoder *geocoder;
 
 @end
@@ -43,7 +42,6 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
     self.resultsLabel.userInteractionEnabled = NO;
     [self.view addSubview:self.resultsLabel];
 
-//    self.geocoder = [CLGeocoder new];
     self.geocoder = [[MBGeocoder alloc] initWithAccessToken:MapboxAccessToken];
 }
 
@@ -55,12 +53,11 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
     [self.geocoder cancelGeocode];
-    [self.geocoder reverseGeocodeLocation:[[CLLocation alloc] initWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude] completionHandler:^(NSArray *results, NSError *error) {
+    [self.geocoder reverseGeocodeLocation:[[CLLocation alloc] initWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude] completionHandler:^(NSArray<MBPlacemark *> * _Nullable results, NSError * _Nullable error) {
         if (error) {
             NSLog(@"%@", error);
         } else if (results.count > 0) {
-//            self.resultsLabel.text = ((CLPlacemark *)results[0]).name;
-            self.resultsLabel.text = ((MBPlacemark *)results[0]).name;
+            self.resultsLabel.text = results[0].name;
         } else {
             self.resultsLabel.text = @"No results";
         }
