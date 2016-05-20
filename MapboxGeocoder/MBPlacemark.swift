@@ -1,6 +1,3 @@
-import Foundation
-import CoreLocation
-
 // Based on CNPostalAddress, the successor to ABPerson, which is used by CLPlacemark.
 
 public let MBPostalAddressStreetKey = "street"
@@ -10,49 +7,23 @@ public let MBPostalAddressPostalCodeKey = "postalCode"
 public let MBPostalAddressCountryKey = "country"
 public let MBPostalAddressISOCountryCodeKey = "ISOCountryCode"
 
-// Based on CLPlacemark, which can't be reliably subclassed in Swift.
-
-public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
-
-    private var featureJSON: JSON?
+public class Placemark: NSObject, NSCopying, NSSecureCoding {
+    private let featureJSON: JSONDictionary
     
-    public enum Scope: String {
-        case Address = "address"
-        case AdministrativeArea = "region"
-        case Country = "country"
-        case District = "district"
-        case Locality = "locality"
-        case Neighborhood = "neighborhood"
-        case Place = "place"
-        case PointOfInterest = "poi"
-        case PostalCode = "postcode"
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        featureJSON = aDecoder.decodeObjectOfClass(NSDictionary.self, forKey: "featureJSON") as! JSON?
+    internal init(featureJSON: JSONDictionary) {
+        self.featureJSON = featureJSON
     }
     
-    public override init() {
-        super.init()
-    }
-
-    public convenience init(placemark: MBPlacemark) {
-        self.init()
-        featureJSON = placemark.featureJSON
-    }
-
-    internal convenience init?(featureJSON: JSON) {
-        if let geometry = featureJSON["geometry"] as? NSDictionary,
-          type = geometry["type"] as? String where type == "Point",
-          let _ = geometry["coordinates"] as? NSArray,
-          let _ = featureJSON["place_name"] as? String {
-            self.init()
-            self.featureJSON = featureJSON
-        } else {
-            self.init()
-            self.featureJSON = nil
+    public convenience required init?(coder aDecoder: NSCoder) {
+        guard let featureJSON = aDecoder.decodeObjectOfClass(NSDictionary.self, forKey: "featureJSON") as? JSONDictionary else {
             return nil
         }
+        
+        self.init(featureJSON: featureJSON)
+    }
+    
+    public convenience init(placemark: Placemark) {
+        self.init(featureJSON: placemark.featureJSON)
     }
     
     public class func supportsSecureCoding() -> Bool {
@@ -60,213 +31,262 @@ public class MBPlacemark: NSObject, NSCopying, NSSecureCoding {
     }
     
     public func copyWithZone(zone: NSZone) -> AnyObject {
-        return MBPlacemark(featureJSON: featureJSON!)!
+        return Placemark(featureJSON: featureJSON)
     }
     
-    public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(featureJSON, forKey: "featureJSON")
+    public func encodeWithCoder(coder: NSCoder) {
+        coder.encodeObject(featureJSON, forKey: "featureJSON")
     }
     
-    var identifier: String? {
-        return featureJSON?["id"] as? String
+    public override var hashValue: Int {
+        return identifier.hashValue
     }
     
     public override func isEqual(object: AnyObject?) -> Bool {
-        if let object = object as? MBPlacemark {
+        if let object = object as? Placemark {
             return identifier == object.identifier
         }
         return false
     }
     
+    // MARK: Identifying the Placemark
+    
     public override var description: String {
-        return featureJSON?["place_name"] as? String ?? ""
+        return name
     }
-
+    
+    private var identifier: String {
+        return featureJSON["id"] as! String
+    }
+    
+    public var name: String {
+        return featureJSON["text"] as! String
+    }
+    
+    public var qualifiedName: String? {
+        return nil
+    }
+    
+    public var code: String? {
+        return nil
+    }
+    
+    public var scope: PlacemarkScope {
+        let components = identifier.characters.split(".")
+        assert(components.count == 2)
+        let scopeCharacters = identifier.characters.split(".").first!
+        return PlacemarkScope(descriptions: [String(scopeCharacters)])
+    }
+    
+    public var wikidataEntityIdentifier: String? {
+        return nil
+    }
+    
+    public var genres: [String]? {
+        return nil
+    }
+    
+    /**
+     Name of the [Maki](https://www.mapbox.com/maki/) icon that most precisely identifies the placemark.
+     
+     The icon is determined based on the placemark’s scope and any available genres.
+     */
+    public var imageName: String? {
+        return nil
+    }
+    
+    // MARK: Accessing Location Data
+    
     public var location: CLLocation? {
-        if let feature = featureJSON?["geometry"] as? JSON, coordinates = feature["coordinates"] as? [Double] {
-            return CLLocation(latitude: coordinates.last!, longitude: coordinates.first!)
-        }
-        return nil
-    }
-
-    public var name: String? {
-        if scope == .Address {
-            return "\(subThoroughfare ?? "") \(thoroughfare ?? "")"
-                .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        }
-        
-        let name = featureJSON?["text"] as? String ?? ""
-        return !name.isEmpty ? name : description
-    }
-    
-    public var scope: Scope? {
-        if let identifier = featureJSON?["id"] as? String {
-            if let scopeCharacters = identifier.characters.split(".").first {
-                if let scope = Scope(rawValue: String(scopeCharacters)) {
-                    return scope
-                }
-            }
-        }
         return nil
     }
     
-    var formattedAddressLines: [String]? {
-        if let name = featureJSON?["place_name"] as? String {
-            let lines = name.componentsSeparatedByString(", ")
-            return scope == .Address ? lines : Array(lines.suffixFrom(1))
-        }
+    public var region: CLRegion? {
         return nil
     }
-
+    
+    // MARK: Accessing Contact Information
+    
+    public var formattedAddressLines: [String]? {
+        return nil
+    }
+    
     public var addressDictionary: [NSObject: AnyObject]? {
-        guard featureJSON != nil else {
+        return nil
+    }
+    
+    public var phoneNumber: String? {
+        return nil
+    }
+    
+    // MARK: Accessing Containing Placemarks
+    
+    public internal(set) var qualifiers: [Placemark]?
+    
+    public var country: Placemark? {
+        return qualifiers?.lazy.filter { $0.scope == .Country }.first
+    }
+    
+    public var postalCode: Placemark? {
+        return qualifiers?.lazy.filter { $0.scope == .PostalCode }.first
+    }
+    
+    public var administrativeRegion: Placemark? {
+        return qualifiers?.lazy.filter { $0.scope == .Region }.last
+    }
+    
+    public var district: Placemark? {
+        return qualifiers?.lazy.filter { $0.scope == .District }.last
+    }
+    
+    public var place: Placemark? {
+        return qualifiers?.lazy.filter { $0.scope == .Place }.last
+    }
+    
+    public var neighborhood: Placemark? {
+        return qualifiers?.lazy.filter { $0.scope == .Neighborhood }.last
+    }
+    
+    public var thoroughfare: String? {
+        guard scope == .Address else {
+            return nil
+        }
+        return featureJSON["text"] as? String
+    }
+    
+    public var subThoroughfare: String? {
+        guard let houseNumber = featureJSON["address"] else {
+            return nil
+        }
+        return String(houseNumber)
+    }
+}
+
+internal class GeocodedPlacemark: Placemark {
+    private let propertiesJSON: JSONDictionary
+    
+    override init(featureJSON: JSONDictionary) {
+        propertiesJSON = featureJSON["properties"] as? JSONDictionary ?? [:]
+        
+        super.init(featureJSON: featureJSON)
+        
+        assert(featureJSON["type"] as? String == "Feature")
+        
+        let contextJSON = featureJSON["context"] as? [JSONDictionary]
+        qualifiers = contextJSON?.map { QualifyingPlacemark(featureJSON: $0) }
+    }
+    
+    override func copyWithZone(zone: NSZone) -> AnyObject {
+        return GeocodedPlacemark(featureJSON: featureJSON)
+    }
+    
+    override var debugDescription: String {
+        return qualifiedName
+    }
+    
+    override var qualifiedName: String! {
+        return featureJSON["place_name"] as! String
+    }
+    
+    override var location: CLLocation {
+        let centerCoordinate = CLLocationCoordinate2D(geoJSON: featureJSON["center"] as! [Double])
+        return CLLocation(coordinate: centerCoordinate)
+    }
+    
+    override var region: CLRegion? {
+        guard let boundingBox = featureJSON["bbox"] as? [Double] else {
             return nil
         }
         
+        assert(boundingBox.count == 4)
+        let southWest = CLLocationCoordinate2D(geoJSON: Array(boundingBox.prefix(2)))
+        let northEast = CLLocationCoordinate2D(geoJSON: Array(boundingBox.suffix(2)))
+        return MBRectangularRegion(southWest: southWest, northEast: northEast)
+    }
+    
+    override var name: String {
+        let text = super.name
+        
+        // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
+        if let houseNumber = featureJSON["address"] as? String where scope == .Address {
+            let streetName = text
+            let reversedAddress = "\(streetName) \(houseNumber)"
+            if qualifiedName.componentsSeparatedByString(", ").contains(reversedAddress) {
+                return reversedAddress
+            } else {
+                return "\(houseNumber) \(streetName)"
+            }
+        } else {
+            return text
+        }
+    }
+    
+    override var code: String? {
+        return (propertiesJSON["short_code"] as? String)?.uppercaseString
+    }
+    
+    override var wikidataEntityIdentifier: String? {
+        let entity = propertiesJSON["wikidata"] as? String
+        if let entity = entity {
+            assert(entity.hasPrefix("Q"))
+        }
+        return entity
+    }
+    
+    override var genres: [String]? {
+        let categoryList = propertiesJSON["category"] as? String
+        return categoryList?.componentsSeparatedByString(", ")
+    }
+    
+    override var formattedAddressLines: [String] {
+        let lines = qualifiedName.componentsSeparatedByString(", ")
+        return scope == .Address ? lines : Array(lines.suffixFrom(1))
+    }
+    
+    override var addressDictionary: [NSObject: AnyObject]? {
         var addressDictionary: [String: AnyObject] = [:]
         if scope == .Address {
             addressDictionary[MBPostalAddressStreetKey] = name
-        } else if let address = properties?["address"] as? String {
+        } else if let address = propertiesJSON["address"] as? String {
             addressDictionary[MBPostalAddressStreetKey] = address
         }
-        addressDictionary[MBPostalAddressCityKey] = locality
-        addressDictionary[MBPostalAddressStateKey] = administrativeArea
-        addressDictionary[MBPostalAddressPostalCodeKey] = postalCode
-        addressDictionary[MBPostalAddressCountryKey] = country
-        addressDictionary[MBPostalAddressISOCountryCodeKey] = ISOcountryCode
-        addressDictionary["formattedAddressLines"] = formattedAddressLines
+        addressDictionary[MBPostalAddressCityKey] = place?.name
+        addressDictionary[MBPostalAddressStateKey] = administrativeRegion?.name
+        addressDictionary[MBPostalAddressPostalCodeKey] = postalCode?.name
+        addressDictionary[MBPostalAddressCountryKey] = country?.name
+        addressDictionary[MBPostalAddressISOCountryCodeKey] = country?.code
+        let lines = qualifiedName.componentsSeparatedByString(", ")
+        addressDictionary["formattedAddressLines"] = scope == .Address ? lines : Array(lines.suffixFrom(1))
         addressDictionary["name"] = name
-        addressDictionary["subAdministrativeArea"] = subAdministrativeArea
-        addressDictionary["subLocality"] = subLocality
+        addressDictionary["subAdministrativeArea"] = district?.name ?? place?.name
+        addressDictionary["subLocality"] = neighborhood?.name
         addressDictionary["subThoroughfare"] = subThoroughfare
         addressDictionary["thoroughfare"] = thoroughfare
         return addressDictionary
     }
     
-    /// The phone number to contact a business at this location.
-    public var phoneNumber: String? {
-        if let phoneNumber = properties?["tel"] as? String {
-            return phoneNumber
-        }
-        return nil
+    /**
+     The phone number to contact a business at this location.
+     */
+    override var phoneNumber: String? {
+        return propertiesJSON["tel"] as? String
+    }
+}
+
+private class QualifyingPlacemark: Placemark {
+    override func copyWithZone(zone: NSZone) -> AnyObject {
+        return QualifyingPlacemark(featureJSON: featureJSON)
     }
     
-    var context: [JSON]? {
-        return featureJSON?["context"] as? [JSON]
+    override var code: String? {
+        return (featureJSON["short_code"] as? String)?.uppercaseString
     }
     
-    func contextItemsWithType(type: String) -> [JSON]? {
-        return context?.filter({
-            ($0["id"] as? String)?.hasPrefix("\(type).") ?? false
-        })
-    }
-    
-    var properties: JSON? {
-        return featureJSON?["properties"] as? JSON
-    }
-    
-    public var ISOcountryCode: String? {
-        if let country = contextItemsWithType("country")?.first {
-            return (country["short_code"] as? String)?.uppercaseString
+    override var wikidataEntityIdentifier: String? {
+        let entity = featureJSON["wikidata"] as? String
+        if let entity = entity {
+            assert(entity.hasPrefix("Q"))
         }
-        return nil
-    }
-
-    public var country: String? {
-        if let country = contextItemsWithType("country")?.first {
-            return country["text"] as? String
-        }
-        return nil
-    }
-
-    public var postalCode: String? {
-        if let country = contextItemsWithType("postcode")?.first {
-            return country["text"] as? String
-        }
-        return nil
-    }
-
-    public var administrativeArea: String? {
-        if let region = contextItemsWithType("region")?.last {
-            return region["text"] as? String
-        }
-        return nil
-    }
-
-    public var subAdministrativeArea: String? {
-        if let district = contextItemsWithType("district")?.last {
-            return district["text"] as? String
-        }
-        if let place = contextItemsWithType("place")?.last {
-            return place["text"] as? String
-        }
-        return nil
-    }
-
-    public var locality: String? {
-        if let place = contextItemsWithType("place")?.last {
-            return place["text"] as? String
-        }
-        return nil
-    }
-
-    public var subLocality: String? {
-        if let country = contextItemsWithType("neighborhood")?.last {
-            return country["text"] as? String
-        }
-        return nil
-    }
-
-    public var thoroughfare: String? {
-        if scope == .Address {
-            return featureJSON?["text"] as? String
-        }
-        return nil
-    }
-
-    public var subThoroughfare: String? {
-        if let address = featureJSON?["address"] {
-            return String(address)
-        }
-        return nil
-    }
-
-    public var region: MBRectangularRegion? {
-        if let boundingBox = featureJSON?["bbox"] as? [Double] {
-            return MBRectangularRegion(southWest: CLLocationCoordinate2D(latitude: boundingBox[1], longitude: boundingBox[0]),
-                northEast: CLLocationCoordinate2D(latitude: boundingBox[3], longitude: boundingBox[2]))
-        }
-        return nil
-    }
-    
-    public var timeZone: NSTimeZone? {
-        return nil
-    }
-
-    public var inlandWater: String? {
-        return nil
-    }
-
-    public var ocean: String? {
-        return nil
-    }
-
-    public var areasOfInterest: [String]? {
-        return nil
-    }
-    
-    /// Maki image name. <https://www.mapbox.com/maki/>
-    public var imageName: String? {
-        if let maki = properties?["maki"] as? String {
-            return maki
-        }
-        return nil
-    }
-    
-    public var genres: [String]? {
-        if let category = properties?["category"] as? String {
-            return category.componentsSeparatedByString(", ")
-        }
-        return nil
+        return entity
     }
 }

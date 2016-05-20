@@ -1,5 +1,4 @@
 @import MapKit;
-@import CoreLocation;
 @import MapboxGeocoder;
 
 #import "ViewController.h"
@@ -15,6 +14,7 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 @property (nonatomic) MKMapView *mapView;
 @property (nonatomic) UILabel *resultsLabel;
 @property (nonatomic) MBGeocoder *geocoder;
+@property (nonatomic) NSURLSessionDataTask *geocodingDataTask;
 
 @end
 
@@ -48,16 +48,17 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 #pragma mark - MKMapViewDelegate
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
-    [self.geocoder cancelGeocode];
+    [self.geocodingDataTask cancel];
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    [self.geocoder cancelGeocode];
-    [self.geocoder reverseGeocodeLocation:[[CLLocation alloc] initWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude] completionHandler:^(NSArray<MBPlacemark *> * _Nullable results, NSError * _Nullable error) {
+    [self.geocodingDataTask cancel];
+    MBReverseGeocodeOptions *options = [[MBReverseGeocodeOptions alloc] initWithCoordinate:self.mapView.centerCoordinate];
+    [self.geocoder geocodeWithOptions:options completionHandler:^(NSArray<Placemark *> * _Nullable placemarks, NSString * _Nullable attribution, NSError * _Nullable error) {
         if (error) {
             NSLog(@"%@", error);
-        } else if (results.count > 0) {
-            self.resultsLabel.text = results[0].name;
+        } else if (placemarks.count > 0) {
+            self.resultsLabel.text = placemarks[0].qualifiedName;
         } else {
             self.resultsLabel.text = @"No results";
         }

@@ -1,0 +1,75 @@
+@objc(MBGeocodeOptions)
+public class GeocodeOptions: NSObject {
+    public var allowedISOCountryCodes: [String]?
+    
+    public var focalCoordinate: CLLocationCoordinate2D = kCLLocationCoordinate2DInvalid
+    
+    public var allowedScopes: PlacemarkScope = [.All]
+    
+    public var autocompletionEnabled = true
+    
+    public var allowedRegion: MBRectangularRegion?
+    
+    private override init() {}
+    
+    internal var queries: [String] = []
+    
+    internal var params: [NSURLQueryItem] {
+        var params: [NSURLQueryItem] = []
+        if let allowedISOCountryCodes = allowedISOCountryCodes {
+            assert(allowedISOCountryCodes.filter {
+                $0.characters.count != 2 || $0.containsString("-")
+            }.isEmpty, "Only ISO 3166-1 alpha-2 codes are allowed.")
+            let codeList = allowedISOCountryCodes.joinWithSeparator(",").lowercaseString
+            params.append(NSURLQueryItem(name: "country", value: codeList))
+        }
+        if CLLocationCoordinate2DIsValid(focalCoordinate) {
+            params.append(NSURLQueryItem(name: "proximity", value: "\(focalCoordinate.longitude),\(focalCoordinate.latitude)"))
+        }
+        if !allowedScopes.isEmpty && allowedScopes != .All {
+            params.append(NSURLQueryItem(name: "types", value: String(allowedScopes)))
+        }
+        if !autocompletionEnabled {
+            params.append(NSURLQueryItem(name: "autocomplete", value: String(autocompletionEnabled)))
+        }
+        if let allowedRegion = allowedRegion {
+            params.append(NSURLQueryItem(name: "bbox", value: String(allowedRegion)))
+        }
+        return params
+    }
+}
+
+@objc(MBForwardGeocodeOptions)
+public class ForwardGeocodeOptions: GeocodeOptions {
+    public init(queries: [String]) {
+        super.init()
+        self.queries = queries
+    }
+    
+    public convenience init(query: String) {
+        self.init(queries: [query])
+    }
+}
+
+@objc(MBReverseGeocodeOptions)
+public class ReverseGeocodeOptions: GeocodeOptions {
+    public var coordinates: [CLLocationCoordinate2D]
+    
+    public init(coordinates: [CLLocationCoordinate2D]) {
+        self.coordinates = coordinates
+        super.init()
+        queries = coordinates.map { String(format: "%.5f,%.5f", $0.longitude, $0.latitude) }
+    }
+    
+    public convenience init(locations: [CLLocation]) {
+        self.init(coordinates: locations.map { $0.coordinate })
+    }
+    
+    public convenience init(coordinate: CLLocationCoordinate2D) {
+        self.init(coordinates: [coordinate])
+    }
+    
+    public convenience init(location: CLLocation) {
+        self.init(locations: [location])
+    }
+}

@@ -1,6 +1,3 @@
-import Foundation
-import CoreLocation
-
 public class MBRectangularRegion: CLRegion {
     /** Coordinate at the southwest corner. */
     public var southWest: CLLocationCoordinate2D = CLLocationCoordinate2D()
@@ -25,10 +22,18 @@ public class MBRectangularRegion: CLRegion {
         coder.encodeValueOfObjCType("{dd}", at: &northEast)
     }
     
+    public override var hashValue: Int {
+        return (southWest.latitude.hashValue + southWest.longitude.hashValue
+            + northEast.latitude.hashValue + northEast.longitude.hashValue)
+    }
+    
     public override func isEqual(object: AnyObject?) -> Bool {
-        if let object = object as? MBRectangularRegion {
-            return southWest == object.southWest && northEast == object.northEast
+        guard let object = object as? MBRectangularRegion else {
+            return false
         }
-        return false
+        return (southWest.latitude == object.southWest.latitude
+            && southWest.longitude == object.southWest.longitude
+            && northEast.latitude == object.northEast.latitude
+            && northEast.longitude == object.northEast.longitude)
     }
 }

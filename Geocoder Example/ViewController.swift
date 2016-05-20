@@ -13,7 +13,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
 
     var mapView: MKMapView!
     var resultsLabel: UILabel!
-    var geocoder: MBGeocoder!
+    var geocoder: Geocoder!
+    var geocodingDataTask: NSURLSessionDataTask?
     
     // MARK: - Setup
 
@@ -34,23 +35,23 @@ class ViewController: UIViewController, MKMapViewDelegate {
         resultsLabel.userInteractionEnabled = false
         view.addSubview(resultsLabel)
         
-        geocoder = MBGeocoder(accessToken: MapboxAccessToken)
+        geocoder = Geocoder(accessToken: MapboxAccessToken)
     }
 
     // MARK: - MKMapViewDelegate
 
     func mapView(mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-        geocoder.cancelGeocode()
+        geocodingDataTask?.cancel()
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        geocoder.cancelGeocode()
-        geocoder.reverseGeocodeLocation(CLLocation(latitude: mapView.centerCoordinate.latitude,
-            longitude: mapView.centerCoordinate.longitude)) { [unowned self] (results, error) in
+        geocodingDataTask?.cancel()
+        let options = ReverseGeocodeOptions(coordinate: mapView.centerCoordinate)
+        geocodingDataTask = geocoder.geocode(options: options) { [unowned self] (placemarks, attribution, error) in
             if let error = error {
                 NSLog("%@", error)
-            } else if let results = results where results.count > 0 {
-                self.resultsLabel.text = results[0].name
+            } else if let placemarks = placemarks where !placemarks.isEmpty {
+                self.resultsLabel.text = placemarks[0].qualifiedName
             } else {
                 self.resultsLabel.text = "No results"
             }

@@ -19,13 +19,17 @@ class ForwardGeocodingTests: XCTestCase {
         let expectation = expectationWithDescription("forward geocode should return results")
         
         let json = Fixture.stringFromFileNamed("forward_valid")
-        stubRequest("GET", "https://api.mapbox.com/geocoding/v5/mapbox.places/1600+pennsylvania+ave+nw.json?access_token=\(BogusToken)&country=ca").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+        stubRequest("GET", "https://api.mapbox.com/geocoding/v5/mapbox.places/1600+pennsylvania+ave.json?country=ca&access_token=\(BogusToken)").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
         
-        let geocoder = MBGeocoder(accessToken: BogusToken)
-        var addressPlacemark: MBPlacemark! = nil
-        let task = geocoder.geocodeAddressString("1600 pennsylvania ave nw", inCountries: ["CA"]) { (placemarks, error) in
-            XCTAssertEqual(placemarks?.count, 5, "forward geocode should have 5 results")
+        let geocoder = Geocoder(accessToken: BogusToken)
+        var addressPlacemark: Placemark! = nil
+        let options = ForwardGeocodeOptions(query: "1600 pennsylvania ave")
+        options.allowedISOCountryCodes = ["CA"]
+        let task = geocoder.geocode(options: options) { (placemarks, attribution, error) in
+            XCTAssertEqual(placemarks?.count, 4, "forward geocode should have 4 results")
             addressPlacemark = placemarks![0]
+            
+            XCTAssertEqual(attribution, "NOTICE: © 2016 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained.")
             
             expectation.fulfill()
         }
@@ -33,46 +37,57 @@ class ForwardGeocodingTests: XCTestCase {
         
         waitForExpectationsWithTimeout(1) { (error) in
             XCTAssertNil(error, "Error: \(error)")
-            XCTAssertEqual(task?.state, .Completed)
+            XCTAssertEqual(task.state, NSURLSessionTaskState.Completed)
         }
         
-        XCTAssertEqual(addressPlacemark.description, "Pennsylvania Ave, Stellarton, Nova Scotia B0K 1S0, Canada", "forward geocode should populate description")
+        XCTAssertEqual(addressPlacemark.description, "Pennsylvania Ave", "forward geocode should populate description")
+        XCTAssertEqual(addressPlacemark.debugDescription, "Pennsylvania Ave, Wasaga Beach, Ontario L9Z 3A8, Canada", "forward geocode should populate debug description")
         XCTAssertEqual(addressPlacemark.name, "Pennsylvania Ave", "forward geocode should populate name")
-        XCTAssertEqual(addressPlacemark.location?.coordinate, CLLocationCoordinate2D(latitude: 45.5562851, longitude: -62.661944), "forward geocode should populate location")
-        XCTAssertEqual(addressPlacemark.scope, .Address, "forward geocode should populate scope")
-        XCTAssertEqual(addressPlacemark.ISOcountryCode, "CA", "forward geocode should populate ISO country code")
-        XCTAssertEqual(addressPlacemark.country, "Canada", "forward geocode should populate country")
-        XCTAssertEqual(addressPlacemark.postalCode, "B0K 1S0", "forward geocode should populate postal code")
-        XCTAssertEqual(addressPlacemark.administrativeArea, "Nova Scotia", "forward geocode should populate administrative area")
-        XCTAssertEqual(addressPlacemark.subAdministrativeArea, "Stellarton", "forward geocode should populate sub-administrative area")
-        XCTAssertEqual(addressPlacemark.locality, "Stellarton", "forward geocode should populate locality")
+        XCTAssertEqual(addressPlacemark.qualifiedName, "Pennsylvania Ave, Wasaga Beach, Ontario L9Z 3A8, Canada", "forward geocode should populate name")
+        XCTAssertEqual(addressPlacemark.qualifiers?.count, 4, "forward geocode should populate qualifier placemarks")
+        XCTAssertEqual(addressPlacemark.location?.coordinate.latitude, 44.5047077, "forward geocode should populate location")
+    
+        XCTAssertEqual(addressPlacemark.location?.coordinate.longitude, -79.9850737, "forward geocode should populate location")
+        XCTAssertEqual(addressPlacemark.scope, PlacemarkScope.Address, "forward geocode should populate scope")
+        XCTAssertEqual(addressPlacemark.country?.code, "CA", "forward geocode should populate ISO country code")
+        XCTAssertEqual(addressPlacemark.country?.name, "Canada", "forward geocode should populate country")
+        XCTAssertEqual(addressPlacemark.postalCode?.name, "L9Z 3A8", "forward geocode should populate postal code")
+        XCTAssertEqual(addressPlacemark.administrativeRegion?.name, "Ontario", "forward geocode should populate administrative region")
+        XCTAssertNil(addressPlacemark.district?.name, "forward geocode in Canada should not populate district area")
+        XCTAssertEqual(addressPlacemark.place?.name, "Wasaga Beach", "forward geocode should populate locality")
         XCTAssertEqual(addressPlacemark.thoroughfare, "Pennsylvania Ave", "forward geocode should populate thoroughfare")
         XCTAssertNil(addressPlacemark.subThoroughfare, "forward geocode should not populate sub-thoroughfare for street-only result")
         
         XCTAssertNotNil(addressPlacemark.addressDictionary)
         let addressDictionary = addressPlacemark.addressDictionary!
         XCTAssertEqual(addressDictionary[MBPostalAddressStreetKey] as? String, "Pennsylvania Ave", "forward geocode should populate street in address dictionary")
-        XCTAssertEqual(addressDictionary[MBPostalAddressCityKey] as? String, "Stellarton", "forward geocode should populate city in address dictionary")
-        XCTAssertEqual(addressDictionary[MBPostalAddressStateKey] as? String, "Nova Scotia", "forward geocode should populate state in address dictionary")
+        XCTAssertEqual(addressDictionary[MBPostalAddressCityKey] as? String, "Wasaga Beach", "forward geocode should populate city in address dictionary")
+        XCTAssertEqual(addressDictionary[MBPostalAddressStateKey] as? String, "Ontario", "forward geocode should populate state in address dictionary")
         XCTAssertEqual(addressDictionary[MBPostalAddressCountryKey] as? String, "Canada", "forward geocode should populate country in address dictionary")
         XCTAssertEqual(addressDictionary[MBPostalAddressISOCountryCodeKey] as? String, "CA", "forward geocode should populate ISO country code in address dictionary")
     }
     
     func testInvalidForwardGeocode() {
         let json = Fixture.stringFromFileNamed("forward_invalid")
-        stubRequest("GET", "https://api.mapbox.com/geocoding/v5/mapbox.places/Sandy+Island,+New+Caledonia.json?access_token=\(BogusToken)&country=fr&types=region%2Cplace%2Clocality%2Cpoi").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+        stubRequest("GET", "https://api.mapbox.com/geocoding/v5/mapbox.places/Sandy+Island,+New+Caledonia.json?country=nc&types=region,place,locality,poi&access_token=\(BogusToken)").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
         
         let expection = expectationWithDescription("forward geocode execute completion handler for invalid query")
-        let geocoder = MBGeocoder(accessToken: BogusToken)
-        let task = geocoder.geocodeAddressString("Sandy Island, New Caledonia", withAllowedScopes: [.AdministrativeArea, .Place, .Locality, .PointOfInterest], inCountries: ["FR"]) { (placemarks, error) in
+        let geocoder = Geocoder(accessToken: BogusToken)
+        let options = ForwardGeocodeOptions(query: "Sandy Island, New Caledonia")
+        options.allowedScopes = [.Region, .Place, .Locality, .PointOfInterest]
+        options.allowedISOCountryCodes = ["NC"]
+        let task = geocoder.geocode(options: options) { (placemarks, attribution, error) in
             XCTAssertEqual(placemarks?.count, 0, "forward geocode should return no results for invalid query")
+            
+            XCTAssertEqual(attribution, "NOTICE: © 2016 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained.")
+            
             expection.fulfill()
         }
         XCTAssertNotNil(task)
         
         waitForExpectationsWithTimeout(1) { (error) in
             XCTAssertNil(error, "Error: \(error)")
-            XCTAssertEqual(task?.state, .Completed)
+            XCTAssertEqual(task.state, NSURLSessionTaskState.Completed)
         }
     }
 }
