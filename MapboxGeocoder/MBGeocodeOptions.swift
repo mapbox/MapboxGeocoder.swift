@@ -2,7 +2,12 @@
 public class GeocodeOptions: NSObject {
     public var allowedISOCountryCodes: [String]?
     
-    public var focalCoordinate: CLLocationCoordinate2D = kCLLocationCoordinate2DInvalid
+    /**
+     A loation to use as a hint when looking up the specified address.
+     
+     This property prioritizes results that are close to a specific location, which is typically the user’s current location. If the value of this property is `nil` – which it is by default – no specific location is prioritized.
+     */
+    public var focalLocation: CLLocation?
     
     public var allowedScopes: PlacemarkScope = [.All]
     
@@ -26,8 +31,8 @@ public class GeocodeOptions: NSObject {
             let codeList = allowedISOCountryCodes.joinWithSeparator(",").lowercaseString
             params.append(NSURLQueryItem(name: "country", value: codeList))
         }
-        if CLLocationCoordinate2DIsValid(focalCoordinate) {
-            params.append(NSURLQueryItem(name: "proximity", value: "\(focalCoordinate.longitude),\(focalCoordinate.latitude)"))
+        if let focalLocation = focalLocation {
+            params.append(NSURLQueryItem(name: "proximity", value: "\(focalLocation.coordinate.longitude),\(focalLocation.coordinate.latitude)"))
         }
         if !allowedScopes.isEmpty && allowedScopes != .All {
             params.append(NSURLQueryItem(name: "types", value: String(allowedScopes)))
