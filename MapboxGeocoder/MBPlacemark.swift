@@ -82,7 +82,14 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
         return PlacemarkScope(descriptions: [String(scopeCharacters)])
     }
     
-    public var wikidataEntityIdentifier: String? {
+    /**
+     The identifier of the placemark’s [Wikidata](https://www.wikidata.org/) item, if known.
+     
+     The item identifier consists of “Q” followed by a number. Prepend `https://www.wikidata.org/wiki/` to get the URL to the Wikidata item page.
+     
+     The Wikidata item contains structured information about the feature represented by the placemark. It also links to corresponding entries in various free content or open data resources, including Wikipedia, Wikimedia Commons, Wikivoyage, and Freebase.
+     */
+    public var wikidataItemIdentifier: String? {
         return nil
     }
     
@@ -229,12 +236,12 @@ internal class GeocodedPlacemark: Placemark {
         return (propertiesJSON["short_code"] as? String)?.uppercaseString
     }
     
-    override var wikidataEntityIdentifier: String? {
-        let entity = propertiesJSON["wikidata"] as? String
-        if let entity = entity {
-            assert(entity.hasPrefix("Q"))
+    override var wikidataItemIdentifier: String? {
+        let item = propertiesJSON["wikidata"] as? String
+        if let item = item {
+            assert(item.hasPrefix("Q"))
         }
-        return entity
+        return item
     }
     
     override var genres: [String]? {
@@ -286,11 +293,11 @@ private class QualifyingPlacemark: Placemark {
         return (featureJSON["short_code"] as? String)?.uppercaseString
     }
     
-    override var wikidataEntityIdentifier: String? {
-        let entity = featureJSON["wikidata"] as? String
-        if let entity = entity {
-            assert(entity.hasPrefix("Q"))
+    override var wikidataItemIdentifier: String? {
+        let item = featureJSON["wikidata"] as? String
+        if let item = item {
+            assert(item.hasPrefix("Q"))
         }
-        return entity
+        return item
     }
 }
