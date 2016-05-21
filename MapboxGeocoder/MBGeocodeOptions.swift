@@ -6,9 +6,12 @@ public class GeocodeOptions: NSObject {
     
     public var allowedScopes: PlacemarkScope = [.All]
     
-    public var autocompletionEnabled = true
-    
-    public var allowedRegion: MBRectangularRegion?
+    /**
+     The region in which each resulting placemark must be located.
+     
+     By default, no region is specified, so results may be located anywhere in the world.
+     */
+    public var allowedRegion: RectangularRegion?
     
     private override init() {}
     
@@ -29,9 +32,6 @@ public class GeocodeOptions: NSObject {
         if !allowedScopes.isEmpty && allowedScopes != .All {
             params.append(NSURLQueryItem(name: "types", value: String(allowedScopes)))
         }
-        if !autocompletionEnabled {
-            params.append(NSURLQueryItem(name: "autocomplete", value: String(autocompletionEnabled)))
-        }
         if let allowedRegion = allowedRegion {
             params.append(NSURLQueryItem(name: "bbox", value: String(allowedRegion)))
         }
@@ -48,6 +48,14 @@ public class ForwardGeocodeOptions: GeocodeOptions {
     
     public convenience init(query: String) {
         self.init(queries: [query])
+    }
+    
+    override var params: [NSURLQueryItem] {
+        var params = super.params
+        if !autocompletesQuery {
+            params.append(NSURLQueryItem(name: "autocomplete", value: String(autocompletesQuery)))
+        }
+        return params
     }
 }
 

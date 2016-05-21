@@ -1,4 +1,8 @@
-public class MBRectangularRegion: CLRegion {
+/**
+ The `RectangularRegion` class defines a rectangular bounding box for a geographic region.
+ */
+@objc(MBRectangularRegion)
+public class RectangularRegion: CLRegion {
     /** Coordinate at the southwest corner. */
     public var southWest: CLLocationCoordinate2D = CLLocationCoordinate2D()
     /** Coordinate at the northeast corner. */
@@ -28,7 +32,7 @@ public class MBRectangularRegion: CLRegion {
     }
     
     public override func isEqual(object: AnyObject?) -> Bool {
-        guard let object = object as? MBRectangularRegion else {
+        guard let object = object as? RectangularRegion else {
             return false
         }
         return (southWest.latitude == object.southWest.latitude
