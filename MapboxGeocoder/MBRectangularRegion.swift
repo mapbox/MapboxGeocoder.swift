@@ -35,9 +35,15 @@ public class RectangularRegion: CLRegion {
         guard let object = object as? RectangularRegion else {
             return false
         }
-        return (southWest.latitude == object.southWest.latitude
-            && southWest.longitude == object.southWest.longitude
-            && northEast.latitude == object.northEast.latitude
-            && northEast.longitude == object.northEast.longitude)
+        return (southWest.latitude == object.southWest.latitude && southWest.longitude == object.southWest.longitude
+            && northEast.latitude == object.northEast.latitude && northEast.longitude == object.northEast.longitude)
+    }
+    
+    /**
+     Returns a Boolean value indicating whether the bounding box contains the specified coordinate.
+     */
+    public func containsCoordinate(coordinate: CLLocationCoordinate2D) -> Bool! {
+        return (coordinate.latitude >= southWest.latitude && coordinate.latitude <= northEast.latitude
+            && coordinate.longitude >= southWest.longitude && coordinate.longitude <= northEast.longitude)
     }
 }
