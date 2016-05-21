@@ -132,30 +132,35 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
     
     // MARK: Accessing Containing Placemarks
     
-    public internal(set) var qualifiers: [Placemark]?
+    /**
+     An array of placemarks representing the hierarchy of administrative areas containing the feature represented by this placemark.
+     
+     The array is sorted in order from the smallest, most local administrative area to the largest administrative area.
+     */
+    public internal(set) var superiorPlacemarks: [Placemark]?
     
     public var country: Placemark? {
-        return qualifiers?.lazy.filter { $0.scope == .Country }.first
+        return superiorPlacemarks?.lazy.filter { $0.scope == .Country }.first
     }
     
     public var postalCode: Placemark? {
-        return qualifiers?.lazy.filter { $0.scope == .PostalCode }.first
+        return superiorPlacemarks?.lazy.filter { $0.scope == .PostalCode }.first
     }
     
     public var administrativeRegion: Placemark? {
-        return qualifiers?.lazy.filter { $0.scope == .Region }.last
+        return superiorPlacemarks?.lazy.filter { $0.scope == .Region }.last
     }
     
     public var district: Placemark? {
-        return qualifiers?.lazy.filter { $0.scope == .District }.last
+        return superiorPlacemarks?.lazy.filter { $0.scope == .District }.last
     }
     
     public var place: Placemark? {
-        return qualifiers?.lazy.filter { $0.scope == .Place }.last
+        return superiorPlacemarks?.lazy.filter { $0.scope == .Place }.last
     }
     
     public var neighborhood: Placemark? {
-        return qualifiers?.lazy.filter { $0.scope == .Neighborhood }.last
+        return superiorPlacemarks?.lazy.filter { $0.scope == .Neighborhood }.last
     }
     
     public var thoroughfare: String? {
@@ -184,7 +189,7 @@ internal class GeocodedPlacemark: Placemark {
         assert(featureJSON["type"] as? String == "Feature")
         
         let contextJSON = featureJSON["context"] as? [JSONDictionary]
-        qualifiers = contextJSON?.map { QualifyingPlacemark(featureJSON: $0) }
+        superiorPlacemarks = contextJSON?.map { QualifyingPlacemark(featureJSON: $0) }
     }
     
     override func copyWithZone(zone: NSZone) -> AnyObject {

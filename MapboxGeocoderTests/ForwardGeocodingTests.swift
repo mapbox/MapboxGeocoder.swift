@@ -44,7 +44,7 @@ class ForwardGeocodingTests: XCTestCase {
         XCTAssertEqual(addressPlacemark.debugDescription, "Pennsylvania Ave, Wasaga Beach, Ontario L9Z 3A8, Canada", "forward geocode should populate debug description")
         XCTAssertEqual(addressPlacemark.name, "Pennsylvania Ave", "forward geocode should populate name")
         XCTAssertEqual(addressPlacemark.qualifiedName, "Pennsylvania Ave, Wasaga Beach, Ontario L9Z 3A8, Canada", "forward geocode should populate name")
-        XCTAssertEqual(addressPlacemark.qualifiers?.count, 4, "forward geocode should populate qualifier placemarks")
+        XCTAssertEqual(addressPlacemark.superiorPlacemarks?.count, 4, "forward geocode should populate superior placemarks")
         XCTAssertEqual(addressPlacemark.location?.coordinate.latitude, 44.5047077, "forward geocode should populate location")
     
         XCTAssertEqual(addressPlacemark.location?.coordinate.longitude, -79.9850737, "forward geocode should populate location")
