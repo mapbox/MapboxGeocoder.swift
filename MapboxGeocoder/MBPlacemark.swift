@@ -61,8 +61,14 @@ public let MBPostalAddressISOCountryCodeKey = "ISOCountryCode"
  */
 @objc(MBPlacemark)
 public class Placemark: NSObject, NSCopying, NSSecureCoding {
+    /**
+     The GeoJSON feature dictionary containing the placemark’s data.
+     */
     private let featureJSON: JSONDictionary
     
+    /**
+     Creates a placemark from the given [Carmen GeoJSON](https://github.com/mapbox/carmen/blob/master/carmen-geojson.md) feature.
+     */
     internal init(featureJSON: JSONDictionary) {
         self.featureJSON = featureJSON
     }
@@ -75,6 +81,9 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
         self.init(featureJSON: featureJSON)
     }
     
+    /**
+     Creates a placemark with the same data as another placemark object.
+     */
     public convenience init(placemark: Placemark) {
         self.init(featureJSON: placemark.featureJSON)
     }
@@ -108,22 +117,47 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
         return name
     }
     
+    /**
+     A string that uniquely identifies the feature.
+     
+     The identifier takes the form <tt><var>index</var>.<var>id</var></tt>, where <var>index</var> corresponds to the `scope` property and <var>id</var> is a number that is unique to the feature but may change when the data source is updated.
+     */
     private var identifier: String {
         return featureJSON["id"] as! String
     }
     
+    /**
+     The common name of the placemark.
+     
+     If the placemark represents an address, the value of this property consists of only the street address, not the full address. Otherwise, if the placemark represents a point of interest or other place, the value of this property consists of only the common name, not the names of any containing administrative areas.
+     */
     public var name: String {
         return featureJSON["text"] as! String
     }
     
+    /**
+     The fully qualified name of the placemark.
+     
+     If the placemark represents an address or point of interest, the value of this property includes the full address. Otherwise, the value of this property includes any containing administrative areas.
+     */
     public var qualifiedName: String? {
         return nil
     }
     
+    /**
+     A standard code uniquely identifying the placemark.
+     
+     If the placemark represents a country, the value of this property is the country’s [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code. If the placemark represents a top-level subdivision of a country, such as a state or province, the value of this property is the subdivision’s [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code. Otherwise, the value of this property is `nil`.
+     */
     public var code: String? {
         return nil
     }
     
+    /**
+     The placemark’s scope.
+     
+     The scope offers a general indication of the size or importance of the feature represented by the placemark – in other words, how local the feature is.
+     */
     public var scope: PlacemarkScope {
         let components = identifier.characters.split(".")
         assert(components.count == 2)
@@ -142,6 +176,9 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
         return nil
     }
     
+    /**
+     An array of keywords that describe the genre of the point of interest represented by the placemark.
+     */
     public var genres: [String]? {
         return nil
     }
@@ -157,10 +194,18 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
     
     // MARK: Accessing Location Data
     
+    /**
+     The placemark’s geographic center.
+     */
     public var location: CLLocation? {
         return nil
     }
     
+    /**
+     A region object indicating in some fashion the geographic extents of the placemark.
+     
+     When this property is not `nil`, it is currently always a `RectangularRegion`. In the future, it may be another type of `CLRegion`.
+     */
     public var region: CLRegion? {
         return nil
     }
@@ -197,6 +242,9 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
         return nil
     }
     
+    /**
+     The phone number associated with the business represented by the placemark.
+     */
     public var phoneNumber: String? {
         return nil
     }
@@ -210,30 +258,63 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      */
     public internal(set) var superiorPlacemarks: [Placemark]?
     
+    /**
+     A placemark representing the country containing the feature represented by this placemark.
+     
+     To get the country’s name, use the `name` property of the object stored in this property.
+     */
     public var country: Placemark? {
         return superiorPlacemarks?.lazy.filter { $0.scope == .Country }.first
     }
     
+    /**
+     A placemark representing the postal code area containing the feature represented by this placemark.
+     
+     To get the postal code itself, use the `name` property of the object stored in this property.
+     */
     public var postalCode: Placemark? {
         return superiorPlacemarks?.lazy.filter { $0.scope == .PostalCode }.first
     }
     
+    /**
+     A placemark representing the region containing the feature represented by this placemark.
+     
+     To get the region’s name, use the `name` property of the object stored in this property.
+     */
     public var administrativeRegion: Placemark? {
         return superiorPlacemarks?.lazy.filter { $0.scope == .Region }.last
     }
     
+    /**
+     A placemark representing the district containing the feature represented by this placemark.
+     
+     To get the district’s name, use the `name` property of the object stored in this property.
+     */
     public var district: Placemark? {
         return superiorPlacemarks?.lazy.filter { $0.scope == .District }.last
     }
     
+    /**
+     A placemark representing the place containing the feature represented by this placemark.
+     
+     To get the place’s name, use the `name` property of the object stored in this property.
+     */
     public var place: Placemark? {
         return superiorPlacemarks?.lazy.filter { $0.scope == .Place }.last
     }
     
+    /**
+     A placemark representing the neighborhood containing the feature represented by this placemark.
+     
+     To get the neighborhood’s name, use the `name` property of the object stored in this property.
+     */
     public var neighborhood: Placemark? {
         return superiorPlacemarks?.lazy.filter { $0.scope == .Neighborhood }.last
     }
     
+    /**
+     The name of the street associated with the placemark.
+     */
     public var thoroughfare: String? {
         guard scope == .Address else {
             return nil
@@ -241,6 +322,11 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
         return featureJSON["text"] as? String
     }
     
+    /**
+     An identifier indicating the location along the street at which you can find the feature represented by the placemark.
+     
+     Typically, this property contains the house number and/or unit number of a business or residence.
+     */
     public var subThoroughfare: String? {
         guard let houseNumber = featureJSON["address"] else {
             return nil
@@ -249,6 +335,9 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
     }
 }
 
+/**
+ A concrete subclass of `Placemark` to represent results of geocoding requests.
+ */
 internal class GeocodedPlacemark: Placemark {
     private let propertiesJSON: JSONDictionary
     
@@ -389,6 +478,9 @@ internal class GeocodedPlacemark: Placemark {
     }
 }
 
+/**
+ A concrete subclass of `Placemark` to represent entries in a `GeocodedPlacemark` object’s `superiorPlacemarks` property. These entries are like top-level geocoding results, except that they lack location information and are flatter, with properties directly at the top level.
+ */
 private class QualifyingPlacemark: Placemark {
     override func copyWithZone(zone: NSZone) -> AnyObject {
         return QualifyingPlacemark(featureJSON: featureJSON)

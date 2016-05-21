@@ -1,4 +1,7 @@
 extension PlacemarkScope: CustomStringConvertible {
+    /**
+     Initializes a placemark scope bitmask corresponding to the given array of string representations of scopes.
+     */
     public init(descriptions: [String]) {
         var scope: PlacemarkScope = []
         for description in descriptions {

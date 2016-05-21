@@ -4,6 +4,9 @@ typealias JSONDictionary = [String: AnyObject]
 let defaultAccessToken = NSBundle.mainBundle().objectForInfoDictionaryKey("MGLMapboxAccessToken") as? String
 
 extension NSCharacterSet {
+    /**
+     Returns the character set including the characters allowed in the “geocoding query” (file name) part of a Geocoding API URL request.
+     */
     internal class func geocodingQueryAllowedCharacterSet() -> NSCharacterSet {
         let characterSet = NSCharacterSet.URLPathAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
         characterSet.removeCharactersInString("/;")
@@ -12,6 +15,9 @@ extension NSCharacterSet {
 }
 
 extension CLLocationCoordinate2D {
+    /**
+     Initializes a coordinate pair based on the given GeoJSON array.
+     */
     internal init(geoJSON array: [Double]) {
         assert(array.count == 2)
         self.init(latitude: array[1], longitude: array[0])
@@ -19,6 +25,9 @@ extension CLLocationCoordinate2D {
 }
 
 extension CLLocation {
+    /**
+     Initializes a CLLocation object with the given coordinate pair.
+     */
     internal convenience init(coordinate: CLLocationCoordinate2D) {
         self.init(latitude: coordinate.latitude, longitude: coordinate.longitude)
     }
@@ -87,6 +96,15 @@ public class Geocoder: NSObject {
     
     // MARK: Geocoding a Location
     
+    /**
+     Submits a geocoding request to search for placemarks and delivers the results to the given closure.
+     
+     This method retrieves the placemarks asynchronously over a network connection. If a connection error or server error occurs, details about the error are passed into the given completion handler in lieu of the placemarks.
+     
+     - parameter options: A `ForwardGeocodeOptions` or `ReverseGeocodeOptions` object indicating what to search for.
+     - parameter completionHandler: The closure (block) to call with the resulting placemarks. This closure is executed on the application’s main thread.
+     - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting placemarks, cancel this task.
+     */
     public func geocode(options options: GeocodeOptions, completionHandler completion: CompletionHandler) -> NSURLSessionDataTask {
         let url = URLForGeocoding(options: options)
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in

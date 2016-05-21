@@ -1,5 +1,20 @@
+/**
+ A structure that specifies the criteria for results returned by the Mapbox Geocoding API.
+ 
+ You do not create instances of `GeocodeOptions` directly. Instead, you create instances of `ForwardGeocodeOptions` and `ReverseGeocodeOptions`, depending on the kind of geocoding you want to perform:
+ 
+ - _Forward geocoding_ takes a human-readable query, such as a place name or address, and produces any number of geographic coordinates that correspond to that query. To perform forward geocoding, use a `ForwardGeocodeOptions` object.
+ - _Reverse geocoding_ takes a geographic coordinate and produces a hierarchy of places, often beginning with an address, that describes the coordinate’s location. To perform reverse geocoding, use a `ReverseGeocodeOptions` object.
+ 
+ Pass an instance of either class into the `Geocoder.geocode(options:completionHandler:)` method.
+ */
 @objc(MBGeocodeOptions)
 public class GeocodeOptions: NSObject {
+    /**
+     An array of [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes specifying the countries in which the results may lie. The codes may appear in any order and are case-insensitive.
+     
+     By default, no country codes are specified.
+     */
     public var allowedISOCountryCodes: [String]?
     
     /**
@@ -9,6 +24,11 @@ public class GeocodeOptions: NSObject {
      */
     public var focalLocation: CLLocation?
     
+    /**
+     The bitmask of placemark scopes, such as country and neighborhood, to include in the results.
+     
+     The default value of this property is `PlacemarkScope.All`, which includes all scopes.
+     */
     public var allowedScopes: PlacemarkScope = [.All]
     
     /**
@@ -20,8 +40,14 @@ public class GeocodeOptions: NSObject {
     
     private override init() {}
     
+    /**
+     An array of geocoding query strings to include in the request URL.
+     */
     internal var queries: [String] = []
     
+    /**
+     An array of URL parameters to include in the request URL.
+     */
     internal var params: [NSURLQueryItem] {
         var params: [NSURLQueryItem] = []
         if let allowedISOCountryCodes = allowedISOCountryCodes {
@@ -44,13 +70,35 @@ public class GeocodeOptions: NSObject {
     }
 }
 
+/**
+ A structure that specifies the criteria for forward geocoding results. Forward geocoding takes a human-readable query, such as a place name or address, and produces any number of geographic coordinates that correspond to that query.
+ */
 @objc(MBForwardGeocodeOptions)
 public class ForwardGeocodeOptions: GeocodeOptions {
+    /**
+     A Boolean value that determines whether the results may include placemarks whose names match must match the whole query string exactly.
+     
+     If true, a resulting placemark’s name may contain a word that begins with the query string. If false, the query string must match a whole word or phrase in the placemark’s name. The default value of this property is true, which is best suited for continuous search fields.
+     */
+    public var autocompletesQuery = true
+    
+    /**
+     Initializes a forward batch geocode options object with the given query strings.
+     
+     You can include up to 50 forward geocoding queries in a single request. Each query in a batch request counts individually against your account’s rate limits.
+     
+     - parameter queries: An array of place names or addresses to search for.
+     */
     public init(queries: [String]) {
         super.init()
         self.queries = queries
     }
     
+    /**
+     Initializes a forward geocode options object with the given query string.
+     
+     - parameter query: A place name or address to search for.
+     */
     public convenience init(query: String) {
         self.init(queries: [query])
     }
@@ -64,24 +112,54 @@ public class ForwardGeocodeOptions: GeocodeOptions {
     }
 }
 
+/**
+ A structure that specifies the criteria for reverse geocoding results. _Reverse geocoding_ takes a geographic coordinate and produces a hierarchy of places, often beginning with an address, that describes the coordinate’s location.
+ */
 @objc(MBReverseGeocodeOptions)
 public class ReverseGeocodeOptions: GeocodeOptions {
+    /**
+     An array of coordinates to search for.
+     */
     public var coordinates: [CLLocationCoordinate2D]
     
+    /**
+     Initializes a reverse batch geocode options object with the given coordinate pairs.
+     
+     You can include up to 50 reverse geocoding queries in a single request. Each query in a batch request counts individually against your account’s rate limits.
+     
+     - parameter coordinates: An array of coordinate pairs to search for.
+     */
     public init(coordinates: [CLLocationCoordinate2D]) {
         self.coordinates = coordinates
         super.init()
         queries = coordinates.map { String(format: "%.5f,%.5f", $0.longitude, $0.latitude) }
     }
     
+    /**
+     Initializes a reverse batch geocode options object with the given `CLLocation` objects.
+     
+     You can include up to 50 reverse geocoding queries in a single request. Each query in a batch request counts individually against your account’s rate limits.
+     
+     - parameter location: An array of `CLLocation` objects to search for.
+     */
     public convenience init(locations: [CLLocation]) {
         self.init(coordinates: locations.map { $0.coordinate })
     }
     
+    /**
+     Initializes a reverse geocode options object with the given coordinate pair.
+     
+     - parameter coordinate: A coordinate pair to search for.
+     */
     public convenience init(coordinate: CLLocationCoordinate2D) {
         self.init(coordinates: [coordinate])
     }
     
+    /**
+     Initializes a reverse geocode options object with the given `CLLocation` object.
+     
+     - parameter location: A `CLLocation` object to search for.
+     */
     public convenience init(location: CLLocation) {
         self.init(locations: [location])
     }
