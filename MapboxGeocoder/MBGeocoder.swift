@@ -57,7 +57,7 @@ public class Geocoder: NSObject {
      
      To use this object, a Mapbox [access token](https://www.mapbox.com/help/define-access-token/) should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
      */
-    static let sharedGeocoder = Geocoder(accessToken: nil)
+    public static let sharedGeocoder = Geocoder(accessToken: nil)
     
     /// The API endpoint to request the geocodes from.
     internal var apiEndpoint: NSURL
