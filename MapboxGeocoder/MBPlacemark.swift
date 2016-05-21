@@ -1,10 +1,59 @@
-// Based on CNPostalAddress, the successor to ABPerson, which is used by CLPlacemark.
+import Contacts
 
+// MARK: Postal Address Properties
+
+/**
+ Street.
+ 
+ This key takes a string value.
+ 
+ - seealso: CNPostalAddressStreetKey
+ */
 public let MBPostalAddressStreetKey = "street"
+
+/**
+ City.
+ 
+ This key takes a string value.
+ 
+ - seealso: CNPostalAddressCityKey
+ */
 public let MBPostalAddressCityKey = "city"
+
+/**
+ State.
+ 
+ This key takes a string value.
+ 
+ - seealso: CNPostalAddressStateKey
+ */
 public let MBPostalAddressStateKey = "state"
+
+/**
+ Postal code.
+ 
+ This key takes a string value.
+ 
+ - seealso: CNPostalAddressPostalCodeKey
+ */
 public let MBPostalAddressPostalCodeKey = "postalCode"
+
+/**
+ Country.
+ 
+ This key takes a string value.
+ 
+ - seealso: CNPostalAddressCountryKey
+ */
 public let MBPostalAddressCountryKey = "country"
+
+/**
+ ISO country code.
+ 
+ This key takes a string value.
+ 
+ - seealso: CNPostalAddressISOCountryCodeKey
+ */
 public let MBPostalAddressISOCountryCodeKey = "ISOCountryCode"
 
 /**
@@ -118,10 +167,32 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
     
     // MARK: Accessing Contact Information
     
-    public var formattedAddressLines: [String]? {
+    /**
+     The placemark’s full address in the customary local format, with each line in a separate string in the array.
+     
+     If you need to fit the same address on a single line, use the `qualifiedName` property, in which each line is separated by a comma instead of a line break.
+     */
+    private var formattedAddressLines: [String]? {
         return nil
     }
     
+    /**
+     The placemark’s postal address.
+     
+     To format the postal address, use a `CNPostalAddressFormatter` object.
+     */
+    @available(iOS 9.0, *)
+    public var postalAddress: CNPostalAddress? {
+        return nil
+    }
+    
+    /**
+     A dictionary containing the Contacts keys and values for the placemark.
+     
+     The keys in this dictionary are those defined by the Contacts framework and used to access address information for a person or business. For a list of the keys that can be set in this dictionary, see the “Postal Address Properties” constants in _CNPostalAddress Reference_ and in this module.
+     
+     On iOS 9.0 and above, most of the information in this dictionary is also contained in the `CNPostalAddress` object stored in the `postalAddress` property.
+     */
     public var addressDictionary: [NSObject: AnyObject]? {
         return nil
     }
@@ -257,6 +328,35 @@ internal class GeocodedPlacemark: Placemark {
     override var formattedAddressLines: [String] {
         let lines = qualifiedName.componentsSeparatedByString(", ")
         return scope == .Address ? lines : Array(lines.suffixFrom(1))
+    }
+    
+    @available(iOS 9.0, *)
+    override var postalAddress: CNPostalAddress? {
+        let postalAddress = CNMutablePostalAddress()
+        
+        if scope == .Address {
+            postalAddress.street = name
+        } else if let address = propertiesJSON["address"] as? String {
+            postalAddress.street = address.stringByReplacingOccurrencesOfString(", ", withString: "\n")
+        }
+        
+        if let placeName = place?.name {
+            postalAddress.city = placeName
+        }
+        if let regionName = administrativeRegion?.name {
+            postalAddress.state = regionName
+        }
+        if let postalCode = postalCode?.name {
+            postalAddress.postalCode = postalCode
+        }
+        if let countryName = country?.name {
+            postalAddress.country = countryName
+        }
+        if let ISOCountryCode = country?.code {
+            postalAddress.ISOCountryCode = ISOCountryCode
+        }
+        
+        return postalAddress
     }
     
     override var addressDictionary: [NSObject: AnyObject]? {
