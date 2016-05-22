@@ -4,7 +4,7 @@ import Nocilla
 
 let BogusToken = "pk.feedCafeDadeDeadBeef-BadeBede.FadeCafeDadeDeed-BadeBede"
 
-class MBGeocoderConfigurationTests: XCTestCase {
+class GeocoderTests: XCTestCase {
     override func setUp() {
         super.setUp()
         LSNocilla.sharedInstance().start()
@@ -17,8 +17,8 @@ class MBGeocoderConfigurationTests: XCTestCase {
     }
     
     func testConfiguration() {
-        let subject = MBGeocoderConfiguration(BogusToken)
-        XCTAssertEqual(subject.accessToken, BogusToken)
-        XCTAssertEqual(subject.apiEndpoint, "https://api.mapbox.com")
+        let geocoder = Geocoder(accessToken: BogusToken)
+        XCTAssertEqual(geocoder.accessToken, BogusToken)
+        XCTAssertEqual(geocoder.apiEndpoint.absoluteString, "https://api.mapbox.com")
     }
 }
