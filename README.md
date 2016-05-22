@@ -59,7 +59,9 @@ _Forward geocoding_ takes a human-readable query, such as a place name or addres
 
 ```swift
 // main.swift
-import Contacts
+#if !os(tvOS)
+    import Contacts
+#endif
 
 let options = ForwardGeocodeOptions(query: "200 queen street")
 
@@ -79,17 +81,21 @@ let task = geocoder.geocode(options: options) { (placemarks, attribution, error)
     print("\(coordinate.latitude), \(coordinate.longitude)")
         // 45.270093, -66.050985
     
+    #if !os(tvOS)
     let formatter = CNPostalAddressFormatter()
     print(formatter.stringFromPostalAddress(placemark.postalAddress))
         // 200 Queen St
         // Saint John New Brunswick E2L 2X1
         // Canada
+    #endif
 }
 ```
 
 ```objc
 // main.m
+#if !TARGET_OS_TV
 @import Contacts;
+#endif
 
 MBForwardGeocodeOptions *options = [[MBForwardGeocodeOptions alloc] initWithQuery:@"200 queen street"];
 
@@ -112,11 +118,13 @@ NSURLSessionDataTask *task = [geocoder geocodeWithOptions:options
     NSLog(@"%f, %f", coordinate.latitude, coordinate.longitude);
         // 45.270093, -66.050985
     
+#if !TARGET_OS_TV
     CNPostalAddressFormatter *formatter = [[CNPostalAddressFormatter alloc] init];
     NSLog(@"%@", [formatter stringFromPostalAddress:placemark.postalAddress]);
         // 200 Queen St
         // Saint John New Brunswick E2L 2X1
         // Canada
+#endif
 }];
 ```
 
