@@ -1,3 +1,5 @@
+import Contacts
+
 /**
  A structure that specifies the criteria for results returned by the Mapbox Geocoding API.
  
@@ -94,6 +96,17 @@ public class ForwardGeocodeOptions: GeocodeOptions {
      */
     public convenience init(query: String) {
         self.init(queries: [query])
+    }
+    
+    /**
+     Initializes a forward geocode options object with the given postal address object.
+     
+     - parameter postalAddress: A `CNPostalAddress` object to search for.
+     */
+    @available(iOS 9.0, *)
+    public convenience init(postalAddress: CNPostalAddress) {
+        let formattedAddress = CNPostalAddressFormatter().stringFromPostalAddress(postalAddress)
+        self.init(query: formattedAddress.stringByReplacingOccurrencesOfString("\n", withString: ", "))
     }
     
     override var params: [NSURLQueryItem] {
