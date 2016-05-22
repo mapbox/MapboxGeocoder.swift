@@ -53,7 +53,7 @@ public class Geocoder: NSObject {
      - parameter attribution: A legal notice indicating the source, copyright status, and terms of use of the placemark data.
      - parameter error: The error that occurred, or `nil` if the placemarks were obtained successfully.
      */
-    public typealias CompletionHandler = (placemarks: [Placemark]?, attribution: String?, error: NSError?) -> Void
+    public typealias CompletionHandler = (placemarks: [GeocodedPlacemark]?, attribution: String?, error: NSError?) -> Void
     
     /**
      A closure (block) to be called when a geocoding request is complete.
@@ -64,7 +64,7 @@ public class Geocoder: NSObject {
      - parameter attributionsByQuery: An array of legal notices indicating the sources, copyright statuses, and terms of use of the placemark data for each query.
      - parameter error: The error that occurred, or `nil` if the placemarks were obtained successfully.
      */
-    public typealias BatchCompletionHandler = (placemarksByQuery: [[Placemark]]?, attributionsByQuery: [String]?, error: NSError?) -> Void
+    public typealias BatchCompletionHandler = (placemarksByQuery: [[GeocodedPlacemark]]?, attributionsByQuery: [String]?, error: NSError?) -> Void
     
     /**
      The shared geocoder object.
@@ -153,7 +153,7 @@ public class Geocoder: NSObject {
         let url = URLForGeocoding(options: options)
         let task = dataTaskWithURL(url, completionHandler: { (json) in
             let featureCollections = json as! [JSONDictionary]
-            let placemarksByQuery = featureCollections.map { (featureCollection) -> [Placemark] in
+            let placemarksByQuery = featureCollections.map { (featureCollection) -> [GeocodedPlacemark] in
                 assert(featureCollection["type"] as? String == "FeatureCollection")
                 let features = featureCollection["features"] as! [JSONDictionary]
                 return features.flatMap { GeocodedPlacemark(featureJSON: $0) }

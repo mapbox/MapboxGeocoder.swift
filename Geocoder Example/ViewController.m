@@ -54,7 +54,7 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
     [self.geocodingDataTask cancel];
     MBReverseGeocodeOptions *options = [[MBReverseGeocodeOptions alloc] initWithCoordinate:self.mapView.centerCoordinate];
-    [self.geocoder geocodeWithOptions:options completionHandler:^(NSArray<MBPlacemark *> * _Nullable placemarks, NSString * _Nullable attribution, NSError * _Nullable error) {
+    [self.geocoder geocodeWithOptions:options completionHandler:^(NSArray<MBGeocodedPlacemark *> * _Nullable placemarks, NSString * _Nullable attribution, NSError * _Nullable error) {
         if (error) {
             NSLog(@"%@", error);
         } else if (placemarks.count > 0) {
