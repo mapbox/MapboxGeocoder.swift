@@ -226,7 +226,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      To format the postal address, use a `CNPostalAddressFormatter` object.
      */
-    @available(iOS 9.0, *)
+    @available(iOS 9.0, OSX 10.11, *)
     public var postalAddress: CNPostalAddress? {
         return nil
     }
@@ -424,7 +424,7 @@ public class GeocodedPlacemark: Placemark {
         return scope == .Address ? lines : Array(lines.suffixFrom(1))
     }
     
-    @available(iOS 9.0, *)
+    @available(iOS 9.0, OSX 10.11, *)
     public override var postalAddress: CNPostalAddress? {
         let postalAddress = CNMutablePostalAddress()
         

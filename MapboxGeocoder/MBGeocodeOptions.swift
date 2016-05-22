@@ -103,7 +103,7 @@ public class ForwardGeocodeOptions: GeocodeOptions {
      
      - parameter postalAddress: A `CNPostalAddress` object to search for.
      */
-    @available(iOS 9.0, *)
+    @available(iOS 9.0, OSX 10.11, *)
     public convenience init(postalAddress: CNPostalAddress) {
         let formattedAddress = CNPostalAddressFormatter().stringFromPostalAddress(postalAddress)
         self.init(query: formattedAddress.stringByReplacingOccurrencesOfString("\n", withString: ", "))
