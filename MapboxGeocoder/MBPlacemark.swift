@@ -415,6 +415,10 @@ public class GeocodedPlacemark: Placemark {
         return categoryList?.componentsSeparatedByString(", ")
     }
     
+    public override var imageName: String? {
+        return propertiesJSON["maki"] as? String
+    }
+    
     override var formattedAddressLines: [String] {
         let lines = qualifiedName.componentsSeparatedByString(", ")
         return scope == .Address ? lines : Array(lines.suffixFrom(1))
