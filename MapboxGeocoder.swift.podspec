@@ -4,13 +4,13 @@ Pod::Spec.new do |s|
 
   s.name         = "MapboxGeocoder.swift"
   s.version      = "0.4.2"
-  s.summary      = "Mapbox Geocoding API wrapper for Objective-C and Swift."
+  s.summary      = "Mapbox Geocoding API for Swift and Objective-C."
 
   s.description  = <<-DESC
-  MapboxGeocoder.swift makes it easy to connect your iOS or OS X application to the Mapbox Geocoding API. MapboxGeocoder.swift combines the power of the Carmen geocoder with the simplicity of Core Location’s CLGeocoder API.
+  MapboxGeocoder.swift makes it easy to connect your iOS or OS X application to the Mapbox Geocoding API. MapboxGeocoder.swift exposes the power of the Carmen geocoder through a simple API similar to Core Location’s CLGeocoder.
                    DESC
 
-  s.homepage     = "https://www.mapbox.com/api-documentation/#geocoding"
+  s.homepage     = "https://www.mapbox.com/api-documentation/?language=Swift#geocoding"
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
@@ -41,7 +41,5 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
   s.module_name = "MapboxGeocoder"
-
-  s.dependency "NBNRequestKit"
 
 end
