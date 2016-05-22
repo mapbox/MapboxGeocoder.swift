@@ -8,7 +8,7 @@ use_frameworks!
 #end
 
 def shared_test_pods
-  pod 'Nocilla', :configurations => ['Debug']
+  pod 'OHHTTPStubs/Swift', '~> 5.0.0', :configurations => ['Debug']
 end
 
 target 'MapboxGeocoderTests' do
@@ -17,6 +17,6 @@ target 'MapboxGeocoderTests' do
 end
 
 target 'MapboxGeocoderMacTests' do
-    platform :osx, '10.10'
+  platform :osx, '10.10'
   shared_test_pods
 end

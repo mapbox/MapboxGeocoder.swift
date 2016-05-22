@@ -1,18 +1,12 @@
 import XCTest
-import Nocilla
+import OHHTTPStubs
 @testable import MapboxGeocoder
 
 let BogusToken = "pk.feedCafeDadeDeadBeef-BadeBede.FadeCafeDadeDeed-BadeBede"
 
 class GeocoderTests: XCTestCase {
-    override func setUp() {
-        super.setUp()
-        LSNocilla.sharedInstance().start()
-    }
-    
     override func tearDown() {
-        LSNocilla.sharedInstance().clearStubs()
-        LSNocilla.sharedInstance().stop()
+        OHHTTPStubs.removeAllStubs()
         super.tearDown()
     }
     
