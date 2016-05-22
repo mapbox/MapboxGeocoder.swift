@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DA5170EA1CF2581900CD6DCF"
-               BuildableName = "MapboxGeocoderWatch.framework"
+               BuildableName = "MapboxGeocoder.framework"
                BlueprintName = "MapboxGeocoderWatch"
                ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DA5170EA1CF2581900CD6DCF"
-            BuildableName = "MapboxGeocoderWatch.framework"
+            BuildableName = "MapboxGeocoder.framework"
             BlueprintName = "MapboxGeocoderWatch"
             ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DA5170EA1CF2581900CD6DCF"
-            BuildableName = "MapboxGeocoderWatch.framework"
+            BuildableName = "MapboxGeocoder.framework"
             BlueprintName = "MapboxGeocoderWatch"
             ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
          </BuildableReference>
