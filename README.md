@@ -98,7 +98,7 @@ options.focalLocation = [[CLLocation alloc] initWithLatitude:45.3 longitude:-66.
 options.allowedScopes = MBPlacemarkScopeAddress | MBPlacemarkScopePointOfInterest;
 
 NSURLSessionDataTask *task = [geocoder geocodeWithOptions:options
-                                        completionHandler:^(NSArray<MBPlacemark *> * _Nullable placemarks,
+                                        completionHandler:^(NSArray<MBGeocodedPlacemark *> * _Nullable placemarks,
                                                             NSString * _Nullable attribution,
                                                             NSError * _Nullable error) {
     MBPlacemark *placemark = placemarks[0];
@@ -149,7 +149,7 @@ MBReverseGeocodeOptions *options = [[MBReverseGeocodeOptions alloc] initWithCoor
 // Or perhaps: [[MBReverseGeocodeOptions alloc] initWithLocation:locationManager.location]
 
 NSURLSessionDataTask *task = [geocoder geocodeWithOptions:options
-                                        completionHandler:^(NSArray<MBPlacemark *> * _Nullable placemarks,
+                                        completionHandler:^(NSArray<MBGeocodedPlacemark *> * _Nullable placemarks,
                                                             NSString * _Nullable attribution,
                                                             NSError * _Nullable error) {
     MBPlacemark *placemark = placemarks[0];

@@ -338,7 +338,8 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
 /**
  A concrete subclass of `Placemark` to represent results of geocoding requests.
  */
-internal class GeocodedPlacemark: Placemark {
+@objc(MBGeocodedPlacemark)
+public class GeocodedPlacemark: Placemark {
     private let propertiesJSON: JSONDictionary
     
     override init(featureJSON: JSONDictionary) {
@@ -352,24 +353,24 @@ internal class GeocodedPlacemark: Placemark {
         superiorPlacemarks = contextJSON?.map { QualifyingPlacemark(featureJSON: $0) }
     }
     
-    override func copyWithZone(zone: NSZone) -> AnyObject {
+    public override func copyWithZone(zone: NSZone) -> AnyObject {
         return GeocodedPlacemark(featureJSON: featureJSON)
     }
     
-    override var debugDescription: String {
+    public override var debugDescription: String {
         return qualifiedName
     }
     
-    override var qualifiedName: String! {
+    public override var qualifiedName: String! {
         return featureJSON["place_name"] as! String
     }
     
-    override var location: CLLocation {
+    public override var location: CLLocation {
         let centerCoordinate = CLLocationCoordinate2D(geoJSON: featureJSON["center"] as! [Double])
         return CLLocation(coordinate: centerCoordinate)
     }
     
-    override var region: RectangularRegion? {
+    public override var region: CLRegion? {
         guard let boundingBox = featureJSON["bbox"] as? [Double] else {
             return nil
         }
@@ -380,7 +381,7 @@ internal class GeocodedPlacemark: Placemark {
         return RectangularRegion(southWest: southWest, northEast: northEast)
     }
     
-    override var name: String {
+    public override var name: String {
         let text = super.name
         
         // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
@@ -397,11 +398,11 @@ internal class GeocodedPlacemark: Placemark {
         }
     }
     
-    override var code: String? {
+    public override var code: String? {
         return (propertiesJSON["short_code"] as? String)?.uppercaseString
     }
     
-    override var wikidataItemIdentifier: String? {
+    public override var wikidataItemIdentifier: String? {
         let item = propertiesJSON["wikidata"] as? String
         if let item = item {
             assert(item.hasPrefix("Q"))
@@ -409,7 +410,7 @@ internal class GeocodedPlacemark: Placemark {
         return item
     }
     
-    override var genres: [String]? {
+    public override var genres: [String]? {
         let categoryList = propertiesJSON["category"] as? String
         return categoryList?.componentsSeparatedByString(", ")
     }
@@ -420,7 +421,7 @@ internal class GeocodedPlacemark: Placemark {
     }
     
     @available(iOS 9.0, *)
-    override var postalAddress: CNPostalAddress? {
+    public override var postalAddress: CNPostalAddress? {
         let postalAddress = CNMutablePostalAddress()
         
         if scope == .Address {
@@ -448,7 +449,7 @@ internal class GeocodedPlacemark: Placemark {
         return postalAddress
     }
     
-    override var addressDictionary: [NSObject: AnyObject]? {
+    public override var addressDictionary: [NSObject: AnyObject]? {
         var addressDictionary: [String: AnyObject] = [:]
         if scope == .Address {
             addressDictionary[MBPostalAddressStreetKey] = name
@@ -473,7 +474,7 @@ internal class GeocodedPlacemark: Placemark {
     /**
      The phone number to contact a business at this location.
      */
-    override var phoneNumber: String? {
+    public override var phoneNumber: String? {
         return propertiesJSON["tel"] as? String
     }
 }
@@ -481,16 +482,17 @@ internal class GeocodedPlacemark: Placemark {
 /**
  A concrete subclass of `Placemark` to represent entries in a `GeocodedPlacemark` object’s `superiorPlacemarks` property. These entries are like top-level geocoding results, except that they lack location information and are flatter, with properties directly at the top level.
  */
-private class QualifyingPlacemark: Placemark {
-    override func copyWithZone(zone: NSZone) -> AnyObject {
+@objc(MBQualifyingPlacemark)
+public class QualifyingPlacemark: Placemark {
+    public override func copyWithZone(zone: NSZone) -> AnyObject {
         return QualifyingPlacemark(featureJSON: featureJSON)
     }
     
-    override var code: String? {
+    public override var code: String? {
         return (featureJSON["short_code"] as? String)?.uppercaseString
     }
     
-    override var wikidataItemIdentifier: String? {
+    public override var wikidataItemIdentifier: String? {
         let item = featureJSON["wikidata"] as? String
         if let item = item {
             assert(item.hasPrefix("Q"))
