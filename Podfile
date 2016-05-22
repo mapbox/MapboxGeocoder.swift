@@ -20,3 +20,8 @@ target 'MapboxGeocoderMacTests' do
   platform :osx, '10.10'
   shared_test_pods
 end
+
+target 'MapboxGeocoderTVTests' do
+  platform :tvos, '9.0'
+  shared_test_pods
+end

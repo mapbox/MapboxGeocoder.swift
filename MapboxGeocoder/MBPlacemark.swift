@@ -1,4 +1,6 @@
-import Contacts
+#if !os(tvOS)
+    import Contacts
+#endif
 
 // MARK: Postal Address Properties
 
@@ -221,6 +223,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
         return nil
     }
     
+    #if !os(tvOS)
     /**
      The placemark’s postal address.
      
@@ -230,6 +233,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
     public var postalAddress: CNPostalAddress? {
         return nil
     }
+    #endif
     
     /**
      A dictionary containing the Contacts keys and values for the placemark.
@@ -424,6 +428,7 @@ public class GeocodedPlacemark: Placemark {
         return scope == .Address ? lines : Array(lines.suffixFrom(1))
     }
     
+    #if !os(tvOS)
     @available(iOS 9.0, OSX 10.11, *)
     public override var postalAddress: CNPostalAddress? {
         let postalAddress = CNMutablePostalAddress()
@@ -452,6 +457,7 @@ public class GeocodedPlacemark: Placemark {
         
         return postalAddress
     }
+    #endif
     
     public override var addressDictionary: [NSObject: AnyObject]? {
         var addressDictionary: [String: AnyObject] = [:]

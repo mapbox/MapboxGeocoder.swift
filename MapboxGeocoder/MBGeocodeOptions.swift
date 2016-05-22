@@ -1,4 +1,6 @@
-import Contacts
+#if !os(tvOS)
+    import Contacts
+#endif
 
 /**
  A structure that specifies the criteria for results returned by the Mapbox Geocoding API.
@@ -98,6 +100,7 @@ public class ForwardGeocodeOptions: GeocodeOptions {
         self.init(queries: [query])
     }
     
+    #if !os(tvOS)
     /**
      Initializes a forward geocode options object with the given postal address object.
      
@@ -108,6 +111,7 @@ public class ForwardGeocodeOptions: GeocodeOptions {
         let formattedAddress = CNPostalAddressFormatter().stringFromPostalAddress(postalAddress)
         self.init(query: formattedAddress.stringByReplacingOccurrencesOfString("\n", withString: ", "))
     }
+    #endif
     
     override var params: [NSURLQueryItem] {
         var params = super.params
