@@ -1,4 +1,4 @@
-# MapboxGeocoder.swift
+# MapboxGeocoder
 
 [![Build Status](https://www.bitrise.io/app/6cae401ec4c1d406.svg?token=MJnXK0c2x2tmTnmHSPtcFA&branch=master)](https://www.bitrise.io/app/6cae401ec4c1d406)
 
@@ -8,7 +8,7 @@ MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com
 
 ## Getting started
 
-Import `MapboxGeocoder.framework` into your project, then `import MapboxGeocoder` or `@import MapboxGeocoder;`. Alternatively, specify the following dependencies in your [CocoaPods](http://cocoapods.org/) Podfile:
+Import `MapboxGeocoder.framework` into your project, then `import MapboxGeocoder` or `@import MapboxGeocoder;`. Alternatively, specify the following dependency in your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
 pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :tag => 'master'
