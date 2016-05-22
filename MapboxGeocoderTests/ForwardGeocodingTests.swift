@@ -1,25 +1,23 @@
 import XCTest
-import Nocilla
+import OHHTTPStubs
 import CoreLocation
 @testable import MapboxGeocoder
 
 class ForwardGeocodingTests: XCTestCase {
-    override func setUp() {
-        super.setUp()
-        LSNocilla.sharedInstance().start()
-    }
-    
     override func tearDown() {
-        LSNocilla.sharedInstance().clearStubs()
-        LSNocilla.sharedInstance().stop()
-        super.setUp()
+        OHHTTPStubs.removeAllStubs()
+        super.tearDown()
     }
 
     func testValidForwardGeocode() {
         let expectation = expectationWithDescription("forward geocode should return results")
         
-        let json = Fixture.stringFromFileNamed("forward_valid")
-        stubRequest("GET", "https://api.mapbox.com/geocoding/v5/mapbox.places/1600+pennsylvania+ave.json?country=ca&access_token=\(BogusToken)").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+        stub(isHost("api.mapbox.com")
+            && isPath("/geocoding/v5/mapbox.places/1600+pennsylvania+ave.json")
+            && containsQueryParams(["country": "ca", "access_token": BogusToken])) { _ in
+            let path = NSBundle(forClass: self.dynamicType).pathForResource("forward_valid", ofType: "json")
+            return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/json"])
+        }
         
         let geocoder = Geocoder(accessToken: BogusToken)
         var addressPlacemark: Placemark! = nil
@@ -68,8 +66,12 @@ class ForwardGeocodingTests: XCTestCase {
     }
     
     func testInvalidForwardGeocode() {
-        let json = Fixture.stringFromFileNamed("forward_invalid")
-        stubRequest("GET", "https://api.mapbox.com/geocoding/v5/mapbox.places/Sandy+Island,+New+Caledonia.json?country=nc&types=region,place,locality,poi&access_token=\(BogusToken)").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+        stub(isHost("api.mapbox.com")
+            && isPath("/geocoding/v5/mapbox.places/Sandy+Island,+New+Caledonia.json")
+            && containsQueryParams(["country": "nc", "types": "region,place,locality,poi", "access_token": BogusToken])) { _ in
+                let path = NSBundle(forClass: self.dynamicType).pathForResource("forward_invalid", ofType: "json")
+                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/json"])
+        }
         
         let expection = expectationWithDescription("forward geocode execute completion handler for invalid query")
         let geocoder = Geocoder(accessToken: BogusToken)

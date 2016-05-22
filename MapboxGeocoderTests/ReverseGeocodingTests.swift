@@ -1,26 +1,23 @@
 import XCTest
-import Nocilla
+import OHHTTPStubs
 import CoreLocation
 @testable import MapboxGeocoder
 
 class ReverseGeocodingTests: XCTestCase {
-
-    override func setUp() {
-        super.setUp()
-        LSNocilla.sharedInstance().start()
-    }
-    
     override func tearDown() {
-        LSNocilla.sharedInstance().clearStubs()
-        LSNocilla.sharedInstance().stop()
-        super.setUp()
+        OHHTTPStubs.removeAllStubs()
+        super.tearDown()
     }
 
     func testValidReverseGeocode() {
         let expectation = expectationWithDescription("reverse geocode should return results")
         
-        let json = Fixture.stringFromFileNamed("reverse_valid")
-        stubRequest("GET", "https://api.mapbox.com/geocoding/v5/mapbox.places/-95.78558,37.13284.json?access_token=\(BogusToken)").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+        stub(isHost("api.mapbox.com")
+            && isPath("/geocoding/v5/mapbox.places/-95.78558,37.13284.json")
+            && containsQueryParams(["access_token": BogusToken])) { _ in
+                let path = NSBundle(forClass: self.dynamicType).pathForResource("reverse_valid", ofType: "json")
+                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/json"])
+        }
 
         let geocoder = Geocoder(accessToken: BogusToken)
         var pointOfInterestPlacemark: Placemark?
@@ -75,8 +72,12 @@ class ReverseGeocodingTests: XCTestCase {
     }
 
     func testInvalidReverseGeocode() {
-        let json = Fixture.stringFromFileNamed("reverse_invalid")
-        stubRequest("GET", "https://api.mapbox.com/geocoding/v5/mapbox.places/0.00000,0.00000.json?access_token=\(BogusToken)").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+        stub(isHost("api.mapbox.com")
+            && isPath("/geocoding/v5/mapbox.places/0.00000,0.00000.json")
+            && containsQueryParams(["access_token": BogusToken])) { _ in
+                let path = NSBundle(forClass: self.dynamicType).pathForResource("reverse_invalid", ofType: "json")
+                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/json"])
+        }
         
         let expection = expectationWithDescription("reverse geocode execute completion handler for invalid query")
         let geocoder = Geocoder(accessToken: BogusToken)

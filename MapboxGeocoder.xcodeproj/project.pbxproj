@@ -27,13 +27,11 @@
 		DA5170B41CF1B1EF00CD6DCF /* GeocoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA701C001CB1292C00B0E520 /* GeocoderTests.swift */; };
 		DA5170B51CF1B1EF00CD6DCF /* ForwardGeocodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA210BAA1CB4BE73008088FD /* ForwardGeocodingTests.swift */; };
 		DA5170B61CF1B1EF00CD6DCF /* ReverseGeocodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF1E84C1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift */; };
-		DA5170B71CF1B1F300CD6DCF /* Fixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA701C021CB12A1800B0E520 /* Fixture.swift */; };
 		DA5170B81CF1B1F900CD6DCF /* forward_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = DA210BAC1CB4BFF7008088FD /* forward_valid.json */; };
 		DA5170B91CF1B1F900CD6DCF /* forward_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = DA210BAE1CB4C5A7008088FD /* forward_invalid.json */; };
 		DA5170BA1CF1B1F900CD6DCF /* reverse_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */; };
 		DA5170BB1CF1B1F900CD6DCF /* reverse_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */; };
 		DA701C011CB1292C00B0E520 /* GeocoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA701C001CB1292C00B0E520 /* GeocoderTests.swift */; };
-		DA701C031CB12A1800B0E520 /* Fixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA701C021CB12A1800B0E520 /* Fixture.swift */; };
 		DD342B5619A140EE00219F77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5519A140EE00219F77 /* AppDelegate.swift */; };
 		DD342B5819A140EE00219F77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5719A140EE00219F77 /* ViewController.swift */; };
 		DDC2295C1A36074F006BE405 /* MapboxGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = DDC229581A36073B006BE405 /* MapboxGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -131,7 +129,6 @@
 		DA5170961CF1B18F00CD6DCF /* MapboxGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA51709F1CF1B18F00CD6DCF /* MapboxGeocoderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxGeocoderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA701C001CB1292C00B0E520 /* GeocoderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocoderTests.swift; sourceTree = "<group>"; };
-		DA701C021CB12A1800B0E520 /* Fixture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fixture.swift; sourceTree = "<group>"; };
 		DD342B5019A140EE00219F77 /* Geocoder (Swift).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geocoder (Swift).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD342B5419A140EE00219F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD342B5519A140EE00219F77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -307,7 +304,6 @@
 				DDF1E84C1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift */,
 				DDF1E84E1BD6F7BA00C40C78 /* Info.plist */,
 				DDF1E8571BD700EB00C40C78 /* Fixtures */,
-				DA701C021CB12A1800B0E520 /* Fixture.swift */,
 			);
 			path = MapboxGeocoderTests;
 			sourceTree = "<group>";
@@ -696,7 +692,6 @@
 				DA5170B61CF1B1EF00CD6DCF /* ReverseGeocodingTests.swift in Sources */,
 				DA5170B41CF1B1EF00CD6DCF /* GeocoderTests.swift in Sources */,
 				DA5170B51CF1B1EF00CD6DCF /* ForwardGeocodingTests.swift in Sources */,
-				DA5170B71CF1B1F300CD6DCF /* Fixture.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,7 +733,6 @@
 				DDF1E84D1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift in Sources */,
 				DA210BAB1CB4BE73008088FD /* ForwardGeocodingTests.swift in Sources */,
 				DA701C011CB1292C00B0E520 /* GeocoderTests.swift in Sources */,
-				DA701C031CB12A1800B0E520 /* Fixture.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
