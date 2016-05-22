@@ -82,14 +82,7 @@ public class ForwardGeocodeOptions: GeocodeOptions {
      */
     public var autocompletesQuery = true
     
-    /**
-     Initializes a forward batch geocode options object with the given query strings.
-     
-     You can include up to 50 forward geocoding queries in a single request. Each query in a batch request counts individually against your account’s rate limits.
-     
-     - parameter queries: An array of place names or addresses to search for.
-     */
-    public init(queries: [String]) {
+    private init(queries: [String]) {
         super.init()
         self.queries = queries
     }
@@ -122,28 +115,10 @@ public class ReverseGeocodeOptions: GeocodeOptions {
      */
     public var coordinates: [CLLocationCoordinate2D]
     
-    /**
-     Initializes a reverse batch geocode options object with the given coordinate pairs.
-     
-     You can include up to 50 reverse geocoding queries in a single request. Each query in a batch request counts individually against your account’s rate limits.
-     
-     - parameter coordinates: An array of coordinate pairs to search for.
-     */
-    public init(coordinates: [CLLocationCoordinate2D]) {
+    private init(coordinates: [CLLocationCoordinate2D]) {
         self.coordinates = coordinates
         super.init()
         queries = coordinates.map { String(format: "%.5f,%.5f", $0.longitude, $0.latitude) }
-    }
-    
-    /**
-     Initializes a reverse batch geocode options object with the given `CLLocation` objects.
-     
-     You can include up to 50 reverse geocoding queries in a single request. Each query in a batch request counts individually against your account’s rate limits.
-     
-     - parameter location: An array of `CLLocation` objects to search for.
-     */
-    public convenience init(locations: [CLLocation]) {
-        self.init(coordinates: locations.map { $0.coordinate })
     }
     
     /**
@@ -161,6 +136,55 @@ public class ReverseGeocodeOptions: GeocodeOptions {
      - parameter location: A `CLLocation` object to search for.
      */
     public convenience init(location: CLLocation) {
-        self.init(locations: [location])
+        self.init(coordinate: location.coordinate)
+    }
+}
+
+/**
+ Objects that conform to the `BatchGeocodeOptions` protocol specify the criteria for batch geocoding results returned by the Mapbox Geocoding API.
+ 
+ You can include up to 50 forward geocoding queries in a single request. Each query in a batch request counts individually against your account’s rate limits.
+ 
+ Pass an object conforming to this protocol into the `Geocoder.batchGeocode(options:completionHandler:)` method.
+ */
+@objc(MBBatchGeocodeOptions)
+public protocol BatchGeocodeOptions {}
+
+/**
+ A structure that specifies the criteria for forward batch geocoding results. Forward geocoding takes a human-readable query, such as a place name or address, and produces any number of geographic coordinates that correspond to that query.
+ */
+@objc(MBForwardBatchGeocodeOptions)
+public class ForwardBatchGeocodeOptions: ForwardGeocodeOptions, BatchGeocodeOptions {
+    /**
+     Initializes a forward batch geocode options object with the given query strings.
+     
+     - parameter queries: An array of up to 50 place names or addresses to search for.
+     */
+    public override init(queries: [String]) {
+        super.init(queries: queries)
+    }
+}
+
+/**
+ A structure that specifies the criteria for reverse geocoding results. Reverse geocoding takes a geographic coordinate and produces a hierarchy of places, often beginning with an address, that describes the coordinate’s location.
+ */
+@objc(MBReverseBatchGeocodeOptions)
+public class ReverseBatchGeocodeOptions: ReverseGeocodeOptions, BatchGeocodeOptions {
+    /**
+     Initializes a reverse batch geocode options object with the given coordinate pairs.
+     
+     - parameter coordinates: An array of up to 50 coordinate pairs to search for.
+     */
+    public override init(coordinates: [CLLocationCoordinate2D]) {
+        super.init(coordinates: coordinates)
+    }
+    
+    /**
+     Initializes a reverse batch geocode options object with the given `CLLocation` objects.
+     
+     - parameter location: An array of up to 50 `CLLocation` objects to search for.
+     */
+    public convenience init(locations: [CLLocation]) {
+        self.init(coordinates: locations.map { $0.coordinate })
     }
 }
