@@ -14,7 +14,7 @@ MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com
 Import `MapboxGeocoder.framework` into your project, then `import MapboxGeocoder` or `@import MapboxGeocoder;`. Alternatively, specify the following dependency in your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
-pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :tag => 'master'
+pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :tag => 'v0.5.0'
 ```
 
 This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). More examples and detailed documentation are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#geocoding).
