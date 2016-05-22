@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   MapboxGeocoder.swift makes it easy to connect your iOS or OS X application to the Mapbox Geocoding API. MapboxGeocoder.swift exposes the power of the Carmen geocoder through a simple API similar to Core Location’s CLGeocoder.
                    DESC
 
-  s.homepage     = "https://www.mapbox.com/api-documentation/?language=Swift#geocoding"
+  s.homepage     = "https://www.mapbox.com/geocoding/"
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 

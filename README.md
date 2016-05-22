@@ -2,7 +2,7 @@
 
 [![Build Status](https://www.bitrise.io/app/6cae401ec4c1d406.svg?token=MJnXK0c2x2tmTnmHSPtcFA&branch=master)](https://www.bitrise.io/app/6cae401ec4c1d406)
 
-MapboxGeocoder.swift makes it easy to connect your iOS or OS X application to the [Mapbox Geocoding API](https://www.mapbox.com/api-documentation/?language=Swift#geocoding). MapboxGeocoder.swift exposes the power of the [Carmen](https://github.com/mapbox/carmen) geocoder through a simple API similar to Core Location’s CLGeocoder.
+MapboxGeocoder.swift makes it easy to connect your iOS or OS X application to the [Mapbox Geocoding API](https://www.mapbox.com/geocoding/). MapboxGeocoder.swift exposes the power of the [Carmen](https://github.com/mapbox/carmen) geocoder through a simple API similar to Core Location’s CLGeocoder.
 
 MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxStatic.swift](https://github.com/mapbox/MapboxStatic.swift), and the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [OS X SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/osx).
 
@@ -14,7 +14,7 @@ Import `MapboxGeocoder.framework` into your project, then `import MapboxGeocoder
 pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :tag => 'master'
 ```
 
-This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). More examples are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#geocoding).
+This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). More examples and detailed documentation are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#geocoding).
 
 ## Usage
 
@@ -165,6 +165,12 @@ NSURLSessionDataTask *task = [geocoder geocodeWithOptions:options
         // Q60
 }];
 ```
+
+### Batch geocoding
+
+With _batch geocoding_, you can perform up to 50 distinct forward or reverse geocoding requests simultaneously and store the results in a private database. Create a ForwardBatchGeocodingOptions or ReverseBatchGeocodingOptions object in Swift, or an MBForwardBatchGeocodingOptions or MBReverseBatchGeocodingOptions object in Objective-C, and pass it into the `Geocoder.batchGeocode(options:completionHandler:)` method.
+
+Batch geocoding is available to Mapbox enterprise accounts. See the [Mapbox Geocoding](https://www.mapbox.com/geocoding/) website for more information.
 
 ## Tests
 
