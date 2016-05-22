@@ -104,38 +104,69 @@ public class Geocoder: NSObject {
      - parameter options: A `ForwardGeocodeOptions` or `ReverseGeocodeOptions` object indicating what to search for.
      - parameter completionHandler: The closure (block) to call with the resulting placemarks. This closure is executed on the application’s main thread.
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting placemarks, cancel this task.
+     - precondition: To avoid redundant geocoding requests while the user is typing in an autocompleting search field, cancel the task returned by a previous call to this method before calling this method again.
      */
-    public func geocode(options options: GeocodeOptions, completionHandler completion: CompletionHandler) -> NSURLSessionDataTask {
+    public func geocode(options options: GeocodeOptions, completionHandler: CompletionHandler) -> NSURLSessionDataTask {
         let url = URLForGeocoding(options: options)
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
-            guard let data = data where error == nil else {
-                dispatch_async(dispatch_get_main_queue()) {
-                    completion(placemarks: nil, attribution: nil, error: error)
-                }
-                return
-            }
-            
-            let features: [JSONDictionary]
-            let attribution: String?
-            do {
-                let featureCollection = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! JSONDictionary
-                assert(featureCollection["type"] as? String == "FeatureCollection")
-                features = featureCollection["features"] as! [JSONDictionary]
-                attribution = featureCollection["attribution"] as? String
-            } catch {
-                dispatch_async(dispatch_get_main_queue()) {
-                    completion(placemarks: nil, attribution: nil, error: error as NSError)
-                }
-                return
-            }
+        let task = dataTaskWithURL(url, completionHandler: { (json) in
+            var featureCollection = json
+            assert(featureCollection["type"] as? String == "FeatureCollection")
+            let features = featureCollection["features"] as! [JSONDictionary]
+            let attribution = featureCollection["attribution"] as? String
             
             let placemarks = features.flatMap { GeocodedPlacemark(featureJSON: $0) }
-            dispatch_async(dispatch_get_main_queue()) {
-                completion(placemarks: placemarks, attribution: attribution, error: nil)
-            }
+            completionHandler(placemarks: placemarks, attribution: attribution, error: nil)
+        }) { (error) in
+            completionHandler(placemarks: nil, attribution: nil, error: error)
         }
         task.resume()
         return task
+    }
+    
+    /**
+     Returns a URL session task for the given URL that will run the given blocks on completion or error.
+     
+     - parameter url: The URL to request.
+     - parameter completionHandler: The closure to call with the parsed JSON response dictionary.
+     - parameter errorHandler: The closure to call when there is an error.
+     - returns: The data task for the URL.
+     - postcondition: The caller must resume the returned task.
+     */
+    private func dataTaskWithURL(url: NSURL, completionHandler: (json: JSONDictionary) -> Void, errorHandler: (error: NSError) -> Void) -> NSURLSessionDataTask {
+        return NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            var json: JSONDictionary = [:]
+            if let data = data {
+                do {
+                    json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! JSONDictionary
+                } catch {
+                    assert(false, "Invalid data")
+                }
+            }
+            
+            guard data != nil && error == nil else {
+                // Supplement the error with additional information from the response body or headers.
+                var userInfo = error?.userInfo ?? [:]
+                if let message = json["message"] as? String {
+                    userInfo[NSLocalizedFailureReasonErrorKey] = message
+                }
+                if let response = response as? NSHTTPURLResponse where response.statusCode == 429 {
+                    if let rolloverTimestamp = response.allHeaderFields["x-rate-limit-reset"] as? Double {
+                        let date = NSDate(timeIntervalSince1970: rolloverTimestamp)
+                        userInfo[NSLocalizedRecoverySuggestionErrorKey] = "Wait until \(date) before retrying."
+                    }
+                }
+                let apiError = NSError(domain: error?.domain ?? "", code: error?.code ?? -1, userInfo: userInfo)
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    errorHandler(error: apiError)
+                }
+                return
+            }
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                completionHandler(json: json)
+            }
+        }
     }
     
     /**
