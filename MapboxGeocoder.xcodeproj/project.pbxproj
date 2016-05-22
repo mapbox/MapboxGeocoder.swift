@@ -47,6 +47,13 @@
 		DA5170E31CF2542B00CD6DCF /* forward_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = DA210BAE1CB4C5A7008088FD /* forward_invalid.json */; };
 		DA5170E41CF2542B00CD6DCF /* reverse_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */; };
 		DA5170E51CF2542B00CD6DCF /* reverse_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */; };
+		DA5170F31CF2582F00CD6DCF /* MapboxGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = DDC229581A36073B006BE405 /* MapboxGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA5170F41CF2582F00CD6DCF /* MBGeocodeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC05D1CED732F00D4BA5D /* MBGeocodeOptions.swift */; };
+		DA5170F51CF2582F00CD6DCF /* MBGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC229591A36073B006BE405 /* MBGeocoder.swift */; };
+		DA5170F61CF2582F00CD6DCF /* MBPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E03EF1CB0FDB400D1269A /* MBPlacemark.swift */; };
+		DA5170F71CF2582F00CD6DCF /* MBPlacemarkScope.h in Headers */ = {isa = PBXBuildFile; fileRef = DA29C8DE1CEBE90200E48A61 /* MBPlacemarkScope.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA5170F81CF2582F00CD6DCF /* MBPlacemarkScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC05B1CED72E900D4BA5D /* MBPlacemarkScope.swift */; };
+		DA5170F91CF2582F00CD6DCF /* MBRectangularRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */; };
 		DA701C011CB1292C00B0E520 /* GeocoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA701C001CB1292C00B0E520 /* GeocoderTests.swift */; };
 		DD342B5619A140EE00219F77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5519A140EE00219F77 /* AppDelegate.swift */; };
 		DD342B5819A140EE00219F77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD342B5719A140EE00219F77 /* ViewController.swift */; };
@@ -155,6 +162,7 @@
 		DA51709F1CF1B18F00CD6DCF /* MapboxGeocoderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxGeocoderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5170C11CF253EE00CD6DCF /* MapboxGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5170CA1CF253EE00CD6DCF /* MapboxGeocoderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxGeocoderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA5170EB1CF2581900CD6DCF /* MapboxGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA701C001CB1292C00B0E520 /* GeocoderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocoderTests.swift; sourceTree = "<group>"; };
 		DD342B5019A140EE00219F77 /* Geocoder (Swift).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geocoder (Swift).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD342B5419A140EE00219F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -207,6 +215,13 @@
 			files = (
 				DA5170CB1CF253EE00CD6DCF /* MapboxGeocoder.framework in Frameworks */,
 				0C025346C32B474C347C71BD /* Pods_MapboxGeocoderTVTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA5170E71CF2581900CD6DCF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +292,7 @@
 				DA51709F1CF1B18F00CD6DCF /* MapboxGeocoderTests.xctest */,
 				DA5170C11CF253EE00CD6DCF /* MapboxGeocoder.framework */,
 				DA5170CA1CF253EE00CD6DCF /* MapboxGeocoderTests.xctest */,
+				DA5170EB1CF2581900CD6DCF /* MapboxGeocoder.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -401,6 +417,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DA5170E81CF2581900CD6DCF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA5170F31CF2582F00CD6DCF /* MapboxGeocoder.h in Headers */,
+				DA5170F71CF2582F00CD6DCF /* MBPlacemarkScope.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DDC2470119A1C3B40054B0C0 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -490,6 +515,24 @@
 			productName = MapboxGeocoderTVTests;
 			productReference = DA5170CA1CF253EE00CD6DCF /* MapboxGeocoderTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DA5170EA1CF2581900CD6DCF /* MapboxGeocoderWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA5170F21CF2581900CD6DCF /* Build configuration list for PBXNativeTarget "MapboxGeocoderWatch" */;
+			buildPhases = (
+				DA5170E61CF2581900CD6DCF /* Sources */,
+				DA5170E71CF2581900CD6DCF /* Frameworks */,
+				DA5170E81CF2581900CD6DCF /* Headers */,
+				DA5170E91CF2581900CD6DCF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MapboxGeocoderWatch;
+			productName = MapboxGeocoderWatch;
+			productReference = DA5170EB1CF2581900CD6DCF /* MapboxGeocoder.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		DD342B4F19A140EE00219F77 /* Example (Swift) */ = {
 			isa = PBXNativeTarget;
@@ -592,6 +635,9 @@
 					DA5170C91CF253EE00CD6DCF = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
+					DA5170EA1CF2581900CD6DCF = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
 					DD342B4F19A140EE00219F77 = {
 						CreatedOnToolsVersion = 6.0;
 					};
@@ -627,6 +673,7 @@
 				DA51709E1CF1B18F00CD6DCF /* MapboxGeocoderMacTests */,
 				DA5170C01CF253EE00CD6DCF /* MapboxGeocoderTV */,
 				DA5170C91CF253EE00CD6DCF /* MapboxGeocoderTVTests */,
+				DA5170EA1CF2581900CD6DCF /* MapboxGeocoderWatch */,
 			);
 		};
 /* End PBXProject section */
@@ -665,6 +712,13 @@
 				DA5170E31CF2542B00CD6DCF /* forward_invalid.json in Resources */,
 				DA5170E51CF2542B00CD6DCF /* reverse_invalid.json in Resources */,
 				DA5170E41CF2542B00CD6DCF /* reverse_valid.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA5170E91CF2581900CD6DCF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -882,6 +936,18 @@
 				DA5170E11CF2542800CD6DCF /* ReverseGeocodingTests.swift in Sources */,
 				DA5170DF1CF2542800CD6DCF /* GeocoderTests.swift in Sources */,
 				DA5170E01CF2542800CD6DCF /* ForwardGeocodingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA5170E61CF2581900CD6DCF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA5170F91CF2582F00CD6DCF /* MBRectangularRegion.swift in Sources */,
+				DA5170F61CF2582F00CD6DCF /* MBPlacemark.swift in Sources */,
+				DA5170F51CF2582F00CD6DCF /* MBGeocoder.swift in Sources */,
+				DA5170F81CF2582F00CD6DCF /* MBPlacemarkScope.swift in Sources */,
+				DA5170F41CF2582F00CD6DCF /* MBGeocodeOptions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1134,6 +1200,59 @@
 			};
 			name = Release;
 		};
+		DA5170F01CF2581900CD6DCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = MapboxGeocoder/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoder;
+				PRODUCT_NAME = MapboxGeocoder;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		DA5170F11CF2581900CD6DCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = MapboxGeocoder/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoder;
+				PRODUCT_NAME = MapboxGeocoder;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
 		DD342B6A19A140EE00219F77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1380,6 +1499,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		DA5170F21CF2581900CD6DCF /* Build configuration list for PBXNativeTarget "MapboxGeocoderWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA5170F01CF2581900CD6DCF /* Debug */,
+				DA5170F11CF2581900CD6DCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		DD342B4B19A140EE00219F77 /* Build configuration list for PBXProject "MapboxGeocoder" */ = {
 			isa = XCConfigurationList;
