@@ -1,6 +1,7 @@
 # MapboxGeocoder
 
-[![Build Status](https://www.bitrise.io/app/6cae401ec4c1d406.svg?token=MJnXK0c2x2tmTnmHSPtcFA&branch=master)](https://www.bitrise.io/app/6cae401ec4c1d406)
+[📱&nbsp;![iOS Build Status](https://www.bitrise.io/app/6cae401ec4c1d406.svg?token=MJnXK0c2x2tmTnmHSPtcFA&branch=master)](https://www.bitrise.io/app/6cae401ec4c1d406) &nbsp;&nbsp;&nbsp;
+[🖥💻&nbsp;![OS X Build Status](https://www.bitrise.io/app/8413a6e577d6aa9a.svg?token=N1agv0mw75SOE_SykliueQ&branch=master)](https://www.bitrise.io/app/8413a6e577d6aa9a)
 
 MapboxGeocoder.swift makes it easy to connect your iOS or OS X application to the [Mapbox Geocoding API](https://www.mapbox.com/geocoding/). MapboxGeocoder.swift exposes the power of the [Carmen](https://github.com/mapbox/carmen) geocoder through a simple API similar to Core Location’s CLGeocoder.
 
