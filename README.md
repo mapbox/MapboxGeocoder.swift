@@ -3,7 +3,7 @@
 [📱&nbsp;![iOS Build Status](https://www.bitrise.io/app/6cae401ec4c1d406.svg?token=MJnXK0c2x2tmTnmHSPtcFA&branch=master)](https://www.bitrise.io/app/6cae401ec4c1d406) &nbsp;&nbsp;&nbsp;
 [🖥💻&nbsp;![OS X Build Status](https://www.bitrise.io/app/8413a6e577d6aa9a.svg?token=N1agv0mw75SOE_SykliueQ&branch=master)](https://www.bitrise.io/app/8413a6e577d6aa9a)
 
-MapboxGeocoder.swift makes it easy to connect your iOS or OS X application to the [Mapbox Geocoding API](https://www.mapbox.com/geocoding/). MapboxGeocoder.swift exposes the power of the [Carmen](https://github.com/mapbox/carmen) geocoder through a simple API similar to Core Location’s CLGeocoder.
+MapboxGeocoder.swift makes it easy to connect your iOS, OS X, tvOS, or watchOS application to the [Mapbox Geocoding API](https://www.mapbox.com/geocoding/). MapboxGeocoder.swift exposes the power of the [Carmen](https://github.com/mapbox/carmen) geocoder through a simple API similar to Core Location’s CLGeocoder.
 
 MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxStatic.swift](https://github.com/mapbox/MapboxStatic.swift), and the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [OS X SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/osx).
 
@@ -59,7 +59,9 @@ _Forward geocoding_ takes a human-readable query, such as a place name or addres
 
 ```swift
 // main.swift
-import Contacts
+#if !os(tvOS)
+    import Contacts
+#endif
 
 let options = ForwardGeocodeOptions(query: "200 queen street")
 
@@ -79,17 +81,21 @@ let task = geocoder.geocode(options: options) { (placemarks, attribution, error)
     print("\(coordinate.latitude), \(coordinate.longitude)")
         // 45.270093, -66.050985
     
+    #if !os(tvOS)
     let formatter = CNPostalAddressFormatter()
     print(formatter.stringFromPostalAddress(placemark.postalAddress))
         // 200 Queen St
         // Saint John New Brunswick E2L 2X1
         // Canada
+    #endif
 }
 ```
 
 ```objc
 // main.m
+#if !TARGET_OS_TV
 @import Contacts;
+#endif
 
 MBForwardGeocodeOptions *options = [[MBForwardGeocodeOptions alloc] initWithQuery:@"200 queen street"];
 
@@ -112,11 +118,13 @@ NSURLSessionDataTask *task = [geocoder geocodeWithOptions:options
     NSLog(@"%f, %f", coordinate.latitude, coordinate.longitude);
         // 45.270093, -66.050985
     
+#if !TARGET_OS_TV
     CNPostalAddressFormatter *formatter = [[CNPostalAddressFormatter alloc] init];
     NSLog(@"%@", [formatter stringFromPostalAddress:placemark.postalAddress]);
         // 200 Queen St
         // Saint John New Brunswick E2L 2X1
         // Canada
+#endif
 }];
 ```
 
