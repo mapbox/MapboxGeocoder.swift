@@ -1,6 +1,7 @@
 typealias JSONDictionary = [String: AnyObject]
 
-public let MBGeocoderErrorDomain = "com.mapbox.MapboxGeocoder"
+/// Indicates that an error occurred in MapboxGeocoder.
+public let MBGeocoderErrorDomain = "MBGeocoderErrorDomain"
 
 /// The Mapbox access token specified in the main application bundle’s Info.plist.
 let defaultAccessToken = NSBundle.mainBundle().objectForInfoDictionaryKey("MGLMapboxAccessToken") as? String
@@ -100,7 +101,7 @@ public class Geocoder: NSObject {
     /**
      Initializes a newly created geocoder object with an optional access token.
      
-     The snapshot instance sends requests to the Mapbox Geocoding API endpoint.
+     The geocoder object sends requests to the Mapbox Geocoding API endpoint.
      
      - parameter accessToken: A Mapbox [access token](https://www.mapbox.com/help/define-access-token/). If an access token is not specified when initializing the geocoder object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
      */
@@ -178,29 +179,17 @@ public class Geocoder: NSObject {
      */
     private func dataTaskWithURL(url: NSURL, completionHandler: (json: AnyObject) -> Void, errorHandler: (error: NSError) -> Void) -> NSURLSessionDataTask {
         return NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
-            var json: AnyObject = [:]
+            var json: JSONDictionary = [:]
             if let data = data {
                 do {
-                    json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+                    json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! JSONDictionary
                 } catch {
                     assert(false, "Invalid data")
                 }
             }
             
             guard data != nil && error == nil else {
-                // Supplement the error with additional information from the response body or headers.
-                var userInfo = error?.userInfo ?? [:]
-                if let json = json as? JSONDictionary, message = json["message"] as? String {
-                    userInfo[NSLocalizedFailureReasonErrorKey] = message
-                }
-                if let response = response as? NSHTTPURLResponse where response.statusCode == 429 {
-                    if let rolloverTimestamp = response.allHeaderFields["x-rate-limit-reset"] as? Double {
-                        let date = NSDate(timeIntervalSince1970: rolloverTimestamp)
-                        userInfo[NSLocalizedRecoverySuggestionErrorKey] = "Wait until \(date) before retrying."
-                    }
-                }
-                let apiError = NSError(domain: error?.domain ?? MBGeocoderErrorDomain, code: error?.code ?? -1, userInfo: userInfo)
-                
+                let apiError = Geocoder.descriptiveError(json, response: response, underlyingError: error)
                 dispatch_async(dispatch_get_main_queue()) {
                     errorHandler(error: apiError)
                 }
@@ -240,5 +229,37 @@ public class Geocoder: NSObject {
         let components = NSURLComponents(URL: unparameterizedURL, resolvingAgainstBaseURL: true)!
         components.queryItems = params
         return components.URL!
+    }
+    
+    /**
+     Returns an error that supplements the given underlying error with additional information from the an HTTP response’s body or headers.
+     */
+    private static func descriptiveError(json: JSONDictionary, response: NSURLResponse?, underlyingError error: NSError?) -> NSError {
+        var userInfo = error?.userInfo ?? [:]
+        if let response = response as? NSHTTPURLResponse {
+            var failureReason: String? = nil
+            var recoverySuggestion: String? = nil
+            switch response.statusCode {
+            case 429:
+                if let timeInterval = response.allHeaderFields["x-rate-limit-interval"] as? NSTimeInterval, maximumCountOfRequests = response.allHeaderFields["x-rate-limit-limit"] as? UInt {
+                    let components = NSDateComponents()
+                    components.second = Int(round(timeInterval))
+                    let formattedInterval = NSDateComponentsFormatter.localizedStringFromDateComponents(components, unitsStyle: .Full)
+                    let formattedCount = NSNumberFormatter.localizedStringFromNumber(maximumCountOfRequests, numberStyle: .DecimalStyle)
+                    failureReason = "More than \(formattedCount) requests have been made with this access token within a period of \(formattedInterval)."
+                }
+                if let rolloverTimestamp = response.allHeaderFields["x-rate-limit-reset"] as? Double {
+                    let date = NSDate(timeIntervalSince1970: rolloverTimestamp)
+                    let formattedDate = NSDateFormatter.localizedStringFromDate(date, dateStyle: .LongStyle, timeStyle: .FullStyle)
+                    recoverySuggestion = "Wait until \(formattedDate) before retrying."
+                }
+            default:
+                failureReason = json["message"] as? String
+            }
+            userInfo[NSLocalizedFailureReasonErrorKey] = failureReason ?? userInfo[NSLocalizedFailureReasonErrorKey] ?? NSHTTPURLResponse.localizedStringForStatusCode(error?.code ?? -1)
+            userInfo[NSLocalizedRecoverySuggestionErrorKey] = recoverySuggestion ?? userInfo[NSLocalizedRecoverySuggestionErrorKey]
+        }
+        userInfo[NSUnderlyingErrorKey] = error
+        return NSError(domain: error?.domain ?? MBGeocoderErrorDomain, code: error?.code ?? -1, userInfo: userInfo)
     }
 }
