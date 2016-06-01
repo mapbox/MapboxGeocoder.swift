@@ -43,6 +43,13 @@ public class RectangularRegion: CLRegion {
      Returns a Boolean value indicating whether the bounding box contains the specified coordinate.
      */
     public func containsCoordinate(coordinate: CLLocationCoordinate2D) -> Bool! {
+        return contains(coordinate)
+    }
+    
+    /**
+     Returns a Boolean value indicating whether the bounding box contains the specified coordinate.
+     */
+    public func contains(coordinate: CLLocationCoordinate2D) -> Bool {
         return (coordinate.latitude >= southWest.latitude && coordinate.latitude <= northEast.latitude
             && coordinate.longitude >= southWest.longitude && coordinate.longitude <= northEast.longitude)
     }
