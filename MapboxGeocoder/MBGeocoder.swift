@@ -15,13 +15,7 @@ let userAgent: String = {
         components.append("\(appName)/\(version)")
     }
     
-    var libraryBundle: NSBundle? = NSBundle(forClass: Geocoder.self)
-    if libraryBundle?.infoDictionary?["CFBundlePackageType"] as? String != "FMWK" {
-        // For static frameworks, the class is contained in the application bundle rather than the framework bundle.
-        if let frameworkURL = libraryBundle?.privateFrameworksURL?.URLByAppendingPathComponent("Mapbox.framework") {
-            libraryBundle = NSBundle(URL: frameworkURL)
-        }
-    }
+    let libraryBundle: NSBundle? = NSBundle(forClass: Geocoder.self)
     
     if let libraryName = libraryBundle?.infoDictionary?["CFBundleName"] as? String, version = libraryBundle?.infoDictionary?["CFBundleShortVersionString"] as? String {
         components.append("\(libraryName)/\(version)")
