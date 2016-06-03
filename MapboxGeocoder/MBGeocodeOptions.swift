@@ -14,6 +14,8 @@
  */
 @objc(MBGeocodeOptions)
 public class GeocodeOptions: NSObject {
+    // MARK: Specifying the Search Criteria
+    
     /**
      An array of [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes specifying the countries in which the results may lie. The codes may appear in any order and are case-insensitive.
      
@@ -42,6 +44,19 @@ public class GeocodeOptions: NSObject {
      */
     public var allowedRegion: RectangularRegion?
     
+    // MARK: Specifying the Output Format
+    
+    /**
+     The locale in which results should be returned.
+     
+     This property affects the language of returned results; generally speaking, it does not determine which results are found. If the Geocoding API does not recognize the language code, it may fall back to another language or the default language. Components other than the language code, such as the country and script codes, are ignored.
+     
+     By default, this property is set to `nil`, causing results to be in the default language.
+     
+     - experiment: This option is experimental.
+     */
+    public var locale: NSLocale?
+    
     private override init() {}
     
     /**
@@ -69,6 +84,9 @@ public class GeocodeOptions: NSObject {
         }
         if let allowedRegion = allowedRegion {
             params.append(NSURLQueryItem(name: "bbox", value: String(allowedRegion)))
+        }
+        if let languageCode = locale?.objectForKey(NSLocaleLanguageCode) as? String {
+            params.append(NSURLQueryItem(name: "language", value: languageCode))
         }
         return params
     }
