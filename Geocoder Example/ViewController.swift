@@ -1,17 +1,17 @@
 import UIKit
-import MapKit
 import CoreLocation
+import Mapbox
 import MapboxGeocoder
 
 // A Mapbox access token is required to use the Geocoding API.
 // https://www.mapbox.com/help/create-api-access-token/
 let MapboxAccessToken = "<# your Mapbox access token #>"
 
-class ViewController: UIViewController, MKMapViewDelegate {
+class ViewController: UIViewController, MGLMapViewDelegate {
     
     // MARK: - Variables
 
-    var mapView: MKMapView!
+    var mapView: MGLMapView!
     var resultsLabel: UILabel!
     var geocoder: Geocoder!
     var geocodingDataTask: NSURLSessionDataTask?
@@ -23,7 +23,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
 
         assert(MapboxAccessToken != "<# your Mapbox access token #>", "You must set `MapboxAccessToken` to your Mapbox access token.")
         
-        mapView = MKMapView(frame: view.bounds)
+        MGLAccountManager.setAccessToken(MapboxAccessToken)
+        mapView = MGLMapView(frame: view.bounds)
         mapView.autoresizingMask = [ .FlexibleWidth, .FlexibleHeight ]
         mapView.delegate = self
         view.addSubview(mapView)
@@ -40,11 +41,11 @@ class ViewController: UIViewController, MKMapViewDelegate {
 
     // MARK: - MKMapViewDelegate
 
-    func mapView(mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+    func mapView(mapView: MGLMapView, regionWillChangeAnimated animated: Bool) {
         geocodingDataTask?.cancel()
     }
     
-    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    func mapView(mapView: MGLMapView, regionDidChangeAnimated animated: Bool) {
         geocodingDataTask?.cancel()
         let options = ReverseGeocodeOptions(coordinate: mapView.centerCoordinate)
         geocodingDataTask = geocoder.geocode(options: options) { [unowned self] (placemarks, attribution, error) in

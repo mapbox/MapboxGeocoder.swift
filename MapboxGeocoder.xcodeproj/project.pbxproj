@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0C025346C32B474C347C71BD /* Pods_MapboxGeocoderTVTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3C49168FF11C0E7040FD82 /* Pods_MapboxGeocoderTVTests.framework */; };
+		4F3CC6C371DB3F8DEF8536A6 /* Pods_Example__Swift_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FC59EB81FC5A00154C319AF /* Pods_Example__Swift_.framework */; };
 		7CA566EF62920C25D486FD70 /* Pods_MapboxGeocoderMacTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A2AC60FDF3B534284CDB36 /* Pods_MapboxGeocoderMacTests.framework */; };
 		86AE592691CECC25DE17D833 /* Pods_MapboxGeocoderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72CB04596652E3835ED4FC60 /* Pods_MapboxGeocoderTests.framework */; };
+		D97635D517B3A0115CC8F5CB /* Pods_Example__Objective_C_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97BF78DC3BA7B648F5BB140E /* Pods_Example__Objective_C_.framework */; };
 		DA210BAB1CB4BE73008088FD /* ForwardGeocodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA210BAA1CB4BE73008088FD /* ForwardGeocodingTests.swift */; };
 		DA210BAD1CB4BFF7008088FD /* forward_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = DA210BAC1CB4BFF7008088FD /* forward_valid.json */; };
 		DA210BAF1CB4C5A7008088FD /* forward_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = DA210BAE1CB4C5A7008088FD /* forward_invalid.json */; };
@@ -148,8 +150,13 @@
 		296697D5C455A31511CF9C08 /* Pods-MapboxGeocoderTVTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapboxGeocoderTVTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MapboxGeocoderTVTests/Pods-MapboxGeocoderTVTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2F5FC0ED83E6908E7104787A /* Pods-MapboxGeocoderTVTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapboxGeocoderTVTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MapboxGeocoderTVTests/Pods-MapboxGeocoderTVTests.release.xcconfig"; sourceTree = "<group>"; };
 		46A2AC60FDF3B534284CDB36 /* Pods_MapboxGeocoderMacTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapboxGeocoderMacTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BEDFDFFA3CD02CD54283983 /* Pods-Example (Objective-C).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example (Objective-C).debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example (Objective-C)/Pods-Example (Objective-C).debug.xcconfig"; sourceTree = "<group>"; };
 		72CB04596652E3835ED4FC60 /* Pods_MapboxGeocoderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapboxGeocoderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76AB1CF6F2C112A4ADFAC213 /* Pods-Example (Swift).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example (Swift).debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example (Swift)/Pods-Example (Swift).debug.xcconfig"; sourceTree = "<group>"; };
 		8C8C881DE859EB667533E864 /* Pods-MapboxGeocoderMacTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapboxGeocoderMacTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MapboxGeocoderMacTests/Pods-MapboxGeocoderMacTests.release.xcconfig"; sourceTree = "<group>"; };
+		8FC59EB81FC5A00154C319AF /* Pods_Example__Swift_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example__Swift_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		97BF78DC3BA7B648F5BB140E /* Pods_Example__Objective_C_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example__Objective_C_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BAB912C9D9B18B32FC51980E /* Pods-Example (Swift).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example (Swift).release.xcconfig"; path = "Pods/Target Support Files/Pods-Example (Swift)/Pods-Example (Swift).release.xcconfig"; sourceTree = "<group>"; };
 		BE56DFB939470771CAC74338 /* Pods-MapboxGeocoderMacTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapboxGeocoderMacTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MapboxGeocoderMacTests/Pods-MapboxGeocoderMacTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C166681A922E6E205D5040F9 /* Pods-MapboxGeocoderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapboxGeocoderTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MapboxGeocoderTests/Pods-MapboxGeocoderTests.release.xcconfig"; sourceTree = "<group>"; };
 		DA210BAA1CB4BE73008088FD /* ForwardGeocodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForwardGeocodingTests.swift; sourceTree = "<group>"; };
@@ -186,6 +193,7 @@
 		DDF1E84E1BD6F7BA00C40C78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = reverse_invalid.json; sourceTree = "<group>"; };
 		DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = reverse_valid.json; sourceTree = "<group>"; };
+		EA55BA7C07A4CF37A4BD78E9 /* Pods-Example (Objective-C).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example (Objective-C).release.xcconfig"; path = "Pods/Target Support Files/Pods-Example (Objective-C)/Pods-Example (Objective-C).release.xcconfig"; sourceTree = "<group>"; };
 		EB3C49168FF11C0E7040FD82 /* Pods_MapboxGeocoderTVTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapboxGeocoderTVTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -233,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDC2471819A1C3B40054B0C0 /* MapboxGeocoder.framework in Frameworks */,
+				4F3CC6C371DB3F8DEF8536A6 /* Pods_Example__Swift_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDC2474F19A1C64D0054B0C0 /* MapboxGeocoder.framework in Frameworks */,
+				D97635D517B3A0115CC8F5CB /* Pods_Example__Objective_C_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +278,8 @@
 				72CB04596652E3835ED4FC60 /* Pods_MapboxGeocoderTests.framework */,
 				46A2AC60FDF3B534284CDB36 /* Pods_MapboxGeocoderMacTests.framework */,
 				EB3C49168FF11C0E7040FD82 /* Pods_MapboxGeocoderTVTests.framework */,
+				97BF78DC3BA7B648F5BB140E /* Pods_Example__Objective_C_.framework */,
+				8FC59EB81FC5A00154C319AF /* Pods_Example__Swift_.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -396,6 +408,10 @@
 				8C8C881DE859EB667533E864 /* Pods-MapboxGeocoderMacTests.release.xcconfig */,
 				296697D5C455A31511CF9C08 /* Pods-MapboxGeocoderTVTests.debug.xcconfig */,
 				2F5FC0ED83E6908E7104787A /* Pods-MapboxGeocoderTVTests.release.xcconfig */,
+				4BEDFDFFA3CD02CD54283983 /* Pods-Example (Objective-C).debug.xcconfig */,
+				EA55BA7C07A4CF37A4BD78E9 /* Pods-Example (Objective-C).release.xcconfig */,
+				76AB1CF6F2C112A4ADFAC213 /* Pods-Example (Swift).debug.xcconfig */,
+				BAB912C9D9B18B32FC51980E /* Pods-Example (Swift).release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -542,10 +558,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DD342B6C19A140EE00219F77 /* Build configuration list for PBXNativeTarget "Example (Swift)" */;
 			buildPhases = (
+				A5BB95C8E5B163DBA671429F /* 📦 Check Pods Manifest.lock */,
 				DD342B4C19A140EE00219F77 /* Sources */,
 				DD342B4D19A140EE00219F77 /* Frameworks */,
 				DD342B4E19A140EE00219F77 /* Resources */,
 				DDC2471919A1C3B40054B0C0 /* Embed Frameworks */,
+				ECBCE20486B85578E4CB8922 /* 📦 Embed Pods Frameworks */,
+				A8A6404772EB149E07E2728F /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -579,10 +598,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DDC2474719A1C60E0054B0C0 /* Build configuration list for PBXNativeTarget "Example (Objective-C)" */;
 			buildPhases = (
+				83EC888F6816CB20568BC0F2 /* 📦 Check Pods Manifest.lock */,
 				DDC2472619A1C60E0054B0C0 /* Sources */,
 				DDC2472719A1C60E0054B0C0 /* Frameworks */,
 				DDC2472819A1C60E0054B0C0 /* Resources */,
 				DDC2475119A1CBE20054B0C0 /* Embed Frameworks */,
+				533F6598C0354EC9328CDD86 /* 📦 Embed Pods Frameworks */,
+				DBE69EEE6B1A631B399294E2 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -778,6 +800,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MapboxGeocoderMacTests/Pods-MapboxGeocoderMacTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		533F6598C0354EC9328CDD86 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Example (Objective-C)/Pods-Example (Objective-C)-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		63590C504C246C0AE756F70A /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -808,6 +845,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MapboxGeocoderMacTests/Pods-MapboxGeocoderMacTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		83EC888F6816CB20568BC0F2 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		9C7744E9B56DCE437A134074 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -821,6 +873,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A5BB95C8E5B163DBA671429F /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A8A6404772EB149E07E2728F /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Example (Swift)/Pods-Example (Swift)-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B5DADF6B81D86CCDCD201D0B /* 📦 Embed Pods Frameworks */ = {
@@ -866,6 +948,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DBE69EEE6B1A631B399294E2 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Example (Objective-C)/Pods-Example (Objective-C)-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECBCE20486B85578E4CB8922 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Example (Swift)/Pods-Example (Swift)-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F37C4A0BDB9868CD695600A9 /* 📦 Check Pods Manifest.lock */ = {
@@ -1343,6 +1455,7 @@
 		};
 		DD342B6D19A140EE00219F77 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76AB1CF6F2C112A4ADFAC213 /* Pods-Example (Swift).debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1355,6 +1468,7 @@
 		};
 		DD342B6E19A140EE00219F77 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BAB912C9D9B18B32FC51980E /* Pods-Example (Swift).release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1412,6 +1526,7 @@
 		};
 		DDC2474819A1C60E0054B0C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4BEDFDFFA3CD02CD54283983 /* Pods-Example (Objective-C).debug.xcconfig */;
 			buildSettings = {
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1427,6 +1542,7 @@
 		};
 		DDC2474919A1C60E0054B0C0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA55BA7C07A4CF37A4BD78E9 /* Pods-Example (Objective-C).release.xcconfig */;
 			buildSettings = {
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "Geocoder Example/Info.plist";
