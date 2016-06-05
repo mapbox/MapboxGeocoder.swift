@@ -5,7 +5,8 @@ import MapboxGeocoder
 
 // A Mapbox access token is required to use the Geocoding API.
 // https://www.mapbox.com/help/create-api-access-token/
-let MapboxAccessToken = "<# your Mapbox access token #>"
+let MapboxAccessToken = "pk.eyJ1IjoiMWVjNSIsImEiOiJyRW5pejBNIn0.JceDoWfuprApnwKdhKA5Ig"
+//let MapboxAccessToken = "<# your Mapbox access token #>"
 
 class ViewController: UIViewController, MKMapViewDelegate {
     
