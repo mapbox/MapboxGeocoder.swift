@@ -235,7 +235,8 @@ public class Geocoder: NSObject {
                 }
             }
             
-            guard data != nil && error == nil else {
+            let apiMessage = json["message"] as? String
+            guard data != nil && error == nil && apiMessage == nil else {
                 let apiError = Geocoder.descriptiveError(json, response: response, underlyingError: error)
                 dispatch_async(dispatch_get_main_queue()) {
                     errorHandler(error: apiError)
