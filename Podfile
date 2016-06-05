@@ -1,14 +1,21 @@
 use_frameworks!
 
-#def shared_pods
-#end
-
-#target 'MapboxGeocoder' do
-#  shared_pods
-#end
+def shared_pods
+  pod 'Mapbox-iOS-SDK', '~> 3.2.2'
+end
 
 def shared_test_pods
   pod 'OHHTTPStubs/Swift', '~> 5.0.0', :configurations => ['Debug']
+end
+
+target 'Example (Swift)' do
+  platform :ios, '8.0'
+  shared_pods
+end
+
+target 'Example (Objective-C)' do
+  platform :ios, '8.0'
+  shared_pods
 end
 
 target 'MapboxGeocoderTests' do

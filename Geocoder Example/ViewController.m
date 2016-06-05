@@ -1,4 +1,4 @@
-@import MapKit;
+@import Mapbox;
 @import MapboxGeocoder;
 
 #import "ViewController.h"
@@ -7,11 +7,11 @@
 // https://www.mapbox.com/help/create-api-access-token/
 NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 
-@interface ViewController () <MKMapViewDelegate>
+@interface ViewController () <MGLMapViewDelegate>
 
 #pragma mark - Variables
 
-@property (nonatomic) MKMapView *mapView;
+@property (nonatomic) MGLMapView *mapView;
 @property (nonatomic) UILabel *resultsLabel;
 @property (nonatomic) MBGeocoder *geocoder;
 @property (nonatomic) NSURLSessionDataTask *geocodingDataTask;
@@ -30,7 +30,8 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 
     NSAssert(![MapboxAccessToken isEqualToString:@"<# your Mapbox access token #>"], @"You must set `MapboxAccessToken` to your Mapbox access token.");
 
-    self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
+    [MGLAccountManager setAccessToken:MapboxAccessToken];
+    self.mapView = [[MGLMapView alloc] initWithFrame:self.view.bounds];
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.mapView.delegate = self;
     [self.view addSubview:self.mapView];
@@ -47,11 +48,11 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 
 #pragma mark - MKMapViewDelegate
 
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
+- (void)mapView:(MGLMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
     [self.geocodingDataTask cancel];
 }
 
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+- (void)mapView:(MGLMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
     [self.geocodingDataTask cancel];
     MBReverseGeocodeOptions *options = [[MBReverseGeocodeOptions alloc] initWithCoordinate:self.mapView.centerCoordinate];
     [self.geocoder geocodeWithOptions:options completionHandler:^(NSArray<MBGeocodedPlacemark *> * _Nullable placemarks, NSString * _Nullable attribution, NSError * _Nullable error) {
