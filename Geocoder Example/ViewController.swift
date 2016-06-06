@@ -39,7 +39,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         geocoder = Geocoder(accessToken: MapboxAccessToken)
     }
 
-    // MARK: - MKMapViewDelegate
+    // MARK: - MGLMapViewDelegate
 
     func mapView(mapView: MGLMapView, regionWillChangeAnimated animated: Bool) {
         geocodingDataTask?.cancel()

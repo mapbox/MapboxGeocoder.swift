@@ -46,7 +46,7 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
     self.geocoder = [[MBGeocoder alloc] initWithAccessToken:MapboxAccessToken];
 }
 
-#pragma mark - MKMapViewDelegate
+#pragma mark - MGLMapViewDelegate
 
 - (void)mapView:(MGLMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
     [self.geocodingDataTask cancel];
