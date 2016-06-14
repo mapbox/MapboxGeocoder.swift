@@ -1,13 +1,13 @@
 # MapboxGeocoder
 
 [📱&nbsp;![iOS Build Status](https://www.bitrise.io/app/6cae401ec4c1d406.svg?token=MJnXK0c2x2tmTnmHSPtcFA&branch=master)](https://www.bitrise.io/app/6cae401ec4c1d406) &nbsp;&nbsp;&nbsp;
-[🖥💻&nbsp;![OS X Build Status](https://www.bitrise.io/app/8413a6e577d6aa9a.svg?token=N1agv0mw75SOE_SykliueQ&branch=master)](https://www.bitrise.io/app/8413a6e577d6aa9a) &nbsp;&nbsp;&nbsp;
+[🖥💻&nbsp;![macOS Build Status](https://www.bitrise.io/app/8413a6e577d6aa9a.svg?token=N1agv0mw75SOE_SykliueQ&branch=master)](https://www.bitrise.io/app/8413a6e577d6aa9a) &nbsp;&nbsp;&nbsp;
 [📺&nbsp;![tvOS Build Status](https://www.bitrise.io/app/0a8b56775b94f3e3.svg?token=UgLmHNS_ALJLjJN8ebd4hA&branch=master)](https://www.bitrise.io/app/0a8b56775b94f3e3) &nbsp;&nbsp;&nbsp;
 [⌚️&nbsp;![watchOS Build Status](https://www.bitrise.io/app/b2a0878fa4bddab4.svg?token=4wjvK6K92dNK2bOCuV9-Yg&branch=master)](https://www.bitrise.io/app/b2a0878fa4bddab4)
 
-MapboxGeocoder.swift makes it easy to connect your iOS, OS X, tvOS, or watchOS application to the [Mapbox Geocoding API](https://www.mapbox.com/geocoding/). MapboxGeocoder.swift exposes the power of the [Carmen](https://github.com/mapbox/carmen) geocoder through a simple API similar to Core Location’s CLGeocoder.
+MapboxGeocoder.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the [Mapbox Geocoding API](https://www.mapbox.com/geocoding/). MapboxGeocoder.swift exposes the power of the [Carmen](https://github.com/mapbox/carmen) geocoder through a simple API similar to Core Location’s CLGeocoder.
 
-MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxStatic.swift](https://github.com/mapbox/MapboxStatic.swift), and the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [OS X SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/osx).
+MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxStatic.swift](https://github.com/mapbox/MapboxStatic.swift), and the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [macOS SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/macos).
 
 ## Getting started
 
@@ -29,7 +29,7 @@ This repository includes example applications written in both Swift and Objectiv
 
 ## Usage
 
-You will need a [Mapbox access token](https://www.mapbox.com/developers/api/#access-tokens) in order to use the API. If you’re already using the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [OS X SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/osx), MapboxGeocoder.swift automatically recognizes your access token, as long as you’ve placed it in the `MGLMapboxAccessToken` key of your application’s Info.plist file.
+You will need a [Mapbox access token](https://www.mapbox.com/developers/api/#access-tokens) in order to use the API. If you’re already using the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [macOS SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/macos), MapboxGeocoder.swift automatically recognizes your access token, as long as you’ve placed it in the `MGLMapboxAccessToken` key of your application’s Info.plist file.
 
 ### Basics
 
