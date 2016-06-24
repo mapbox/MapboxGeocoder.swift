@@ -663,6 +663,7 @@
 					};
 					DA5170EA1CF2581900CD6DCF = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					DD342B4F19A140EE00219F77 = {
 						CreatedOnToolsVersion = 6.0;
@@ -1337,6 +1338,7 @@
 				PRODUCT_NAME = MapboxGeocoder;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1364,6 +1366,7 @@
 				PRODUCT_NAME = MapboxGeocoder;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
