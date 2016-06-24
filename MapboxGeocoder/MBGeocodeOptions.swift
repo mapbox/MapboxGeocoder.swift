@@ -33,9 +33,9 @@ public class GeocodeOptions: NSObject {
     /**
      The bitmask of placemark scopes, such as country and neighborhood, to include in the results.
      
-     The default value of this property is `PlacemarkScope.All`, which includes all scopes.
+     The default value of this property is `PlacemarkScope.all`, which includes all scopes.
      */
-    public var allowedScopes: PlacemarkScope = [.All]
+    public var allowedScopes: PlacemarkScope = [.all]
     
     /**
      The region in which each resulting placemark must be located.
@@ -55,7 +55,7 @@ public class GeocodeOptions: NSObject {
      
      - experiment: This option is experimental.
      */
-    public var locale: NSLocale?
+    public var locale: Locale?
     
     private override init() {}
     
@@ -67,26 +67,26 @@ public class GeocodeOptions: NSObject {
     /**
      An array of URL parameters to include in the request URL.
      */
-    internal var params: [NSURLQueryItem] {
-        var params: [NSURLQueryItem] = []
+    internal var params: [URLQueryItem] {
+        var params: [URLQueryItem] = []
         if let allowedISOCountryCodes = allowedISOCountryCodes {
             assert(allowedISOCountryCodes.filter {
-                $0.characters.count != 2 || $0.containsString("-")
+                $0.characters.count != 2 || $0.contains("-")
             }.isEmpty, "Only ISO 3166-1 alpha-2 codes are allowed.")
-            let codeList = allowedISOCountryCodes.joinWithSeparator(",").lowercaseString
-            params.append(NSURLQueryItem(name: "country", value: codeList))
+            let codeList = allowedISOCountryCodes.joined(separator: ",").lowercased()
+            params.append(URLQueryItem(name: "country", value: codeList))
         }
         if let focalLocation = focalLocation {
-            params.append(NSURLQueryItem(name: "proximity", value: "\(focalLocation.coordinate.longitude),\(focalLocation.coordinate.latitude)"))
+            params.append(URLQueryItem(name: "proximity", value: "\(focalLocation.coordinate.longitude),\(focalLocation.coordinate.latitude)"))
         }
-        if !allowedScopes.isEmpty && allowedScopes != .All {
-            params.append(NSURLQueryItem(name: "types", value: String(allowedScopes)))
+        if !allowedScopes.isEmpty && allowedScopes != .all {
+            params.append(URLQueryItem(name: "types", value: String(allowedScopes)))
         }
         if let allowedRegion = allowedRegion {
-            params.append(NSURLQueryItem(name: "bbox", value: String(allowedRegion)))
+            params.append(URLQueryItem(name: "bbox", value: String(allowedRegion)))
         }
-        if let languageCode = locale?.objectForKey(NSLocaleLanguageCode) as? String {
-            params.append(NSURLQueryItem(name: "language", value: languageCode))
+        if let languageCode = locale?.object(forKey: Locale.Key.languageCode) as? String {
+            params.append(URLQueryItem(name: "language", value: languageCode))
         }
         return params
     }
@@ -126,15 +126,15 @@ public class ForwardGeocodeOptions: GeocodeOptions {
      */
     @available(iOS 9.0, OSX 10.11, *)
     public convenience init(postalAddress: CNPostalAddress) {
-        let formattedAddress = CNPostalAddressFormatter().stringFromPostalAddress(postalAddress)
-        self.init(query: formattedAddress.stringByReplacingOccurrencesOfString("\n", withString: ", "))
+        let formattedAddress = CNPostalAddressFormatter().string(from: postalAddress)
+        self.init(query: formattedAddress.replacingOccurrences(of: "\n", with: ", "))
     }
     #endif
     
-    override var params: [NSURLQueryItem] {
+    override var params: [URLQueryItem] {
         var params = super.params
         if !autocompletesQuery {
-            params.append(NSURLQueryItem(name: "autocomplete", value: String(autocompletesQuery)))
+            params.append(URLQueryItem(name: "autocomplete", value: String(autocompletesQuery)))
         }
         return params
     }

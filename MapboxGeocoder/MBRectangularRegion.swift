@@ -15,15 +15,15 @@ public class RectangularRegion: CLRegion {
     }
     
     required public init?(coder decoder: NSCoder) {
-        decoder.decodeValueOfObjCType("{dd}", at: &southWest)
-        decoder.decodeValueOfObjCType("{dd}", at: &northEast)
+        decoder.decodeValue(ofObjCType: "{dd}", at: &southWest)
+        decoder.decodeValue(ofObjCType: "{dd}", at: &northEast)
         super.init(coder: decoder)
     }
     
-    public override func encodeWithCoder(coder: NSCoder) {
-        super.encodeWithCoder(coder)
-        coder.encodeValueOfObjCType("{dd}", at: &southWest)
-        coder.encodeValueOfObjCType("{dd}", at: &northEast)
+    public override func encode(with coder: NSCoder) {
+        super.encode(with: coder)
+        coder.encodeValue(ofObjCType: "{dd}", at: &southWest)
+        coder.encodeValue(ofObjCType: "{dd}", at: &northEast)
     }
     
     public override var hashValue: Int {
@@ -31,7 +31,7 @@ public class RectangularRegion: CLRegion {
             + northEast.latitude.hashValue + northEast.longitude.hashValue)
     }
     
-    public override func isEqual(object: AnyObject?) -> Bool {
+    public override func isEqual(_ object: AnyObject?) -> Bool {
         guard let object = object as? RectangularRegion else {
             return false
         }
@@ -42,14 +42,7 @@ public class RectangularRegion: CLRegion {
     /**
      Returns a Boolean value indicating whether the bounding box contains the specified coordinate.
      */
-    public func containsCoordinate(coordinate: CLLocationCoordinate2D) -> Bool! {
-        return contains(coordinate)
-    }
-    
-    /**
-     Returns a Boolean value indicating whether the bounding box contains the specified coordinate.
-     */
-    public func contains(coordinate: CLLocationCoordinate2D) -> Bool {
+    public func containsLocationCoordinate2D(_ coordinate: CLLocationCoordinate2D) -> Bool {
         return (coordinate.latitude >= southWest.latitude && coordinate.latitude <= northEast.latitude
             && coordinate.longitude >= southWest.longitude && coordinate.longitude <= northEast.longitude)
     }

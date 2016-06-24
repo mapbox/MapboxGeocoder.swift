@@ -4,18 +4,18 @@ typealias JSONDictionary = [String: AnyObject]
 public let MBGeocoderErrorDomain = "MBGeocoderErrorDomain"
 
 /// The Mapbox access token specified in the main application bundle’s Info.plist.
-let defaultAccessToken = NSBundle.mainBundle().objectForInfoDictionaryKey("MGLMapboxAccessToken") as? String
+let defaultAccessToken = Bundle.main().objectForInfoDictionaryKey("MGLMapboxAccessToken") as? String
 
 /// The user agent string for any HTTP requests performed directly within this library.
 let userAgent: String = {
     var components: [String] = []
     
-    if let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String ?? NSBundle.mainBundle().infoDictionary?["CFBundleIdentifier"] as? String {
-        let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+    if let appName = Bundle.main().infoDictionary?["CFBundleName"] as? String ?? Bundle.main().infoDictionary?["CFBundleIdentifier"] as? String {
+        let version = Bundle.main().infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         components.append("\(appName)/\(version)")
     }
     
-    let libraryBundle: NSBundle? = NSBundle(forClass: Geocoder.self)
+    let libraryBundle: Bundle? = Bundle(for: Geocoder.self)
     
     if let libraryName = libraryBundle?.infoDictionary?["CFBundleName"] as? String, version = libraryBundle?.infoDictionary?["CFBundleShortVersionString"] as? String {
         components.append("\(libraryName)/\(version)")
@@ -33,7 +33,7 @@ let userAgent: String = {
     #elseif os(Linux)
         system = "Linux"
     #endif
-    let systemVersion = NSProcessInfo().operatingSystemVersion
+    let systemVersion = ProcessInfo().operatingSystemVersion
     components.append("\(system)/\(systemVersion.majorVersion).\(systemVersion.minorVersion).\(systemVersion.patchVersion)")
     
     let chip: String
@@ -48,17 +48,19 @@ let userAgent: String = {
     #endif
     components.append("(\(chip))")
     
-    return components.joinWithSeparator(" ")
+    return components.joined(separator: " ")
 }()
 
-extension NSCharacterSet {
+extension CharacterSet {
     /**
      Returns the character set including the characters allowed in the “geocoding query” (file name) part of a Geocoding API URL request.
      */
-    internal class func geocodingQueryAllowedCharacterSet() -> NSCharacterSet {
-        let characterSet = NSCharacterSet.URLPathAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
-        characterSet.removeCharactersInString("/;")
-        return characterSet
+    internal static func geocodingQueryAllowedCharacterSet() -> CharacterSet {
+        // <rdar://problem/26880260> <https://openradar.appspot.com/26880260>
+        return CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+//        var characterSet = CharacterSet.urlPathAllowed
+//        characterSet.remove(charactersIn: "/;")
+//        return characterSet
     }
 }
 
@@ -120,7 +122,7 @@ public class Geocoder: NSObject {
     public static let sharedGeocoder = Geocoder(accessToken: nil)
     
     /// The API endpoint to request the geocodes from.
-    internal var apiEndpoint: NSURL
+    internal var apiEndpoint: URL
     
     /// The Mapbox access token to associate the request with.
     internal let accessToken: String
@@ -137,10 +139,10 @@ public class Geocoder: NSObject {
         
         self.accessToken = accessToken!
         
-        let baseURLComponents = NSURLComponents()
+        var baseURLComponents = URLComponents()
         baseURLComponents.scheme = "https"
         baseURLComponents.host = host ?? "api.mapbox.com"
-        self.apiEndpoint = baseURLComponents.URL!
+        self.apiEndpoint = baseURLComponents.url!
     }
     
     /**
@@ -167,8 +169,8 @@ public class Geocoder: NSObject {
      - parameter completionHandler: The closure (block) to call with the resulting placemarks. This closure is executed on the application’s main thread.
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting placemarks, cancel this task.
      */
-    public func geocode(options options: GeocodeOptions, completionHandler: CompletionHandler) -> NSURLSessionDataTask {
-        let url = URLForGeocoding(options: options)
+    public func geocode(options: GeocodeOptions, completionHandler: CompletionHandler) -> URLSessionDataTask {
+        let url = urlForGeocoding(options: options)
         let task = dataTaskWithURL(url, completionHandler: { (json) in
             let featureCollection = json as! JSONDictionary
             assert(featureCollection["type"] as? String == "FeatureCollection")
@@ -195,8 +197,8 @@ public class Geocoder: NSObject {
      - parameter completionHandler: The closure (block) to call with the resulting placemarks. This closure is executed on the application’s main thread.
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting placemarks, cancel this task.
      */
-    public func batchGeocode<T: GeocodeOptions where T: BatchGeocodeOptions>(options options: T, completionHandler: BatchCompletionHandler) -> NSURLSessionDataTask {
-        let url = URLForGeocoding(options: options)
+    public func batchGeocode<T: GeocodeOptions where T: BatchGeocodeOptions>(options: T, completionHandler: BatchCompletionHandler) -> URLSessionDataTask {
+        let url = urlForGeocoding(options: options)
         let task = dataTaskWithURL(url, completionHandler: { (json) in
             let featureCollections = json as! [JSONDictionary]
             let placemarksByQuery = featureCollections.map { (featureCollection) -> [GeocodedPlacemark] in
@@ -222,14 +224,14 @@ public class Geocoder: NSObject {
      - returns: The data task for the URL.
      - postcondition: The caller must resume the returned task.
      */
-    private func dataTaskWithURL(url: NSURL, completionHandler: (json: AnyObject) -> Void, errorHandler: (error: NSError) -> Void) -> NSURLSessionDataTask {
-        let request = NSMutableURLRequest(URL: url)
+    private func dataTaskWithURL(_ url: URL, completionHandler: (json: AnyObject) -> Void, errorHandler: (error: NSError) -> Void) -> URLSessionDataTask {
+        var request = URLRequest(url: url)
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
-        return NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
+        return URLSession.shared().dataTask(with: request) { (data, response, error) in
             var json: JSONDictionary = [:]
             if let data = data {
                 do {
-                    json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! JSONDictionary
+                    json = try JSONSerialization.jsonObject(with: data, options: []) as! JSONDictionary
                 } catch {
                     assert(false, "Invalid data")
                 }
@@ -238,13 +240,13 @@ public class Geocoder: NSObject {
             let apiMessage = json["message"] as? String
             guard data != nil && error == nil && apiMessage == nil else {
                 let apiError = Geocoder.descriptiveError(json, response: response, underlyingError: error)
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     errorHandler(error: apiError)
                 }
                 return
             }
             
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 completionHandler(json: json)
             }
         }
@@ -253,9 +255,9 @@ public class Geocoder: NSObject {
     /**
      The HTTP URL used to fetch the geocodes from the API.
      */
-    public func URLForGeocoding(options options: GeocodeOptions) -> NSURL {
+    public func urlForGeocoding(options: GeocodeOptions) -> URL {
         let params = options.params + [
-            NSURLQueryItem(name: "access_token", value: accessToken),
+            URLQueryItem(name: "access_token", value: accessToken),
         ]
         
         assert(!options.queries.isEmpty, "No query")
@@ -269,42 +271,42 @@ public class Geocoder: NSObject {
         }
         
         let queryComponent = options.queries.map {
-            $0.stringByReplacingOccurrencesOfString(" ", withString: "+")
-                .stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.geocodingQueryAllowedCharacterSet()) ?? ""
-        }.joinWithSeparator(";")
+            $0.replacingOccurrences(of: " ", with: "+")
+                .addingPercentEncoding(withAllowedCharacters: CharacterSet.geocodingQueryAllowedCharacterSet()) ?? ""
+        }.joined(separator: ";")
         
-        let unparameterizedURL = NSURL(string: "/geocoding/v5/\(mode)/\(queryComponent).json", relativeToURL: apiEndpoint)!
-        let components = NSURLComponents(URL: unparameterizedURL, resolvingAgainstBaseURL: true)!
+        let unparameterizedURL = URL(string: "/geocoding/v5/\(mode)/\(queryComponent).json", relativeTo: apiEndpoint)!
+        var components = URLComponents(url: unparameterizedURL, resolvingAgainstBaseURL: true)!
         components.queryItems = params
-        return components.URL!
+        return components.url!
     }
     
     /**
      Returns an error that supplements the given underlying error with additional information from the an HTTP response’s body or headers.
      */
-    private static func descriptiveError(json: JSONDictionary, response: NSURLResponse?, underlyingError error: NSError?) -> NSError {
+    private static func descriptiveError(_ json: JSONDictionary, response: URLResponse?, underlyingError error: NSError?) -> NSError {
         var userInfo = error?.userInfo ?? [:]
-        if let response = response as? NSHTTPURLResponse {
+        if let response = response as? HTTPURLResponse {
             var failureReason: String? = nil
             var recoverySuggestion: String? = nil
             switch response.statusCode {
             case 429:
-                if let timeInterval = response.allHeaderFields["x-rate-limit-interval"] as? NSTimeInterval, maximumCountOfRequests = response.allHeaderFields["x-rate-limit-limit"] as? UInt {
-                    let intervalFormatter = NSDateComponentsFormatter()
-                    intervalFormatter.unitsStyle = .Full
-                    let formattedInterval = intervalFormatter.stringFromTimeInterval(timeInterval)
-                    let formattedCount = NSNumberFormatter.localizedStringFromNumber(maximumCountOfRequests, numberStyle: .DecimalStyle)
+                if let timeInterval = response.allHeaderFields["x-rate-limit-interval"] as? TimeInterval, maximumCountOfRequests = response.allHeaderFields["x-rate-limit-limit"] as? UInt {
+                    let intervalFormatter = DateComponentsFormatter()
+                    intervalFormatter.unitsStyle = .full
+                    let formattedInterval = intervalFormatter.string(from: timeInterval)
+                    let formattedCount = NumberFormatter.localizedString(from: maximumCountOfRequests, number: .decimal)
                     failureReason = "More than \(formattedCount) requests have been made with this access token within a period of \(formattedInterval)."
                 }
                 if let rolloverTimestamp = response.allHeaderFields["x-rate-limit-reset"] as? Double {
-                    let date = NSDate(timeIntervalSince1970: rolloverTimestamp)
-                    let formattedDate = NSDateFormatter.localizedStringFromDate(date, dateStyle: .LongStyle, timeStyle: .FullStyle)
+                    let date = Date(timeIntervalSince1970: rolloverTimestamp)
+                    let formattedDate = DateFormatter.localizedString(from: date, dateStyle: .longStyle, timeStyle: .fullStyle)
                     recoverySuggestion = "Wait until \(formattedDate) before retrying."
                 }
             default:
                 failureReason = json["message"] as? String
             }
-            userInfo[NSLocalizedFailureReasonErrorKey] = failureReason ?? userInfo[NSLocalizedFailureReasonErrorKey] ?? NSHTTPURLResponse.localizedStringForStatusCode(error?.code ?? -1)
+            userInfo[NSLocalizedFailureReasonErrorKey] = failureReason ?? userInfo[NSLocalizedFailureReasonErrorKey] ?? HTTPURLResponse.localizedString(forStatusCode: error?.code ?? -1)
             userInfo[NSLocalizedRecoverySuggestionErrorKey] = recoverySuggestion ?? userInfo[NSLocalizedRecoverySuggestionErrorKey]
         }
         userInfo[NSUnderlyingErrorKey] = error

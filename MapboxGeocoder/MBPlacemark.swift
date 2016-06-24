@@ -94,19 +94,19 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
         return true
     }
     
-    public func copyWithZone(zone: NSZone) -> AnyObject {
+    public func copy(with zone: NSZone?) -> AnyObject {
         return Placemark(featureJSON: featureJSON)
     }
     
-    public func encodeWithCoder(coder: NSCoder) {
-        coder.encodeObject(featureJSON, forKey: "featureJSON")
+    public func encode(with coder: NSCoder) {
+        coder.encode(featureJSON, forKey: "featureJSON")
     }
     
     public override var hashValue: Int {
         return identifier.hashValue
     }
     
-    public override func isEqual(object: AnyObject?) -> Bool {
+    public override func isEqual(_ object: AnyObject?) -> Bool {
         if let object = object as? Placemark {
             return identifier == object.identifier
         }
@@ -161,9 +161,9 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      The scope offers a general indication of the size or importance of the feature represented by the placemark – in other words, how local the feature is.
      */
     public var scope: PlacemarkScope {
-        let components = identifier.characters.split(".")
+        let components = identifier.characters.split(separator: ".")
         assert(components.count == 2)
-        let scopeCharacters = identifier.characters.split(".").first!
+        let scopeCharacters = identifier.characters.split(separator: ".").first!
         return PlacemarkScope(descriptions: [String(scopeCharacters)])
     }
     
@@ -268,7 +268,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      To get the country’s name, use the `name` property of the object stored in this property.
      */
     public var country: Placemark? {
-        return superiorPlacemarks?.lazy.filter { $0.scope == .Country }.first
+        return superiorPlacemarks?.lazy.filter { $0.scope == .country }.first
     }
     
     /**
@@ -277,7 +277,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      To get the postal code itself, use the `name` property of the object stored in this property.
      */
     public var postalCode: Placemark? {
-        return superiorPlacemarks?.lazy.filter { $0.scope == .PostalCode }.first
+        return superiorPlacemarks?.lazy.filter { $0.scope == .postalCode }.first
     }
     
     /**
@@ -286,7 +286,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      To get the region’s name, use the `name` property of the object stored in this property.
      */
     public var administrativeRegion: Placemark? {
-        return superiorPlacemarks?.lazy.filter { $0.scope == .Region }.last
+        return superiorPlacemarks?.lazy.filter { $0.scope == .region }.last
     }
     
     /**
@@ -295,7 +295,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      To get the district’s name, use the `name` property of the object stored in this property.
      */
     public var district: Placemark? {
-        return superiorPlacemarks?.lazy.filter { $0.scope == .District }.last
+        return superiorPlacemarks?.lazy.filter { $0.scope == .district }.last
     }
     
     /**
@@ -304,7 +304,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      To get the place’s name, use the `name` property of the object stored in this property.
      */
     public var place: Placemark? {
-        return superiorPlacemarks?.lazy.filter { $0.scope == .Place }.last
+        return superiorPlacemarks?.lazy.filter { $0.scope == .place }.last
     }
     
     /**
@@ -313,14 +313,14 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      To get the neighborhood’s name, use the `name` property of the object stored in this property.
      */
     public var neighborhood: Placemark? {
-        return superiorPlacemarks?.lazy.filter { $0.scope == .Neighborhood }.last
+        return superiorPlacemarks?.lazy.filter { $0.scope == .neighborhood }.last
     }
     
     /**
      The name of the street associated with the placemark.
      */
     public var thoroughfare: String? {
-        guard scope == .Address else {
+        guard scope == .address else {
             return nil
         }
         return featureJSON["text"] as? String
@@ -357,7 +357,7 @@ public class GeocodedPlacemark: Placemark {
         superiorPlacemarks = contextJSON?.map { QualifyingPlacemark(featureJSON: $0) }
     }
     
-    public override func copyWithZone(zone: NSZone) -> AnyObject {
+    public override func copy(with zone: NSZone?) -> AnyObject {
         return GeocodedPlacemark(featureJSON: featureJSON)
     }
     
@@ -389,10 +389,10 @@ public class GeocodedPlacemark: Placemark {
         let text = super.name
         
         // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
-        if let houseNumber = featureJSON["address"] as? String where scope == .Address {
+        if let houseNumber = featureJSON["address"] as? String where scope == .address {
             let streetName = text
             let reversedAddress = "\(streetName) \(houseNumber)"
-            if qualifiedName.componentsSeparatedByString(", ").contains(reversedAddress) {
+            if qualifiedName.components(separatedBy: ", ").contains(reversedAddress) {
                 return reversedAddress
             } else {
                 return "\(houseNumber) \(streetName)"
@@ -403,7 +403,7 @@ public class GeocodedPlacemark: Placemark {
     }
     
     public override var code: String? {
-        return (propertiesJSON["short_code"] as? String)?.uppercaseString
+        return (propertiesJSON["short_code"] as? String)?.uppercased()
     }
     
     public override var wikidataItemIdentifier: String? {
@@ -416,7 +416,7 @@ public class GeocodedPlacemark: Placemark {
     
     public override var genres: [String]? {
         let categoryList = propertiesJSON["category"] as? String
-        return categoryList?.componentsSeparatedByString(", ")
+        return categoryList?.components(separatedBy: ", ")
     }
     
     public override var imageName: String? {
@@ -424,8 +424,8 @@ public class GeocodedPlacemark: Placemark {
     }
     
     override var formattedAddressLines: [String] {
-        let lines = qualifiedName.componentsSeparatedByString(", ")
-        return scope == .Address ? lines : Array(lines.suffixFrom(1))
+        let lines = qualifiedName.components(separatedBy: ", ")
+        return scope == .address ? lines : Array(lines.suffix(from: 1))
     }
     
     #if !os(tvOS)
@@ -433,10 +433,10 @@ public class GeocodedPlacemark: Placemark {
     public override var postalAddress: CNPostalAddress? {
         let postalAddress = CNMutablePostalAddress()
         
-        if scope == .Address {
+        if scope == .address {
             postalAddress.street = name
         } else if let address = propertiesJSON["address"] as? String {
-            postalAddress.street = address.stringByReplacingOccurrencesOfString(", ", withString: "\n")
+            postalAddress.street = address.replacingOccurrences(of: ", ", with: "\n")
         }
         
         if let placeName = place?.name {
@@ -452,7 +452,7 @@ public class GeocodedPlacemark: Placemark {
             postalAddress.country = countryName
         }
         if let ISOCountryCode = country?.code {
-            postalAddress.ISOCountryCode = ISOCountryCode
+            postalAddress.isoCountryCode = ISOCountryCode
         }
         
         return postalAddress
@@ -461,7 +461,7 @@ public class GeocodedPlacemark: Placemark {
     
     public override var addressDictionary: [NSObject: AnyObject]? {
         var addressDictionary: [String: AnyObject] = [:]
-        if scope == .Address {
+        if scope == .address {
             addressDictionary[MBPostalAddressStreetKey] = name
         } else if let address = propertiesJSON["address"] as? String {
             addressDictionary[MBPostalAddressStreetKey] = address
@@ -471,8 +471,8 @@ public class GeocodedPlacemark: Placemark {
         addressDictionary[MBPostalAddressPostalCodeKey] = postalCode?.name
         addressDictionary[MBPostalAddressCountryKey] = country?.name
         addressDictionary[MBPostalAddressISOCountryCodeKey] = country?.code
-        let lines = qualifiedName.componentsSeparatedByString(", ")
-        addressDictionary["formattedAddressLines"] = scope == .Address ? lines : Array(lines.suffixFrom(1))
+        let lines = qualifiedName.components(separatedBy: ", ")
+        addressDictionary["formattedAddressLines"] = scope == .address ? lines : Array(lines.suffix(from: 1))
         addressDictionary["name"] = name
         addressDictionary["subAdministrativeArea"] = district?.name ?? place?.name
         addressDictionary["subLocality"] = neighborhood?.name
@@ -494,12 +494,12 @@ public class GeocodedPlacemark: Placemark {
  */
 @objc(MBQualifyingPlacemark)
 public class QualifyingPlacemark: Placemark {
-    public override func copyWithZone(zone: NSZone) -> AnyObject {
+    public override func copy(with zone: NSZone?) -> AnyObject {
         return QualifyingPlacemark(featureJSON: featureJSON)
     }
     
     public override var code: String? {
-        return (featureJSON["short_code"] as? String)?.uppercaseString
+        return (featureJSON["short_code"] as? String)?.uppercased()
     }
     
     public override var wikidataItemIdentifier: String? {
