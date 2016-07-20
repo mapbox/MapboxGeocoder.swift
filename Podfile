@@ -1,7 +1,7 @@
 use_frameworks!
 
 def shared_pods
-  pod 'Mapbox-iOS-SDK', '~> 3.2.2'
+  pod 'Mapbox-iOS-SDK', '~> 3.3'
 end
 
 def shared_test_pods
