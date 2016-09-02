@@ -81,23 +81,24 @@ options.focalLocation = CLLocation(latitude: 45.3, longitude: -66.1)
 options.allowedScopes = [.Address, .PointOfInterest]
 
 let task = geocoder.geocode(options: options) { (placemarks, attribution, error) in
-    let placemark = placemarks[0]
-    print(placemark.name)
-        // 200 Queen St
-    print(placemark.qualifiedName)
-        // 200 Queen St, Saint John, New Brunswick E2L 2X1, Canada
-    
-    let coordinate = placemark.location!.coordinate
-    print("\(coordinate.latitude), \(coordinate.longitude)")
-        // 45.270093, -66.050985
-    
-    #if !os(tvOS)
-    let formatter = CNPostalAddressFormatter()
-    print(formatter.stringFromPostalAddress(placemark.postalAddress))
-        // 200 Queen St
-        // Saint John New Brunswick E2L 2X1
-        // Canada
-    #endif
+    if let placemark = placemarks?[0] {
+        print(placemark.name)
+            // 200 Queen St
+        print(placemark.qualifiedName)
+            // 200 Queen St, Saint John, New Brunswick E2L 2X1, Canada
+        
+        let coordinate = placemark.location!.coordinate
+        print("\(coordinate.latitude), \(coordinate.longitude)")
+            // 45.270093, -66.050985
+        
+        #if !os(tvOS)
+        let formatter = CNPostalAddressFormatter()
+        print(formatter.stringFromPostalAddress(placemark.postalAddress))
+            // 200 Queen St
+            // Saint John New Brunswick E2L 2X1
+            // Canada
+        #endif
+    }
 }
 ```
 
