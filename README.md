@@ -11,15 +11,21 @@ MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com
 
 ## Getting started
 
-Import `MapboxGeocoder.framework` into your project, then `import MapboxGeocoder` or `@import MapboxGeocoder;`. 
+**Static Framework**
 
-Alternatively, specify the following dependency in your [CocoaPods](http://cocoapods.org/) Podfile:
+Download a framework build from [the releases page](https://github.com/mapbox/MapboxGeocoder.swift/releases). Import `MapboxGeocoder.framework` into your project, then `import MapboxGeocoder` or `@import MapboxGeocoder;`. 
+
+**[CocoaPods](http://cocoapods.org/)**
+
+In your Podfile:
 
 ```podspec
 pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :tag => 'v0.5.0'
 ```
 
-Or in your [Carthage](https://github.com/Carthage/Carthage) Cartfile:
+**[Carthage](https://github.com/Carthage/Carthage)**
+
+In your Cartfile:
 
 ```sh
 github "Mapbox/MapboxGeocoder.swift" ~> 0.5.0
