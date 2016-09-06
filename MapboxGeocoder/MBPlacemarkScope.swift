@@ -1,3 +1,5 @@
+public typealias PlacemarkScope = MBPlacemarkScope
+
 extension PlacemarkScope: CustomStringConvertible {
     /**
      Initializes a placemark scope bitmask corresponding to the given array of string representations of scopes.
