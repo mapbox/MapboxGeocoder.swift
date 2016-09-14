@@ -5,7 +5,7 @@ def shared_pods
 end
 
 def shared_test_pods
-  pod 'OHHTTPStubs/Swift', '~> 5.0.0', :configurations => ['Debug']
+  pod 'OHHTTPStubs/Swift', '~> 5.0', :configurations => ['Debug']
 end
 
 target 'Example (Swift)' do
