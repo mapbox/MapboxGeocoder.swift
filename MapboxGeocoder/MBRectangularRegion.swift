@@ -8,6 +8,14 @@ public class RectangularRegion: CLRegion {
     /** Coordinate at the northeast corner. */
     public var northEast: CLLocationCoordinate2D = CLLocationCoordinate2D()
     
+    /**
+     Creates a rectangular region with the given southwest and northeast corners.
+     
+     `southWest` must be to the southwest of `northEast`. The region may not span the antimeridian. If you need to restrict a query to a region that spans the antimeridian, such as the region that encompasses Fiji, perform two queries each limited to the region on either side of the antimeridian, then combine the results.
+     
+     - parameter southWest: The southwesternmost geographic coordinate that lies within the region.
+     - parameter northEast: The northeasternmost geographic coordinate that lies within the region.
+     */
     public init(southWest: CLLocationCoordinate2D, northEast: CLLocationCoordinate2D) {
         self.southWest = southWest
         self.northEast = northEast
