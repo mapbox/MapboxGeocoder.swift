@@ -1,0 +1,17 @@
+PODS:
+  - Mapbox-iOS-SDK (3.3.4)
+  - OHHTTPStubs/Core (5.2.1)
+  - OHHTTPStubs/Swift (5.2.1):
+    - OHHTTPStubs/Core
+
+DEPENDENCIES:
+  - Mapbox-iOS-SDK (~> 3.3)
+  - OHHTTPStubs/Swift (~> 5.0)
+
+SPEC CHECKSUMS:
+  Mapbox-iOS-SDK: b22da0d9703fcfb0a8b592b6a7f6a21264fe44b0
+  OHHTTPStubs: 3a42f25c00563b71355ac73112ba2324e9e6cef4
+
+PODFILE CHECKSUM: 0d327e0fe430b4211f61e91065c69151ac64aef7
+
+COCOAPODS: 1.1.0.rc.2
