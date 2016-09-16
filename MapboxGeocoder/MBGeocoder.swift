@@ -227,7 +227,7 @@ public class Geocoder: NSObject {
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         return NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) in
             var json: JSONDictionary = [:]
-            if let data = data {
+            if let data = data where response?.MIMEType == "application/json" {
                 do {
                     json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as! JSONDictionary
                 } catch {
