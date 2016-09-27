@@ -4,20 +4,20 @@ typealias JSONDictionary = [String: AnyObject]
 public let MBGeocoderErrorDomain = "MBGeocoderErrorDomain"
 
 /// The Mapbox access token specified in the main application bundle’s Info.plist.
-let defaultAccessToken = Bundle.main().objectForInfoDictionaryKey("MGLMapboxAccessToken") as? String
+let defaultAccessToken = Bundle.main.infoDictionary?["MGLMapboxAccessToken"] as? String
 
 /// The user agent string for any HTTP requests performed directly within this library.
 let userAgent: String = {
     var components: [String] = []
     
-    if let appName = Bundle.main().infoDictionary?["CFBundleName"] as? String ?? Bundle.main().infoDictionary?["CFBundleIdentifier"] as? String {
-        let version = Bundle.main().infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+    if let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         components.append("\(appName)/\(version)")
     }
     
     let libraryBundle: Bundle? = Bundle(for: Geocoder.self)
     
-    if let libraryName = libraryBundle?.infoDictionary?["CFBundleName"] as? String, version = libraryBundle?.infoDictionary?["CFBundleShortVersionString"] as? String {
+    if let libraryName = libraryBundle?.infoDictionary?["CFBundleName"] as? String, let version = libraryBundle?.infoDictionary?["CFBundleShortVersionString"] as? String {
         components.append("\(libraryName)/\(version)")
     }
     
@@ -91,7 +91,7 @@ extension CLLocation {
  Each result produced by the geocoder object is stored in a `Placemark` object. Depending on your query and the available data, the placemark object may contain a variety of information, such as the name, address, region, or contact information for a place, or some combination thereof.
  */
 @objc(MBGeocoder)
-public class Geocoder: NSObject {
+open class Geocoder: NSObject {
     /**
      A closure (block) to be called when a geocoding request is complete.
      
@@ -101,7 +101,7 @@ public class Geocoder: NSObject {
      - parameter attribution: A legal notice indicating the source, copyright status, and terms of use of the placemark data.
      - parameter error: The error that occurred, or `nil` if the placemarks were obtained successfully.
      */
-    public typealias CompletionHandler = (placemarks: [GeocodedPlacemark]?, attribution: String?, error: NSError?) -> Void
+    public typealias CompletionHandler = (_ placemarks: [GeocodedPlacemark]?, _ attribution: String?, _ error: NSError?) -> Void
     
     /**
      A closure (block) to be called when a geocoding request is complete.
@@ -112,14 +112,14 @@ public class Geocoder: NSObject {
      - parameter attributionsByQuery: An array of legal notices indicating the sources, copyright statuses, and terms of use of the placemark data for each query.
      - parameter error: The error that occurred, or `nil` if the placemarks were obtained successfully.
      */
-    public typealias BatchCompletionHandler = (placemarksByQuery: [[GeocodedPlacemark]]?, attributionsByQuery: [String]?, error: NSError?) -> Void
+    public typealias BatchCompletionHandler = (_ placemarksByQuery: [[GeocodedPlacemark]]?, _ attributionsByQuery: [String]?, _ error: NSError?) -> Void
     
     /**
      The shared geocoder object.
      
      To use this object, a Mapbox [access token](https://www.mapbox.com/help/define-access-token/) should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
      */
-    public static let sharedGeocoder = Geocoder(accessToken: nil)
+    open static let sharedGeocoder = Geocoder(accessToken: nil)
     
     /// The API endpoint to request the geocodes from.
     internal var apiEndpoint: URL
@@ -169,8 +169,8 @@ public class Geocoder: NSObject {
      - parameter completionHandler: The closure (block) to call with the resulting placemarks. This closure is executed on the application’s main thread.
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting placemarks, cancel this task.
      */
-    public func geocode(options: GeocodeOptions, completionHandler: CompletionHandler) -> URLSessionDataTask {
-        let url = urlForGeocoding(options: options)
+    open func geocode(_ options: GeocodeOptions, completionHandler: @escaping CompletionHandler) -> URLSessionDataTask {
+        let url = urlForGeocoding(options)
         let task = dataTaskWithURL(url, completionHandler: { (json) in
             let featureCollection = json as! JSONDictionary
             assert(featureCollection["type"] as? String == "FeatureCollection")
@@ -178,9 +178,9 @@ public class Geocoder: NSObject {
             let attribution = featureCollection["attribution"] as? String
             
             let placemarks = features.flatMap { GeocodedPlacemark(featureJSON: $0) }
-            completionHandler(placemarks: placemarks, attribution: attribution, error: nil)
+            completionHandler(placemarks, attribution, nil)
         }) { (error) in
-            completionHandler(placemarks: nil, attribution: nil, error: error)
+            completionHandler(nil, nil, error)
         }
         task.resume()
         return task
@@ -197,8 +197,8 @@ public class Geocoder: NSObject {
      - parameter completionHandler: The closure (block) to call with the resulting placemarks. This closure is executed on the application’s main thread.
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting placemarks, cancel this task.
      */
-    public func batchGeocode<T: GeocodeOptions where T: BatchGeocodeOptions>(options: T, completionHandler: BatchCompletionHandler) -> URLSessionDataTask {
-        let url = urlForGeocoding(options: options)
+    open func batchGeocode<T: GeocodeOptions>(_ options: T, completionHandler: @escaping BatchCompletionHandler) -> URLSessionDataTask where T: BatchGeocodeOptions {
+        let url = urlForGeocoding(options)
         let task = dataTaskWithURL(url, completionHandler: { (json) in
             let featureCollections = json as! [JSONDictionary]
             let placemarksByQuery = featureCollections.map { (featureCollection) -> [GeocodedPlacemark] in
@@ -207,9 +207,9 @@ public class Geocoder: NSObject {
                 return features.flatMap { GeocodedPlacemark(featureJSON: $0) }
             }
             let attributionsByQuery = featureCollections.map { $0["attribution"] as! String }
-            completionHandler(placemarksByQuery: placemarksByQuery, attributionsByQuery: attributionsByQuery, error: nil)
+            completionHandler(placemarksByQuery, attributionsByQuery, nil)
         }) { (error) in
-            completionHandler(placemarksByQuery: nil, attributionsByQuery: nil, error: error)
+            completionHandler(nil, nil, error)
         }
         task.resume()
         return task
@@ -224,10 +224,10 @@ public class Geocoder: NSObject {
      - returns: The data task for the URL.
      - postcondition: The caller must resume the returned task.
      */
-    private func dataTaskWithURL(_ url: URL, completionHandler: (json: AnyObject) -> Void, errorHandler: (error: NSError) -> Void) -> URLSessionDataTask {
+    fileprivate func dataTaskWithURL(_ url: URL, completionHandler: @escaping (_ json: AnyObject) -> Void, errorHandler: @escaping (_ error: NSError) -> Void) -> URLSessionDataTask {
         var request = URLRequest(url: url)
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
-        return URLSession.shared().dataTask(with: request) { (data, response, error) in
+        return URLSession.shared.dataTask(with: request) { (data, response, error) in
             var json: JSONDictionary = [:]
             if let data = data {
                 do {
@@ -239,15 +239,15 @@ public class Geocoder: NSObject {
             
             let apiMessage = json["message"] as? String
             guard data != nil && error == nil && apiMessage == nil else {
-                let apiError = Geocoder.descriptiveError(json, response: response, underlyingError: error)
+                let apiError = Geocoder.descriptiveError(json, response: response, underlyingError: error as NSError?)
                 DispatchQueue.main.async {
-                    errorHandler(error: apiError)
+                    errorHandler(apiError)
                 }
                 return
             }
             
             DispatchQueue.main.async {
-                completionHandler(json: json)
+                completionHandler(json as AnyObject)
             }
         }
     }
@@ -255,7 +255,7 @@ public class Geocoder: NSObject {
     /**
      The HTTP URL used to fetch the geocodes from the API.
      */
-    public func urlForGeocoding(options: GeocodeOptions) -> URL {
+    open func urlForGeocoding(_ options: GeocodeOptions) -> URL {
         let params = options.params + [
             URLQueryItem(name: "access_token", value: accessToken),
         ]
@@ -284,23 +284,23 @@ public class Geocoder: NSObject {
     /**
      Returns an error that supplements the given underlying error with additional information from the an HTTP response’s body or headers.
      */
-    private static func descriptiveError(_ json: JSONDictionary, response: URLResponse?, underlyingError error: NSError?) -> NSError {
+    fileprivate static func descriptiveError(_ json: JSONDictionary, response: URLResponse?, underlyingError error: NSError?) -> NSError {
         var userInfo = error?.userInfo ?? [:]
         if let response = response as? HTTPURLResponse {
             var failureReason: String? = nil
             var recoverySuggestion: String? = nil
             switch response.statusCode {
             case 429:
-                if let timeInterval = response.allHeaderFields["x-rate-limit-interval"] as? TimeInterval, maximumCountOfRequests = response.allHeaderFields["x-rate-limit-limit"] as? UInt {
+                if let timeInterval = response.allHeaderFields["x-rate-limit-interval"] as? TimeInterval, let maximumCountOfRequests = response.allHeaderFields["x-rate-limit-limit"] as? UInt {
                     let intervalFormatter = DateComponentsFormatter()
                     intervalFormatter.unitsStyle = .full
                     let formattedInterval = intervalFormatter.string(from: timeInterval)
-                    let formattedCount = NumberFormatter.localizedString(from: maximumCountOfRequests, number: .decimal)
+                    let formattedCount = NumberFormatter.localizedString(from: maximumCountOfRequests as NSNumber, number: .decimal)
                     failureReason = "More than \(formattedCount) requests have been made with this access token within a period of \(formattedInterval)."
                 }
                 if let rolloverTimestamp = response.allHeaderFields["x-rate-limit-reset"] as? Double {
                     let date = Date(timeIntervalSince1970: rolloverTimestamp)
-                    let formattedDate = DateFormatter.localizedString(from: date, dateStyle: .longStyle, timeStyle: .fullStyle)
+                    let formattedDate = DateFormatter.localizedString(from: date, dateStyle: .long, timeStyle: .full)
                     recoverySuggestion = "Wait until \(formattedDate) before retrying."
                 }
             default:

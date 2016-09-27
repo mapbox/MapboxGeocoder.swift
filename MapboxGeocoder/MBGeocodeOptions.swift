@@ -13,7 +13,7 @@
  Pass an instance of either class into the `Geocoder.geocode(options:completionHandler:)` method.
  */
 @objc(MBGeocodeOptions)
-public class GeocodeOptions: NSObject {
+open class GeocodeOptions: NSObject {
     // MARK: Specifying the Search Criteria
     
     /**
@@ -21,28 +21,28 @@ public class GeocodeOptions: NSObject {
      
      By default, no country codes are specified.
      */
-    public var allowedISOCountryCodes: [String]?
+    open var allowedISOCountryCodes: [String]?
     
     /**
      A loation to use as a hint when looking up the specified address.
      
      This property prioritizes results that are close to a specific location, which is typically the user’s current location. If the value of this property is `nil` – which it is by default – no specific location is prioritized.
      */
-    public var focalLocation: CLLocation?
+    open var focalLocation: CLLocation?
     
     /**
      The bitmask of placemark scopes, such as country and neighborhood, to include in the results.
      
      The default value of this property is `PlacemarkScope.all`, which includes all scopes.
      */
-    public var allowedScopes: PlacemarkScope = [.all]
+    open var allowedScopes: PlacemarkScope = [.all]
     
     /**
      The region in which each resulting placemark must be located.
      
      By default, no region is specified, so results may be located anywhere in the world.
      */
-    public var allowedRegion: RectangularRegion?
+    open var allowedRegion: RectangularRegion?
     
     // MARK: Specifying the Output Format
     
@@ -55,9 +55,9 @@ public class GeocodeOptions: NSObject {
      
      - experiment: This option is experimental.
      */
-    public var locale: Locale?
+    open var locale: Locale?
     
-    private override init() {}
+    fileprivate override init() {}
     
     /**
      An array of geocoding query strings to include in the request URL.
@@ -80,12 +80,12 @@ public class GeocodeOptions: NSObject {
             params.append(URLQueryItem(name: "proximity", value: "\(focalLocation.coordinate.longitude),\(focalLocation.coordinate.latitude)"))
         }
         if !allowedScopes.isEmpty && allowedScopes != .all {
-            params.append(URLQueryItem(name: "types", value: String(allowedScopes)))
+            params.append(URLQueryItem(name: "types", value: String(describing: allowedScopes)))
         }
         if let allowedRegion = allowedRegion {
-            params.append(URLQueryItem(name: "bbox", value: String(allowedRegion)))
+            params.append(URLQueryItem(name: "bbox", value: String(describing: allowedRegion)))
         }
-        if let languageCode = locale?.object(forKey: Locale.Key.languageCode) as? String {
+        if let languageCode = locale?.languageCode {
             params.append(URLQueryItem(name: "language", value: languageCode))
         }
         return params
@@ -96,15 +96,15 @@ public class GeocodeOptions: NSObject {
  A structure that specifies the criteria for forward geocoding results. Forward geocoding takes a human-readable query, such as a place name or address, and produces any number of geographic coordinates that correspond to that query.
  */
 @objc(MBForwardGeocodeOptions)
-public class ForwardGeocodeOptions: GeocodeOptions {
+open class ForwardGeocodeOptions: GeocodeOptions {
     /**
      A Boolean value that determines whether the results may include placemarks whose names match must match the whole query string exactly.
      
      If true, a resulting placemark’s name may contain a word that begins with the query string. If false, the query string must match a whole word or phrase in the placemark’s name. The default value of this property is true, which is best suited for continuous search fields.
      */
-    public var autocompletesQuery = true
+    open var autocompletesQuery = true
     
-    private init(queries: [String]) {
+    fileprivate init(queries: [String]) {
         super.init()
         self.queries = queries
     }
@@ -144,13 +144,13 @@ public class ForwardGeocodeOptions: GeocodeOptions {
  A structure that specifies the criteria for reverse geocoding results. _Reverse geocoding_ takes a geographic coordinate and produces a hierarchy of places, often beginning with an address, that describes the coordinate’s location.
  */
 @objc(MBReverseGeocodeOptions)
-public class ReverseGeocodeOptions: GeocodeOptions {
+open class ReverseGeocodeOptions: GeocodeOptions {
     /**
      An array of coordinates to search for.
      */
-    public var coordinates: [CLLocationCoordinate2D]
+    open var coordinates: [CLLocationCoordinate2D]
     
-    private init(coordinates: [CLLocationCoordinate2D]) {
+    fileprivate init(coordinates: [CLLocationCoordinate2D]) {
         self.coordinates = coordinates
         super.init()
         queries = coordinates.map { String(format: "%.5f,%.5f", $0.longitude, $0.latitude) }
@@ -189,7 +189,7 @@ public protocol BatchGeocodeOptions {}
  A structure that specifies the criteria for forward batch geocoding results. Forward geocoding takes a human-readable query, such as a place name or address, and produces any number of geographic coordinates that correspond to that query.
  */
 @objc(MBForwardBatchGeocodeOptions)
-public class ForwardBatchGeocodeOptions: ForwardGeocodeOptions, BatchGeocodeOptions {
+open class ForwardBatchGeocodeOptions: ForwardGeocodeOptions, BatchGeocodeOptions {
     /**
      Initializes a forward batch geocode options object with the given query strings.
      
@@ -204,7 +204,7 @@ public class ForwardBatchGeocodeOptions: ForwardGeocodeOptions, BatchGeocodeOpti
  A structure that specifies the criteria for reverse geocoding results. Reverse geocoding takes a geographic coordinate and produces a hierarchy of places, often beginning with an address, that describes the coordinate’s location.
  */
 @objc(MBReverseBatchGeocodeOptions)
-public class ReverseBatchGeocodeOptions: ReverseGeocodeOptions, BatchGeocodeOptions {
+open class ReverseBatchGeocodeOptions: ReverseGeocodeOptions, BatchGeocodeOptions {
     /**
      Initializes a reverse batch geocode options object with the given coordinate pairs.
      
