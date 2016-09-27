@@ -460,24 +460,24 @@ open class GeocodedPlacemark: Placemark {
     #endif
     
     open override var addressDictionary: [AnyHashable: Any]? {
-        var addressDictionary: [String: AnyObject] = [:]
+        var addressDictionary: [String: Any] = [:]
         if scope == .address {
-            addressDictionary[MBPostalAddressStreetKey] = name as AnyObject?
+            addressDictionary[MBPostalAddressStreetKey] = name
         } else if let address = propertiesJSON["address"] as? String {
-            addressDictionary[MBPostalAddressStreetKey] = address as AnyObject?
+            addressDictionary[MBPostalAddressStreetKey] = address
         }
-        addressDictionary[MBPostalAddressCityKey] = place?.name as AnyObject?
-        addressDictionary[MBPostalAddressStateKey] = administrativeRegion?.name as AnyObject?
-        addressDictionary[MBPostalAddressPostalCodeKey] = postalCode?.name as AnyObject?
-        addressDictionary[MBPostalAddressCountryKey] = country?.name as AnyObject?
-        addressDictionary[MBPostalAddressISOCountryCodeKey] = country?.code as AnyObject?
+        addressDictionary[MBPostalAddressCityKey] = place?.name
+        addressDictionary[MBPostalAddressStateKey] = administrativeRegion?.name
+        addressDictionary[MBPostalAddressPostalCodeKey] = postalCode?.name
+        addressDictionary[MBPostalAddressCountryKey] = country?.name
+        addressDictionary[MBPostalAddressISOCountryCodeKey] = country?.code
         let lines = qualifiedName.components(separatedBy: ", ")
-        //addressDictionary["formattedAddressLines"] = scope == .address ? lines : Array(lines.suffix(from: 1)) as AnyObject?
-        addressDictionary["name"] = name as AnyObject?
-        addressDictionary["subAdministrativeArea"] = district?.name as AnyObject?? ?? place?.name as AnyObject?
-        addressDictionary["subLocality"] = neighborhood?.name as AnyObject?
-        addressDictionary["subThoroughfare"] = subThoroughfare as AnyObject?
-        addressDictionary["thoroughfare"] = thoroughfare as AnyObject?
+        addressDictionary["formattedAddressLines"] = scope == .address ? lines : Array(lines.suffix(from: 1))
+        addressDictionary["name"] = name
+        addressDictionary["subAdministrativeArea"] = district?.name ?? place?.name
+        addressDictionary["subLocality"] = neighborhood?.name
+        addressDictionary["subThoroughfare"] = subThoroughfare
+        addressDictionary["thoroughfare"] = thoroughfare
         return addressDictionary
     }
     

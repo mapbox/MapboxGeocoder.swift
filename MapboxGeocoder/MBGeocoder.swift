@@ -1,4 +1,4 @@
-typealias JSONDictionary = [String: AnyObject]
+typealias JSONDictionary = [String: Any]
 
 /// Indicates that an error occurred in MapboxGeocoder.
 public let MBGeocoderErrorDomain = "MBGeocoderErrorDomain"
@@ -224,7 +224,7 @@ open class Geocoder: NSObject {
      - returns: The data task for the URL.
      - postcondition: The caller must resume the returned task.
      */
-    fileprivate func dataTaskWithURL(_ url: URL, completionHandler: @escaping (_ json: AnyObject) -> Void, errorHandler: @escaping (_ error: NSError) -> Void) -> URLSessionDataTask {
+    fileprivate func dataTaskWithURL(_ url: URL, completionHandler: @escaping (_ json: Any) -> Void, errorHandler: @escaping (_ error: NSError) -> Void) -> URLSessionDataTask {
         var request = URLRequest(url: url)
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         return URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -247,7 +247,7 @@ open class Geocoder: NSObject {
             }
             
             DispatchQueue.main.async {
-                completionHandler(json as AnyObject)
+                completionHandler(json)
             }
         }
     }
