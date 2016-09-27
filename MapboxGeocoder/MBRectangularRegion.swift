@@ -2,11 +2,11 @@
  The `RectangularRegion` class defines a rectangular bounding box for a geographic region.
  */
 @objc(MBRectangularRegion)
-public class RectangularRegion: CLRegion {
+open class RectangularRegion: CLRegion {
     /** Coordinate at the southwest corner. */
-    public var southWest: CLLocationCoordinate2D = CLLocationCoordinate2D()
+    open var southWest: CLLocationCoordinate2D = CLLocationCoordinate2D()
     /** Coordinate at the northeast corner. */
-    public var northEast: CLLocationCoordinate2D = CLLocationCoordinate2D()
+    open var northEast: CLLocationCoordinate2D = CLLocationCoordinate2D()
     
     public init(southWest: CLLocationCoordinate2D, northEast: CLLocationCoordinate2D) {
         self.southWest = southWest
@@ -20,18 +20,18 @@ public class RectangularRegion: CLRegion {
         super.init(coder: decoder)
     }
     
-    public override func encode(with coder: NSCoder) {
+    open override func encode(with coder: NSCoder) {
         super.encode(with: coder)
         coder.encodeValue(ofObjCType: "{dd}", at: &southWest)
         coder.encodeValue(ofObjCType: "{dd}", at: &northEast)
     }
     
-    public override var hashValue: Int {
+    open override var hashValue: Int {
         return (southWest.latitude.hashValue + southWest.longitude.hashValue
             + northEast.latitude.hashValue + northEast.longitude.hashValue)
     }
     
-    public override func isEqual(_ object: AnyObject?) -> Bool {
+    open override func isEqual(_ object: Any?) -> Bool {
         guard let object = object as? RectangularRegion else {
             return false
         }
@@ -42,7 +42,7 @@ public class RectangularRegion: CLRegion {
     /**
      Returns a Boolean value indicating whether the bounding box contains the specified coordinate.
      */
-    public func containsLocationCoordinate2D(_ coordinate: CLLocationCoordinate2D) -> Bool {
+    open func containsLocationCoordinate2D(_ coordinate: CLLocationCoordinate2D) -> Bool {
         return (coordinate.latitude >= southWest.latitude && coordinate.latitude <= northEast.latitude
             && coordinate.longitude >= southWest.longitude && coordinate.longitude <= northEast.longitude)
     }
