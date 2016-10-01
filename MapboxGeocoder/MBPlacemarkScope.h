@@ -27,4 +27,4 @@ typedef NS_OPTIONS(NSUInteger, MBPlacemarkScope) {
     
     /// All scopes.
     MBPlacemarkScopeAll = 0x0ffffUL,
-} NS_SWIFT_NAME(PlacemarkScope);
+};

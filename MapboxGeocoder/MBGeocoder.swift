@@ -23,7 +23,7 @@ let userAgent: String = {
     
     let system: String
     #if os(OSX)
-        system = "OS X"
+        system = "macOS"
     #elseif os(iOS)
         system = "iOS"
     #elseif os(watchOS)
@@ -229,7 +229,7 @@ open class Geocoder: NSObject {
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         return URLSession.shared.dataTask(with: request) { (data, response, error) in
             var json: JSONDictionary = [:]
-            if let data = data {
+            if let data = data, response?.mimeType == "application/json" {
                 do {
                     json = try JSONSerialization.jsonObject(with: data, options: []) as! JSONDictionary
                 } catch {
