@@ -10,7 +10,7 @@
  - _Forward geocoding_ takes a human-readable query, such as a place name or address, and produces any number of geographic coordinates that correspond to that query. To perform forward geocoding, use a `ForwardGeocodeOptions` object.
  - _Reverse geocoding_ takes a geographic coordinate and produces a hierarchy of places, often beginning with an address, that describes the coordinate’s location. To perform reverse geocoding, use a `ReverseGeocodeOptions` object.
  
- Pass an instance of either class into the `Geocoder.geocode(options:completionHandler:)` method.
+ Pass an instance of either class into the `Geocoder.geocode(withOptions:completionHandler:)` method.
  */
 @objc(MBGeocodeOptions)
 open class GeocodeOptions: NSObject {
@@ -20,6 +20,8 @@ open class GeocodeOptions: NSObject {
      An array of [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes specifying the countries in which the results may lie. The codes may appear in any order and are case-insensitive.
      
      By default, no country codes are specified.
+     
+     To find out what kinds of results are available for a particular country, consult [the Geocoding API’s coverage map](https://www.mapbox.com/geocoding/#coverage).
      */
     open var allowedISOCountryCodes: [String]?
     
@@ -112,7 +114,7 @@ open class ForwardGeocodeOptions: GeocodeOptions {
     /**
      Initializes a forward geocode options object with the given query string.
      
-     - parameter query: A place name or address to search for.
+     - parameter query: A place name or address to search for. The query may have a maximum of 20 words or numbers; it may have up to 256 characters including spaces and punctuation.
      */
     public convenience init(query: String) {
         self.init(queries: [query])
@@ -180,7 +182,7 @@ open class ReverseGeocodeOptions: GeocodeOptions {
  
  You can include up to 50 forward geocoding queries in a single request. Each query in a batch request counts individually against your account’s rate limits.
  
- Pass an object conforming to this protocol into the `Geocoder.batchGeocode(options:completionHandler:)` method.
+ Pass an object conforming to this protocol into the `Geocoder.batchGeocode(withOptions:completionHandler:)` method.
  */
 @objc(MBBatchGeocodeOptions)
 public protocol BatchGeocodeOptions {}
@@ -193,7 +195,7 @@ open class ForwardBatchGeocodeOptions: ForwardGeocodeOptions, BatchGeocodeOption
     /**
      Initializes a forward batch geocode options object with the given query strings.
      
-     - parameter queries: An array of up to 50 place names or addresses to search for.
+     - parameter queries: An array of up to 50 place names or addresses to search for. An individual query may have a maximum of 20 words or numbers; it may have up to 256 characters including spaces and punctuation.
      */
     public override init(queries: [String]) {
         super.init(queries: queries)

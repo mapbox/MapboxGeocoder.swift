@@ -10,12 +10,12 @@ class ForwardGeocodingTests: XCTestCase {
     }
 
     func testValidForwardGeocode() {
-        let expectation = expectationWithDescription("forward geocode should return results")
+        let expectation = self.expectation(description: "forward geocode should return results")
         
-        stub(isHost("api.mapbox.com")
+        _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places/1600+pennsylvania+ave.json")
             && containsQueryParams(["country": "ca", "access_token": BogusToken])) { _ in
-            let path = NSBundle(forClass: self.dynamicType).pathForResource("forward_valid", ofType: "json")
+            let path = Bundle(for: type(of: self)).path(forResource: "forward_valid", ofType: "json")
             return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/json"])
         }
         
@@ -23,7 +23,7 @@ class ForwardGeocodingTests: XCTestCase {
         var addressPlacemark: Placemark! = nil
         let options = ForwardGeocodeOptions(query: "1600 pennsylvania ave")
         options.allowedISOCountryCodes = ["CA"]
-        let task = geocoder.geocode(options: options) { (placemarks, attribution, error) in
+        let task = geocoder.geocode(withOptions: options) { (placemarks, attribution, error) in
             XCTAssertEqual(placemarks?.count, 4, "forward geocode should have 4 results")
             addressPlacemark = placemarks![0]
             
@@ -33,9 +33,9 @@ class ForwardGeocodingTests: XCTestCase {
         }
         XCTAssertNotNil(task)
         
-        waitForExpectationsWithTimeout(1) { (error) in
+        waitForExpectations(timeout: 1) { (error) in
             XCTAssertNil(error, "Error: \(error)")
-            XCTAssertEqual(task.state, NSURLSessionTaskState.Completed)
+            XCTAssertEqual(task.state, URLSessionTask.State.completed)
         }
         
         XCTAssertEqual(addressPlacemark.description, "Pennsylvania Ave", "forward geocode should populate description")
@@ -46,7 +46,7 @@ class ForwardGeocodingTests: XCTestCase {
         XCTAssertEqual(addressPlacemark.location?.coordinate.latitude, 44.5047077, "forward geocode should populate location")
     
         XCTAssertEqual(addressPlacemark.location?.coordinate.longitude, -79.9850737, "forward geocode should populate location")
-        XCTAssertEqual(addressPlacemark.scope, PlacemarkScope.Address, "forward geocode should populate scope")
+        XCTAssertEqual(addressPlacemark.scope, PlacemarkScope.address, "forward geocode should populate scope")
         XCTAssertEqual(addressPlacemark.country?.code, "CA", "forward geocode should populate ISO country code")
         XCTAssertEqual(addressPlacemark.country?.name, "Canada", "forward geocode should populate country")
         XCTAssertEqual(addressPlacemark.postalCode?.name, "L9Z 3A8", "forward geocode should populate postal code")
@@ -66,30 +66,30 @@ class ForwardGeocodingTests: XCTestCase {
     }
     
     func testInvalidForwardGeocode() {
-        stub(isHost("api.mapbox.com")
+        _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places/Sandy+Island,+New+Caledonia.json")
             && containsQueryParams(["country": "nc", "types": "region,place,locality,poi", "access_token": BogusToken])) { _ in
-                let path = NSBundle(forClass: self.dynamicType).pathForResource("forward_invalid", ofType: "json")
+                let path = Bundle(for: type(of: self)).path(forResource: "forward_invalid", ofType: "json")
                 return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/json"])
         }
         
-        let expection = expectationWithDescription("forward geocode execute completion handler for invalid query")
+        let expectation = self.expectation(description: "forward geocode execute completion handler for invalid query")
         let geocoder = Geocoder(accessToken: BogusToken)
         let options = ForwardGeocodeOptions(query: "Sandy Island, New Caledonia")
-        options.allowedScopes = [.Region, .Place, .Locality, .PointOfInterest]
+        options.allowedScopes = [.region, .place, .locality, .pointOfInterest]
         options.allowedISOCountryCodes = ["NC"]
-        let task = geocoder.geocode(options: options) { (placemarks, attribution, error) in
+        let task = geocoder.geocode(withOptions: options) { (placemarks, attribution, error) in
             XCTAssertEqual(placemarks?.count, 0, "forward geocode should return no results for invalid query")
             
             XCTAssertEqual(attribution, "NOTICE: © 2016 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained.")
             
-            expection.fulfill()
+            expectation.fulfill()
         }
         XCTAssertNotNil(task)
         
-        waitForExpectationsWithTimeout(1) { (error) in
+        waitForExpectations(timeout: 1) { (error) in
             XCTAssertNil(error, "Error: \(error)")
-            XCTAssertEqual(task.state, NSURLSessionTaskState.Completed)
+            XCTAssertEqual(task.state, URLSessionTask.State.completed)
         }
     }
 }

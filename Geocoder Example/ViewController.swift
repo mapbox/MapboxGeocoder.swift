@@ -32,7 +32,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         resultsLabel = UILabel(frame: CGRect(x: 10, y: 20, width: view.bounds.size.width - 20, height: 30))
         resultsLabel.autoresizingMask = .flexibleWidth
         resultsLabel.adjustsFontSizeToFitWidth = true
-        resultsLabel.backgroundColor = UIColor.white().withAlphaComponent(0.5)
+        resultsLabel.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         resultsLabel.isUserInteractionEnabled = false
         view.addSubview(resultsLabel)
         
@@ -48,10 +48,10 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     func mapView(_ mapView: MGLMapView, regionDidChangeAnimated animated: Bool) {
         geocodingDataTask?.cancel()
         let options = ReverseGeocodeOptions(coordinate: mapView.centerCoordinate)
-        geocodingDataTask = geocoder.geocode(options: options) { [unowned self] (placemarks, attribution, error) in
+        geocodingDataTask = geocoder.geocode(withOptions: options) { [unowned self] (placemarks, attribution, error) in
             if let error = error {
                 NSLog("%@", error)
-            } else if let placemarks = placemarks where !placemarks.isEmpty {
+            } else if let placemarks = placemarks, !placemarks.isEmpty {
                 self.resultsLabel.text = placemarks[0].qualifiedName
             } else {
                 self.resultsLabel.text = "No results"

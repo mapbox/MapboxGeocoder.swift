@@ -23,7 +23,7 @@ let userAgent: String = {
     
     let system: String
     #if os(OSX)
-        system = "OS X"
+        system = "macOS"
     #elseif os(iOS)
         system = "iOS"
     #elseif os(watchOS)
@@ -163,13 +163,13 @@ open class Geocoder: NSObject {
      
      This method retrieves the placemarks asynchronously over a network connection. If a connection error or server error occurs, details about the error are passed into the given completion handler in lieu of the placemarks.
      
-     Geocoding results may be displayed atop a Mapbox map. They may be cached but may not be stored permanently. To use the results in other contexts or store them permanently, use the `batchGeocode(options:completionHandler:)` method with a Mapbox enterprise plan.
+     Geocoding results may be displayed atop a Mapbox map. They may be cached but may not be stored permanently. To use the results in other contexts or store them permanently, use the `batchGeocode(withOptions:completionHandler:)` method with a Mapbox enterprise plan.
      
      - parameter options: A `ForwardGeocodeOptions` or `ReverseGeocodeOptions` object indicating what to search for.
      - parameter completionHandler: The closure (block) to call with the resulting placemarks. This closure is executed on the application’s main thread.
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting placemarks, cancel this task.
      */
-    open func geocode(_ options: GeocodeOptions, completionHandler: @escaping CompletionHandler) -> URLSessionDataTask {
+    open func geocode(withOptions options: GeocodeOptions, completionHandler: @escaping CompletionHandler) -> URLSessionDataTask {
         let url = urlForGeocoding(options)
         let task = dataTaskWithURL(url, completionHandler: { (json) in
             let featureCollection = json as! JSONDictionary
@@ -197,7 +197,7 @@ open class Geocoder: NSObject {
      - parameter completionHandler: The closure (block) to call with the resulting placemarks. This closure is executed on the application’s main thread.
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting placemarks, cancel this task.
      */
-    open func batchGeocode<T: GeocodeOptions>(_ options: T, completionHandler: @escaping BatchCompletionHandler) -> URLSessionDataTask where T: BatchGeocodeOptions {
+    open func batchGeocode<T: GeocodeOptions>(withOptions options: T, completionHandler: @escaping BatchCompletionHandler) -> URLSessionDataTask where T: BatchGeocodeOptions {
         let url = urlForGeocoding(options)
         let task = dataTaskWithURL(url, completionHandler: { (json) in
             let featureCollections = json as! [JSONDictionary]
@@ -229,7 +229,7 @@ open class Geocoder: NSObject {
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         return URLSession.shared.dataTask(with: request) { (data, response, error) in
             var json: JSONDictionary = [:]
-            if let data = data {
+            if let data = data, response?.mimeType == "application/json" {
                 do {
                     json = try JSONSerialization.jsonObject(with: data, options: []) as! JSONDictionary
                 } catch {
