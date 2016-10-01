@@ -48,7 +48,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     func mapView(_ mapView: MGLMapView, regionDidChangeAnimated animated: Bool) {
         geocodingDataTask?.cancel()
         let options = ReverseGeocodeOptions(coordinate: mapView.centerCoordinate)
-        geocodingDataTask = geocoder.geocode(options) { [unowned self] (placemarks, attribution, error) in
+        geocodingDataTask = geocoder.geocode(withOptions: options) { [unowned self] (placemarks, attribution, error) in
             if let error = error {
                 NSLog("%@", error)
             } else if let placemarks = placemarks, !placemarks.isEmpty {

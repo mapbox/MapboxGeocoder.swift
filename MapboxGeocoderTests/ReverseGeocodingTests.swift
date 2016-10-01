@@ -23,7 +23,7 @@ class ReverseGeocodingTests: XCTestCase {
         var pointOfInterestPlacemark: Placemark?
         var placePlacemark: Placemark?
         let options = ReverseGeocodeOptions(location: CLLocation(latitude: 37.13284000, longitude: -95.78558000))
-        let task = geocoder.geocode(options) { (placemarks, attribution, error) in
+        let task = geocoder.geocode(withOptions: options) { (placemarks, attribution, error) in
             XCTAssertEqual(placemarks?.count, 5, "reverse geocode should have 5 results")
             pointOfInterestPlacemark = placemarks![0]
             placePlacemark = placemarks![1]
@@ -82,7 +82,7 @@ class ReverseGeocodingTests: XCTestCase {
         let expectation = self.expectation(description: "reverse geocode execute completion handler for invalid query")
         let geocoder = Geocoder(accessToken: BogusToken)
         let options = ReverseGeocodeOptions(coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
-        let task = geocoder.geocode(options) { (placemarks, attribution, error) in
+        let task = geocoder.geocode(withOptions: options) { (placemarks, attribution, error) in
             XCTAssertEqual(placemarks?.count, 0, "reverse geocode should return no results for invalid query")
             
             XCTAssertEqual(attribution, "NOTICE: © 2016 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained.")
