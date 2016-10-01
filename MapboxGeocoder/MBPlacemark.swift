@@ -59,7 +59,7 @@ public let MBPostalAddressCountryKey = "country"
 public let MBPostalAddressISOCountryCodeKey = "ISOCountryCode"
 
 /**
- A `Placemark` object represents a geocoder result. A placemark associates identifiers, geographic data, and contact information with a particular latitude and longitude. It is possible to explicitly create a placemark object from another placemark object; however, placemark objects are generally created for you via the `Geocoder.geocode(withOptions:completionHandler:)` method.
+ A `Placemark` object represents a geocoder result. A placemark associates identifiers, geographic data, and contact information with a particular latitude and longitude. It is possible to explicitly create a placemark object from another placemark object; however, placemark objects are generally created for you via the `Geocoder.geocode(_:completionHandler:)` method.
  */
 @objc(MBPlacemark)
 open class Placemark: NSObject, NSSecureCoding {

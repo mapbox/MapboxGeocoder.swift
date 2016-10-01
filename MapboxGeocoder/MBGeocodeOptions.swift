@@ -10,7 +10,7 @@
  - _Forward geocoding_ takes a human-readable query, such as a place name or address, and produces any number of geographic coordinates that correspond to that query. To perform forward geocoding, use a `ForwardGeocodeOptions` object.
  - _Reverse geocoding_ takes a geographic coordinate and produces a hierarchy of places, often beginning with an address, that describes the coordinate’s location. To perform reverse geocoding, use a `ReverseGeocodeOptions` object.
  
- Pass an instance of either class into the `Geocoder.geocode(withOptions:completionHandler:)` method.
+ Pass an instance of either class into the `Geocoder.geocode(_:completionHandler:)` method.
  */
 @objc(MBGeocodeOptions)
 open class GeocodeOptions: NSObject {
@@ -182,7 +182,7 @@ open class ReverseGeocodeOptions: GeocodeOptions {
  
  You can include up to 50 forward geocoding queries in a single request. Each query in a batch request counts individually against your account’s rate limits.
  
- Pass an object conforming to this protocol into the `Geocoder.batchGeocode(withOptions:completionHandler:)` method.
+ Pass an object conforming to this protocol into the `Geocoder.batchGeocode(_:completionHandler:)` method.
  */
 @objc(MBBatchGeocodeOptions)
 public protocol BatchGeocodeOptions {}

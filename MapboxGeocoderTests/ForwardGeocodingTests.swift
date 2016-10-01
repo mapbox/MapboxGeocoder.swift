@@ -23,7 +23,7 @@ class ForwardGeocodingTests: XCTestCase {
         var addressPlacemark: Placemark! = nil
         let options = ForwardGeocodeOptions(query: "1600 pennsylvania ave")
         options.allowedISOCountryCodes = ["CA"]
-        let task = geocoder.geocode(withOptions: options) { (placemarks, attribution, error) in
+        let task = geocoder.geocode(options) { (placemarks, attribution, error) in
             XCTAssertEqual(placemarks?.count, 4, "forward geocode should have 4 results")
             addressPlacemark = placemarks![0]
             
@@ -78,7 +78,7 @@ class ForwardGeocodingTests: XCTestCase {
         let options = ForwardGeocodeOptions(query: "Sandy Island, New Caledonia")
         options.allowedScopes = [.region, .place, .locality, .pointOfInterest]
         options.allowedISOCountryCodes = ["NC"]
-        let task = geocoder.geocode(withOptions: options) { (placemarks, attribution, error) in
+        let task = geocoder.geocode(options) { (placemarks, attribution, error) in
             XCTAssertEqual(placemarks?.count, 0, "forward geocode should return no results for invalid query")
             
             XCTAssertEqual(attribution, "NOTICE: © 2016 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained.")
