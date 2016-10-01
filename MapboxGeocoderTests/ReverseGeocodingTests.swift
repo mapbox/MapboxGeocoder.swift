@@ -10,12 +10,12 @@ class ReverseGeocodingTests: XCTestCase {
     }
 
     func testValidReverseGeocode() {
-        let expectation = expectationWithDescription("reverse geocode should return results")
+        let expectation = self.expectation(description: "reverse geocode should return results")
         
-        stub(isHost("api.mapbox.com")
+        _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places/-95.78558,37.13284.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = NSBundle(forClass: self.dynamicType).pathForResource("reverse_valid", ofType: "json")
+                let path = Bundle(for: type(of: self)).path(forResource: "reverse_valid", ofType: "json")
                 return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/json"])
         }
 
@@ -23,7 +23,7 @@ class ReverseGeocodingTests: XCTestCase {
         var pointOfInterestPlacemark: Placemark?
         var placePlacemark: Placemark?
         let options = ReverseGeocodeOptions(location: CLLocation(latitude: 37.13284000, longitude: -95.78558000))
-        let task = geocoder.geocode(options: options) { (placemarks, attribution, error) in
+        let task = geocoder.geocode(options) { (placemarks, attribution, error) in
             XCTAssertEqual(placemarks?.count, 5, "reverse geocode should have 5 results")
             pointOfInterestPlacemark = placemarks![0]
             placePlacemark = placemarks![1]
@@ -34,9 +34,9 @@ class ReverseGeocodingTests: XCTestCase {
         }
         XCTAssertNotNil(task)
 
-        waitForExpectationsWithTimeout(1) { (error) in
+        waitForExpectations(timeout: 1) { (error) in
             XCTAssertNil(error, "Error: \(error)")
-            XCTAssertEqual(task.state, NSURLSessionTaskState.Completed)
+            XCTAssertEqual(task.state, URLSessionTask.State.completed)
         }
         
         XCTAssertEqual(pointOfInterestPlacemark?.description, "Jones Jerry", "reverse geocode should populate description")
@@ -44,7 +44,7 @@ class ReverseGeocodingTests: XCTestCase {
         XCTAssertEqual(pointOfInterestPlacemark?.qualifiedName, "Jones Jerry, 2850 CR 3100, Independence, Kansas 67301, United States", "reverse geocode should populate qualified name")
         XCTAssertEqual(pointOfInterestPlacemark?.location?.coordinate.latitude, 37.128003, "reverse geocode should populate location")
         XCTAssertEqual(pointOfInterestPlacemark?.location?.coordinate.longitude, -95.782951, "reverse geocode should populate location")
-        XCTAssertEqual(pointOfInterestPlacemark?.scope, PlacemarkScope.PointOfInterest, "reverse geocode should populate scope")
+        XCTAssertEqual(pointOfInterestPlacemark?.scope, PlacemarkScope.pointOfInterest, "reverse geocode should populate scope")
         XCTAssertEqual(pointOfInterestPlacemark?.country?.code, "US", "reverse geocode should populate ISO country code")
         XCTAssertEqual(pointOfInterestPlacemark?.country?.name, "United States", "reverse geocode should populate country")
         XCTAssertEqual(pointOfInterestPlacemark?.postalCode?.name, "67301", "reverse geocode should populate postal code")
@@ -72,28 +72,28 @@ class ReverseGeocodingTests: XCTestCase {
     }
 
     func testInvalidReverseGeocode() {
-        stub(isHost("api.mapbox.com")
+        _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places/0.00000,0.00000.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = NSBundle(forClass: self.dynamicType).pathForResource("reverse_invalid", ofType: "json")
+                let path = Bundle(for: type(of: self)).path(forResource: "reverse_invalid", ofType: "json")
                 return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/json"])
         }
         
-        let expection = expectationWithDescription("reverse geocode execute completion handler for invalid query")
+        let expectation = self.expectation(description: "reverse geocode execute completion handler for invalid query")
         let geocoder = Geocoder(accessToken: BogusToken)
         let options = ReverseGeocodeOptions(coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0))
-        let task = geocoder.geocode(options: options) { (placemarks, attribution, error) in
+        let task = geocoder.geocode(options) { (placemarks, attribution, error) in
             XCTAssertEqual(placemarks?.count, 0, "reverse geocode should return no results for invalid query")
             
             XCTAssertEqual(attribution, "NOTICE: © 2016 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained.")
             
-            expection.fulfill()
+            expectation.fulfill()
         }
         XCTAssertNotNil(task)
 
-        waitForExpectationsWithTimeout(1) { (error) in
+        waitForExpectations(timeout: 1) { (error) in
             XCTAssertNil(error, "Error: \(error)")
-            XCTAssertEqual(task.state, NSURLSessionTaskState.Completed)
+            XCTAssertEqual(task.state, URLSessionTask.State.completed)
         }
     }
 }
