@@ -16,7 +16,7 @@ class ReverseGeocodingTests: XCTestCase {
             && isPath("/geocoding/v5/mapbox.places/-95.78558,37.13284.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
                 let path = Bundle(for: type(of: self)).path(forResource: "reverse_valid", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/json"])
+                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
 
         let geocoder = Geocoder(accessToken: BogusToken)
@@ -76,7 +76,7 @@ class ReverseGeocodingTests: XCTestCase {
             && isPath("/geocoding/v5/mapbox.places/0.00000,0.00000.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
                 let path = Bundle(for: type(of: self)).path(forResource: "reverse_invalid", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/json"])
+                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let expectation = self.expectation(description: "reverse geocode execute completion handler for invalid query")
