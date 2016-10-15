@@ -365,6 +365,14 @@ open class GeocodedPlacemark: Placemark {
         return qualifiedName
     }
     
+    internal var qualifiedNameComponents: [String] {
+        if qualifiedName.contains(", ") {
+            return qualifiedName.components(separatedBy: ", ")
+        }
+        // Chinese addresses have no commas and are reversed.
+        return (superiorPlacemarks?.map { $0.name } ?? []).reversed() + [name]
+    }
+    
     open override var qualifiedName: String! {
         return featureJSON["place_name"] as! String
     }
@@ -392,7 +400,7 @@ open class GeocodedPlacemark: Placemark {
         if let houseNumber = featureJSON["address"] as? String, scope == .address {
             let streetName = text
             let reversedAddress = "\(streetName) \(houseNumber)"
-            if qualifiedName.components(separatedBy: ", ").contains(reversedAddress) {
+            if qualifiedNameComponents.contains(reversedAddress) {
                 return reversedAddress
             } else {
                 return "\(houseNumber) \(streetName)"
@@ -423,9 +431,20 @@ open class GeocodedPlacemark: Placemark {
         return propertiesJSON["maki"] as? String
     }
     
+    private var clippedAddressLines: [String] {
+        let lines = qualifiedNameComponents
+        if scope == .address {
+            return lines
+        }
+        guard qualifiedName.contains(", ") else {
+            // Chinese addresses have no commas and are reversed.
+            return Array(lines.prefix(lines.count))
+        }
+        return Array(lines.suffix(from: 1))
+    }
+    
     override var formattedAddressLines: [String] {
-        let lines = qualifiedName.components(separatedBy: ", ")
-        return scope == .address ? lines : Array(lines.suffix(from: 1))
+        return clippedAddressLines
     }
     
     #if !os(tvOS)
@@ -471,8 +490,7 @@ open class GeocodedPlacemark: Placemark {
         addressDictionary[MBPostalAddressPostalCodeKey] = postalCode?.name
         addressDictionary[MBPostalAddressCountryKey] = country?.name
         addressDictionary[MBPostalAddressISOCountryCodeKey] = country?.code
-        let lines = qualifiedName.components(separatedBy: ", ")
-        addressDictionary["formattedAddressLines"] = scope == .address ? lines : Array(lines.suffix(from: 1))
+        addressDictionary["formattedAddressLines"] = clippedAddressLines
         addressDictionary["name"] = name
         addressDictionary["subAdministrativeArea"] = district?.name ?? place?.name
         addressDictionary["subLocality"] = neighborhood?.name

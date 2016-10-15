@@ -20,7 +20,7 @@ class ReverseGeocodingTests: XCTestCase {
         }
 
         let geocoder = Geocoder(accessToken: BogusToken)
-        var pointOfInterestPlacemark: Placemark?
+        var pointOfInterestPlacemark: GeocodedPlacemark! = nil
         var placePlacemark: Placemark?
         let options = ReverseGeocodeOptions(location: CLLocation(latitude: 37.13284000, longitude: -95.78558000))
         let task = geocoder.geocode(options) { (placemarks, attribution, error) in
@@ -39,23 +39,24 @@ class ReverseGeocodingTests: XCTestCase {
             XCTAssertEqual(task.state, URLSessionTask.State.completed)
         }
         
-        XCTAssertEqual(pointOfInterestPlacemark?.description, "Jones Jerry", "reverse geocode should populate description")
-        XCTAssertEqual(pointOfInterestPlacemark?.name, "Jones Jerry", "reverse geocode should populate name")
-        XCTAssertEqual(pointOfInterestPlacemark?.qualifiedName, "Jones Jerry, 2850 CR 3100, Independence, Kansas 67301, United States", "reverse geocode should populate qualified name")
-        XCTAssertEqual(pointOfInterestPlacemark?.location?.coordinate.latitude, 37.128003, "reverse geocode should populate location")
-        XCTAssertEqual(pointOfInterestPlacemark?.location?.coordinate.longitude, -95.782951, "reverse geocode should populate location")
-        XCTAssertEqual(pointOfInterestPlacemark?.scope, PlacemarkScope.pointOfInterest, "reverse geocode should populate scope")
-        XCTAssertEqual(pointOfInterestPlacemark?.country?.code, "US", "reverse geocode should populate ISO country code")
-        XCTAssertEqual(pointOfInterestPlacemark?.country?.name, "United States", "reverse geocode should populate country")
-        XCTAssertEqual(pointOfInterestPlacemark?.postalCode?.name, "67301", "reverse geocode should populate postal code")
-        XCTAssertEqual(pointOfInterestPlacemark?.administrativeRegion?.name, "Kansas", "reverse geocode should populate administrative region")
-        XCTAssertNil(pointOfInterestPlacemark?.district?.name, "reverse geocode in the United States should not populate district")
-        XCTAssertEqual(pointOfInterestPlacemark?.place?.name, "Independence", "reverse geocode should populate place")
-        XCTAssertNil(pointOfInterestPlacemark?.thoroughfare, "reverse geocode for POI should not populate thoroughfare")
-        XCTAssertNil(pointOfInterestPlacemark?.subThoroughfare, "reverse geocode for POI should not populate sub-thoroughfare")
+        XCTAssertEqual(pointOfInterestPlacemark.description, "Jones Jerry", "reverse geocode should populate description")
+        XCTAssertEqual(pointOfInterestPlacemark.name, "Jones Jerry", "reverse geocode should populate name")
+        XCTAssertEqual(pointOfInterestPlacemark.qualifiedNameComponents, ["Jones Jerry", "2850 CR 3100", "Independence", "Kansas 67301", "United States"], "reverse geocode should populate qualified name")
+        XCTAssertEqual(pointOfInterestPlacemark.qualifiedName, "Jones Jerry, 2850 CR 3100, Independence, Kansas 67301, United States", "reverse geocode should populate qualified name")
+        XCTAssertEqual(pointOfInterestPlacemark.location.coordinate.latitude, 37.128003, "reverse geocode should populate location")
+        XCTAssertEqual(pointOfInterestPlacemark.location.coordinate.longitude, -95.782951, "reverse geocode should populate location")
+        XCTAssertEqual(pointOfInterestPlacemark.scope, PlacemarkScope.pointOfInterest, "reverse geocode should populate scope")
+        XCTAssertEqual(pointOfInterestPlacemark.country?.code, "US", "reverse geocode should populate ISO country code")
+        XCTAssertEqual(pointOfInterestPlacemark.country?.name, "United States", "reverse geocode should populate country")
+        XCTAssertEqual(pointOfInterestPlacemark.postalCode?.name, "67301", "reverse geocode should populate postal code")
+        XCTAssertEqual(pointOfInterestPlacemark.administrativeRegion?.name, "Kansas", "reverse geocode should populate administrative region")
+        XCTAssertNil(pointOfInterestPlacemark.district?.name, "reverse geocode in the United States should not populate district")
+        XCTAssertEqual(pointOfInterestPlacemark.place?.name, "Independence", "reverse geocode should populate place")
+        XCTAssertNil(pointOfInterestPlacemark.thoroughfare, "reverse geocode for POI should not populate thoroughfare")
+        XCTAssertNil(pointOfInterestPlacemark.subThoroughfare, "reverse geocode for POI should not populate sub-thoroughfare")
         
-        XCTAssertNotNil(pointOfInterestPlacemark?.addressDictionary)
-        let addressDictionary = pointOfInterestPlacemark?.addressDictionary
+        XCTAssertNotNil(pointOfInterestPlacemark.addressDictionary)
+        let addressDictionary = pointOfInterestPlacemark.addressDictionary
         XCTAssertEqual(addressDictionary?[MBPostalAddressStreetKey] as? String, "2850 CR 3100", "reverse geocode should populate street in address dictionary")
         XCTAssertEqual(addressDictionary?[MBPostalAddressCityKey] as? String, "Independence", "reverse geocode should populate city in address dictionary")
         XCTAssertEqual(addressDictionary?[MBPostalAddressStateKey] as? String, "Kansas", "reverse geocode should populate state in address dictionary")

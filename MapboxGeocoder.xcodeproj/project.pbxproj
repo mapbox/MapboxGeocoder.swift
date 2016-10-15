@@ -56,6 +56,9 @@
 		DA5170F71CF2582F00CD6DCF /* MBPlacemarkScope.h in Headers */ = {isa = PBXBuildFile; fileRef = DA29C8DE1CEBE90200E48A61 /* MBPlacemarkScope.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA5170F81CF2582F00CD6DCF /* MBPlacemarkScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC05B1CED72E900D4BA5D /* MBPlacemarkScope.swift */; };
 		DA5170F91CF2582F00CD6DCF /* MBRectangularRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */; };
+		DA58D8A11DB2ADDD00530CBB /* forward_valid_zh.json in Resources */ = {isa = PBXBuildFile; fileRef = DA58D8A01DB2ADDD00530CBB /* forward_valid_zh.json */; };
+		DA58D8A21DB2ADDD00530CBB /* forward_valid_zh.json in Resources */ = {isa = PBXBuildFile; fileRef = DA58D8A01DB2ADDD00530CBB /* forward_valid_zh.json */; };
+		DA58D8A31DB2ADDD00530CBB /* forward_valid_zh.json in Resources */ = {isa = PBXBuildFile; fileRef = DA58D8A01DB2ADDD00530CBB /* forward_valid_zh.json */; };
 		DA701C011CB1292C00B0E520 /* GeocoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA701C001CB1292C00B0E520 /* GeocoderTests.swift */; };
 		DAF158851D03D81600829B35 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF158841D03D81600829B35 /* Launch Screen.storyboard */; };
 		DAF158861D03D81600829B35 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF158841D03D81600829B35 /* Launch Screen.storyboard */; };
@@ -173,6 +176,7 @@
 		DA5170C11CF253EE00CD6DCF /* MapboxGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5170CA1CF253EE00CD6DCF /* MapboxGeocoderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxGeocoderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5170EB1CF2581900CD6DCF /* MapboxGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA58D8A01DB2ADDD00530CBB /* forward_valid_zh.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = forward_valid_zh.json; sourceTree = "<group>"; };
 		DA701C001CB1292C00B0E520 /* GeocoderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocoderTests.swift; sourceTree = "<group>"; };
 		DAF158841D03D81600829B35 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		DD342B5019A140EE00219F77 /* Geocoder (Swift).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geocoder (Swift).app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -408,6 +412,7 @@
 			isa = PBXGroup;
 			children = (
 				DA210BAC1CB4BFF7008088FD /* forward_valid.json */,
+				DA58D8A01DB2ADDD00530CBB /* forward_valid_zh.json */,
 				DA210BAE1CB4C5A7008088FD /* forward_invalid.json */,
 				DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */,
 				DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */,
@@ -725,6 +730,7 @@
 				DA5170B91CF1B1F900CD6DCF /* forward_invalid.json in Resources */,
 				DA5170BB1CF1B1F900CD6DCF /* reverse_invalid.json in Resources */,
 				DA5170BA1CF1B1F900CD6DCF /* reverse_valid.json in Resources */,
+				DA58D8A21DB2ADDD00530CBB /* forward_valid_zh.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,6 +749,7 @@
 				DA5170E31CF2542B00CD6DCF /* forward_invalid.json in Resources */,
 				DA5170E51CF2542B00CD6DCF /* reverse_invalid.json in Resources */,
 				DA5170E41CF2542B00CD6DCF /* reverse_valid.json in Resources */,
+				DA58D8A31DB2ADDD00530CBB /* forward_valid_zh.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,6 +791,7 @@
 				DDF1E85C1BD70E4C00C40C78 /* reverse_invalid.json in Resources */,
 				DDF1E85D1BD70E4C00C40C78 /* reverse_valid.json in Resources */,
 				DA210BAF1CB4C5A7008088FD /* forward_invalid.json in Resources */,
+				DA58D8A11DB2ADDD00530CBB /* forward_valid_zh.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
