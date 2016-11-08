@@ -26,7 +26,7 @@ public class GeocodeOptions: NSObject {
     public var allowedISOCountryCodes: [String]?
     
     /**
-     A loation to use as a hint when looking up the specified address.
+     A location to use as a hint when looking up the specified address.
      
      This property prioritizes results that are close to a specific location, which is typically the user’s current location. If the value of this property is `nil` – which it is by default – no specific location is prioritized.
      */
@@ -46,6 +46,11 @@ public class GeocodeOptions: NSObject {
      */
     public var allowedRegion: RectangularRegion?
     
+    /**
+     Limit the number of results returned. The default is `5` for forward geocoding and `1` for reverse geocoding.
+     */
+    public var resultLimit: UInt?
+
     // MARK: Specifying the Output Format
     
     /**
@@ -86,6 +91,9 @@ public class GeocodeOptions: NSObject {
         }
         if let allowedRegion = allowedRegion {
             params.append(NSURLQueryItem(name: "bbox", value: String(allowedRegion)))
+        }
+        if let resultLimit = resultLimit {
+            params.append(NSURLQueryItem(name: "limit", value: String(resultLimit)))
         }
         if let languageCode = locale?.objectForKey(NSLocaleLanguageCode) as? String {
             params.append(NSURLQueryItem(name: "language", value: languageCode))
