@@ -25,7 +25,7 @@ typedef NS_OPTIONS(NSUInteger, MBPlacemarkScope) {
     /// A point of interest, such as a business, school, or place of worship.
     MBPlacemarkScopePointOfInterest = (1 << 9),
     /// A point of interest, such as school or place of worship -- subset of MBPlacemarkScopePointOfInterest
-    MBPlacemarkScopePointOfInterestLandmark = (1 << 10)
+    MBPlacemarkScopePointOfInterestLandmark = (1 << 10),
 
     /// All scopes.
     MBPlacemarkScopeAll = 0x0ffffUL,
