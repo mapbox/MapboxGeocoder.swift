@@ -47,6 +47,10 @@ public class RectangularRegion: CLRegion {
             && northEast.latitude == object.northEast.latitude && northEast.longitude == object.northEast.longitude)
     }
     
+    public override var description: String {
+        return "\(southWest.longitude),\(southWest.latitude),\(northEast.longitude),\(northEast.latitude)"
+    }
+
     /**
      Returns a Boolean value indicating whether the bounding box contains the specified coordinate.
      */
