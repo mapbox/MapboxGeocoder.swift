@@ -22,9 +22,11 @@ typedef NS_OPTIONS(NSUInteger, MBPlacemarkScope) {
     MBPlacemarkScopeNeighborhood = (1 << 7),
     /// A physical address, such as to a business or residence.
     MBPlacemarkScopeAddress = (1 << 8),
-    /// A point of interest, such as a business, school, or landmark.
+    /// A point of interest, such as a business or school.
     MBPlacemarkScopePointOfInterest = (1 << 9),
-    
+    /// Subset of regular points of interest. Landmarks are particularly notable or long-lived features like parks, museums, and places of worship.
+    MBPlacemarkScopePointOfInterestLandmark = (1 << 10),
+
     /// All scopes.
     MBPlacemarkScopeAll = 0x0ffffUL,
 };
