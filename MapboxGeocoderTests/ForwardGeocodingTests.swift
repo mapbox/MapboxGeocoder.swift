@@ -23,6 +23,7 @@ class ForwardGeocodingTests: XCTestCase {
         var addressPlacemark: GeocodedPlacemark! = nil
         let options = ForwardGeocodeOptions(query: "1600 pennsylvania ave")
         options.allowedISOCountryCodes = ["CA"]
+        options.allowedRegion = RectangularRegion(southWest: CLLocationCoordinate2D(latitude: -85, longitude: -179), northEast: CLLocationCoordinate2D(latitude: 85, longitude: 179))
         let task = geocoder.geocode(options) { (placemarks, attribution, error) in
             XCTAssertEqual(placemarks?.count, 4, "forward geocode should have 4 results")
             addressPlacemark = placemarks![0]
