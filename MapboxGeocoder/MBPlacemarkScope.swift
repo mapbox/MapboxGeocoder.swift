@@ -37,34 +37,34 @@ extension PlacemarkScope: CustomStringConvertible {
     
     public var description: String {
         var descriptions: [String] = []
-        if contains(PlacemarkScope.Country) {
+        if contains(.Country) {
             descriptions.append("country")
         }
-        if contains(PlacemarkScope.Region) {
+        if contains(.Region) {
             descriptions.append("region")
         }
-        if contains(PlacemarkScope.District) {
+        if contains(.District) {
             descriptions.append("district")
         }
-        if contains(PlacemarkScope.PostalCode) {
+        if contains(.PostalCode) {
             descriptions.append("postcode")
         }
-        if contains(PlacemarkScope.Place) {
+        if contains(.Place) {
             descriptions.append("place")
         }
-        if contains(PlacemarkScope.Locality) {
+        if contains(.Locality) {
             descriptions.append("locality")
         }
-        if contains(PlacemarkScope.Neighborhood) {
+        if contains(.Neighborhood) {
             descriptions.append("neighborhood")
         }
-        if contains(PlacemarkScope.Address) {
+        if contains(.Address) {
             descriptions.append("address")
         }
-        if contains(PlacemarkScope.PointOfInterest) {
+        if contains(.PointOfInterest) {
             descriptions.append("poi")
         }
-        if contains(PlacemarkScope.Landmark) {
+        if contains(.Landmark) {
             descriptions.append("poi.landmark")
         }
         return descriptions.joinWithSeparator(",")
