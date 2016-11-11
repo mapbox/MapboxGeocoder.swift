@@ -4,7 +4,7 @@ extension PlacemarkScope: CustomStringConvertible {
     /**
      Initializes a placemark scope bitmask corresponding to the given array of string representations of scopes.
      */
-    public init(descriptions: [String]) {
+    public init?(descriptions: [String]) {
         var scope: PlacemarkScope = []
         for description in descriptions {
             switch description {
@@ -24,12 +24,13 @@ extension PlacemarkScope: CustomStringConvertible {
                 scope.insert(.Neighborhood)
             case "address":
                 scope.insert(.Address)
-            case "poi":
-                scope.insert(.PointOfInterest)
+                
             case "poi.landmark":
                 scope.insert(.Landmark)
+            case "poi":
+                scope.insert(.PointOfInterest)
             default:
-                break
+                return nil
             }
         }
         self.init(rawValue: scope.rawValue)
@@ -61,11 +62,11 @@ extension PlacemarkScope: CustomStringConvertible {
         if contains(.Address) {
             descriptions.append("address")
         }
-        if contains(.PointOfInterest) {
-            descriptions.append("poi")
-        }
+        
         if contains(.Landmark) {
             descriptions.append("poi.landmark")
+        } else if contains(.PointOfInterest) {
+            descriptions.append("poi")
         }
         return descriptions.joinWithSeparator(",")
     }
