@@ -49,7 +49,7 @@ public class GeocodeOptions: NSObject {
     /**
      Limit the number of results returned. The default is `5` for forward geocoding and `1` for reverse geocoding.
      */
-    public var resultLimit: UInt?
+    public var maximumResultCount: UInt?
 
     // MARK: Specifying the Output Format
     
@@ -92,8 +92,8 @@ public class GeocodeOptions: NSObject {
         if let allowedRegion = allowedRegion {
             params.append(NSURLQueryItem(name: "bbox", value: String(allowedRegion)))
         }
-        if let resultLimit = resultLimit {
-            params.append(NSURLQueryItem(name: "limit", value: String(resultLimit)))
+        if let maximumResultCount = maximumResultCount {
+            params.append(NSURLQueryItem(name: "limit", value: String(maximumResultCount)))
         }
         if let languageCode = locale?.objectForKey(NSLocaleLanguageCode) as? String {
             params.append(NSURLQueryItem(name: "language", value: languageCode))
