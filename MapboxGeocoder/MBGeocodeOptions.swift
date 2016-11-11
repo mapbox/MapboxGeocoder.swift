@@ -49,7 +49,7 @@ public class GeocodeOptions: NSObject {
     /**
      Limit the number of results returned. The default is `5` for forward geocoding and `1` for reverse geocoding.
      */
-    public var maximumResultCount: UInt = 0
+    public var maximumResultCount: UInt
 
     // MARK: Specifying the Output Format
     
@@ -160,7 +160,7 @@ public class ReverseGeocodeOptions: GeocodeOptions {
      An array of coordinates to search for.
      */
     public var coordinates: [CLLocationCoordinate2D]
-    
+
     private init(coordinates: [CLLocationCoordinate2D]) {
         self.coordinates = coordinates
         super.init()
