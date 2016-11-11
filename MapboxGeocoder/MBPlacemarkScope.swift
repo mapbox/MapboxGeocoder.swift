@@ -27,7 +27,7 @@ extension PlacemarkScope: CustomStringConvertible {
             case "poi":
                 scope.insert(.PointOfInterest)
             case "poi.landmark":
-                scope.insert(.PointOfInterestLandmark)
+                scope.insert(.Landmark)
             default:
                 break
             }
@@ -64,7 +64,7 @@ extension PlacemarkScope: CustomStringConvertible {
         if contains(PlacemarkScope.PointOfInterest) {
             descriptions.append("poi")
         }
-        if contains(PlacemarkScope.PointOfInterestLandmark) {
+        if contains(PlacemarkScope.Landmark) {
             descriptions.append("poi.landmark")
         }
         return descriptions.joinWithSeparator(",")
