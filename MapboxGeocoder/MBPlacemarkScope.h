@@ -24,7 +24,7 @@ typedef NS_OPTIONS(NSUInteger, MBPlacemarkScope) {
     MBPlacemarkScopeAddress = (1 << 8),
     
     /// A particularly notable or long-lived point of interest, such as a park, museum, or place of worship.
-    MBPlacemarkScopeLandmark = (1 << 91),
+    MBPlacemarkScopeLandmark = (1 << 10),
     /// A point of interest, such as a business or store.
     MBPlacemarkScopePointOfInterest = MBPlacemarkScopeLandmark | (1 << 9),
     

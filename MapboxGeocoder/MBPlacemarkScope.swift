@@ -62,11 +62,8 @@ extension PlacemarkScope: CustomStringConvertible {
         if contains(.Address) {
             descriptions.append("address")
         }
-        
         if contains(.Landmark) {
-            descriptions.append("poi.landmark")
-        } else if contains(.PointOfInterest) {
-            descriptions.append("poi")
+            descriptions.append(contains(.PointOfInterest) ? "poi" : "poi.landmark")
         }
         return descriptions.joinWithSeparator(",")
     }

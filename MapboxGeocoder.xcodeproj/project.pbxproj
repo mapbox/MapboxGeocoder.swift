@@ -20,6 +20,9 @@
 		DA2E03F21CB0FE0200D1269A /* MBRectangularRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */; };
 		DA2EC05C1CED72E900D4BA5D /* MBPlacemarkScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC05B1CED72E900D4BA5D /* MBPlacemarkScope.swift */; };
 		DA2EC05E1CED732F00D4BA5D /* MBGeocodeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC05D1CED732F00D4BA5D /* MBGeocodeOptions.swift */; };
+		DA4D90071DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4D90061DD63AEC006EC71A /* PlacemarkScopeTests.swift */; };
+		DA4D90081DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4D90061DD63AEC006EC71A /* PlacemarkScopeTests.swift */; };
+		DA4D90091DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4D90061DD63AEC006EC71A /* PlacemarkScopeTests.swift */; };
 		DA5170AD1CF1B1DB00CD6DCF /* MapboxGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = DDC229581A36073B006BE405 /* MapboxGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA5170AE1CF1B1E000CD6DCF /* MBGeocodeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC05D1CED732F00D4BA5D /* MBGeocodeOptions.swift */; };
 		DA5170AF1CF1B1E000CD6DCF /* MBGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC229591A36073B006BE405 /* MBGeocoder.swift */; };
@@ -171,6 +174,7 @@
 		DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBRectangularRegion.swift; sourceTree = "<group>"; };
 		DA2EC05B1CED72E900D4BA5D /* MBPlacemarkScope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBPlacemarkScope.swift; sourceTree = "<group>"; };
 		DA2EC05D1CED732F00D4BA5D /* MBGeocodeOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBGeocodeOptions.swift; sourceTree = "<group>"; };
+		DA4D90061DD63AEC006EC71A /* PlacemarkScopeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacemarkScopeTests.swift; sourceTree = "<group>"; };
 		DA5170961CF1B18F00CD6DCF /* MapboxGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA51709F1CF1B18F00CD6DCF /* MapboxGeocoderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxGeocoderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5170C11CF253EE00CD6DCF /* MapboxGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -402,6 +406,7 @@
 				DA701C001CB1292C00B0E520 /* GeocoderTests.swift */,
 				DA210BAA1CB4BE73008088FD /* ForwardGeocodingTests.swift */,
 				DDF1E84C1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift */,
+				DA4D90061DD63AEC006EC71A /* PlacemarkScopeTests.swift */,
 				DDF1E84E1BD6F7BA00C40C78 /* Info.plist */,
 				DDF1E8571BD700EB00C40C78 /* Fixtures */,
 			);
@@ -1043,6 +1048,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA5170B61CF1B1EF00CD6DCF /* ReverseGeocodingTests.swift in Sources */,
+				DA4D90081DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */,
 				DA5170B41CF1B1EF00CD6DCF /* GeocoderTests.swift in Sources */,
 				DA5170B51CF1B1EF00CD6DCF /* ForwardGeocodingTests.swift in Sources */,
 			);
@@ -1065,6 +1071,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA5170E11CF2542800CD6DCF /* ReverseGeocodingTests.swift in Sources */,
+				DA4D90091DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */,
 				DA5170DF1CF2542800CD6DCF /* GeocoderTests.swift in Sources */,
 				DA5170E01CF2542800CD6DCF /* ForwardGeocodingTests.swift in Sources */,
 			);
@@ -1118,6 +1125,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDF1E84D1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift in Sources */,
+				DA4D90071DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */,
 				DA210BAB1CB4BE73008088FD /* ForwardGeocodingTests.swift in Sources */,
 				DA701C011CB1292C00B0E520 /* GeocoderTests.swift in Sources */,
 			);
