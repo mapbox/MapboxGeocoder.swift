@@ -49,7 +49,7 @@ public class GeocodeOptions: NSObject {
     /**
      Limit the number of results returned. The default is `5` for forward geocoding and `1` for reverse geocoding.
      */
-    public var maximumResultCount: UInt?
+    public var maximumResultCount: UInt = 0
 
     // MARK: Specifying the Output Format
     
@@ -92,7 +92,7 @@ public class GeocodeOptions: NSObject {
         if let allowedRegion = allowedRegion {
             params.append(NSURLQueryItem(name: "bbox", value: String(allowedRegion)))
         }
-        if let maximumResultCount = maximumResultCount {
+        if maximumResultCount > 0 {
             params.append(NSURLQueryItem(name: "limit", value: String(maximumResultCount)))
         }
         if let languageCode = locale?.objectForKey(NSLocaleLanguageCode) as? String {
@@ -113,10 +113,11 @@ public class ForwardGeocodeOptions: GeocodeOptions {
      If true, a resulting placemark’s name may contain a word that begins with the query string. If false, the query string must match a whole word or phrase in the placemark’s name. The default value of this property is true, which is best suited for continuous search fields.
      */
     public var autocompletesQuery = true
-    
+
     private init(queries: [String]) {
         super.init()
         self.queries = queries
+        maximumResultCount = 5
     }
     
     /**
@@ -164,6 +165,7 @@ public class ReverseGeocodeOptions: GeocodeOptions {
         self.coordinates = coordinates
         super.init()
         queries = coordinates.map { String(format: "%.5f,%.5f", $0.longitude, $0.latitude) }
+        maximumResultCount = 1
     }
     
     /**
