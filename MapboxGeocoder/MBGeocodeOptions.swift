@@ -64,7 +64,10 @@ public class GeocodeOptions: NSObject {
      */
     public var locale: NSLocale?
     
-    private override init() {}
+    private override init() {
+        self.maximumResultCount = 0
+        super.init()
+    }
     
     /**
      An array of geocoding query strings to include in the request URL.
@@ -117,7 +120,7 @@ public class ForwardGeocodeOptions: GeocodeOptions {
     private init(queries: [String]) {
         super.init()
         self.queries = queries
-        maximumResultCount = 5
+        self.maximumResultCount = 5
     }
     
     /**
@@ -164,8 +167,8 @@ public class ReverseGeocodeOptions: GeocodeOptions {
     private init(coordinates: [CLLocationCoordinate2D]) {
         self.coordinates = coordinates
         super.init()
+        self.maximumResultCount = 1
         queries = coordinates.map { String(format: "%.5f,%.5f", $0.longitude, $0.latitude) }
-        maximumResultCount = 1
     }
     
     /**
