@@ -4,7 +4,7 @@ extension PlacemarkScope: CustomStringConvertible {
     /**
      Initializes a placemark scope bitmask corresponding to the given array of string representations of scopes.
      */
-    public init(descriptions: [String]) {
+    public init?(descriptions: [String]) {
         var scope: PlacemarkScope = []
         for description in descriptions {
             switch description {
@@ -24,12 +24,13 @@ extension PlacemarkScope: CustomStringConvertible {
                 scope.insert(.Neighborhood)
             case "address":
                 scope.insert(.Address)
+                
+            case "poi.landmark":
+                scope.insert(.Landmark)
             case "poi":
                 scope.insert(.PointOfInterest)
-            case "poi.landmark":
-                scope.insert(.PointOfInterestLandmark)
             default:
-                break
+                return nil
             }
         }
         self.init(rawValue: scope.rawValue)
@@ -37,35 +38,32 @@ extension PlacemarkScope: CustomStringConvertible {
     
     public var description: String {
         var descriptions: [String] = []
-        if contains(PlacemarkScope.Country) {
+        if contains(.Country) {
             descriptions.append("country")
         }
-        if contains(PlacemarkScope.Region) {
+        if contains(.Region) {
             descriptions.append("region")
         }
-        if contains(PlacemarkScope.District) {
+        if contains(.District) {
             descriptions.append("district")
         }
-        if contains(PlacemarkScope.PostalCode) {
+        if contains(.PostalCode) {
             descriptions.append("postcode")
         }
-        if contains(PlacemarkScope.Place) {
+        if contains(.Place) {
             descriptions.append("place")
         }
-        if contains(PlacemarkScope.Locality) {
+        if contains(.Locality) {
             descriptions.append("locality")
         }
-        if contains(PlacemarkScope.Neighborhood) {
+        if contains(.Neighborhood) {
             descriptions.append("neighborhood")
         }
-        if contains(PlacemarkScope.Address) {
+        if contains(.Address) {
             descriptions.append("address")
         }
-        if contains(PlacemarkScope.PointOfInterest) {
-            descriptions.append("poi")
-        }
-        if contains(PlacemarkScope.PointOfInterestLandmark) {
-            descriptions.append("poi.landmark")
+        if contains(.Landmark) {
+            descriptions.append(contains(.PointOfInterest) ? "poi" : "poi.landmark")
         }
         return descriptions.joinWithSeparator(",")
     }
