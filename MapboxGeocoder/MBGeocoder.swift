@@ -336,7 +336,7 @@ extension NSHTTPURLResponse {
             return nil
         }
         guard let resetTimeNumber = Double(resetTime) else {
-            return nil;
+            return nil
         }
         return NSDate(timeIntervalSince1970: resetTimeNumber)
     }
