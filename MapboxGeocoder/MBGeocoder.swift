@@ -306,7 +306,9 @@ public class Geocoder: NSObject {
             userInfo[NSLocalizedFailureReasonErrorKey] = failureReason ?? userInfo[NSLocalizedFailureReasonErrorKey] ?? NSHTTPURLResponse.localizedStringForStatusCode(error?.code ?? -1)
             userInfo[NSLocalizedRecoverySuggestionErrorKey] = recoverySuggestion ?? userInfo[NSLocalizedRecoverySuggestionErrorKey]
         }
-        userInfo[NSUnderlyingErrorKey] = error
+        if let error = error {
+            userInfo[NSUnderlyingErrorKey] = error
+        }
         return NSError(domain: error?.domain ?? MBGeocoderErrorDomain, code: error?.code ?? -1, userInfo: userInfo)
     }
 }
