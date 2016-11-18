@@ -282,23 +282,22 @@ public class Geocoder: NSObject {
     /**
      Returns an error that supplements the given underlying error with additional information from the an HTTP response’s body or headers.
      */
-    private static func descriptiveError(json: JSONDictionary, response: NSURLResponse?, underlyingError error: NSError?) -> NSError {
+    static func descriptiveError(json: JSONDictionary, response: NSURLResponse?, underlyingError error: NSError?) -> NSError {
         var userInfo = error?.userInfo ?? [:]
         if let response = response as? NSHTTPURLResponse {
             var failureReason: String? = nil
             var recoverySuggestion: String? = nil
             switch response.statusCode {
             case 429:
-                if let timeInterval = response.allHeaderFields["x-rate-limit-interval"] as? NSTimeInterval, maximumCountOfRequests = response.allHeaderFields["x-rate-limit-limit"] as? UInt {
+                if let timeInterval = response.rateLimitInterval, let maximumCountOfRequests = response.rateLimit {
                     let intervalFormatter = NSDateComponentsFormatter()
                     intervalFormatter.unitsStyle = .Full
-                    let formattedInterval = intervalFormatter.stringFromTimeInterval(timeInterval)
+                    let formattedInterval = intervalFormatter.stringFromTimeInterval(timeInterval) ?? "? minutes"
                     let formattedCount = NSNumberFormatter.localizedStringFromNumber(maximumCountOfRequests, numberStyle: .DecimalStyle)
                     failureReason = "More than \(formattedCount) requests have been made with this access token within a period of \(formattedInterval)."
                 }
-                if let rolloverTimestamp = response.allHeaderFields["x-rate-limit-reset"] as? Double {
-                    let date = NSDate(timeIntervalSince1970: rolloverTimestamp)
-                    let formattedDate = NSDateFormatter.localizedStringFromDate(date, dateStyle: .LongStyle, timeStyle: .FullStyle)
+                if let rolloverTime = response.rateLimitResetTime {
+                    let formattedDate = NSDateFormatter.localizedStringFromDate(rolloverTime, dateStyle: .LongStyle, timeStyle: .FullStyle)
                     recoverySuggestion = "Wait until \(formattedDate) before retrying."
                 }
             default:
@@ -310,4 +309,36 @@ public class Geocoder: NSObject {
         userInfo[NSUnderlyingErrorKey] = error
         return NSError(domain: error?.domain ?? MBGeocoderErrorDomain, code: error?.code ?? -1, userInfo: userInfo)
     }
+}
+
+extension NSHTTPURLResponse {
+    
+    @nonobjc static let rateLimitIntervalHeaderKey = "X-Rate-Limit-Interval"
+    @nonobjc static let rateLimitLimitHeaderKey = "X-Rate-Limit-Limit"
+    @nonobjc static let rateLimitResetHeaderKey = "X-Rate-Limit-Reset"
+    
+    var rateLimit: UInt? {
+        guard let limit = allHeaderFields[NSHTTPURLResponse.rateLimitLimitHeaderKey] as? String else {
+            return nil
+        }
+        return UInt(limit)
+    }
+    
+    var rateLimitInterval: NSTimeInterval? {
+        guard let interval = allHeaderFields[NSHTTPURLResponse.rateLimitIntervalHeaderKey] as? String else {
+            return nil
+        }
+        return NSTimeInterval(interval)
+    }
+    
+    var rateLimitResetTime: NSDate? {
+        guard let resetTime = allHeaderFields[NSHTTPURLResponse.rateLimitResetHeaderKey] as? String else {
+            return nil
+        }
+        guard let resetTimeNumber = Double(resetTime) else {
+            return nil;
+        }
+        return NSDate(timeIntervalSince1970: resetTimeNumber)
+    }
+
 }
