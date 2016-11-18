@@ -338,7 +338,7 @@ extension HTTPURLResponse {
             return nil
         }
         guard let resetTimeNumber = Double(resetTime) else {
-            return nil;
+            return nil
         }
         return Date(timeIntervalSince1970: resetTimeNumber)
     }
