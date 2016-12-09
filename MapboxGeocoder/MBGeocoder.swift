@@ -294,7 +294,7 @@ open class Geocoder: NSObject {
                 if let timeInterval = response.rateLimitInterval, let maximumCountOfRequests = response.rateLimit {
                     let intervalFormatter = DateComponentsFormatter()
                     intervalFormatter.unitsStyle = .full
-                    let formattedInterval = intervalFormatter.string(from: timeInterval) ?? "? minutes"
+                    let formattedInterval = intervalFormatter.string(from: timeInterval) ?? "\(timeInterval) seconds"
                     let formattedCount = NumberFormatter.localizedString(from: maximumCountOfRequests as NSNumber, number: .decimal)
                     failureReason = "More than \(formattedCount) requests have been made with this access token within a period of \(formattedInterval)."
                 }
