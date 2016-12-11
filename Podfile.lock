@@ -1,7 +1,7 @@
 PODS:
-  - Mapbox-iOS-SDK (3.3.4)
-  - OHHTTPStubs/Core (5.2.1)
-  - OHHTTPStubs/Swift (5.2.1):
+  - Mapbox-iOS-SDK (3.3.6)
+  - OHHTTPStubs/Core (5.2.2)
+  - OHHTTPStubs/Swift (5.2.2):
     - OHHTTPStubs/Core
 
 DEPENDENCIES:
@@ -9,9 +9,9 @@ DEPENDENCIES:
   - OHHTTPStubs/Swift (~> 5.0)
 
 SPEC CHECKSUMS:
-  Mapbox-iOS-SDK: b22da0d9703fcfb0a8b592b6a7f6a21264fe44b0
-  OHHTTPStubs: 3a42f25c00563b71355ac73112ba2324e9e6cef4
+  Mapbox-iOS-SDK: 1651ab31beec917b60ccbb8f737d0435ec80eeb3
+  OHHTTPStubs: 34d9d0994e64fcf8552dbfade5ce82ada913ee31
 
 PODFILE CHECKSUM: 0d327e0fe430b4211f61e91065c69151ac64aef7
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.1.1

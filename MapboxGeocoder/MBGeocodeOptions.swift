@@ -26,7 +26,7 @@ open class GeocodeOptions: NSObject {
     open var allowedISOCountryCodes: [String]?
     
     /**
-     A loation to use as a hint when looking up the specified address.
+     A location to use as a hint when looking up the specified address.
      
      This property prioritizes results that are close to a specific location, which is typically the user’s current location. If the value of this property is `nil` – which it is by default – no specific location is prioritized.
      */
@@ -46,6 +46,11 @@ open class GeocodeOptions: NSObject {
      */
     open var allowedRegion: RectangularRegion?
     
+    /**
+     Limit the number of results returned. The default is `5` for forward geocoding and `1` for reverse geocoding.
+     */
+    public var maximumResultCount: UInt
+
     // MARK: Specifying the Output Format
     
     /**
@@ -59,7 +64,10 @@ open class GeocodeOptions: NSObject {
      */
     open var locale: Locale?
     
-    fileprivate override init() {}
+    fileprivate override init() {
+        self.maximumResultCount = 0
+        super.init()
+    }
     
     /**
      An array of geocoding query strings to include in the request URL.
@@ -87,7 +95,10 @@ open class GeocodeOptions: NSObject {
         if let allowedRegion = allowedRegion {
             params.append(URLQueryItem(name: "bbox", value: String(describing: allowedRegion)))
         }
-        if let languageCode = locale?.languageCode {
+        if maximumResultCount > 0 {
+            params.append(URLQueryItem(name: "limit", value: String(maximumResultCount)))
+        }
+        if let languageCode = (locale as NSLocale?)?.object(forKey: .languageCode) as? String {
             params.append(URLQueryItem(name: "language", value: languageCode))
         }
         return params
@@ -105,10 +116,11 @@ open class ForwardGeocodeOptions: GeocodeOptions {
      If true, a resulting placemark’s name may contain a word that begins with the query string. If false, the query string must match a whole word or phrase in the placemark’s name. The default value of this property is true, which is best suited for continuous search fields.
      */
     open var autocompletesQuery = true
-    
+
     fileprivate init(queries: [String]) {
         super.init()
         self.queries = queries
+        self.maximumResultCount = 5
     }
     
     /**
@@ -151,10 +163,11 @@ open class ReverseGeocodeOptions: GeocodeOptions {
      An array of coordinates to search for.
      */
     open var coordinates: [CLLocationCoordinate2D]
-    
+
     fileprivate init(coordinates: [CLLocationCoordinate2D]) {
         self.coordinates = coordinates
         super.init()
+        self.maximumResultCount = 1
         queries = coordinates.map { String(format: "%.5f,%.5f", $0.longitude, $0.latitude) }
     }
     

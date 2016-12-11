@@ -38,6 +38,26 @@
                ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DA51709E1CF1B18F00CD6DCF"
+               BuildableName = "MapboxGeocoderTests.xctest"
+               BlueprintName = "MapboxGeocoderMacTests"
+               ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DA5170C91CF253EE00CD6DCF"
+               BuildableName = "MapboxGeocoderTests.xctest"
+               BlueprintName = "MapboxGeocoderTVTests"
+               ReferencedContainer = "container:MapboxGeocoder.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

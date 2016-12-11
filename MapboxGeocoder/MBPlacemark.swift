@@ -161,10 +161,9 @@ open class Placemark: NSObject, NSSecureCoding {
      The scope offers a general indication of the size or importance of the feature represented by the placemark – in other words, how local the feature is.
      */
     open var scope: PlacemarkScope {
-        let components = identifier.characters.split(separator: ".")
-        assert(components.count == 2)
-        let scopeCharacters = identifier.characters.split(separator: ".").first!
-        return PlacemarkScope(descriptions: [String(scopeCharacters)])
+        let components = identifier.components(separatedBy: ".")
+        assert(components.count > 0)
+        return PlacemarkScope(descriptions: [components.prefix(2).joined(separator: ".")]) ?? PlacemarkScope(descriptions: [components.first!]) ?? []
     }
     
     /**
