@@ -201,7 +201,7 @@ Batch geocoding is available to Mapbox enterprise accounts. See the [Mapbox Geoc
 
 ## Tests
 
-To run the included unit tests, you need to use [Carthage](https://github.com/Carthage/Carthage/) to install the dependencies. 
+To run the included unit tests, you need to use [Carthage](https://github.com/Carthage/Carthage/) 0.19 or above to install the dependencies. 
 
 1. `carthage bootstrap`
 1. `open MapboxGeocoder.xcodeproj`
