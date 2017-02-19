@@ -20,7 +20,7 @@ Download a framework build from [the releases page](https://github.com/mapbox/Ma
 In your Podfile:
 
 ```podspec
-pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :tag => 'v0.5.0'
+pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :tag => 'v0.5.2'
 ```
 
 **[Carthage](https://github.com/Carthage/Carthage)**
@@ -28,7 +28,7 @@ pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.sw
 In your Cartfile:
 
 ```sh
-github "Mapbox/MapboxGeocoder.swift" ~> 0.5.0
+github "Mapbox/MapboxGeocoder.swift" ~> 0.5
 ```
 
 This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). More examples and detailed documentation are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#geocoding).
