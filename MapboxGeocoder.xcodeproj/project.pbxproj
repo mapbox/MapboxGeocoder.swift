@@ -58,9 +58,7 @@
 		DA58D8A31DB2ADDD00530CBB /* forward_valid_zh.json in Resources */ = {isa = PBXBuildFile; fileRef = DA58D8A01DB2ADDD00530CBB /* forward_valid_zh.json */; };
 		DA701C011CB1292C00B0E520 /* GeocoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA701C001CB1292C00B0E520 /* GeocoderTests.swift */; };
 		DA737AEE1E5999C900AD2CDE /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA737AED1E5999C900AD2CDE /* Mapbox.framework */; };
-		DA737AEF1E5999C900AD2CDE /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA737AED1E5999C900AD2CDE /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA737AF51E599AB300AD2CDE /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA737AED1E5999C900AD2CDE /* Mapbox.framework */; };
-		DA737AF61E599AB300AD2CDE /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA737AED1E5999C900AD2CDE /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA737AF91E599B5800AD2CDE /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA737AF81E599B5800AD2CDE /* OHHTTPStubs.framework */; };
 		DA737B011E599C2C00AD2CDE /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA737AFC1E599BB300AD2CDE /* OHHTTPStubs.framework */; };
 		DA737B041E599C4A00AD2CDE /* OHHTTPStubs.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = DA737AFF1E599BD400AD2CDE /* OHHTTPStubs.framework.dSYM */; };
@@ -72,12 +70,10 @@
 		DDC2295C1A36074F006BE405 /* MapboxGeocoder.h in Headers */ = {isa = PBXBuildFile; fileRef = DDC229581A36073B006BE405 /* MapboxGeocoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DDC2295E1A360843006BE405 /* MBGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC229591A36073B006BE405 /* MBGeocoder.swift */; };
 		DDC2471819A1C3B40054B0C0 /* MapboxGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; };
-		DDC2471A19A1C3B40054B0C0 /* MapboxGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DDC2472F19A1C60E0054B0C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC2472E19A1C60E0054B0C0 /* main.m */; };
 		DDC2473219A1C60E0054B0C0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC2473119A1C60E0054B0C0 /* AppDelegate.m */; };
 		DDC2473519A1C60E0054B0C0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDC2473419A1C60E0054B0C0 /* ViewController.m */; };
 		DDC2474F19A1C64D0054B0C0 /* MapboxGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; };
-		DDC2475219A1CBF40054B0C0 /* MapboxGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DDF1E84D1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF1E84C1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift */; };
 		DDF1E85C1BD70E4C00C40C78 /* reverse_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */; };
 		DDF1E85D1BD70E4C00C40C78 /* reverse_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */; };
@@ -137,30 +133,6 @@
 			files = (
 				DA737B041E599C4A00AD2CDE /* OHHTTPStubs.framework.dSYM in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DDC2471919A1C3B40054B0C0 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				DDC2471A19A1C3B40054B0C0 /* MapboxGeocoder.framework in Embed Frameworks */,
-				DA737AEF1E5999C900AD2CDE /* Mapbox.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DDC2475119A1CBE20054B0C0 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				DDC2475219A1CBF40054B0C0 /* MapboxGeocoder.framework in Embed Frameworks */,
-				DA737AF61E599AB300AD2CDE /* Mapbox.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -552,7 +524,6 @@
 				DD342B4C19A140EE00219F77 /* Sources */,
 				DD342B4D19A140EE00219F77 /* Frameworks */,
 				DD342B4E19A140EE00219F77 /* Resources */,
-				DDC2471919A1C3B40054B0C0 /* Embed Frameworks */,
 				DA737AF11E599A2300AD2CDE /* Copy Frameworks */,
 			);
 			buildRules = (
@@ -590,7 +561,6 @@
 				DDC2472619A1C60E0054B0C0 /* Sources */,
 				DDC2472719A1C60E0054B0C0 /* Frameworks */,
 				DDC2472819A1C60E0054B0C0 /* Resources */,
-				DDC2475119A1CBE20054B0C0 /* Embed Frameworks */,
 				DA737AF71E599ABF00AD2CDE /* Copy Frameworks */,
 			);
 			buildRules = (
