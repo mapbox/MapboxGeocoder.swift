@@ -1226,7 +1226,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AAD436380AAB501AB6291304 /* Pods-MapboxGeocoderMacTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1319,7 +1318,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BF3AEBC5904F365B64817732 /* Pods-MapboxGeocoderTVTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1610,7 +1608,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 05A6B8764F1B74BB857B037B /* Pods-MapboxGeocoderTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = MapboxGeocoderTests/Info.plist;
