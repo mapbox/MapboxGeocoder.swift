@@ -1,0 +1,2 @@
+binary "https://www.mapbox.com/ios-sdk/Mapbox-iOS-SDK.json" "3.4.1"
+github "AliSoftware/OHHTTPStubs" "57feceaabf333e72b2c637dfba6c13a7a5c49619"

@@ -1,5 +1,3 @@
-MapboxGeocoder.xcworkspace
-
 .DS_Store
 
 xcuserdata
@@ -8,4 +6,5 @@ xcuserdata
 *.xcuserstate
 *.xcscmblueprint
 
-Pods/
+Carthage.pkg
+Carthage/
