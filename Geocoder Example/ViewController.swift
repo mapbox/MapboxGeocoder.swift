@@ -14,7 +14,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     var mapView: MGLMapView!
     var resultsLabel: UILabel!
     var geocoder: Geocoder!
-    var geocodingDataTask: NSURLSessionDataTask?
+    var geocodingDataTask: URLSessionDataTask?
     
     // MARK: - Setup
 
@@ -25,15 +25,15 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         
         MGLAccountManager.setAccessToken(MapboxAccessToken)
         mapView = MGLMapView(frame: view.bounds)
-        mapView.autoresizingMask = [ .FlexibleWidth, .FlexibleHeight ]
+        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapView.delegate = self
         view.addSubview(mapView)
         
         resultsLabel = UILabel(frame: CGRect(x: 10, y: 20, width: view.bounds.size.width - 20, height: 30))
-        resultsLabel.autoresizingMask = .FlexibleWidth
+        resultsLabel.autoresizingMask = .flexibleWidth
         resultsLabel.adjustsFontSizeToFitWidth = true
-        resultsLabel.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
-        resultsLabel.userInteractionEnabled = false
+        resultsLabel.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        resultsLabel.isUserInteractionEnabled = false
         view.addSubview(resultsLabel)
         
         geocoder = Geocoder(accessToken: MapboxAccessToken)
@@ -41,17 +41,17 @@ class ViewController: UIViewController, MGLMapViewDelegate {
 
     // MARK: - MGLMapViewDelegate
 
-    func mapView(mapView: MGLMapView, regionWillChangeAnimated animated: Bool) {
+    func mapView(_ mapView: MGLMapView, regionWillChangeAnimated animated: Bool) {
         geocodingDataTask?.cancel()
     }
     
-    func mapView(mapView: MGLMapView, regionDidChangeAnimated animated: Bool) {
+    func mapView(_ mapView: MGLMapView, regionDidChangeAnimated animated: Bool) {
         geocodingDataTask?.cancel()
         let options = ReverseGeocodeOptions(coordinate: mapView.centerCoordinate)
-        geocodingDataTask = geocoder.geocode(options: options) { [unowned self] (placemarks, attribution, error) in
+        geocodingDataTask = geocoder.geocode(options) { [unowned self] (placemarks, attribution, error) in
             if let error = error {
                 NSLog("%@", error)
-            } else if let placemarks = placemarks where !placemarks.isEmpty {
+            } else if let placemarks = placemarks, !placemarks.isEmpty {
                 self.resultsLabel.text = placemarks[0].qualifiedName
             } else {
                 self.resultsLabel.text = "No results"

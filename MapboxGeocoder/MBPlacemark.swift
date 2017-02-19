@@ -59,14 +59,14 @@ public let MBPostalAddressCountryKey = "country"
 public let MBPostalAddressISOCountryCodeKey = "ISOCountryCode"
 
 /**
- A `Placemark` object represents a geocoder result. A placemark associates identifiers, geographic data, and contact information with a particular latitude and longitude. It is possible to explicitly create a placemark object from another placemark object; however, placemark objects are generally created for you via the `Geocoder.geocode(options:completionHandler:)` method.
+ A `Placemark` object represents a geocoder result. A placemark associates identifiers, geographic data, and contact information with a particular latitude and longitude. It is possible to explicitly create a placemark object from another placemark object; however, placemark objects are generally created for you via the `Geocoder.geocode(_:completionHandler:)` method.
  */
 @objc(MBPlacemark)
-public class Placemark: NSObject, NSCopying, NSSecureCoding {
+open class Placemark: NSObject, NSSecureCoding {
     /**
      The GeoJSON feature dictionary containing the placemark’s data.
      */
-    private let featureJSON: JSONDictionary
+    fileprivate let featureJSON: JSONDictionary
     
     /**
      Creates a placemark from the given [Carmen GeoJSON](https://github.com/mapbox/carmen/blob/master/carmen-geojson.md) feature.
@@ -76,7 +76,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
     }
     
     public convenience required init?(coder aDecoder: NSCoder) {
-        guard let featureJSON = aDecoder.decodeObjectOfClass(NSDictionary.self, forKey: "featureJSON") as? JSONDictionary else {
+        guard let featureJSON = aDecoder.decodeObject(of: NSDictionary.self, forKey: "featureJSON") as? JSONDictionary else {
             return nil
         }
         
@@ -90,23 +90,23 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
         self.init(featureJSON: placemark.featureJSON)
     }
     
-    public class func supportsSecureCoding() -> Bool {
+    public class var supportsSecureCoding : Bool {
         return true
     }
     
-    public func copyWithZone(zone: NSZone) -> AnyObject {
+    open func copy(with zone: NSZone?) -> AnyObject {
         return Placemark(featureJSON: featureJSON)
     }
     
-    public func encodeWithCoder(coder: NSCoder) {
-        coder.encodeObject(featureJSON, forKey: "featureJSON")
+    open func encode(with coder: NSCoder) {
+        coder.encode(featureJSON, forKey: "featureJSON")
     }
     
-    public override var hashValue: Int {
+    open override var hashValue: Int {
         return identifier.hashValue
     }
     
-    public override func isEqual(object: AnyObject?) -> Bool {
+    open override func isEqual(_ object: Any?) -> Bool {
         if let object = object as? Placemark {
             return identifier == object.identifier
         }
@@ -115,7 +115,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
     
     // MARK: Identifying the Placemark
     
-    public override var description: String {
+    open override var description: String {
         return name
     }
     
@@ -124,7 +124,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      The identifier takes the form <tt><var>index</var>.<var>id</var></tt>, where <var>index</var> corresponds to the `scope` property and <var>id</var> is a number that is unique to the feature but may change when the data source is updated.
      */
-    private var identifier: String {
+    fileprivate var identifier: String {
         return featureJSON["id"] as! String
     }
     
@@ -133,7 +133,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      If the placemark represents an address, the value of this property consists of only the street address, not the full address. Otherwise, if the placemark represents a point of interest or other place, the value of this property consists of only the common name, not the names of any containing administrative areas.
      */
-    public var name: String {
+    open var name: String {
         return featureJSON["text"] as! String
     }
     
@@ -142,7 +142,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      If the placemark represents an address or point of interest, the value of this property includes the full address. Otherwise, the value of this property includes any containing administrative areas.
      */
-    public var qualifiedName: String? {
+    open var qualifiedName: String? {
         return nil
     }
     
@@ -151,7 +151,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      If the placemark represents a country, the value of this property is the country’s [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code. If the placemark represents a top-level subdivision of a country, such as a state or province, the value of this property is the subdivision’s [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code. Otherwise, the value of this property is `nil`.
      */
-    public var code: String? {
+    open var code: String? {
         return nil
     }
     
@@ -160,10 +160,10 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      The scope offers a general indication of the size or importance of the feature represented by the placemark – in other words, how local the feature is.
      */
-    public var scope: PlacemarkScope {
-        let components = identifier.componentsSeparatedByString(".")
+    open var scope: PlacemarkScope {
+        let components = identifier.components(separatedBy: ".")
         assert(components.count > 0)
-        return PlacemarkScope(descriptions: [components.prefix(2).joinWithSeparator(".")]) ?? PlacemarkScope(descriptions: [components.first!]) ?? []
+        return PlacemarkScope(descriptions: [components.prefix(2).joined(separator: ".")]) ?? PlacemarkScope(descriptions: [components.first!]) ?? []
     }
     
     /**
@@ -173,14 +173,14 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      The Wikidata item contains structured information about the feature represented by the placemark. It also links to corresponding entries in various free content or open data resources, including Wikipedia, Wikimedia Commons, Wikivoyage, and Freebase.
      */
-    public var wikidataItemIdentifier: String? {
+    open var wikidataItemIdentifier: String? {
         return nil
     }
     
     /**
      An array of keywords that describe the genre of the point of interest represented by the placemark.
      */
-    public var genres: [String]? {
+    open var genres: [String]? {
         return nil
     }
     
@@ -189,7 +189,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      The icon is determined based on the placemark’s scope and any available genres.
      */
-    public var imageName: String? {
+    open var imageName: String? {
         return nil
     }
     
@@ -198,7 +198,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
     /**
      The placemark’s geographic center.
      */
-    public var location: CLLocation? {
+    open var location: CLLocation? {
         return nil
     }
     
@@ -207,7 +207,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      When this property is not `nil`, it is currently always a `RectangularRegion`. In the future, it may be another type of `CLRegion`.
      */
-    public var region: CLRegion? {
+    open var region: CLRegion? {
         return nil
     }
     
@@ -218,7 +218,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      If you need to fit the same address on a single line, use the `qualifiedName` property, in which each line is separated by a comma instead of a line break.
      */
-    private var formattedAddressLines: [String]? {
+    fileprivate var formattedAddressLines: [String]? {
         return nil
     }
     
@@ -229,7 +229,7 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      To format the postal address, use a `CNPostalAddressFormatter` object.
      */
     @available(iOS 9.0, OSX 10.11, *)
-    public var postalAddress: CNPostalAddress? {
+    open var postalAddress: CNPostalAddress? {
         return nil
     }
     #endif
@@ -241,14 +241,14 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      On iOS 9.0 and above, most of the information in this dictionary is also contained in the `CNPostalAddress` object stored in the `postalAddress` property.
      */
-    public var addressDictionary: [NSObject: AnyObject]? {
+    open var addressDictionary: [AnyHashable: Any]? {
         return nil
     }
     
     /**
      The phone number associated with the business represented by the placemark.
      */
-    public var phoneNumber: String? {
+    open var phoneNumber: String? {
         return nil
     }
     
@@ -259,15 +259,15 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      The array is sorted in order from the smallest, most local administrative area to the largest administrative area.
      */
-    public internal(set) var superiorPlacemarks: [Placemark]?
+    open internal(set) var superiorPlacemarks: [Placemark]?
     
     /**
      A placemark representing the country containing the feature represented by this placemark.
      
      To get the country’s name, use the `name` property of the object stored in this property.
      */
-    public var country: Placemark? {
-        return superiorPlacemarks?.lazy.filter { $0.scope == .Country }.first
+    open var country: Placemark? {
+        return superiorPlacemarks?.lazy.filter { $0.scope == .country }.first
     }
     
     /**
@@ -275,8 +275,8 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      To get the postal code itself, use the `name` property of the object stored in this property.
      */
-    public var postalCode: Placemark? {
-        return superiorPlacemarks?.lazy.filter { $0.scope == .PostalCode }.first
+    open var postalCode: Placemark? {
+        return superiorPlacemarks?.lazy.filter { $0.scope == .postalCode }.first
     }
     
     /**
@@ -284,8 +284,8 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      To get the region’s name, use the `name` property of the object stored in this property.
      */
-    public var administrativeRegion: Placemark? {
-        return superiorPlacemarks?.lazy.filter { $0.scope == .Region }.last
+    open var administrativeRegion: Placemark? {
+        return superiorPlacemarks?.lazy.filter { $0.scope == .region }.last
     }
     
     /**
@@ -293,8 +293,8 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      To get the district’s name, use the `name` property of the object stored in this property.
      */
-    public var district: Placemark? {
-        return superiorPlacemarks?.lazy.filter { $0.scope == .District }.last
+    open var district: Placemark? {
+        return superiorPlacemarks?.lazy.filter { $0.scope == .district }.last
     }
     
     /**
@@ -302,8 +302,8 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      To get the place’s name, use the `name` property of the object stored in this property.
      */
-    public var place: Placemark? {
-        return superiorPlacemarks?.lazy.filter { $0.scope == .Place }.last
+    open var place: Placemark? {
+        return superiorPlacemarks?.lazy.filter { $0.scope == .place }.last
     }
     
     /**
@@ -311,15 +311,15 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      To get the neighborhood’s name, use the `name` property of the object stored in this property.
      */
-    public var neighborhood: Placemark? {
-        return superiorPlacemarks?.lazy.filter { $0.scope == .Neighborhood }.last
+    open var neighborhood: Placemark? {
+        return superiorPlacemarks?.lazy.filter { $0.scope == .neighborhood }.last
     }
     
     /**
      The name of the street associated with the placemark.
      */
-    public var thoroughfare: String? {
-        guard scope == .Address else {
+    open var thoroughfare: String? {
+        guard scope == .address else {
             return nil
         }
         return featureJSON["text"] as? String
@@ -330,11 +330,11 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
      
      Typically, this property contains the house number and/or unit number of a business or residence.
      */
-    public var subThoroughfare: String? {
+    open var subThoroughfare: String? {
         guard let houseNumber = featureJSON["address"] else {
             return nil
         }
-        return String(houseNumber)
+        return String(describing: houseNumber)
     }
 }
 
@@ -342,8 +342,8 @@ public class Placemark: NSObject, NSCopying, NSSecureCoding {
  A concrete subclass of `Placemark` to represent results of geocoding requests.
  */
 @objc(MBGeocodedPlacemark)
-public class GeocodedPlacemark: Placemark {
-    private let propertiesJSON: JSONDictionary
+open class GeocodedPlacemark: Placemark {
+    fileprivate let propertiesJSON: JSONDictionary
     
     override init(featureJSON: JSONDictionary) {
         propertiesJSON = featureJSON["properties"] as? JSONDictionary ?? [:]
@@ -356,32 +356,32 @@ public class GeocodedPlacemark: Placemark {
         superiorPlacemarks = contextJSON?.map { QualifyingPlacemark(featureJSON: $0) }
     }
     
-    public override func copyWithZone(zone: NSZone) -> AnyObject {
+    open override func copy(with zone: NSZone?) -> AnyObject {
         return GeocodedPlacemark(featureJSON: featureJSON)
     }
     
-    public override var debugDescription: String {
+    open override var debugDescription: String {
         return qualifiedName
     }
     
-    public override var qualifiedName: String! {
+    internal var qualifiedNameComponents: [String] {
+        if qualifiedName.contains(", ") {
+            return qualifiedName.components(separatedBy: ", ")
+        }
+        // Chinese addresses have no commas and are reversed.
+        return (superiorPlacemarks?.map { $0.name } ?? []).reversed() + [name]
+    }
+    
+    open override var qualifiedName: String! {
         return featureJSON["place_name"] as! String
     }
     
-    internal var qualifiedNameComponents: [String] {
-        if qualifiedName.containsString(", ") {
-            return qualifiedName.componentsSeparatedByString(", ")
-        }
-        // Chinese addresses have no commas and are reversed.
-        return (superiorPlacemarks?.map { $0.name } ?? []).reverse() + [name]
-    }
-    
-    public override var location: CLLocation {
+    open override var location: CLLocation {
         let centerCoordinate = CLLocationCoordinate2D(geoJSON: featureJSON["center"] as! [Double])
         return CLLocation(coordinate: centerCoordinate)
     }
     
-    public override var region: CLRegion? {
+    open override var region: CLRegion? {
         guard let boundingBox = featureJSON["bbox"] as? [Double] else {
             return nil
         }
@@ -392,11 +392,11 @@ public class GeocodedPlacemark: Placemark {
         return RectangularRegion(southWest: southWest, northEast: northEast)
     }
     
-    public override var name: String {
+    open override var name: String {
         let text = super.name
         
         // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
-        if let houseNumber = featureJSON["address"] as? String where scope == .Address {
+        if let houseNumber = featureJSON["address"] as? String, scope == .address {
             let streetName = text
             let reversedAddress = "\(streetName) \(houseNumber)"
             if qualifiedNameComponents.contains(reversedAddress) {
@@ -409,11 +409,11 @@ public class GeocodedPlacemark: Placemark {
         }
     }
     
-    public override var code: String? {
-        return (propertiesJSON["short_code"] as? String)?.uppercaseString
+    open override var code: String? {
+        return (propertiesJSON["short_code"] as? String)?.uppercased()
     }
     
-    public override var wikidataItemIdentifier: String? {
+    open override var wikidataItemIdentifier: String? {
         let item = propertiesJSON["wikidata"] as? String
         if let item = item {
             assert(item.hasPrefix("Q"))
@@ -421,25 +421,25 @@ public class GeocodedPlacemark: Placemark {
         return item
     }
     
-    public override var genres: [String]? {
+    open override var genres: [String]? {
         let categoryList = propertiesJSON["category"] as? String
-        return categoryList?.componentsSeparatedByString(", ")
+        return categoryList?.components(separatedBy: ", ")
     }
     
-    public override var imageName: String? {
+    open override var imageName: String? {
         return propertiesJSON["maki"] as? String
     }
     
     private var clippedAddressLines: [String] {
         let lines = qualifiedNameComponents
-        if scope == .Address {
+        if scope == .address {
             return lines
         }
-        guard qualifiedName.containsString(", ") else {
+        guard qualifiedName.contains(", ") else {
             // Chinese addresses have no commas and are reversed.
             return Array(lines.prefix(lines.count))
         }
-        return Array(lines.suffixFrom(1))
+        return Array(lines.suffix(from: 1))
     }
     
     override var formattedAddressLines: [String] {
@@ -448,13 +448,13 @@ public class GeocodedPlacemark: Placemark {
     
     #if !os(tvOS)
     @available(iOS 9.0, OSX 10.11, *)
-    public override var postalAddress: CNPostalAddress? {
+    open override var postalAddress: CNPostalAddress? {
         let postalAddress = CNMutablePostalAddress()
         
-        if scope == .Address {
+        if scope == .address {
             postalAddress.street = name
         } else if let address = propertiesJSON["address"] as? String {
-            postalAddress.street = address.stringByReplacingOccurrencesOfString(", ", withString: "\n")
+            postalAddress.street = address.replacingOccurrences(of: ", ", with: "\n")
         }
         
         if let placeName = place?.name {
@@ -470,16 +470,16 @@ public class GeocodedPlacemark: Placemark {
             postalAddress.country = countryName
         }
         if let ISOCountryCode = country?.code {
-            postalAddress.ISOCountryCode = ISOCountryCode
+            postalAddress.isoCountryCode = ISOCountryCode
         }
         
         return postalAddress
     }
     #endif
     
-    public override var addressDictionary: [NSObject: AnyObject]? {
-        var addressDictionary: [String: AnyObject] = [:]
-        if scope == .Address {
+    open override var addressDictionary: [AnyHashable: Any]? {
+        var addressDictionary: [String: Any] = [:]
+        if scope == .address {
             addressDictionary[MBPostalAddressStreetKey] = name
         } else if let address = propertiesJSON["address"] as? String {
             addressDictionary[MBPostalAddressStreetKey] = address
@@ -501,7 +501,7 @@ public class GeocodedPlacemark: Placemark {
     /**
      The phone number to contact a business at this location.
      */
-    public override var phoneNumber: String? {
+    open override var phoneNumber: String? {
         return propertiesJSON["tel"] as? String
     }
 }
@@ -510,16 +510,16 @@ public class GeocodedPlacemark: Placemark {
  A concrete subclass of `Placemark` to represent entries in a `GeocodedPlacemark` object’s `superiorPlacemarks` property. These entries are like top-level geocoding results, except that they lack location information and are flatter, with properties directly at the top level.
  */
 @objc(MBQualifyingPlacemark)
-public class QualifyingPlacemark: Placemark {
-    public override func copyWithZone(zone: NSZone) -> AnyObject {
+open class QualifyingPlacemark: Placemark {
+    open override func copy(with zone: NSZone?) -> AnyObject {
         return QualifyingPlacemark(featureJSON: featureJSON)
     }
     
-    public override var code: String? {
-        return (featureJSON["short_code"] as? String)?.uppercaseString
+    open override var code: String? {
+        return (featureJSON["short_code"] as? String)?.uppercased()
     }
     
-    public override var wikidataItemIdentifier: String? {
+    open override var wikidataItemIdentifier: String? {
         let item = featureJSON["wikidata"] as? String
         if let item = item {
             assert(item.hasPrefix("Q"))

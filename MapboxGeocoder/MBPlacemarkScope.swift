@@ -9,26 +9,26 @@ extension PlacemarkScope: CustomStringConvertible {
         for description in descriptions {
             switch description {
             case "country":
-                scope.insert(.Country)
+                scope.update(with: .country)
             case "region":
-                scope.insert(.Region)
+                scope.update(with: .region)
             case "district":
-                scope.insert(.District)
+                scope.update(with: .district)
             case "postcode":
-                scope.insert(.PostalCode)
+                scope.update(with: .postalCode)
             case "place":
-                scope.insert(.Place)
+                scope.update(with: .place)
             case "locality":
-                scope.insert(.Locality)
+                scope.update(with: .locality)
             case "neighborhood":
-                scope.insert(.Neighborhood)
+                scope.update(with: .neighborhood)
             case "address":
-                scope.insert(.Address)
+                scope.update(with: .address)
                 
             case "poi.landmark":
-                scope.insert(.Landmark)
+                scope.update(with: .landmark)
             case "poi":
-                scope.insert(.PointOfInterest)
+                scope.update(with: .pointOfInterest)
             default:
                 return nil
             }
@@ -38,33 +38,33 @@ extension PlacemarkScope: CustomStringConvertible {
     
     public var description: String {
         var descriptions: [String] = []
-        if contains(.Country) {
+        if contains(.country) {
             descriptions.append("country")
         }
-        if contains(.Region) {
+        if contains(.region) {
             descriptions.append("region")
         }
-        if contains(.District) {
+        if contains(.district) {
             descriptions.append("district")
         }
-        if contains(.PostalCode) {
+        if contains(.postalCode) {
             descriptions.append("postcode")
         }
-        if contains(.Place) {
+        if contains(.place) {
             descriptions.append("place")
         }
-        if contains(.Locality) {
+        if contains(.locality) {
             descriptions.append("locality")
         }
-        if contains(.Neighborhood) {
+        if contains(.neighborhood) {
             descriptions.append("neighborhood")
         }
-        if contains(.Address) {
+        if contains(.address) {
             descriptions.append("address")
         }
-        if contains(.Landmark) {
-            descriptions.append(contains(.PointOfInterest) ? "poi" : "poi.landmark")
+        if contains(.landmark) {
+            descriptions.append(contains(.pointOfInterest) ? "poi" : "poi.landmark")
         }
-        return descriptions.joinWithSeparator(",")
+        return descriptions.joined(separator: ",")
     }
 }
