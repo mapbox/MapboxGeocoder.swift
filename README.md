@@ -11,25 +11,19 @@ MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com
 
 ## Getting started
 
-**Static Framework**
+Specify the following dependency in your [Carthage](https://github.com/Carthage/Carthage/) Cartfile:
 
-Download a framework build from [the releases page](https://github.com/mapbox/MapboxGeocoder.swift/releases). Import `MapboxGeocoder.framework` into your project, then `import MapboxGeocoder` or `@import MapboxGeocoder;`. 
+```cartfile
+github "Mapbox/MapboxGeocoder.swift" "master"
+```
 
-**[CocoaPods](http://cocoapods.org/)**
-
-In your Podfile:
+Or in your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
 pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :branch => 'master'
 ```
 
-**[Carthage](https://github.com/Carthage/Carthage)**
-
-In your Cartfile:
-
-```sh
-github "Mapbox/MapboxGeocoder.swift" "master"
-```
+Then `import MapboxDirections` or `@import MapboxDirections;`.
 
 v0.5.2 is the last release of MapboxGeocoder.swift written in Swift 2.3. The `swift2.3` branch corresponds to this release, plus any critical bug fixes that have been applied since. All subsequent releases will be based on the `master` branch, which is written in Swift 3. The Swift examples below are written in Swift 3; see the `swift2.3` branch’s readme for Swift 2.3 examples.
 
@@ -207,8 +201,8 @@ Batch geocoding is available to Mapbox enterprise accounts. See the [Mapbox Geoc
 
 ## Tests
 
-To run the included unit tests, you need to use [CocoaPods](http://cocoapods.org) to install the dependencies. 
+To run the included unit tests, you need to use [Carthage](https://github.com/Carthage/Carthage/) 0.19 or above to install the dependencies. 
 
-1. `pod install`
-1. `open MapboxGeocoder.xcworkspace`
-1. Switch to the MapboxGeocoder scheme and go to Product ‣ Test.
+1. `carthage bootstrap`
+1. `open MapboxGeocoder.xcodeproj`
+1. Switch to the “MapboxGeocoder iOS” scheme and go to Product ‣ Test.
