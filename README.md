@@ -204,6 +204,10 @@ options.focalLocation = locationManager.location
 options.allowedScopes = .pointOfInterest
 
 let task = geocoder.batchGeocode(options) { (placemarksByQuery, attributionsByQuery, error) in
+    guard let placemarksByQuery = placemarksByQuery else {
+        return
+    }
+    
     let nearestSkyline = placemarksByQuery[0][0].location
     let distanceToSkyline = nearestSkyline.distance(from: locationManager.location)
     let nearestGoldStar = placemarksByQuery[1][0].location
