@@ -197,6 +197,41 @@ NSURLSessionDataTask *task = [geocoder geocode:options
 
 With _batch geocoding_, you can perform up to 50 distinct forward or reverse geocoding requests simultaneously and store the results in a private database. Create a ForwardBatchGeocodingOptions or ReverseBatchGeocodingOptions object in Swift, or an MBForwardBatchGeocodingOptions or MBReverseBatchGeocodingOptions object in Objective-C, and pass it into the `Geocoder.batchGeocode(_:completionHandler:)` method.
 
+```swift
+// main.swift
+let options = ForwardBatchGeocodeOptions(queries: ["skyline chili", "gold star chili"])
+options.focalLocation = locationManager.location
+options.allowedScopes = .pointOfInterest
+
+let task = geocoder.batchGeocode(options) { (placemarksByQuery, attributionsByQuery, error) in
+    let nearestSkyline = placemarksByQuery[0][0].location
+    let distanceToSkyline = nearestSkyline.distance(from: locationManager.location)
+    let nearestGoldStar = placemarksByQuery[1][0].location
+    let distanceToGoldStar = nearestGoldStar.distance(from: locationManager.location)
+
+    let distance = LengthFormatter().string(fromMeters: min(distanceToSkyline, distanceToGoldStar))
+    print("Found a chili parlor \(distance) away.")
+}
+```
+
+```objc
+// main.m
+MBForwardBatchGeocodeOptions *options = [[MBForwardBatchGeocodeOptions alloc] initWithQueries:@[@"skyline chili", @"gold star chili"]];
+options.focalLocation = locationManager.location;
+options.allowedScopes = MBPlacemarkScopePointOfInterest;
+
+NSURLSessionDataTask *task = [geocoder batchGeocode:options completionHandler:^(NSArray<NSArray<MBGeocodedPlacemark *> *> * _Nullable placemarksByQuery, NSArray<NSString *> * _Nullable attributionsByQuery, NSError * _Nullable error) {
+    MBPlacemark *nearestSkyline = placemarksByQuery[0][0].location;
+    CLLocationDistance distanceToSkyline = [nearestSkyline distanceFromLocation:locationManager.location];
+    MBPlacemark *nearestGoldStar = placemarksByQuery[1][0].location;
+    CLLocationDistance distanceToGoldStar = [nearestGoldStar distanceFromLocation:locationManager.location];
+
+    NSLengthFormatter *formatter = [[NSLengthFormatter alloc] init];
+    NSString *distance = [formatter stringFromMeters:MIN(distanceToSkyline, distanceToGoldStar)];
+    NSLog("Found a chili parlor %@ away.", distance);
+}];
+```
+
 Batch geocoding is available to Mapbox enterprise accounts. See the [Mapbox Geocoding](https://www.mapbox.com/geocoding/) website for more information.
 
 ## Tests
