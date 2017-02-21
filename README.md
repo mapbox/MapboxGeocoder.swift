@@ -119,10 +119,10 @@ options.allowedISOCountryCodes = @[@"CA"];
 options.focalLocation = [[CLLocation alloc] initWithLatitude:45.3 longitude:-66.1];
 options.allowedScopes = MBPlacemarkScopeAddress | MBPlacemarkScopePointOfInterest;
 
-NSURLSessionDataTask *task = [geocoder geocode:options
-                             completionHandler:^(NSArray<MBGeocodedPlacemark *> * _Nullable placemarks,
-                                                 NSString * _Nullable attribution,
-                                                 NSError * _Nullable error) {
+NSURLSessionDataTask *task = [geocoder geocodeWithOptions:options
+                                        completionHandler:^(NSArray<MBGeocodedPlacemark *> * _Nullable placemarks,
+                                                            NSString * _Nullable attribution,
+                                                            NSError * _Nullable error) {
     MBPlacemark *placemark = placemarks[0];
     NSLog(@"%@", placemark.name);
         // 200 Queen St
@@ -175,10 +175,10 @@ let task = geocoder.geocode(options) { (placemarks, attribution, error) in
 MBReverseGeocodeOptions *options = [[MBReverseGeocodeOptions alloc] initWithCoordinate: CLLocationCoordinate2DMake(40.733, -73.989)];
 // Or perhaps: [[MBReverseGeocodeOptions alloc] initWithLocation:locationManager.location]
 
-NSURLSessionDataTask *task = [geocoder geocode:options
-                             completionHandler:^(NSArray<MBGeocodedPlacemark *> * _Nullable placemarks,
-                                                 NSString * _Nullable attribution,
-                                                 NSError * _Nullable error) {
+NSURLSessionDataTask *task = [geocoder geocodeWithOptions:options
+                                        completionHandler:^(NSArray<MBGeocodedPlacemark *> * _Nullable placemarks,
+                                                            NSString * _Nullable attribution,
+                                                            NSError * _Nullable error) {
     MBPlacemark *placemark = placemarks[0];
     NSLog(@"%@", placemark.imageName);
         // telephone

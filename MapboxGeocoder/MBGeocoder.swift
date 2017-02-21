@@ -170,6 +170,7 @@ open class Geocoder: NSObject {
      - parameter completionHandler: The closure (block) to call with the resulting placemarks. This closure is executed on the application’s main thread.
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting placemarks, cancel this task.
      */
+    @objc(geocodeWithOptions:completionHandler:)
     open func geocode(_ options: GeocodeOptions, completionHandler: @escaping CompletionHandler) -> URLSessionDataTask {
         let url = urlForGeocoding(options)
         let task = dataTaskWithURL(url, completionHandler: { (json) in
