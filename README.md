@@ -218,24 +218,6 @@ let task = geocoder.batchGeocode(options) { (placemarksByQuery, attributionsByQu
 }
 ```
 
-```objc
-// main.m
-MBForwardBatchGeocodeOptions *options = [[MBForwardBatchGeocodeOptions alloc] initWithQueries:@[@"skyline chili", @"gold star chili"]];
-options.focalLocation = locationManager.location;
-options.allowedScopes = MBPlacemarkScopePointOfInterest;
-
-NSURLSessionDataTask *task = [geocoder batchGeocode:options completionHandler:^(NSArray<NSArray<MBGeocodedPlacemark *> *> * _Nullable placemarksByQuery, NSArray<NSString *> * _Nullable attributionsByQuery, NSError * _Nullable error) {
-    MBPlacemark *nearestSkyline = placemarksByQuery[0][0].location;
-    CLLocationDistance distanceToSkyline = [nearestSkyline distanceFromLocation:locationManager.location];
-    MBPlacemark *nearestGoldStar = placemarksByQuery[1][0].location;
-    CLLocationDistance distanceToGoldStar = [nearestGoldStar distanceFromLocation:locationManager.location];
-
-    NSLengthFormatter *formatter = [[NSLengthFormatter alloc] init];
-    NSString *distance = [formatter stringFromMeters:MIN(distanceToSkyline, distanceToGoldStar)];
-    NSLog("Found a chili parlor %@ away.", distance);
-}];
-```
-
 Batch geocoding is available to Mapbox enterprise accounts. See the [Mapbox Geocoding](https://www.mapbox.com/geocoding/) website for more information.
 
 ## Tests
