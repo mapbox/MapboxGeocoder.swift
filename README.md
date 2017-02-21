@@ -55,7 +55,7 @@ Alternatively, you can place your access token in the `MGLMapboxAccessToken` key
 
 ```swift
 // main.swift
-let geocoder = Geocoder.sharedGeocoder
+let geocoder = Geocoder.shared
 ```
 
 ```objc
