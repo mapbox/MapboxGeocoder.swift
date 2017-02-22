@@ -14,13 +14,13 @@ MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com
 Specify the following dependency in your [Carthage](https://github.com/Carthage/Carthage/) Cartfile:
 
 ```cartfile
-github "Mapbox/MapboxGeocoder.swift" "master"
+github "Mapbox/MapboxGeocoder.swift" ~> 0.6
 ```
 
 Or in your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
-pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', :branch => 'master'
+pod 'MapboxGeocoder.swift', :git => 'https://github.com/mapbox/MapboxGeocoder.swift.git', '~> 0.6'
 ```
 
 Then `import MapboxDirections` or `@import MapboxDirections;`.
