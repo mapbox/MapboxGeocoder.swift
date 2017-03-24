@@ -16,7 +16,7 @@ MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com
 Specify the following dependency in your [Carthage](https://github.com/Carthage/Carthage/) Cartfile:
 
 ```cartfile
-github "Mapbox/MapboxGeocoder.swift" ~> 0.6
+github "mapbox/MapboxGeocoder.swift" ~> 0.6
 ```
 
 Or in your [CocoaPods](http://cocoapods.org/) Podfile:
