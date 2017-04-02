@@ -35,7 +35,7 @@ class ForwardGeocodingTests: XCTestCase {
         XCTAssertNotNil(task)
         
         waitForExpectations(timeout: 1) { (error) in
-            XCTAssertNil(error, "Error: \(error)")
+            XCTAssertNil(error, "Error: \(error!)")
             XCTAssertEqual(task.state, URLSessionTask.State.completed)
         }
         
@@ -89,7 +89,7 @@ class ForwardGeocodingTests: XCTestCase {
         XCTAssertNotNil(task)
         
         waitForExpectations(timeout: 1) { (error) in
-            XCTAssertNil(error, "Error: \(error)")
+            XCTAssertNil(error, "Error: \(error!)")
             XCTAssertEqual(task.state, URLSessionTask.State.completed)
         }
     }
@@ -120,7 +120,7 @@ class ForwardGeocodingTests: XCTestCase {
         XCTAssertNotNil(task)
         
         waitForExpectations(timeout: 1) { (error) in
-            XCTAssertNil(error, "Error: \(error)")
+            XCTAssertNil(error, "Error: \(error!)")
             XCTAssertEqual(task.state, .completed)
         }
         
