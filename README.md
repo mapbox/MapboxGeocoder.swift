@@ -25,7 +25,7 @@ Or in your [CocoaPods](http://cocoapods.org/) Podfile:
 pod 'MapboxGeocoder.swift', '~> 0.6'
 ```
 
-Then `import MapboxDirections` or `@import MapboxDirections;`.
+Then `import MapboxGeocoder` or `@import MapboxGeocoder;`.
 
 v0.5.2 is the last release of MapboxGeocoder.swift written in Swift 2.3. The `swift2.3` branch corresponds to this release, plus any critical bug fixes that have been applied since. All subsequent releases will be based on the `master` branch, which is written in Swift 3. The Swift examples below are written in Swift 3; see the `swift2.3` branch’s readme for Swift 2.3 examples.
 
