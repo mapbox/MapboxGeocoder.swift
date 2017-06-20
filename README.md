@@ -35,6 +35,8 @@ This repository includes example applications written in both Swift and Objectiv
 
 You will need a [Mapbox access token](https://www.mapbox.com/developers/api/#access-tokens) in order to use the API. If you’re already using the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [macOS SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/macos), MapboxGeocoder.swift automatically recognizes your access token, as long as you’ve placed it in the `MGLMapboxAccessToken` key of your application’s Info.plist file.
 
+The examples below are each provided in Swift (denoted with `main.swift`), Objective-C (`main.m`), and AppleScript (`AppDelegate.applescript`). For further details, see the [MapboxGeocoder.swift API reference](http://cocoadocs.org/docsets/MapboxGeocoder.swift/).
+
 ### Basics
 
 The main geocoder class is Geocoder in Swift or MBGeocoder in Objective-C. Create a geocoder object using your access token:
