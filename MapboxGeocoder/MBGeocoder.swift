@@ -301,7 +301,7 @@ open class Geocoder: NSObject {
                     failureReason = "More than \(formattedCount) requests have been made with this access token within a period of \(formattedInterval)."
                 }
                 if let rolloverTime = response.rateLimitResetTime {
-                    let formattedDate = DateFormatter.localizedString(from: rolloverTime, dateStyle: .long, timeStyle: .full)
+                    let formattedDate = DateFormatter.localizedString(from: rolloverTime, dateStyle: .long, timeStyle: .long)
                     recoverySuggestion = "Wait until \(formattedDate) before retrying."
                 }
             default:
