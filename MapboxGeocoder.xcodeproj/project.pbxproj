@@ -1034,7 +1034,7 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = MapboxGeocoderTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(PROJECT_DIR)/Carthage/Build/Mac";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoderTests;
 				PRODUCT_NAME = MapboxGeocoderTests;
 				SDKROOT = macosx;
@@ -1055,7 +1055,7 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = MapboxGeocoderTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(PROJECT_DIR)/Carthage/Build/Mac";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoderTests;
 				PRODUCT_NAME = MapboxGeocoderTests;
 				SDKROOT = macosx;
