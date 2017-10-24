@@ -47,7 +47,7 @@ open class GeocodeOptions: NSObject {
     open var allowedRegion: RectangularRegion?
     
     /**
-     Limit the number of results returned. The default is `5` for forward geocoding and `1` for reverse geocoding.
+     Limit the number of results returned. For forward geocoding, the default is `5` and the maximum is `10`. For reverse geocoding, the default is `1` and the maximum is `5`.
      */
     public var maximumResultCount: UInt
 
