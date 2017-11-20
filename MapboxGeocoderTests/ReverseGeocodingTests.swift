@@ -66,10 +66,10 @@ class ReverseGeocodingTests: XCTestCase {
         let southWest = CLLocationCoordinate2D(latitude: 37.033229992893, longitude: -95.927990005645)
         let northEast = CLLocationCoordinate2D(latitude: 37.35632800706, longitude: -95.594628992671)
         let region = placePlacemark?.region as! RectangularRegion
-        XCTAssertEqualWithAccuracy(region.southWest.latitude, southWest.latitude, accuracy: 0.000000000001)
-        XCTAssertEqualWithAccuracy(region.southWest.longitude, southWest.longitude, accuracy: 0.000000000001)
-        XCTAssertEqualWithAccuracy(region.northEast.latitude, northEast.latitude, accuracy: 0.000000000001)
-        XCTAssertEqualWithAccuracy(region.northEast.longitude, northEast.longitude, accuracy: 0.000000000001)
+        XCTAssertEqual(region.southWest.latitude, southWest.latitude, accuracy: 0.000000000001)
+        XCTAssertEqual(region.southWest.longitude, southWest.longitude, accuracy: 0.000000000001)
+        XCTAssertEqual(region.northEast.latitude, northEast.latitude, accuracy: 0.000000000001)
+        XCTAssertEqual(region.northEast.longitude, northEast.longitude, accuracy: 0.000000000001)
     }
 
     func testInvalidReverseGeocode() {
