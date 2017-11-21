@@ -11,7 +11,7 @@ MapboxGeocoder.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS 
 
 MapboxGeocoder.swift pairs well with [MapboxDirections.swift](https://github.com/mapbox/MapboxDirections.swift), [MapboxStatic.swift](https://github.com/mapbox/MapboxStatic.swift), and the [Mapbox iOS SDK](https://www.mapbox.com/ios-sdk/) or [macOS SDK](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/macos).
 
-MapboxGeocoder.swift requires Swift 4 as of v0.7.0. If you'd like to build for Swift 4, please target v0.6.3 or the branch [`swift3.2`](https://github.com/mapbox/MapboxGeocoder.swift/tree/swift3.2).
+MapboxGeocoder.swift requires Swift 4 as of v0.7.0. If you'd like to build for Swift 3.2, please target v0.6.3 or the branch [`swift3.2`](https://github.com/mapbox/MapboxGeocoder.swift/tree/swift3.2).
 
 ## Getting started
 
