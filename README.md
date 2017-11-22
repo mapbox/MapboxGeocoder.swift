@@ -29,7 +29,7 @@ Then `import MapboxGeocoder` or `@import MapboxGeocoder;`.
 
 For Objective-C targets, it may be necessary to enable the `ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES` build setting.
 
-v0.6.3 is the last release of MapboxGeocoder.swift written in Swift 2.3. The `swift3.2` branch corresponds to this release, plus any critical bug fixes that have been applied since. All subsequent releases will be based on the `master` branch, which is written in Swift 4. The Swift examples below are written in Swift 4; see the `swift3.2` branch’s readme for Swift 3.2 examples.
+v0.6.3 is the last release of MapboxGeocoder.swift written in Swift 3.2. The `swift3.2` branch corresponds to this release, plus any critical bug fixes that have been applied since. All subsequent releases will be based on the `master` branch, which is written in Swift 4. The Swift examples below are written in Swift 4; see the `swift3.2` branch’s readme for Swift 3.2 examples.
 
 This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). More examples and detailed documentation are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#geocoding).
 
