@@ -4,9 +4,9 @@
 @objc(MBRectangularRegion)
 open class RectangularRegion: CLRegion {
     /** Coordinate at the southwest corner. */
-    open var southWest: CLLocationCoordinate2D = CLLocationCoordinate2D()
+    @objc open var southWest: CLLocationCoordinate2D = CLLocationCoordinate2D()
     /** Coordinate at the northeast corner. */
-    open var northEast: CLLocationCoordinate2D = CLLocationCoordinate2D()
+    @objc open var northEast: CLLocationCoordinate2D = CLLocationCoordinate2D()
     
     /**
      Creates a rectangular region with the given southwest and northeast corners.
@@ -16,30 +16,30 @@ open class RectangularRegion: CLRegion {
      - parameter southWest: The southwesternmost geographic coordinate that lies within the region.
      - parameter northEast: The northeasternmost geographic coordinate that lies within the region.
      */
-    public init(southWest: CLLocationCoordinate2D, northEast: CLLocationCoordinate2D) {
+    @objc public init(southWest: CLLocationCoordinate2D, northEast: CLLocationCoordinate2D) {
         self.southWest = southWest
         self.northEast = northEast
         super.init()
     }
     
-    required public init?(coder decoder: NSCoder) {
+    @objc required public init?(coder decoder: NSCoder) {
         decoder.decodeValue(ofObjCType: "{dd}", at: &southWest)
         decoder.decodeValue(ofObjCType: "{dd}", at: &northEast)
         super.init(coder: decoder)
     }
     
-    open override func encode(with coder: NSCoder) {
+    @objc open override func encode(with coder: NSCoder) {
         super.encode(with: coder)
         coder.encodeValue(ofObjCType: "{dd}", at: &southWest)
         coder.encodeValue(ofObjCType: "{dd}", at: &northEast)
     }
     
-    open override var hashValue: Int {
+    @objc open override var hashValue: Int {
         return (southWest.latitude.hashValue + southWest.longitude.hashValue
             + northEast.latitude.hashValue + northEast.longitude.hashValue)
     }
     
-    open override func isEqual(_ object: Any?) -> Bool {
+    @objc open override func isEqual(_ object: Any?) -> Bool {
         guard let object = object as? RectangularRegion else {
             return false
         }
@@ -47,14 +47,14 @@ open class RectangularRegion: CLRegion {
             && northEast.latitude == object.northEast.latitude && northEast.longitude == object.northEast.longitude)
     }
     
-    open override var description: String {
+    @objc open override var description: String {
         return "\(southWest.longitude),\(southWest.latitude),\(northEast.longitude),\(northEast.latitude)"
     }
 
     /**
      Returns a Boolean value indicating whether the bounding box contains the specified coordinate.
      */
-    open func containsLocationCoordinate2D(_ coordinate: CLLocationCoordinate2D) -> Bool {
+    @objc open func containsLocationCoordinate2D(_ coordinate: CLLocationCoordinate2D) -> Bool {
         return (coordinate.latitude >= southWest.latitude && coordinate.latitude <= northEast.latitude
             && coordinate.longitude >= southWest.longitude && coordinate.longitude <= northEast.longitude)
     }

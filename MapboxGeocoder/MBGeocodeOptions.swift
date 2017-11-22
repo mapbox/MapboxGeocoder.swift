@@ -23,33 +23,33 @@ open class GeocodeOptions: NSObject {
      
      To find out what kinds of results are available for a particular country, consult [the Geocoding API’s coverage map](https://www.mapbox.com/geocoding/#coverage).
      */
-    open var allowedISOCountryCodes: [String]?
+    @objc open var allowedISOCountryCodes: [String]?
     
     /**
      A location to use as a hint when looking up the specified address.
      
      This property prioritizes results that are close to a specific location, which is typically the user’s current location. If the value of this property is `nil` – which it is by default – no specific location is prioritized.
      */
-    open var focalLocation: CLLocation?
+    @objc open var focalLocation: CLLocation?
     
     /**
      The bitmask of placemark scopes, such as country and neighborhood, to include in the results.
      
      The default value of this property is `PlacemarkScope.all`, which includes all scopes.
      */
-    open var allowedScopes: PlacemarkScope = [.all]
+    @objc open var allowedScopes: PlacemarkScope = [.all]
     
     /**
      The region in which each resulting placemark must be located.
      
      By default, no region is specified, so results may be located anywhere in the world.
      */
-    open var allowedRegion: RectangularRegion?
+    @objc open var allowedRegion: RectangularRegion?
     
     /**
      Limit the number of results returned. For forward geocoding, the default is `5` and the maximum is `10`. For reverse geocoding, the default is `1` and the maximum is `5`.
      */
-    public var maximumResultCount: UInt
+    @objc public var maximumResultCount: UInt
 
     // MARK: Specifying the Output Format
     
@@ -62,7 +62,7 @@ open class GeocodeOptions: NSObject {
      
      - experiment: This option is experimental.
      */
-    open var locale: Locale?
+    @objc open var locale: Locale?
     
     fileprivate override init() {
         self.maximumResultCount = 0
@@ -81,7 +81,7 @@ open class GeocodeOptions: NSObject {
         var params: [URLQueryItem] = []
         if let allowedISOCountryCodes = allowedISOCountryCodes {
             assert(allowedISOCountryCodes.filter {
-                $0.characters.count != 2 || $0.contains("-")
+                $0.count != 2 || $0.contains("-")
             }.isEmpty, "Only ISO 3166-1 alpha-2 codes are allowed.")
             let codeList = allowedISOCountryCodes.joined(separator: ",").lowercased()
             params.append(URLQueryItem(name: "country", value: codeList))

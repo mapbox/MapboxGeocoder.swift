@@ -134,7 +134,7 @@ open class Geocoder: NSObject {
      - parameter accessToken: A Mapbox [access token](https://www.mapbox.com/help/define-access-token/). If an access token is not specified when initializing the geocoder object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
      - parameter host: An optional hostname to the server API. The Mapbox Geocoding API endpoint is used by default.
      */
-    public init(accessToken: String?, host: String?) {
+    @objc public init(accessToken: String?, host: String?) {
         let accessToken = accessToken ?? defaultAccessToken
         assert(accessToken != nil && !accessToken!.isEmpty, "A Mapbox access token is required. Go to <https://www.mapbox.com/studio/account/tokens/>. In Info.plist, set the MGLMapboxAccessToken key to your access token, or use the Geocoder(accessToken:host:) initializer.")
         
@@ -153,7 +153,7 @@ open class Geocoder: NSObject {
      
      - parameter accessToken: A Mapbox [access token](https://www.mapbox.com/help/define-access-token/). If an access token is not specified when initializing the geocoder object, it should be specified in the `MGLMapboxAccessToken` key in the main application bundle’s Info.plist.
      */
-    public convenience init(accessToken: String?) {
+    @objc public convenience init(accessToken: String?) {
         self.init(accessToken: accessToken, host: nil)
     }
     
@@ -257,7 +257,7 @@ open class Geocoder: NSObject {
     /**
      The HTTP URL used to fetch the geocodes from the API.
      */
-    open func urlForGeocoding(_ options: GeocodeOptions) -> URL {
+    @objc open func urlForGeocoding(_ options: GeocodeOptions) -> URL {
         let params = options.params + [
             URLQueryItem(name: "access_token", value: accessToken),
         ]
