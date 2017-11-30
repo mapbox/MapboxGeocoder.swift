@@ -1,3 +1,5 @@
+import Foundation
+
 typealias JSONDictionary = [String: Any]
 
 /// Indicates that an error occurred in MapboxGeocoder.
@@ -170,17 +172,22 @@ open class Geocoder: NSObject {
      - parameter completionHandler: The closure (block) to call with the resulting placemarks. This closure is executed on the application’s main thread.
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting placemarks, cancel this task.
      */
+    
+    @discardableResult
     @objc(geocodeWithOptions:completionHandler:)
     open func geocode(_ options: GeocodeOptions, completionHandler: @escaping CompletionHandler) -> URLSessionDataTask {
         let url = urlForGeocoding(options)
-        let task = dataTaskWithURL(url, completionHandler: { (json) in
-            let featureCollection = json as! JSONDictionary
-            assert(featureCollection["type"] as? String == "FeatureCollection")
-            let features = featureCollection["features"] as! [JSONDictionary]
-            let attribution = featureCollection["attribution"] as? String
-            
-            let placemarks = features.flatMap { GeocodedPlacemark(featureJSON: $0) }
-            completionHandler(placemarks, attribution, nil)
+        
+        let task = dataTaskWithURL(url, completionHandler: { (data) in
+            guard let data = data else { return }
+            let decoder = JSONDecoder()
+            do {
+                let result = try decoder.decode(GeocodeResult.self, from: data)
+                assert(result.type == "FeatureCollection")
+                completionHandler(result.placemarks, result.attribution, nil)
+            } catch {
+                completionHandler(nil, nil, error as NSError)
+            }
         }) { (error) in
             completionHandler(nil, nil, error)
         }
@@ -201,15 +208,32 @@ open class Geocoder: NSObject {
      */
     open func batchGeocode<T: GeocodeOptions>(_ options: T, completionHandler: @escaping BatchCompletionHandler) -> URLSessionDataTask where T: BatchGeocodeOptions {
         let url = urlForGeocoding(options)
-        let task = dataTaskWithURL(url, completionHandler: { (json) in
-            let featureCollections = json as! [JSONDictionary]
-            let placemarksByQuery = featureCollections.map { (featureCollection) -> [GeocodedPlacemark] in
-                assert(featureCollection["type"] as? String == "FeatureCollection")
-                let features = featureCollection["features"] as! [JSONDictionary]
-                return features.flatMap { GeocodedPlacemark(featureJSON: $0) }
-            }
-            let attributionsByQuery = featureCollections.map { $0["attribution"] as! String }
-            completionHandler(placemarksByQuery, attributionsByQuery, nil)
+        
+        // TODO: Migrate to Codable
+        
+//        let task = dataTaskWithURL(url, completionHandler: { (json) in
+//            let featureCollections = json as! [JSONDictionary]
+//            let placemarksByQuery = featureCollections.map { (featureCollection) -> [GeocodedPlacemark] in
+//                assert(featureCollection["type"] as? String == "FeatureCollection")
+//                let features = featureCollection["features"] as! [JSONDictionary]
+//                return features.flatMap { GeocodedPlacemark(featureJSON: $0) }
+//            }
+//            let attributionsByQuery = featureCollections.map { $0["attribution"] as! String }
+//            completionHandler(placemarksByQuery, attributionsByQuery, nil)
+//        }) { (error) in
+//            completionHandler(nil, nil, error)
+//        }
+        
+        let task = dataTaskWithURL(url, completionHandler: { (data) in
+//            let featureCollections = data as! [JSONDictionary]
+//            let placemarksByQuery = featureCollections.map { (featureCollection) -> [GeocodedPlacemark] in
+//                assert(featureCollection["type"] as? String == "FeatureCollection")
+//                let features = featureCollection["features"] as! [JSONDictionary]
+//                return features.flatMap { GeocodedPlacemark(featureJSON: $0) }
+//            }
+//            let attributionsByQuery = featureCollections.map { $0["attribution"] as! String }
+            
+            
         }) { (error) in
             completionHandler(nil, nil, error)
         }
@@ -226,30 +250,23 @@ open class Geocoder: NSObject {
      - returns: The data task for the URL.
      - postcondition: The caller must resume the returned task.
      */
-    fileprivate func dataTaskWithURL(_ url: URL, completionHandler: @escaping (_ json: Any) -> Void, errorHandler: @escaping (_ error: NSError) -> Void) -> URLSessionDataTask {
+    fileprivate func dataTaskWithURL(_ url: URL, completionHandler: @escaping (_ data: Data?) -> Void, errorHandler: @escaping (_ error: NSError) -> Void) -> URLSessionDataTask {
         var request = URLRequest(url: url)
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         return URLSession.shared.dataTask(with: request) { (data, response, error) in
-            var json: JSONDictionary = [:]
-            if let data = data, let mimeType = response?.mimeType, mimeType == "application/json" || mimeType == "application/vnd.geo+json" {
-                do {
-                    json = try JSONSerialization.jsonObject(with: data, options: []) as! JSONDictionary
-                } catch {
-                    assert(false, "Invalid data")
-                }
-            }
-            
-            let apiMessage = json["message"] as? String
-            guard data != nil && error == nil && apiMessage == nil else {
-                let apiError = Geocoder.descriptiveError(json, response: response, underlyingError: error as NSError?)
-                DispatchQueue.main.async {
-                    errorHandler(apiError)
-                }
-                return
-            }
+
+            // TODO: Migrate result to Codable
+//            let apiMessage = json["message"] as? String
+//            guard data != nil && error == nil && apiMessage == nil else {
+//                let apiError = Geocoder.descriptiveError(json, response: response, underlyingError: error as NSError?)
+//                DispatchQueue.main.async {
+//                    errorHandler(apiError)
+//                }
+//                return
+//            }
             
             DispatchQueue.main.async {
-                completionHandler(json)
+                completionHandler(data)
             }
         }
     }

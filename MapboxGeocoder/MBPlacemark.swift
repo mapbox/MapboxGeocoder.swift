@@ -1,6 +1,7 @@
 #if !os(tvOS)
     import Contacts
 #endif
+import CoreLocation
 
 // MARK: Postal Address Properties
 
@@ -62,44 +63,48 @@ public let MBPostalAddressISOCountryCodeKey = "ISOCountryCode"
  A `Placemark` object represents a geocoder result. A placemark associates identifiers, geographic data, and contact information with a particular latitude and longitude. It is possible to explicitly create a placemark object from another placemark object; however, placemark objects are generally created for you via the `Geocoder.geocode(_:completionHandler:)` method.
  */
 @objc(MBPlacemark)
-open class Placemark: NSObject, NSSecureCoding {
-    /**
-     The GeoJSON feature dictionary containing the placemark’s data.
-     */
-    fileprivate let featureJSON: JSONDictionary
+open class Placemark: NSObject, Codable {
+    
+    private enum CodingKeys: String, CodingKey {
+        case identifier = "id"
+        case name = "text"
+        case address = "address"
+        case qualifiedName = "place_name"
+        case superiorPlacemarks = "context"
+        case center = "center"
+        case code = "short_code"
+    }
     
     /**
      Creates a placemark from the given [Carmen GeoJSON](https://github.com/mapbox/carmen/blob/master/carmen-geojson.md) feature.
      */
-    internal init(featureJSON: JSONDictionary) {
-        self.featureJSON = featureJSON
-    }
-    
-    @objc public convenience required init?(coder aDecoder: NSCoder) {
-        guard let featureJSON = aDecoder.decodeObject(of: NSDictionary.self, forKey: "featureJSON") as? JSONDictionary else {
-            return nil
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        identifier = try container.decode(String.self, forKey: .identifier)
+        name = try container.decode(String.self, forKey: .name)
+        address = try container.decodeIfPresent(String.self, forKey: .address)
+        qualifiedName = try container.decodeIfPresent(String.self, forKey: .qualifiedName)
+        superiorPlacemarks = try container.decodeIfPresent([GeocodedPlacemark].self, forKey: .superiorPlacemarks)
+        
+        if let center = try container.decodeIfPresent([CLLocationDegrees].self, forKey: .center) {
+            location = CLLocation(latitude: center.last!, longitude: center.first!)
         }
         
-        self.init(featureJSON: featureJSON)
+        code = try container.decodeIfPresent(String.self, forKey: .code)?.uppercased()
     }
-    
-    /**
-     Creates a placemark with the same data as another placemark object.
-     */
-    @objc public convenience init(placemark: Placemark) {
-        self.init(featureJSON: placemark.featureJSON)
-    }
-    
-    @objc public class var supportsSecureCoding : Bool {
-        return true
-    }
-    
-    @objc open func copy(with zone: NSZone?) -> AnyObject {
-        return Placemark(featureJSON: featureJSON)
-    }
-    
-    @objc open func encode(with coder: NSCoder) {
-        coder.encode(featureJSON, forKey: "featureJSON")
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(identifier, forKey: .identifier)
+        try container.encode(name, forKey: .name)
+        try container.encode(address, forKey: .address)
+        try container.encode(qualifiedName, forKey: .qualifiedName)
+        try container.encode(superiorPlacemarks, forKey: .superiorPlacemarks)
+        if let location = location {
+            try container.encode([location.coordinate.longitude, location.coordinate.latitude], forKey: .center)
+        }
+        
+        try container.encode(code, forKey: .code)
     }
     
     @objc open override var hashValue: Int {
@@ -124,36 +129,30 @@ open class Placemark: NSObject, NSSecureCoding {
      
      The identifier takes the form <tt><var>index</var>.<var>id</var></tt>, where <var>index</var> corresponds to the `scope` property and <var>id</var> is a number that is unique to the feature but may change when the data source is updated.
      */
-    fileprivate var identifier: String {
-        return featureJSON["id"] as! String
-    }
+    fileprivate var identifier: String
     
     /**
      The common name of the placemark.
      
      If the placemark represents an address, the value of this property consists of only the street address, not the full address. Otherwise, if the placemark represents a point of interest or other place, the value of this property consists of only the common name, not the names of any containing administrative areas.
      */
-    @objc open var name: String {
-        return featureJSON["text"] as! String
-    }
+    @objc open var name: String
     
-    /**
-     The fully qualified name of the placemark.
-     
-     If the placemark represents an address or point of interest, the value of this property includes the full address. Otherwise, the value of this property includes any containing administrative areas.
-     */
-    @objc open var qualifiedName: String? {
-        return nil
-    }
+    @objc open var address: String?
     
     /**
      A standard code uniquely identifying the placemark.
      
      If the placemark represents a country, the value of this property is the country’s [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code. If the placemark represents a top-level subdivision of a country, such as a state or province, the value of this property is the subdivision’s [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code. Otherwise, the value of this property is `nil`.
      */
-    @objc open var code: String? {
-        return nil
-    }
+    @objc open var code: String?
+    
+    /**
+     The fully qualified name of the placemark.
+     
+     If the placemark represents an address or point of interest, the value of this property includes the full address. Otherwise, the value of this property includes any containing administrative areas.
+     */
+    @objc open var qualifiedName: String?
     
     /**
      The placemark’s scope.
@@ -198,9 +197,7 @@ open class Placemark: NSObject, NSSecureCoding {
     /**
      The placemark’s geographic center.
      */
-    @objc open var location: CLLocation? {
-        return nil
-    }
+    @objc open var location: CLLocation?
     
     /**
      A region object indicating in some fashion the geographic extents of the placemark.
@@ -322,7 +319,7 @@ open class Placemark: NSObject, NSSecureCoding {
         guard scope == .address else {
             return nil
         }
-        return featureJSON["text"] as? String
+        return name
     }
     
     /**
@@ -331,11 +328,30 @@ open class Placemark: NSObject, NSSecureCoding {
      Typically, this property contains the house number and/or unit number of a business or residence.
      */
     @objc open var subThoroughfare: String? {
-        guard let houseNumber = featureJSON["address"] else {
+        guard let houseNumber = address else {
             return nil
         }
         return String(describing: houseNumber)
     }
+}
+
+struct GeocodeResult: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case placemarks = "features"
+        case type
+        case attribution
+    }
+    
+    let type: String
+    let attribution: String
+    let placemarks: [GeocodedPlacemark]
+}
+
+struct Properties: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case shortCode = "short_code"
+    }
+    let shortCode: String?
 }
 
 /**
@@ -343,103 +359,95 @@ open class Placemark: NSObject, NSSecureCoding {
  */
 @objc(MBGeocodedPlacemark)
 open class GeocodedPlacemark: Placemark {
-    fileprivate let propertiesJSON: JSONDictionary
     
-    override init(featureJSON: JSONDictionary) {
-        propertiesJSON = featureJSON["properties"] as? JSONDictionary ?? [:]
-        
-        super.init(featureJSON: featureJSON)
-        
-        assert(featureJSON["type"] as? String == "Feature")
-        
-        let contextJSON = featureJSON["context"] as? [JSONDictionary]
-        superiorPlacemarks = contextJSON?.map { QualifyingPlacemark(featureJSON: $0) }
+    private enum CodingKeys: String, CodingKey {
+        case properties
     }
     
-    @objc open override func copy(with zone: NSZone?) -> AnyObject {
-        return GeocodedPlacemark(featureJSON: featureJSON)
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        properties = try container.decodeIfPresent(Properties.self, forKey: .properties)
+        try super.init(from: decoder)
     }
     
     @objc open override var debugDescription: String {
-        return qualifiedName
+        return qualifiedName!
     }
     
     internal var qualifiedNameComponents: [String] {
-        if qualifiedName.contains(", ") {
-            return qualifiedName.components(separatedBy: ", ")
+        if qualifiedName!.contains(", ") {
+            return qualifiedName!.components(separatedBy: ", ")
         }
         // Chinese addresses have no commas and are reversed.
         return (superiorPlacemarks?.map { $0.name } ?? []).reversed() + [name]
     }
     
-    @objc open override var qualifiedName: String! {
-        return featureJSON["place_name"] as! String
-    }
-    
-    @objc open override var location: CLLocation {
-        let centerCoordinate = CLLocationCoordinate2D(geoJSON: featureJSON["center"] as! [Double])
-        return CLLocation(coordinate: centerCoordinate)
-    }
-    
     @objc open override var region: CLRegion? {
-        guard let boundingBox = featureJSON["bbox"] as? [Double] else {
-            return nil
-        }
-        
-        assert(boundingBox.count == 4)
-        let southWest = CLLocationCoordinate2D(geoJSON: Array(boundingBox.prefix(2)))
-        let northEast = CLLocationCoordinate2D(geoJSON: Array(boundingBox.suffix(2)))
-        return RectangularRegion(southWest: southWest, northEast: northEast)
+        // TODO: Fix!
+        //        guard let boundingBox = featureJSON["bbox"] as? [Double] else {
+        //            return nil
+        //        }
+        //
+        //        assert(boundingBox.count == 4)
+        //        let southWest = CLLocationCoordinate2D(geoJSON: Array(boundingBox.prefix(2)))
+        //        let northEast = CLLocationCoordinate2D(geoJSON: Array(boundingBox.suffix(2)))
+        let s = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+        return RectangularRegion(southWest: s, northEast: s)
     }
     
-    @objc open override var name: String {
-        let text = super.name
-        
-        // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
-        if let houseNumber = featureJSON["address"] as? String, scope == .address {
-            let streetName = text
-            let reversedAddress = "\(streetName) \(houseNumber)"
-            if qualifiedNameComponents.contains(reversedAddress) {
-                return reversedAddress
-            } else {
-                return "\(houseNumber) \(streetName)"
-            }
-        } else {
-            return text
-        }
-    }
+//    @objc open override var name: String {
+//        let text = super.name
+//
+//        // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
+//        if let houseNumber = featureJSON["address"] as? String, scope == .address {
+//            let streetName = text
+//            let reversedAddress = "\(streetName) \(houseNumber)"
+//            if qualifiedNameComponents.contains(reversedAddress) {
+//                return reversedAddress
+//            } else {
+//                return "\(houseNumber) \(streetName)"
+//            }
+//        } else {
+//            return text
+//        }
+//    }
     
-    @objc open override var code: String? {
-        return (propertiesJSON["short_code"] as? String)?.uppercased()
-    }
+    internal var properties: Properties?
     
     @objc open override var wikidataItemIdentifier: String? {
-        let item = propertiesJSON["wikidata"] as? String
-        if let item = item {
-            assert(item.hasPrefix("Q"))
-        }
-        return item
+        // TODO: Fix
+//        let item = propertiesJSON["wikidata"] as? String
+//        if let item = item {
+//            assert(item.hasPrefix("Q"))
+//        }
+//        return item
+        return ""
     }
     
     @objc open override var genres: [String]? {
-        let categoryList = propertiesJSON["category"] as? String
-        return categoryList?.components(separatedBy: ", ")
+        // TODO: Fix
+//        let categoryList = propertiesJSON["category"] as? String
+//        return categoryList?.components(separatedBy: ", ")
+        return [""]
     }
     
     @objc open override var imageName: String? {
-        return propertiesJSON["maki"] as? String
+        // TODO: Fix
+        //return propertiesJSON["maki"] as? String
+        return ""
     }
     
     private var clippedAddressLines: [String] {
-        let lines = qualifiedNameComponents
-        if scope == .address {
-            return lines
-        }
-        guard qualifiedName.contains(", ") else {
-            // Chinese addresses have no commas and are reversed.
-            return Array(lines.prefix(lines.count))
-        }
-        return Array(lines.suffix(from: 1))
+//        let lines = qualifiedNameComponents
+//        if scope == .address {
+//            return lines
+//        }
+//        guard qualifiedName.contains(", ") else {
+//            // Chinese addresses have no commas and are reversed.
+//            return Array(lines.prefix(lines.count))
+//        }
+//        return Array(lines.suffix(from: 1))
+        return [""]
     }
     
     override var formattedAddressLines: [String] {
@@ -453,10 +461,10 @@ open class GeocodedPlacemark: Placemark {
         
         if scope == .address {
             postalAddress.street = name
-        } else if let address = propertiesJSON["address"] as? String {
+        } else if let address = address {
             postalAddress.street = address.replacingOccurrences(of: ", ", with: "\n")
         }
-        
+
         if let placeName = place?.name {
             postalAddress.city = placeName
         }
@@ -472,7 +480,7 @@ open class GeocodedPlacemark: Placemark {
         if let ISOCountryCode = country?.code {
             postalAddress.isoCountryCode = ISOCountryCode
         }
-        
+    
         return postalAddress
     }
     #endif
@@ -481,7 +489,7 @@ open class GeocodedPlacemark: Placemark {
         var addressDictionary: [String: Any] = [:]
         if scope == .address {
             addressDictionary[MBPostalAddressStreetKey] = name
-        } else if let address = propertiesJSON["address"] as? String {
+        } else if let address = address {
             addressDictionary[MBPostalAddressStreetKey] = address
         }
         addressDictionary[MBPostalAddressCityKey] = place?.name
@@ -502,7 +510,8 @@ open class GeocodedPlacemark: Placemark {
      The phone number to contact a business at this location.
      */
     @objc open override var phoneNumber: String? {
-        return propertiesJSON["tel"] as? String
+        //return propertiesJSON["tel"] as? String
+        return ""
     }
 }
 
@@ -511,19 +520,14 @@ open class GeocodedPlacemark: Placemark {
  */
 @objc(MBQualifyingPlacemark)
 open class QualifyingPlacemark: Placemark {
-    @objc open override func copy(with zone: NSZone?) -> AnyObject {
-        return QualifyingPlacemark(featureJSON: featureJSON)
-    }
-    
-    @objc open override var code: String? {
-        return (featureJSON["short_code"] as? String)?.uppercased()
-    }
     
     @objc open override var wikidataItemIdentifier: String? {
-        let item = featureJSON["wikidata"] as? String
-        if let item = item {
-            assert(item.hasPrefix("Q"))
-        }
-        return item
+        // TODO: Migrate to Codable
+//        let item = featureJSON["wikidata"] as? String
+//        if let item = item {
+//            assert(item.hasPrefix("Q"))
+//        }
+//        return item
+        return ""
     }
 }
