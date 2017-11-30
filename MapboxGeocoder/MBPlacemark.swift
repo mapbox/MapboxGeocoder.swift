@@ -73,6 +73,8 @@ open class Placemark: NSObject, Codable {
         case superiorPlacemarks = "context"
         case center = "center"
         case code = "short_code"
+        case wikidataItemIdentifier = "wikidata"
+        case properties = "properties"
     }
     
     /**
@@ -91,6 +93,12 @@ open class Placemark: NSObject, Codable {
         }
         
         code = try container.decodeIfPresent(String.self, forKey: .code)?.uppercased()
+        if let identifier = try container.decodeIfPresent(String.self, forKey: .wikidataItemIdentifier) {
+            assert(identifier.hasPrefix("Q"))
+            wikidataItemIdentifier = identifier
+        }
+        
+        properties = try container.decodeIfPresent(Properties.self, forKey: .properties)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -105,6 +113,8 @@ open class Placemark: NSObject, Codable {
         }
         
         try container.encode(code, forKey: .code)
+        try container.encode(wikidataItemIdentifier, forKey: .wikidataItemIdentifier)
+        try container.encode(properties, forKey: .properties)
     }
     
     @objc open override var hashValue: Int {
@@ -130,6 +140,8 @@ open class Placemark: NSObject, Codable {
      The identifier takes the form <tt><var>index</var>.<var>id</var></tt>, where <var>index</var> corresponds to the `scope` property and <var>id</var> is a number that is unique to the feature but may change when the data source is updated.
      */
     fileprivate var identifier: String
+    
+    fileprivate var properties: Properties?
     
     /**
      The common name of the placemark.
@@ -172,9 +184,7 @@ open class Placemark: NSObject, Codable {
      
      The Wikidata item contains structured information about the feature represented by the placemark. It also links to corresponding entries in various free content or open data resources, including Wikipedia, Wikimedia Commons, Wikivoyage, and Freebase.
      */
-    @objc open var wikidataItemIdentifier: String? {
-        return nil
-    }
+    @objc open var wikidataItemIdentifier: String?
     
     /**
      An array of keywords that describe the genre of the point of interest represented by the placemark.
@@ -350,8 +360,14 @@ struct GeocodeResult: Codable {
 struct Properties: Codable {
     private enum CodingKeys: String, CodingKey {
         case shortCode = "short_code"
+        case phoneNumber = "tel"
+        case maki
+        case address
     }
     let shortCode: String?
+    let maki: String?
+    let phoneNumber: String?
+    let address: String?
 }
 
 /**
@@ -359,16 +375,6 @@ struct Properties: Codable {
  */
 @objc(MBGeocodedPlacemark)
 open class GeocodedPlacemark: Placemark {
-    
-    private enum CodingKeys: String, CodingKey {
-        case properties
-    }
-    
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        properties = try container.decodeIfPresent(Properties.self, forKey: .properties)
-        try super.init(from: decoder)
-    }
     
     @objc open override var debugDescription: String {
         return qualifiedName!
@@ -411,18 +417,6 @@ open class GeocodedPlacemark: Placemark {
 //            return text
 //        }
 //    }
-    
-    internal var properties: Properties?
-    
-    @objc open override var wikidataItemIdentifier: String? {
-        // TODO: Fix
-//        let item = propertiesJSON["wikidata"] as? String
-//        if let item = item {
-//            assert(item.hasPrefix("Q"))
-//        }
-//        return item
-        return ""
-    }
     
     @objc open override var genres: [String]? {
         // TODO: Fix
@@ -489,6 +483,8 @@ open class GeocodedPlacemark: Placemark {
         var addressDictionary: [String: Any] = [:]
         if scope == .address {
             addressDictionary[MBPostalAddressStreetKey] = name
+        } else if let address = properties?.address {
+            addressDictionary[MBPostalAddressStreetKey] = address
         } else if let address = address {
             addressDictionary[MBPostalAddressStreetKey] = address
         }
@@ -519,15 +515,4 @@ open class GeocodedPlacemark: Placemark {
  A concrete subclass of `Placemark` to represent entries in a `GeocodedPlacemark` object’s `superiorPlacemarks` property. These entries are like top-level geocoding results, except that they lack location information and are flatter, with properties directly at the top level.
  */
 @objc(MBQualifyingPlacemark)
-open class QualifyingPlacemark: Placemark {
-    
-    @objc open override var wikidataItemIdentifier: String? {
-        // TODO: Migrate to Codable
-//        let item = featureJSON["wikidata"] as? String
-//        if let item = item {
-//            assert(item.hasPrefix("Q"))
-//        }
-//        return item
-        return ""
-    }
-}
+open class QualifyingPlacemark: Placemark {}
