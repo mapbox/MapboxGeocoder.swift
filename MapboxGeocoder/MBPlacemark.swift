@@ -350,7 +350,7 @@ open class Placemark: NSObject, Codable {
     }
 }
 
-struct GeocodeResult: Codable {
+internal struct GeocodeResult: Codable {
     private enum CodingKeys: String, CodingKey {
         case placemarks = "features"
         case type
@@ -362,7 +362,11 @@ struct GeocodeResult: Codable {
     let placemarks: [GeocodedPlacemark]
 }
 
-struct Properties: Codable {
+/**
+ `Properties` represents a concrete subset of the `properties` object
+ on a GeoJSON feature suited for Geocoding results.
+ */
+internal struct Properties: Codable {
     private enum CodingKeys: String, CodingKey {
         case shortCode = "short_code"
         case phoneNumber = "tel"
@@ -370,6 +374,7 @@ struct Properties: Codable {
         case address
         case category
     }
+    
     let shortCode: String?
     let maki: String?
     let phoneNumber: String?
