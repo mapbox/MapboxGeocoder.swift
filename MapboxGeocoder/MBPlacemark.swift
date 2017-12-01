@@ -71,7 +71,7 @@ open class Placemark: NSObject, Codable {
         case address
         case qualifiedName = "place_name"
         case superiorPlacemarks = "context"
-        case center
+        case centerCoordinate = "center"
         case code = "short_code"
         case wikidataItemIdentifier = "wikidata"
         case properties
@@ -89,8 +89,9 @@ open class Placemark: NSObject, Codable {
         qualifiedName = try container.decodeIfPresent(String.self, forKey: .qualifiedName)
         superiorPlacemarks = try container.decodeIfPresent([GeocodedPlacemark].self, forKey: .superiorPlacemarks)
         
-        if let center = try container.decodeIfPresent([CLLocationDegrees].self, forKey: .center) {
-            location = CLLocation(latitude: center.last!, longitude: center.first!)
+        if let coordinates = try container.decodeIfPresent([CLLocationDegrees].self, forKey: .centerCoordinate) {
+            let coordinate = CLLocationCoordinate2D(geoJSON: coordinates)
+            location = CLLocation(coordinate: coordinate)
         }
         
         code = try container.decodeIfPresent(String.self, forKey: .code)?.uppercased()
@@ -115,13 +116,12 @@ open class Placemark: NSObject, Codable {
         try container.encode(address, forKey: .address)
         try container.encode(qualifiedName, forKey: .qualifiedName)
         try container.encode(superiorPlacemarks, forKey: .superiorPlacemarks)
-        if let location = location {
-            try container.encode([location.coordinate.longitude, location.coordinate.latitude], forKey: .center)
-        }
-        
         try container.encode(code, forKey: .code)
         try container.encode(wikidataItemIdentifier, forKey: .wikidataItemIdentifier)
         try container.encode(properties, forKey: .properties)
+        if let location = location {
+            try container.encode([location.coordinate.longitude, location.coordinate.latitude], forKey: .centerCoordinate)
+        }
     }
     
     @objc open override var hashValue: Int {
@@ -148,6 +148,9 @@ open class Placemark: NSObject, Codable {
      */
     fileprivate var identifier: String
     
+    /**
+     A subset of the `properties` object on a GeoJSON feature suited for Geocoding results.
+     */
     fileprivate var properties: Properties?
     
     /**
@@ -363,8 +366,7 @@ internal struct GeocodeResult: Codable {
 }
 
 /**
- `Properties` represents a concrete subset of the `properties` object
- on a GeoJSON feature suited for Geocoding results.
+ A subset of the `properties` object on a GeoJSON feature suited for Geocoding results.
  */
 internal struct Properties: Codable {
     private enum CodingKeys: String, CodingKey {
@@ -404,7 +406,7 @@ open class GeocodedPlacemark: Placemark {
         get {
             let text = super.name
             // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
-            if let houseNumber = self.address, scope == .address {
+            if let houseNumber = properties?.address, scope == .address {
                 let streetName = text
                 let reversedAddress = "\(streetName) \(houseNumber)"
                 if qualifiedNameComponents.contains(reversedAddress) {
