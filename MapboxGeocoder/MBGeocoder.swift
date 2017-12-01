@@ -209,30 +209,19 @@ open class Geocoder: NSObject {
     open func batchGeocode<T: GeocodeOptions>(_ options: T, completionHandler: @escaping BatchCompletionHandler) -> URLSessionDataTask where T: BatchGeocodeOptions {
         let url = urlForGeocoding(options)
         
-        // TODO: Migrate to Codable
-        
-//        let task = dataTaskWithURL(url, completionHandler: { (json) in
-//            let featureCollections = json as! [JSONDictionary]
-//            let placemarksByQuery = featureCollections.map { (featureCollection) -> [GeocodedPlacemark] in
-//                assert(featureCollection["type"] as? String == "FeatureCollection")
-//                let features = featureCollection["features"] as! [JSONDictionary]
-//                return features.flatMap { GeocodedPlacemark(featureJSON: $0) }
-//            }
-//            let attributionsByQuery = featureCollections.map { $0["attribution"] as! String }
-//            completionHandler(placemarksByQuery, attributionsByQuery, nil)
-//        }) { (error) in
-//            completionHandler(nil, nil, error)
-//        }
-        
         let task = dataTaskWithURL(url, completionHandler: { (data) in
-//            let featureCollections = data as! [JSONDictionary]
-//            let placemarksByQuery = featureCollections.map { (featureCollection) -> [GeocodedPlacemark] in
-//                assert(featureCollection["type"] as? String == "FeatureCollection")
-//                let features = featureCollection["features"] as! [JSONDictionary]
-//                return features.flatMap { GeocodedPlacemark(featureJSON: $0) }
-//            }
-//            let attributionsByQuery = featureCollections.map { $0["attribution"] as! String }
+            guard let data = data else { return }
+            let decoder = JSONDecoder()
             
+            do {
+                let result = try decoder.decode([GeocodeResult].self, from: data)
+                let placemarks = result.map { $0.placemarks }
+                let attributionsByQuery = result.map { $0.attribution }
+                completionHandler(placemarks, attributionsByQuery, nil)
+                
+            } catch {
+                completionHandler(nil, nil, error as NSError)
+            }
             
         }) { (error) in
             completionHandler(nil, nil, error)
