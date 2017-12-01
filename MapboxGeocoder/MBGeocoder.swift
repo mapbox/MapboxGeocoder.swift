@@ -244,20 +244,31 @@ open class Geocoder: NSObject {
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         return URLSession.shared.dataTask(with: request) { (data, response, error) in
 
-            // TODO: Migrate result to Codable
-//            let apiMessage = json["message"] as? String
-//            guard data != nil && error == nil && apiMessage == nil else {
-//                let apiError = Geocoder.descriptiveError(json, response: response, underlyingError: error as NSError?)
-//                DispatchQueue.main.async {
-//                    errorHandler(apiError)
-//                }
-//                return
-//            }
+            guard let data = data else { return }
+            let decoder = JSONDecoder()
             
-            DispatchQueue.main.async {
-                completionHandler(data)
+            do {
+                let result = try decoder.decode(GeocodeAPIResult.self, from: data)
+                guard result.message == nil else {
+                    let apiError = Geocoder.descriptiveError(["message": result.message!], response: response, underlyingError: error as NSError?)
+                    DispatchQueue.main.async {
+                        errorHandler(apiError)
+                    }
+                    return
+                }
+                DispatchQueue.main.async {
+                    completionHandler(data)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    errorHandler(error as NSError)
+                }
             }
         }
+    }
+    
+    internal struct GeocodeAPIResult: Codable {
+        let message: String?
     }
     
     /**
