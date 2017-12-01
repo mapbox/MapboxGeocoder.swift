@@ -68,13 +68,14 @@ open class Placemark: NSObject, Codable {
     private enum CodingKeys: String, CodingKey {
         case identifier = "id"
         case name = "text"
-        case address = "address"
+        case address
         case qualifiedName = "place_name"
         case superiorPlacemarks = "context"
-        case center = "center"
+        case center
         case code = "short_code"
         case wikidataItemIdentifier = "wikidata"
-        case properties = "properties"
+        case properties
+        case boundingBox = "bbox"
     }
     
     /**
@@ -99,6 +100,12 @@ open class Placemark: NSObject, Codable {
         }
         
         properties = try container.decodeIfPresent(Properties.self, forKey: .properties)
+        
+        if let boundingBox = try container.decodeIfPresent([CLLocationDegrees].self, forKey: .boundingBox) {
+            let southWest = CLLocationCoordinate2D(geoJSON: Array(boundingBox.prefix(2)))
+            let northEast = CLLocationCoordinate2D(geoJSON: Array(boundingBox.suffix(2)))
+            region = RectangularRegion(southWest: southWest, northEast: northEast)
+        }
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -214,9 +221,7 @@ open class Placemark: NSObject, Codable {
      
      When this property is not `nil`, it is currently always a `RectangularRegion`. In the future, it may be another type of `CLRegion`.
      */
-    @objc open var region: CLRegion? {
-        return nil
-    }
+    @objc open var region: CLRegion?
     
     // MARK: Accessing Contact Information
     
@@ -363,11 +368,13 @@ struct Properties: Codable {
         case phoneNumber = "tel"
         case maki
         case address
+        case category
     }
     let shortCode: String?
     let maki: String?
     let phoneNumber: String?
     let address: String?
+    let category: String?
 }
 
 /**
@@ -388,60 +395,47 @@ open class GeocodedPlacemark: Placemark {
         return (superiorPlacemarks?.map { $0.name } ?? []).reversed() + [name]
     }
     
-    @objc open override var region: CLRegion? {
-        // TODO: Fix!
-        //        guard let boundingBox = featureJSON["bbox"] as? [Double] else {
-        //            return nil
-        //        }
-        //
-        //        assert(boundingBox.count == 4)
-        //        let southWest = CLLocationCoordinate2D(geoJSON: Array(boundingBox.prefix(2)))
-        //        let northEast = CLLocationCoordinate2D(geoJSON: Array(boundingBox.suffix(2)))
-        let s = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-        return RectangularRegion(southWest: s, northEast: s)
+    @objc open override var name: String {
+        get {
+            let text = super.name
+            // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
+            if let houseNumber = self.address, scope == .address {
+                let streetName = text
+                let reversedAddress = "\(streetName) \(houseNumber)"
+                if qualifiedNameComponents.contains(reversedAddress) {
+                    return reversedAddress
+                } else {
+                    return "\(houseNumber) \(streetName)"
+                }
+            } else {
+                return text
+            }
+        } set {
+            super.name = name
+        }
     }
     
-//    @objc open override var name: String {
-//        let text = super.name
-//
-//        // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
-//        if let houseNumber = featureJSON["address"] as? String, scope == .address {
-//            let streetName = text
-//            let reversedAddress = "\(streetName) \(houseNumber)"
-//            if qualifiedNameComponents.contains(reversedAddress) {
-//                return reversedAddress
-//            } else {
-//                return "\(houseNumber) \(streetName)"
-//            }
-//        } else {
-//            return text
-//        }
-//    }
-    
     @objc open override var genres: [String]? {
-        // TODO: Fix
-//        let categoryList = propertiesJSON["category"] as? String
-//        return categoryList?.components(separatedBy: ", ")
-        return [""]
+        return properties?.category?.components(separatedBy: ", ")
     }
     
     @objc open override var imageName: String? {
-        // TODO: Fix
-        //return propertiesJSON["maki"] as? String
-        return ""
+        return properties?.maki
     }
     
     private var clippedAddressLines: [String] {
-//        let lines = qualifiedNameComponents
-//        if scope == .address {
-//            return lines
-//        }
-//        guard qualifiedName.contains(", ") else {
-//            // Chinese addresses have no commas and are reversed.
-//            return Array(lines.prefix(lines.count))
-//        }
-//        return Array(lines.suffix(from: 1))
-        return [""]
+        let lines = qualifiedNameComponents
+        if scope == .address {
+            return lines
+        }
+        
+        guard let qualifiedName = qualifiedName,
+            qualifiedName.contains(", ") else {
+            // Chinese addresses have no commas and are reversed.
+            return Array(lines.prefix(lines.count))
+        }
+        
+        return Array(lines.suffix(from: 1))
     }
     
     override var formattedAddressLines: [String] {
@@ -506,8 +500,7 @@ open class GeocodedPlacemark: Placemark {
      The phone number to contact a business at this location.
      */
     @objc open override var phoneNumber: String? {
-        //return propertiesJSON["tel"] as? String
-        return ""
+        return properties?.phoneNumber
     }
 }
 
