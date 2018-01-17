@@ -19,4 +19,12 @@
     XCTAssertNotNil([[MBForwardGeocodeOptions alloc] initWithQuery:@"Golden Gate Bridge"]);
 }
 
+- (void)testMBGeocoder {
+    XCTAssertNotNil([[MBGeocoder alloc] initWithAccessToken:@"pk.foo"]);
+}
+
+- (void)testMBPlacemark {
+    XCTAssertNotNil([MBPlacemark alloc]);
+}
+
 @end
