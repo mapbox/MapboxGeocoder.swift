@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35506B8B200F856400629509 /* BridgingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35506B8A200F856400629509 /* BridgingTests.m */; };
+		35506B8C200F856400629509 /* BridgingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35506B8A200F856400629509 /* BridgingTests.m */; };
+		35506B8D200F856400629509 /* BridgingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35506B8A200F856400629509 /* BridgingTests.m */; };
 		DA1AC0221E5C23B8006DF1D6 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1AC0211E5C23B8006DF1D6 /* Contacts.framework */; };
 		DA1AC0241E5C2425006DF1D6 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1AC0231E5C2425006DF1D6 /* Contacts.framework */; };
 		DA1AC0261E5C2436006DF1D6 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1AC0251E5C2436006DF1D6 /* Contacts.framework */; };
@@ -141,6 +144,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		35506B8A200F856400629509 /* BridgingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BridgingTests.m; sourceTree = "<group>"; };
 		DA1AC0211E5C23B8006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		DA1AC0231E5C2425006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/Contacts.framework; sourceTree = DEVELOPER_DIR; };
 		DA1AC0251E5C2436006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.1.sdk/System/Library/Frameworks/Contacts.framework; sourceTree = DEVELOPER_DIR; };
@@ -376,6 +380,7 @@
 				DA210BAA1CB4BE73008088FD /* ForwardGeocodingTests.swift */,
 				DDF1E84C1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift */,
 				DA4D90061DD63AEC006EC71A /* PlacemarkScopeTests.swift */,
+				35506B8A200F856400629509 /* BridgingTests.m */,
 				DDF1E84E1BD6F7BA00C40C78 /* Info.plist */,
 				DDF1E8571BD700EB00C40C78 /* Fixtures */,
 			);
@@ -622,7 +627,7 @@
 					};
 					DA51709E1CF1B18F00CD6DCF = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 0920;
 					};
 					DA5170C01CF253EE00CD6DCF = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -630,7 +635,7 @@
 					};
 					DA5170C91CF253EE00CD6DCF = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 0920;
 					};
 					DA5170EA1CF2581900CD6DCF = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -650,7 +655,7 @@
 					};
 					DDF1E8491BD6F7BA00C40C78 = {
 						CreatedOnToolsVersion = 7.0.1;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 0920;
 					};
 				};
 			};
@@ -843,6 +848,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35506B8C200F856400629509 /* BridgingTests.m in Sources */,
 				DA5170B61CF1B1EF00CD6DCF /* ReverseGeocodingTests.swift in Sources */,
 				DA4D90081DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */,
 				DA5170B41CF1B1EF00CD6DCF /* GeocoderTests.swift in Sources */,
@@ -866,6 +872,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35506B8D200F856400629509 /* BridgingTests.m in Sources */,
 				DA5170E11CF2542800CD6DCF /* ReverseGeocodingTests.swift in Sources */,
 				DA4D90091DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */,
 				DA5170DF1CF2542800CD6DCF /* GeocoderTests.swift in Sources */,
@@ -920,6 +927,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35506B8B200F856400629509 /* BridgingTests.m in Sources */,
 				DDF1E84D1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift in Sources */,
 				DA4D90071DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */,
 				DA210BAB1CB4BE73008088FD /* ForwardGeocodingTests.swift in Sources */,
@@ -1033,6 +1041,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1046,6 +1055,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoderTests;
 				PRODUCT_NAME = MapboxGeocoderTests;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 			};
@@ -1055,6 +1065,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -1145,6 +1156,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1156,6 +1168,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoderTests;
 				PRODUCT_NAME = MapboxGeocoderTests;
 				SDKROOT = appletvos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -1166,6 +1179,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1474,6 +1488,7 @@
 		DDF1E8531BD6F7BA00C40C78 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1484,6 +1499,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 			};
@@ -1492,6 +1508,7 @@
 		DDF1E8541BD6F7BA00C40C78 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
