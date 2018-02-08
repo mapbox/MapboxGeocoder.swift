@@ -406,7 +406,7 @@ open class GeocodedPlacemark: Placemark {
         get {
             let text = super.name
             // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
-            if let houseNumber = properties?.address, scope == .address {
+            if let houseNumber = address, scope == .address {
                 let streetName = text
                 let reversedAddress = "\(streetName) \(houseNumber)"
                 if qualifiedNameComponents.contains(reversedAddress) {
