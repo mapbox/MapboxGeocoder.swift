@@ -100,4 +100,31 @@ class ReverseGeocodingTests: XCTestCase {
             XCTAssertEqual(task.state, URLSessionTask.State.completed)
         }
     }
+    
+    func testAddressReverseGeocode() {
+        let expectation = self.expectation(description: "reverse geocode should return result with address scope")
+        
+        _ = stub(condition: isHost("api.mapbox.com")
+            && isPath("/geocoding/v5/mapbox.places/-95.78558,37.13284.json")
+            && containsQueryParams(["access_token": BogusToken])) { _ in
+                let path = Bundle(for: type(of: self)).path(forResource: "reverse_address", ofType: "json")
+                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+        }
+        
+        let geocoder = Geocoder(accessToken: BogusToken)
+        var addressPlacemark: Placemark?
+        let options = ReverseGeocodeOptions(location: CLLocation(latitude: 37.13284000, longitude: -95.78558000))
+        let task = geocoder.geocode(options) { (placemarks, attribution, error) in
+            addressPlacemark = placemarks?.first
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { (error) in
+            XCTAssertNil(error, "Error: \(error!)")
+            XCTAssertEqual(task.state, URLSessionTask.State.completed)
+        }
+        
+        XCTAssertNotNil(task)
+        XCTAssert(addressPlacemark?.name == "850 Eldorado Street", "Address not parsed correctly")
+    }
 }

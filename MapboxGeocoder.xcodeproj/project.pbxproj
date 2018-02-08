@@ -10,6 +10,9 @@
 		35506B8B200F856400629509 /* BridgingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35506B8A200F856400629509 /* BridgingTests.m */; };
 		35506B8C200F856400629509 /* BridgingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35506B8A200F856400629509 /* BridgingTests.m */; };
 		35506B8D200F856400629509 /* BridgingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35506B8A200F856400629509 /* BridgingTests.m */; };
+		357B4358202CC90A00735521 /* reverse_address.json in Resources */ = {isa = PBXBuildFile; fileRef = 357B4357202CC90A00735521 /* reverse_address.json */; };
+		357B4359202CC90A00735521 /* reverse_address.json in Resources */ = {isa = PBXBuildFile; fileRef = 357B4357202CC90A00735521 /* reverse_address.json */; };
+		357B435A202CC90A00735521 /* reverse_address.json in Resources */ = {isa = PBXBuildFile; fileRef = 357B4357202CC90A00735521 /* reverse_address.json */; };
 		DA1AC0221E5C23B8006DF1D6 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1AC0211E5C23B8006DF1D6 /* Contacts.framework */; };
 		DA1AC0241E5C2425006DF1D6 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1AC0231E5C2425006DF1D6 /* Contacts.framework */; };
 		DA1AC0261E5C2436006DF1D6 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1AC0251E5C2436006DF1D6 /* Contacts.framework */; };
@@ -145,6 +148,7 @@
 
 /* Begin PBXFileReference section */
 		35506B8A200F856400629509 /* BridgingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BridgingTests.m; sourceTree = "<group>"; };
+		357B4357202CC90A00735521 /* reverse_address.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = reverse_address.json; sourceTree = "<group>"; };
 		DA1AC0211E5C23B8006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		DA1AC0231E5C2425006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/Contacts.framework; sourceTree = DEVELOPER_DIR; };
 		DA1AC0251E5C2436006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.1.sdk/System/Library/Frameworks/Contacts.framework; sourceTree = DEVELOPER_DIR; };
@@ -395,6 +399,7 @@
 				DA210BAE1CB4C5A7008088FD /* forward_invalid.json */,
 				DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */,
 				DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */,
+				357B4357202CC90A00735521 /* reverse_address.json */,
 			);
 			name = Fixtures;
 			path = fixtures;
@@ -698,6 +703,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA5170B81CF1B1F900CD6DCF /* forward_valid.json in Resources */,
+				357B4359202CC90A00735521 /* reverse_address.json in Resources */,
 				DA5170B91CF1B1F900CD6DCF /* forward_invalid.json in Resources */,
 				DA5170BB1CF1B1F900CD6DCF /* reverse_invalid.json in Resources */,
 				DA5170BA1CF1B1F900CD6DCF /* reverse_valid.json in Resources */,
@@ -717,6 +723,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA5170E21CF2542B00CD6DCF /* forward_valid.json in Resources */,
+				357B435A202CC90A00735521 /* reverse_address.json in Resources */,
 				DA5170E31CF2542B00CD6DCF /* forward_invalid.json in Resources */,
 				DA5170E51CF2542B00CD6DCF /* reverse_invalid.json in Resources */,
 				DA5170E41CF2542B00CD6DCF /* reverse_valid.json in Resources */,
@@ -759,6 +766,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA210BAD1CB4BFF7008088FD /* forward_valid.json in Resources */,
+				357B4358202CC90A00735521 /* reverse_address.json in Resources */,
 				DDF1E85C1BD70E4C00C40C78 /* reverse_invalid.json in Resources */,
 				DDF1E85D1BD70E4C00C40C78 /* reverse_valid.json in Resources */,
 				DA210BAF1CB4C5A7008088FD /* forward_invalid.json in Resources */,
