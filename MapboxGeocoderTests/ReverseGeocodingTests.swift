@@ -112,7 +112,7 @@ class ReverseGeocodingTests: XCTestCase {
         }
         
         let geocoder = Geocoder(accessToken: BogusToken)
-        var addressPlacemark: Placemark?
+        var addressPlacemark: GeocodedPlacemark?
         let options = ReverseGeocodeOptions(location: CLLocation(latitude: 37.13284000, longitude: -95.78558000))
         let task = geocoder.geocode(options) { (placemarks, attribution, error) in
             addressPlacemark = placemarks?.first
@@ -125,6 +125,12 @@ class ReverseGeocodingTests: XCTestCase {
         }
         
         XCTAssertNotNil(task)
-        XCTAssert(addressPlacemark?.name == "850 Eldorado Street", "Address not parsed correctly")
+        XCTAssert(addressPlacemark?.formattedName == "850 Eldorado Street", "Address not parsed correctly")
+        
+        let encodedData = try! JSONEncoder().encode(addressPlacemark!)
+        let decodedAddressPlacemark = try! JSONDecoder().decode(GeocodedPlacemark.self, from: encodedData)
+        
+        XCTAssertEqual(addressPlacemark?.name, decodedAddressPlacemark.name)
+        XCTAssertEqual(addressPlacemark?.formattedName, decodedAddressPlacemark.formattedName)
     }
 }
