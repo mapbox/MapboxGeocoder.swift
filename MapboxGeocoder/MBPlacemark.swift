@@ -402,23 +402,19 @@ open class GeocodedPlacemark: Placemark {
         return (superiorPlacemarks?.map { $0.name } ?? []).reversed() + [name]
     }
     
-    @objc open override var name: String {
-        get {
-            let text = super.name
-            // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
-            if let houseNumber = address, scope == .address {
-                let streetName = text
-                let reversedAddress = "\(streetName) \(houseNumber)"
-                if qualifiedNameComponents.contains(reversedAddress) {
-                    return reversedAddress
-                } else {
-                    return "\(houseNumber) \(streetName)"
-                }
+    @objc open var formattedName: String {
+        let text = super.name
+        // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
+        if let houseNumber = address, scope == .address {
+            let streetName = text
+            let reversedAddress = "\(streetName) \(houseNumber)"
+            if qualifiedNameComponents.contains(reversedAddress) {
+                return reversedAddress
             } else {
-                return text
+                return "\(houseNumber) \(streetName)"
             }
-        } set {
-            super.name = name
+        } else {
+            return text
         }
     }
     
