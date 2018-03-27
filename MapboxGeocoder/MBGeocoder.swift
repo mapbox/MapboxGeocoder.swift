@@ -207,7 +207,8 @@ open class Geocoder: NSObject {
      - returns: The data task used to perform the HTTP request. If, while waiting for the completion handler to execute, you no longer want the resulting placemarks, cancel this task.
      */
     @discardableResult
-    open func batchGeocode<T: GeocodeOptions>(_ options: T, completionHandler: @escaping BatchCompletionHandler) -> URLSessionDataTask where T: BatchGeocodeOptions {
+    @objc(batchGeocodeWithOptions:completionHandler:)
+    open func batchGeocode(_ options: GeocodeOptions & BatchGeocodeOptions, completionHandler: @escaping BatchCompletionHandler) -> URLSessionDataTask {
         let url = urlForGeocoding(options)
         
         let task = dataTaskWithURL(url, completionHandler: { (data) in
