@@ -95,7 +95,8 @@ open class Placemark: NSObject, Codable {
         }
         
         code = try container.decodeIfPresent(String.self, forKey: .code)?.uppercased()
-        if let identifier = try container.decodeIfPresent(String.self, forKey: .wikidataItemIdentifier) {
+        if let rawIdentifier = try container.decodeIfPresent(String.self, forKey: .wikidataItemIdentifier) {
+            let identifier = rawIdentifier.trimmingCharacters(in: .whitespacesAndNewlines)
             assert(identifier.hasPrefix("Q"))
             wikidataItemIdentifier = identifier
         }
