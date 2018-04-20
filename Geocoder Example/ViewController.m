@@ -30,7 +30,7 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 
     NSAssert(![MapboxAccessToken isEqualToString:@"<# your Mapbox access token #>"], @"You must set `MapboxAccessToken` to your Mapbox access token.");
 
-    [MGLAccountManager setAccessToken:MapboxAccessToken];
+    MGLAccountManager.accessToken = MapboxAccessToken;
     self.mapView = [[MGLMapView alloc] initWithFrame:self.view.bounds];
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.mapView.delegate = self;
