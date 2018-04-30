@@ -66,9 +66,9 @@ open class GeocodeOptions: NSObject {
     
     
     /**
-     If true, the response will possibly include a `routeableLocation`.
+     If true, the response will possibly include a `routableLocation`.
      
-     `routeableLocation` represents the best location for a vehicle to navigate to.
+     `routableLocation` represents the best location for a vehicle to navigate to.
      */
     @objc open var includeRoutableLocations: Bool = false
     

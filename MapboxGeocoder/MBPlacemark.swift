@@ -118,7 +118,7 @@ open class Placemark: NSObject, Codable {
         if let points = try? container.nestedContainer(keyedBy: RoutableLocationsKeys.self, forKey: .routableLocations),
             let coordinatePairs = try points.decodeIfPresent([[CLLocationDegrees]].self, forKey: .points) {
             let coordinates = coordinatePairs.map { CLLocationCoordinate2D(geoJSON: $0) }
-            routeableLocations = coordinates
+            routableLocations = coordinates
         }
     }
 
@@ -368,7 +368,7 @@ open class Placemark: NSObject, Codable {
     /**
      An array of locations representing the location a user should navigate to to reach the `Placemark`.
      */
-    @objc open var routeableLocations: [CLLocationCoordinate2D]?
+    @objc open var routableLocations: [CLLocationCoordinate2D]?
 }
 
 internal struct GeocodeResult: Codable {
