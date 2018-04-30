@@ -64,6 +64,14 @@ open class GeocodeOptions: NSObject {
      */
     @objc open var locale: Locale?
     
+    
+    /**
+     If true, the response will possibly include a `routeableLocation`.
+     
+     `routeableLocation` represents the best location for a vehicle to navigate to.
+     */
+    @objc open var includeRoutableLocations: Bool = false
+    
     fileprivate override init() {
         self.maximumResultCount = 0
         super.init()
@@ -101,6 +109,9 @@ open class GeocodeOptions: NSObject {
         if let languageCode = (locale as NSLocale?)?.object(forKey: .languageCode) as? String {
             params.append(URLQueryItem(name: "language", value: languageCode))
         }
+        
+        params.append(URLQueryItem(name: "routing", value: String(describing: includeRoutableLocations)))
+        
         return params
     }
 }

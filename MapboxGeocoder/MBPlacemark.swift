@@ -76,7 +76,13 @@ open class Placemark: NSObject, Codable {
         case wikidataItemIdentifier = "wikidata"
         case properties
         case boundingBox = "bbox"
+        case routableLocations = "routable_points"
     }
+    
+    private enum RoutableLocationsKeys: String, CodingKey {
+        case points = "points"
+    }
+    
     
     /**
      Creates a placemark from the given [Carmen GeoJSON](https://github.com/mapbox/carmen/blob/master/carmen-geojson.md) feature.
@@ -107,6 +113,12 @@ open class Placemark: NSObject, Codable {
             let southWest = CLLocationCoordinate2D(geoJSON: Array(boundingBox.prefix(2)))
             let northEast = CLLocationCoordinate2D(geoJSON: Array(boundingBox.suffix(2)))
             region = RectangularRegion(southWest: southWest, northEast: northEast)
+        }
+        
+        if let points = try? container.nestedContainer(keyedBy: RoutableLocationsKeys.self, forKey: .routableLocations),
+            let coordinatePairs = try points.decodeIfPresent([[CLLocationDegrees]].self, forKey: .points) {
+            let coordinates = coordinatePairs.map { CLLocationCoordinate2D(geoJSON: $0) }
+            routeableLocations = coordinates
         }
     }
 
@@ -352,6 +364,11 @@ open class Placemark: NSObject, Codable {
         }
         return String(describing: houseNumber)
     }
+    
+    /**
+     An array of locations representing the location a user should navigate to to reach the `Placemark`.
+     */
+    @objc open var routeableLocations: [CLLocationCoordinate2D]?
 }
 
 internal struct GeocodeResult: Codable {
