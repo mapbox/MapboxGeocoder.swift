@@ -66,11 +66,9 @@ open class GeocodeOptions: NSObject {
     
     
     /**
-     If true, the response will possibly include a `routableLocation`.
-     
-     `routableLocation` represents the best location for a vehicle to navigate to.
+     A Boolean value that determines whether the resulting placemarks have the `Placemark.routableLocation` property set.
      */
-    @objc open var includeRoutableLocations: Bool = false
+    @objc open var includesRoutableLocations: Bool = false
     
     fileprivate override init() {
         self.maximumResultCount = 0
@@ -110,7 +108,7 @@ open class GeocodeOptions: NSObject {
             params.append(URLQueryItem(name: "language", value: languageCode))
         }
         
-        params.append(URLQueryItem(name: "routing", value: String(describing: includeRoutableLocations)))
+        params.append(URLQueryItem(name: "routing", value: String(describing: includesRoutableLocations)))
         
         return params
     }

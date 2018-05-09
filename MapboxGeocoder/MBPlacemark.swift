@@ -117,8 +117,8 @@ open class Placemark: NSObject, Codable {
         
         if let points = try? container.nestedContainer(keyedBy: RoutableLocationsKeys.self, forKey: .routableLocations),
             let coordinatePairs = try points.decodeIfPresent([[CLLocationDegrees]].self, forKey: .points) {
-            let coordinates = coordinatePairs.map { CLLocationCoordinate2D(geoJSON: $0) }
-            routableLocations = coordinates
+            let locations = coordinatePairs.map { CLLocation(coordinate: CLLocationCoordinate2D(geoJSON: $0)) }
+            routableLocations = locations
         }
     }
 
@@ -366,9 +366,13 @@ open class Placemark: NSObject, Codable {
     }
     
     /**
-     An array of locations representing the location a user should navigate to to reach the `Placemark`.
+     An array of locations that serve as hints for navigating to the placemark.
+     
+     If the `GeocodeOptions.includesRoutableLocations` property is set to `true`, this property contains locations that are suitable to use as a waypoint in a routing engine such as MapboxDirections.swift. Otherwise, if the `GeocodeOptions.includesRoutableLocations` property is set to `false`, this property is set to `nil`.
+     
+     For the placemark’s geographic center, use the `location` property. The routable locations may differ from the geographic center. For example, if a house’s driveway leads to a street other than the nearest street (by straight-line distance), then this property may contain the location where the driveway meets the street. A route to the placemark’s geographic center may be impassable, but a route to the routable location would end on the correct street with access to the house.
      */
-    @objc open var routableLocations: [CLLocationCoordinate2D]?
+    @objc open var routableLocations: [CLLocation]?
 }
 
 internal struct GeocodeResult: Codable {
