@@ -39,10 +39,8 @@ class ForwardGeocodingTests: XCTestCase {
             XCTAssertEqual(task.state, URLSessionTask.State.completed)
         }
         
-        XCTAssertEqual(addressPlacemark.routableLocations![0].coordinate.longitude, CLLocationDegrees(0))
-        XCTAssertEqual(addressPlacemark.routableLocations![0].coordinate.latitude, CLLocationDegrees(1))
-        XCTAssertEqual(addressPlacemark.routableLocations![1].coordinate.longitude, CLLocationDegrees(2))
-        XCTAssertEqual(addressPlacemark.routableLocations![1].coordinate.latitude, CLLocationDegrees(3))
+        XCTAssertEqual(addressPlacemark.routableLocations![0].coordinate.longitude, CLLocationDegrees(138.995284))
+        XCTAssertEqual(addressPlacemark.routableLocations![0].coordinate.latitude, CLLocationDegrees(-34.470403))
         
         XCTAssertEqual(addressPlacemark.description, "Pennsylvania Ave", "forward geocode should populate description")
         XCTAssertEqual(addressPlacemark.debugDescription, "Pennsylvania Ave, Wasaga Beach, Ontario L9Z 3A8, Canada", "forward geocode should populate debug description")

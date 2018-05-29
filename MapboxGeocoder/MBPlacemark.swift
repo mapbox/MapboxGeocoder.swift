@@ -78,7 +78,6 @@ open class Placemark: NSObject, Codable {
         case boundingBox = "bbox"
     }
     
-    
     /**
      Creates a placemark from the given [Carmen GeoJSON](https://github.com/mapbox/carmen/blob/master/carmen-geojson.md) feature.
      */
@@ -386,6 +385,18 @@ internal struct Properties: Codable {
     let category: String?
 }
 
+// Used internally for flattening and transforming routable_points.points.coordinates
+internal struct RoutableLocation: Codable {
+    internal let coordinates: [Double]
+    
+    internal var coordinate: CLLocationCoordinate2D? {
+        if coordinates.count >= 2 {
+            return CLLocationCoordinate2D(latitude: coordinates[1], longitude: coordinates[0])
+        }
+        return nil
+    }
+}
+
 /**
  A concrete subclass of `Placemark` to represent results of geocoding requests.
  */
@@ -396,8 +407,8 @@ open class GeocodedPlacemark: Placemark {
         case routableLocations = "routable_points"
     }
     
-    private enum RoutableLocationsKeys: String, CodingKey {
-        case points = "points"
+    private enum PointsCodingKeys: String, CodingKey {
+        case points
     }
     
     /**
@@ -414,10 +425,13 @@ open class GeocodedPlacemark: Placemark {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        if let pointsContainer = try? container.nestedContainer(keyedBy: RoutableLocationsKeys.self, forKey: .routableLocations),
-            let coordinatePairs = try pointsContainer.decodeIfPresent([[CLLocationDegrees]].self, forKey: .points) {
-            let locations = coordinatePairs.map { CLLocation(coordinate: CLLocationCoordinate2D(geoJSON: $0)) }
-            routableLocations = locations
+        if let pointsContainer = try? container.nestedContainer(keyedBy: PointsCodingKeys.self, forKey: .routableLocations),
+            var coordinatesContainer = try? pointsContainer.nestedUnkeyedContainer(forKey: .points) {
+            
+            if let routableLocation = try coordinatesContainer.decodeIfPresent(RoutableLocation.self),
+                let coordinate = routableLocation.coordinate {
+                routableLocations = [CLLocation(coordinate: coordinate)]
+            }
         }
     }
     
@@ -426,10 +440,13 @@ open class GeocodedPlacemark: Placemark {
         
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        if let routableLocations = routableLocations {
-            var pointsContainer = container.nestedContainer(keyedBy: RoutableLocationsKeys.self, forKey: .routableLocations)
-            let coordinatePairs = routableLocations.map { $0.geojson() }
-            try pointsContainer.encodeIfPresent(coordinatePairs, forKey: .points)
+        if let routableLocations = routableLocations,
+            !routableLocations.isEmpty {
+            var pointsContainer = container.nestedContainer(keyedBy: PointsCodingKeys.self, forKey: .routableLocations)
+            var coordinatesContainer = pointsContainer.nestedUnkeyedContainer(forKey: .points)
+            let routableLocation = RoutableLocation(coordinates: [routableLocations[0].coordinate.longitude,
+                                                                  routableLocations[0].coordinate.latitude])
+            try coordinatesContainer.encode(routableLocation)
         }
     }
     
@@ -554,6 +571,4 @@ open class GeocodedPlacemark: Placemark {
  A concrete subclass of `Placemark` to represent entries in a `GeocodedPlacemark` object’s `superiorPlacemarks` property. These entries are like top-level geocoding results, except that they lack location information and are flatter, with properties directly at the top level.
  */
 @objc(MBQualifyingPlacemark)
-open class QualifyingPlacemark: Placemark {
-    
-}
+open class QualifyingPlacemark: Placemark {}
