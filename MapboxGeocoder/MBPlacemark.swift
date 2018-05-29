@@ -76,11 +76,6 @@ open class Placemark: NSObject, Codable {
         case wikidataItemIdentifier = "wikidata"
         case properties
         case boundingBox = "bbox"
-        case routableLocations = "routable_points"
-    }
-    
-    private enum RoutableLocationsKeys: String, CodingKey {
-        case points = "points"
     }
     
     
@@ -113,12 +108,6 @@ open class Placemark: NSObject, Codable {
             let southWest = CLLocationCoordinate2D(geoJSON: Array(boundingBox.prefix(2)))
             let northEast = CLLocationCoordinate2D(geoJSON: Array(boundingBox.suffix(2)))
             region = RectangularRegion(southWest: southWest, northEast: northEast)
-        }
-        
-        if let points = try? container.nestedContainer(keyedBy: RoutableLocationsKeys.self, forKey: .routableLocations),
-            let coordinatePairs = try points.decodeIfPresent([[CLLocationDegrees]].self, forKey: .points) {
-            let locations = coordinatePairs.map { CLLocation(coordinate: CLLocationCoordinate2D(geoJSON: $0)) }
-            routableLocations = locations
         }
     }
 
@@ -364,15 +353,6 @@ open class Placemark: NSObject, Codable {
         }
         return String(describing: houseNumber)
     }
-    
-    /**
-     An array of locations that serve as hints for navigating to the placemark.
-     
-     If the `GeocodeOptions.includesRoutableLocations` property is set to `true`, this property contains locations that are suitable to use as a waypoint in a routing engine such as MapboxDirections.swift. Otherwise, if the `GeocodeOptions.includesRoutableLocations` property is set to `false`, this property is set to `nil`.
-     
-     For the placemark’s geographic center, use the `location` property. The routable locations may differ from the geographic center. For example, if a house’s driveway leads to a street other than the nearest street (by straight-line distance), then this property may contain the location where the driveway meets the street. A route to the placemark’s geographic center may be impassable, but a route to the routable location would end on the correct street with access to the house.
-     */
-    @objc open var routableLocations: [CLLocation]?
 }
 
 internal struct GeocodeResult: Codable {
@@ -411,6 +391,47 @@ internal struct Properties: Codable {
  */
 @objc(MBGeocodedPlacemark)
 open class GeocodedPlacemark: Placemark {
+    
+    private enum CodingKeys: String, CodingKey {
+        case routableLocations = "routable_points"
+    }
+    
+    private enum RoutableLocationsKeys: String, CodingKey {
+        case points = "points"
+    }
+    
+    /**
+     An array of locations that serve as hints for navigating to the placemark.
+     
+     If the `GeocodeOptions.includesRoutableLocations` property is set to `true`, this property contains locations that are suitable to use as a waypoint in a routing engine such as MapboxDirections.swift. Otherwise, if the `GeocodeOptions.includesRoutableLocations` property is set to `false`, this property is set to `nil`.
+     
+     For the placemark’s geographic center, use the `location` property. The routable locations may differ from the geographic center. For example, if a house’s driveway leads to a street other than the nearest street (by straight-line distance), then this property may contain the location where the driveway meets the street. A route to the placemark’s geographic center may be impassable, but a route to the routable location would end on the correct street with access to the house.
+     */
+    @objc open var routableLocations: [CLLocation]?
+    
+    public required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        if let pointsContainer = try? container.nestedContainer(keyedBy: RoutableLocationsKeys.self, forKey: .routableLocations),
+            let coordinatePairs = try pointsContainer.decodeIfPresent([[CLLocationDegrees]].self, forKey: .points) {
+            let locations = coordinatePairs.map { CLLocation(coordinate: CLLocationCoordinate2D(geoJSON: $0)) }
+            routableLocations = locations
+        }
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        if let routableLocations = routableLocations {
+            var pointsContainer = container.nestedContainer(keyedBy: RoutableLocationsKeys.self, forKey: .routableLocations)
+            let coordinatePairs = routableLocations.map { $0.geojson() }
+            try pointsContainer.encodeIfPresent(coordinatePairs, forKey: .points)
+        }
+    }
     
     @objc open override var debugDescription: String {
         return qualifiedName!
@@ -533,4 +554,6 @@ open class GeocodedPlacemark: Placemark {
  A concrete subclass of `Placemark` to represent entries in a `GeocodedPlacemark` object’s `superiorPlacemarks` property. These entries are like top-level geocoding results, except that they lack location information and are flatter, with properties directly at the top level.
  */
 @objc(MBQualifyingPlacemark)
-open class QualifyingPlacemark: Placemark {}
+open class QualifyingPlacemark: Placemark {
+    
+}
