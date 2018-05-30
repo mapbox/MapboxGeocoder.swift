@@ -385,11 +385,70 @@ internal struct Properties: Codable {
     let category: String?
 }
 
+// Used internally for flattening and transforming routable_points.points.coordinates
+internal struct RoutableLocation: Codable {
+    internal let coordinates: [Double]
+    
+    internal var coordinate: CLLocationCoordinate2D? {
+        if coordinates.count >= 2 {
+            return CLLocationCoordinate2D(latitude: coordinates[1], longitude: coordinates[0])
+        }
+        return nil
+    }
+}
+
 /**
  A concrete subclass of `Placemark` to represent results of geocoding requests.
  */
 @objc(MBGeocodedPlacemark)
 open class GeocodedPlacemark: Placemark {
+    
+    private enum CodingKeys: String, CodingKey {
+        case routableLocations = "routable_points"
+    }
+    
+    private enum PointsCodingKeys: String, CodingKey {
+        case points
+    }
+    
+    /**
+     An array of locations that serve as hints for navigating to the placemark.
+     
+     If the `GeocodeOptions.includesRoutableLocations` property is set to `true`, this property contains locations that are suitable to use as a waypoint in a routing engine such as MapboxDirections.swift. Otherwise, if the `GeocodeOptions.includesRoutableLocations` property is set to `false`, this property is set to `nil`.
+     
+     For the placemark’s geographic center, use the `location` property. The routable locations may differ from the geographic center. For example, if a house’s driveway leads to a street other than the nearest street (by straight-line distance), then this property may contain the location where the driveway meets the street. A route to the placemark’s geographic center may be impassable, but a route to the routable location would end on the correct street with access to the house.
+     */
+    @objc open var routableLocations: [CLLocation]?
+    
+    public required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        if let pointsContainer = try? container.nestedContainer(keyedBy: PointsCodingKeys.self, forKey: .routableLocations),
+            var coordinatesContainer = try? pointsContainer.nestedUnkeyedContainer(forKey: .points) {
+            
+            if let routableLocation = try coordinatesContainer.decodeIfPresent(RoutableLocation.self),
+                let coordinate = routableLocation.coordinate {
+                routableLocations = [CLLocation(coordinate: coordinate)]
+            }
+        }
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        if let routableLocations = routableLocations,
+            !routableLocations.isEmpty {
+            var pointsContainer = container.nestedContainer(keyedBy: PointsCodingKeys.self, forKey: .routableLocations)
+            var coordinatesContainer = pointsContainer.nestedUnkeyedContainer(forKey: .points)
+            let routableLocation = RoutableLocation(coordinates: [routableLocations[0].coordinate.longitude,
+                                                                  routableLocations[0].coordinate.latitude])
+            try coordinatesContainer.encode(routableLocation)
+        }
+    }
     
     @objc open override var debugDescription: String {
         return qualifiedName!

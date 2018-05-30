@@ -70,7 +70,7 @@ extension CLLocationCoordinate2D {
     /**
      Initializes a coordinate pair based on the given GeoJSON array.
      */
-    internal init(geoJSON array: [Double]) {
+    internal init(geoJSON array: [CLLocationDegrees]) {
         assert(array.count == 2)
         self.init(latitude: array[1], longitude: array[0])
     }
@@ -82,6 +82,13 @@ extension CLLocation {
      */
     internal convenience init(coordinate: CLLocationCoordinate2D) {
         self.init(latitude: coordinate.latitude, longitude: coordinate.longitude)
+    }
+    
+    /**
+     Returns a GeoJSON compatible array of coordinates.
+     */
+    internal func geojson() -> [CLLocationDegrees] {
+        return [coordinate.longitude, coordinate.latitude]
     }
 }
 

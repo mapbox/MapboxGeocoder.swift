@@ -64,6 +64,12 @@ open class GeocodeOptions: NSObject {
      */
     @objc open var locale: Locale?
     
+    
+    /**
+     A Boolean value that determines whether the resulting placemarks have the `Placemark.routableLocation` property set.
+     */
+    @objc open var includesRoutableLocations: Bool = false
+    
     fileprivate override init() {
         self.maximumResultCount = 0
         super.init()
@@ -101,6 +107,9 @@ open class GeocodeOptions: NSObject {
         if let languageCode = (locale as NSLocale?)?.object(forKey: .languageCode) as? String {
             params.append(URLQueryItem(name: "language", value: languageCode))
         }
+        
+        params.append(URLQueryItem(name: "routing", value: String(describing: includesRoutableLocations)))
+        
         return params
     }
 }
