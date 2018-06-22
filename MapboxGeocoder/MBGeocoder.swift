@@ -290,13 +290,9 @@ open class Geocoder: NSObject {
         
         assert(!options.queries.isEmpty, "No query")
         
-        let mode: String
-        if options.queries.count > 1 {
-            mode = "mapbox.places-permanent"
-            assert(options.queries.count <= 50, "Too many queries in a single request.")
-        } else {
-            mode = "mapbox.places"
-        }
+        let mode = options.mode
+        
+        assert(options.queries.count <= 50, "Too many queries in a single request.")
         
         let queryComponent = options.queries.map {
             $0.replacingOccurrences(of: " ", with: "+")

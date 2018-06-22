@@ -81,6 +81,11 @@ open class GeocodeOptions: NSObject {
     internal var queries: [String] = []
     
     /**
+     The query mode of the forward or reverse geocoding request.
+    */
+    internal var mode: String = "mapbox.places"
+    
+    /**
      An array of URL parameters to include in the request URL.
      */
     internal var params: [URLQueryItem] {
@@ -222,6 +227,8 @@ open class ForwardBatchGeocodeOptions: ForwardGeocodeOptions, BatchGeocodeOption
     @objc public override init(queries: [String]) {
         super.init(queries: queries)
     }
+    
+    override internal var mode: String = "mapbox.places-permanent"
 }
 
 /**
@@ -246,4 +253,6 @@ open class ReverseBatchGeocodeOptions: ReverseGeocodeOptions, BatchGeocodeOption
     @objc public convenience init(locations: [CLLocation]) {
         self.init(coordinates: locations.map { $0.coordinate })
     }
+    
+    override internal var mode: String = "mapbox.places-permanent"
 }
