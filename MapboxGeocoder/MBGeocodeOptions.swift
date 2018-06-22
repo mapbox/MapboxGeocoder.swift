@@ -226,9 +226,8 @@ open class ForwardBatchGeocodeOptions: ForwardGeocodeOptions, BatchGeocodeOption
      */
     @objc public override init(queries: [String]) {
         super.init(queries: queries)
+        mode = "mapbox.places-permanent"
     }
-    
-    override internal var mode: String = "mapbox.places-permanent"
 }
 
 /**
@@ -243,6 +242,7 @@ open class ReverseBatchGeocodeOptions: ReverseGeocodeOptions, BatchGeocodeOption
      */
     @objc public override init(coordinates: [CLLocationCoordinate2D]) {
         super.init(coordinates: coordinates)
+        mode = "mapbox.places-permanent"
     }
     
     /**
@@ -252,7 +252,6 @@ open class ReverseBatchGeocodeOptions: ReverseGeocodeOptions, BatchGeocodeOption
      */
     @objc public convenience init(locations: [CLLocation]) {
         self.init(coordinates: locations.map { $0.coordinate })
+        mode = "mapbox.places-permanent"
     }
-    
-    override internal var mode: String = "mapbox.places-permanent"
 }
