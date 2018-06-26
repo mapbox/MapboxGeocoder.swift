@@ -83,7 +83,7 @@ open class GeocodeOptions: NSObject {
     /**
      The query mode of the forward or reverse geocoding request.
     */
-    internal var mode: String = "mapbox.places"
+    internal var mode = "mapbox.places"
     
     /**
      An array of URL parameters to include in the request URL.

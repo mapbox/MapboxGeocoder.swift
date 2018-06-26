@@ -320,8 +320,6 @@ open class Geocoder: NSObject {
         
         let mode = options.mode
         
-        assert(options.queries.count <= 50, "Too many queries in a single request.")
-        
         let queryComponent = options.queries.map {
             $0.replacingOccurrences(of: " ", with: "+")
                 .addingPercentEncoding(withAllowedCharacters: CharacterSet.geocodingQueryAllowedCharacterSet()) ?? ""
