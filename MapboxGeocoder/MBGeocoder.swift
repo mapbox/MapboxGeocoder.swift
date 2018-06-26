@@ -229,10 +229,13 @@ open class Geocoder: NSObject {
                 completionHandler(placemarks, attributionsByQuery, nil)
                 
             } catch {
+                // ForwardBatchGeocodeOptions(query: "1 Main st")
+                // ForwardBatchGeocodeOptions(queries: ["2 Main st"])
                 completionHandler(nil, nil, error as NSError)
             }
             
         }) { (error) in
+            // ForwardBatchGeocodeOptions(queries: ["1 Main st", "2 Main st"])
             completionHandler(nil, nil, error)
         }
         task.resume()
@@ -257,9 +260,10 @@ open class Geocoder: NSObject {
             let decoder = JSONDecoder()
             
             do {
-                let result = try decoder.decode(GeocodeAPIResult.self, from: data)
-                guard result.message == nil else {
-                    let apiError = Geocoder.descriptiveError(["message": result.message!], response: response, underlyingError: error as NSError?)
+                let result = try decoder.decode([GeocodeAPIResult].self, from: data)
+                
+                if let failedResult = result.first(where: { $0.message != nil }) {
+                    let apiError = Geocoder.descriptiveError(["message": failedResult.message!], response: response, underlyingError: error as NSError?)
                     DispatchQueue.main.async {
                         errorHandler(apiError)
                     }
@@ -269,8 +273,23 @@ open class Geocoder: NSObject {
                     completionHandler(data)
                 }
             } catch {
-                DispatchQueue.main.async {
-                    errorHandler(error as NSError)
+                // Handle all single geocoding queries
+                do {
+                    let result = try decoder.decode(GeocodeAPIResult.self, from: data)
+                    guard result.message == nil else {
+                        let apiError = Geocoder.descriptiveError(["message": result.message!], response: response, underlyingError: error as NSError?)
+                        DispatchQueue.main.async {
+                            errorHandler(apiError)
+                        }
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        completionHandler(data)
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        errorHandler(error as NSError)
+                    }
                 }
             }
         }
