@@ -223,19 +223,24 @@ open class Geocoder: NSObject {
             let decoder = JSONDecoder()
             
             do {
-                let result = try decoder.decode([GeocodeResult].self, from: data)
+                let result: [GeocodeResult]
+                do {
+                    // Decode multiple batch geocoding queries
+                    result = try decoder.decode([GeocodeResult].self, from: data)
+                } catch {
+                    // Decode single batch geocding queries
+                    result = [try decoder.decode(GeocodeResult.self, from: data)]
+                }
+                
                 let placemarks = result.map { $0.placemarks }
                 let attributionsByQuery = result.map { $0.attribution }
                 completionHandler(placemarks, attributionsByQuery, nil)
                 
             } catch {
-                // ForwardBatchGeocodeOptions(query: "1 Main st")
-                // ForwardBatchGeocodeOptions(queries: ["2 Main st"])
                 completionHandler(nil, nil, error as NSError)
             }
             
         }) { (error) in
-            // ForwardBatchGeocodeOptions(queries: ["1 Main st", "2 Main st"])
             completionHandler(nil, nil, error)
         }
         task.resume()
@@ -260,8 +265,10 @@ open class Geocoder: NSObject {
             let decoder = JSONDecoder()
             
             do {
+                // Handle multiple batch geocoding queries
                 let result = try decoder.decode([GeocodeAPIResult].self, from: data)
                 
+                // Check if any of the batch geocoding queries failed
                 if let failedResult = result.first(where: { $0.message != nil }) {
                     let apiError = Geocoder.descriptiveError(["message": failedResult.message!], response: response, underlyingError: error as NSError?)
                     DispatchQueue.main.async {
@@ -273,9 +280,10 @@ open class Geocoder: NSObject {
                     completionHandler(data)
                 }
             } catch {
-                // Handle all single geocoding queries
+                // Handle single & single batch geocoding queries
                 do {
                     let result = try decoder.decode(GeocodeAPIResult.self, from: data)
+                    // Check if geocoding query failed
                     guard result.message == nil else {
                         let apiError = Geocoder.descriptiveError(["message": result.message!], response: response, underlyingError: error as NSError?)
                         DispatchQueue.main.async {
@@ -287,6 +295,7 @@ open class Geocoder: NSObject {
                         completionHandler(data)
                     }
                 } catch {
+                    // Handle errors that don't return a message (such as a server/network error)
                     DispatchQueue.main.async {
                         errorHandler(error as NSError)
                     }
