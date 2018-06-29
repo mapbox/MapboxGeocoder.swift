@@ -82,4 +82,34 @@ class BatchForwardGeocodingTests: XCTestCase {
             XCTAssertEqual(task.state, URLSessionTask.State.completed)
         }
     }
+    
+    func testInvalidForwardSingleBatchGeocode() {
+        _ = stub(condition: isHost("api.mapbox.com")
+            && isPath("/geocoding/v5/mapbox.places-permanent/%23M%40Pb0X.json")
+            && containsQueryParams(["access_token": BogusToken])) { _ in
+                let path = Bundle(for: type(of: self)).path(forResource: "permanent_forward_single_invalid", ofType: "json")
+                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+        }
+        
+        let expectation = self.expectation(description: "single forward batch geocode execute completion handler for invalid query")
+        let geocoder = Geocoder(accessToken: BogusToken)
+        let options = ForwardBatchGeocodeOptions(query: "#M@Pb0X")
+        let task = geocoder.batchGeocode(options) { (placemarks, attribution, error) in
+            
+//            let results = placemarks![0]
+//            let attribution = attribution![0]
+//
+//            XCTAssertEqual(results.count, 0, "single forward batch geocode should return no results for invalid query")
+//
+//            XCTAssertEqual(attribution, "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/")
+            
+            expectation.fulfill()
+        }
+        XCTAssertNotNil(task)
+        
+        waitForExpectations(timeout: 1) { (error) in
+            XCTAssertNil(error, "Error: \(error!)")
+            XCTAssertEqual(task.state, URLSessionTask.State.completed)
+        }
+    }
 }
