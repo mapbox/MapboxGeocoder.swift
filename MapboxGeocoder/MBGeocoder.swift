@@ -241,6 +241,8 @@ open class Geocoder: NSObject {
             }
             
         }) { (error) in
+            // testInvalidForwardSingleBatchGeocode fails here
+            // testInvalidForwardMultipleBatchGeocode fails here
             completionHandler(nil, nil, error)
         }
         task.resume()
@@ -284,6 +286,7 @@ open class Geocoder: NSObject {
                 do {
                     let result = try decoder.decode(GeocodeAPIResult.self, from: data)
                     // Check if geocoding query failed
+                        // testInvalidForwardSingleBatchGeocode & testInvalidForwardMultipleBatchGeocode being caught here
                     guard result.message == nil else {
                         let apiError = Geocoder.descriptiveError(["message": result.message!], response: response, underlyingError: error as NSError?)
                         DispatchQueue.main.async {
