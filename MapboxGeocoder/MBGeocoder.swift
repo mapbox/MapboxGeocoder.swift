@@ -287,12 +287,13 @@ open class Geocoder: NSObject {
                 do {
                     let result = try decoder.decode(GeocodeAPIResult.self, from: data)
                     // Check if geocoding query failed
-                    guard result.message == nil else {
-                        let apiError = Geocoder.descriptiveError(["message": result.message!], response: response, underlyingError: error as NSError?)
+                    if let message = result.message {
+                        let apiError = Geocoder.descriptiveError(["message": message], response: response, underlyingError: error as NSError?)
                         DispatchQueue.main.async {
                             errorHandler(apiError)
                         }
                         return
+                        
                     }
                     DispatchQueue.main.async {
                         completionHandler(data)
