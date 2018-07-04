@@ -13,12 +13,12 @@
 		0711239F20E5A53E0043CB51 /* permanent_forward_multiple_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 0711239E20E5A53E0043CB51 /* permanent_forward_multiple_valid.json */; };
 		071123A020E5A53E0043CB51 /* permanent_forward_multiple_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 0711239E20E5A53E0043CB51 /* permanent_forward_multiple_valid.json */; };
 		071123A120E5A53E0043CB51 /* permanent_forward_multiple_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 0711239E20E5A53E0043CB51 /* permanent_forward_multiple_valid.json */; };
-		071123A320E6EC800043CB51 /* permanent_forward_multiple_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 071123A220E6EC7F0043CB51 /* permanent_forward_multiple_invalid.json */; };
-		071123A420E6EC800043CB51 /* permanent_forward_multiple_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 071123A220E6EC7F0043CB51 /* permanent_forward_multiple_invalid.json */; };
-		071123A520E6EC800043CB51 /* permanent_forward_multiple_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 071123A220E6EC7F0043CB51 /* permanent_forward_multiple_invalid.json */; };
-		071123A720E6EC890043CB51 /* permanent_forward_single_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 071123A620E6EC880043CB51 /* permanent_forward_single_invalid.json */; };
-		071123A820E6EC890043CB51 /* permanent_forward_single_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 071123A620E6EC880043CB51 /* permanent_forward_single_invalid.json */; };
-		071123A920E6EC890043CB51 /* permanent_forward_single_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 071123A620E6EC880043CB51 /* permanent_forward_single_invalid.json */; };
+		071123A320E6EC800043CB51 /* permanent_forward_multiple_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 071123A220E6EC7F0043CB51 /* permanent_forward_multiple_no_results.json */; };
+		071123A420E6EC800043CB51 /* permanent_forward_multiple_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 071123A220E6EC7F0043CB51 /* permanent_forward_multiple_no_results.json */; };
+		071123A520E6EC800043CB51 /* permanent_forward_multiple_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 071123A220E6EC7F0043CB51 /* permanent_forward_multiple_no_results.json */; };
+		071123A720E6EC890043CB51 /* permanent_forward_single_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 071123A620E6EC880043CB51 /* permanent_forward_single_no_results.json */; };
+		071123A820E6EC890043CB51 /* permanent_forward_single_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 071123A620E6EC880043CB51 /* permanent_forward_single_no_results.json */; };
+		071123A920E6EC890043CB51 /* permanent_forward_single_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 071123A620E6EC880043CB51 /* permanent_forward_single_no_results.json */; };
 		079F41E820E42EEF007EEB5E /* BatchForwardGeocodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079F41E720E42EEF007EEB5E /* BatchForwardGeocodingTests.swift */; };
 		079F41E920E42EEF007EEB5E /* BatchForwardGeocodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079F41E720E42EEF007EEB5E /* BatchForwardGeocodingTests.swift */; };
 		079F41EA20E42EEF007EEB5E /* BatchForwardGeocodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079F41E720E42EEF007EEB5E /* BatchForwardGeocodingTests.swift */; };
@@ -187,8 +187,8 @@
 /* Begin PBXFileReference section */
 		0711239220E59DE90043CB51 /* permanent_forward_single_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = permanent_forward_single_valid.json; path = ../../../../.Trash/permanent_forward_single_valid.json; sourceTree = "<group>"; };
 		0711239E20E5A53E0043CB51 /* permanent_forward_multiple_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = permanent_forward_multiple_valid.json; path = ../../../../Desktop/permanent_forward_multiple_valid.json; sourceTree = "<group>"; };
-		071123A220E6EC7F0043CB51 /* permanent_forward_multiple_invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = permanent_forward_multiple_invalid.json; path = ../../../../Desktop/permanent_forward_multiple_invalid.json; sourceTree = "<group>"; };
-		071123A620E6EC880043CB51 /* permanent_forward_single_invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = permanent_forward_single_invalid.json; path = ../../../../Desktop/permanent_forward_single_invalid.json; sourceTree = "<group>"; };
+		071123A220E6EC7F0043CB51 /* permanent_forward_multiple_no_results.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = permanent_forward_multiple_no_results.json; path = ../../../../Desktop/permanent_forward_multiple_no_results.json; sourceTree = "<group>"; };
+		071123A620E6EC880043CB51 /* permanent_forward_single_no_results.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = permanent_forward_single_no_results.json; path = ../../../../Desktop/permanent_forward_single_no_results.json; sourceTree = "<group>"; };
 		079F41E720E42EEF007EEB5E /* BatchForwardGeocodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchForwardGeocodingTests.swift; sourceTree = "<group>"; };
 		35506B8A200F856400629509 /* BridgingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BridgingTests.m; sourceTree = "<group>"; };
 		357B4357202CC90A00735521 /* reverse_address.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = reverse_address.json; sourceTree = "<group>"; };
@@ -437,8 +437,8 @@
 		DDF1E8571BD700EB00C40C78 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
-				071123A620E6EC880043CB51 /* permanent_forward_single_invalid.json */,
-				071123A220E6EC7F0043CB51 /* permanent_forward_multiple_invalid.json */,
+				071123A620E6EC880043CB51 /* permanent_forward_single_no_results.json */,
+				071123A220E6EC7F0043CB51 /* permanent_forward_multiple_no_results.json */,
 				0711239E20E5A53E0043CB51 /* permanent_forward_multiple_valid.json */,
 				0711239220E59DE90043CB51 /* permanent_forward_single_valid.json */,
 				DA210BAC1CB4BFF7008088FD /* forward_valid.json */,
@@ -751,8 +751,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				071123A820E6EC890043CB51 /* permanent_forward_single_invalid.json in Resources */,
-				071123A420E6EC800043CB51 /* permanent_forward_multiple_invalid.json in Resources */,
+				071123A820E6EC890043CB51 /* permanent_forward_single_no_results.json in Resources */,
+				071123A420E6EC800043CB51 /* permanent_forward_multiple_no_results.json in Resources */,
 				DA5170B81CF1B1F900CD6DCF /* forward_valid.json in Resources */,
 				357B4359202CC90A00735521 /* reverse_address.json in Resources */,
 				DA5170B91CF1B1F900CD6DCF /* forward_invalid.json in Resources */,
@@ -775,8 +775,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				071123A920E6EC890043CB51 /* permanent_forward_single_invalid.json in Resources */,
-				071123A520E6EC800043CB51 /* permanent_forward_multiple_invalid.json in Resources */,
+				071123A920E6EC890043CB51 /* permanent_forward_single_no_results.json in Resources */,
+				071123A520E6EC800043CB51 /* permanent_forward_multiple_no_results.json in Resources */,
 				DA5170E21CF2542B00CD6DCF /* forward_valid.json in Resources */,
 				357B435A202CC90A00735521 /* reverse_address.json in Resources */,
 				DA5170E31CF2542B00CD6DCF /* forward_invalid.json in Resources */,
@@ -822,8 +822,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				071123A720E6EC890043CB51 /* permanent_forward_single_invalid.json in Resources */,
-				071123A320E6EC800043CB51 /* permanent_forward_multiple_invalid.json in Resources */,
+				071123A720E6EC890043CB51 /* permanent_forward_single_no_results.json in Resources */,
+				071123A320E6EC800043CB51 /* permanent_forward_multiple_no_results.json in Resources */,
 				DA210BAD1CB4BFF7008088FD /* forward_valid.json in Resources */,
 				357B4358202CC90A00735521 /* reverse_address.json in Resources */,
 				DDF1E85C1BD70E4C00C40C78 /* reverse_invalid.json in Resources */,

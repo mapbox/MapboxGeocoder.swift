@@ -83,25 +83,24 @@ class BatchForwardGeocodingTests: XCTestCase {
         }
     }
     
-    func testInvalidForwardSingleBatchGeocode() {
+    func testNoResultsForwardSingleBatchGeocode() {
         _ = stub(condition: isHost("api.mapbox.com")
-            && isPath("/geocoding/v5/mapbox.places-permanent/%23M%40Pb0X.json")
+            && isPath("/geocoding/v5/mapbox.places-permanent/#M@Pb0X.json") // Text does not need to be encoded
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_forward_single_invalid", ofType: "json")
+                let path = Bundle(for: type(of: self)).path(forResource: "permanent_forward_single_no_results", ofType: "json")
                 return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
-        let expectation = self.expectation(description: "single forward batch geocode execute completion handler for invalid query")
+        let expectation = self.expectation(description: "single forward batch geocode should not return results for an invalid location")
         let geocoder = Geocoder(accessToken: BogusToken)
         let options = ForwardBatchGeocodeOptions(query: "#M@Pb0X")
         let task = geocoder.batchGeocode(options) { (placemarks, attribution, error) in
             
-//            let results = placemarks![0]
-//            let attribution = attribution![0]
-//
-//            XCTAssertEqual(results.count, 0, "single forward batch geocode should return no results for invalid query")
-//
-//            XCTAssertEqual(attribution, "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/")
+            let results = placemarks![0]
+            let attribution = attribution![0]
+
+            XCTAssertEqual(results.count, 0, "single forward batch geocode should not return results for an invalid location")
+            XCTAssertEqual(attribution, "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)")
             
             expectation.fulfill()
         }
@@ -113,25 +112,24 @@ class BatchForwardGeocodingTests: XCTestCase {
         }
     }
     
-    func testInvalidForwardMultipleBatchGeocode() {
+    func testNoResultsForwardMultipleBatchGeocode() {
         _ = stub(condition: isHost("api.mapbox.com")
-            && isPath("/geocoding/v5/mapbox.places-permanent/%23M%40Pb0X%3B%20%24C00L!.json")
+            && isPath("/geocoding/v5/mapbox.places-permanent/#M@Pb0X;$C00L!.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_forward_multiple_invalid", ofType: "json")
+                let path = Bundle(for: type(of: self)).path(forResource: "permanent_forward_multiple_no_results", ofType: "json")
                 return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
-        let expectation = self.expectation(description: "multiple forward batch geocode execute completion handler for invalid query")
+        let expectation = self.expectation(description: "multiple forward batch geocode should not return results for an invalid locations")
         let geocoder = Geocoder(accessToken: BogusToken)
         let options = ForwardBatchGeocodeOptions(queries: ["#M@Pb0X", "$C00L!"])
         let task = geocoder.batchGeocode(options) { (placemarks, attribution, error) in
             
-            //            let results = placemarks![0]
-            //            let attribution = attribution![0]
-            //
-            //            XCTAssertEqual(results.count, 0, "multiple forward batch geocode should return no results for invalid query")
-            //
-            //            XCTAssertEqual(attribution, "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/")
+            for result in placemarks! {
+                XCTAssertTrue(result.isEmpty, "each individual geocode request should not return results")
+            }
+            
+          XCTAssertEqual(attribution![0], "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)")
             
             expectation.fulfill()
         }
