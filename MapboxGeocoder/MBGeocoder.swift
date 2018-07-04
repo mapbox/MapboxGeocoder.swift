@@ -223,7 +223,9 @@ open class Geocoder: NSObject {
             let decoder = JSONDecoder()
             
             do {
+                
                 let result: [GeocodeResult]
+                
                 do {
                     // Decode multiple batch geocoding queries
                     result = try decoder.decode([GeocodeResult].self, from: data)
@@ -241,8 +243,6 @@ open class Geocoder: NSObject {
             }
             
         }) { (error) in
-            // testInvalidForwardSingleBatchGeocode fails here
-            // testInvalidForwardMultipleBatchGeocode fails here
             completionHandler(nil, nil, error)
         }
         task.resume()
@@ -260,6 +260,7 @@ open class Geocoder: NSObject {
      */
     fileprivate func dataTaskWithURL(_ url: URL, completionHandler: @escaping (_ data: Data?) -> Void, errorHandler: @escaping (_ error: NSError) -> Void) -> URLSessionDataTask {
         var request = URLRequest(url: url)
+        
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         return URLSession.shared.dataTask(with: request) { (data, response, error) in
 
@@ -286,7 +287,6 @@ open class Geocoder: NSObject {
                 do {
                     let result = try decoder.decode(GeocodeAPIResult.self, from: data)
                     // Check if geocoding query failed
-                        // testInvalidForwardSingleBatchGeocode & testInvalidForwardMultipleBatchGeocode being caught here
                     guard result.message == nil else {
                         let apiError = Geocoder.descriptiveError(["message": result.message!], response: response, underlyingError: error as NSError?)
                         DispatchQueue.main.async {

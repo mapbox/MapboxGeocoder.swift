@@ -3,11 +3,15 @@ import OHHTTPStubs
 import CoreLocation
 @testable import MapboxGeocoder
 
-class BatchForwardGeocodingTests: XCTestCase {
+class BatchGeocodingTests: XCTestCase {
     override func tearDown() {
         OHHTTPStubs.removeAllStubs()
         super.tearDown()
     }
+    
+    /**
+     Forward batch geocoding tests
+     */
     
     func testValidForwardSingleBatchGeocode() {
         let expectation = self.expectation(description: "forward batch geocode with single query should return results")
@@ -85,7 +89,7 @@ class BatchForwardGeocodingTests: XCTestCase {
     
     func testNoResultsForwardSingleBatchGeocode() {
         _ = stub(condition: isHost("api.mapbox.com")
-            && isPath("/geocoding/v5/mapbox.places-permanent/#M@Pb0X.json") // Text does not need to be encoded
+            && isPath("/geocoding/v5/mapbox.places-permanent/#M@Pb0X.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
                 let path = Bundle(for: type(of: self)).path(forResource: "permanent_forward_single_no_results", ofType: "json")
                 return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
@@ -130,6 +134,89 @@ class BatchForwardGeocodingTests: XCTestCase {
             }
             
           XCTAssertEqual(attribution![0], "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)")
+            
+            expectation.fulfill()
+        }
+        XCTAssertNotNil(task)
+        
+        waitForExpectations(timeout: 1) { (error) in
+            XCTAssertNil(error, "Error: \(error!)")
+            XCTAssertEqual(task.state, URLSessionTask.State.completed)
+        }
+    }
+    
+    /**
+     General batch geocoding tests - invalid queries, invalid tokens, token scope checking, etc.
+     */
+    
+    func testInvalidBatchGeocode() {
+        _ = stub(condition: isHost("api.mapbox.com")
+            && isPath("/geocoding/v5/mapbox.places-permanent////.json")
+            && containsQueryParams(["access_token": BogusToken])) { _ in
+                let path = Bundle(for: type(of: self)).path(forResource: "permanent_invalid", ofType: "json")
+                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+        }
+        
+        let expectation = self.expectation(description: "invalid batch geocoding query should not return results")
+        let geocoder = Geocoder(accessToken: BogusToken)
+        let options = ForwardBatchGeocodeOptions(query: "///")
+        let task = geocoder.batchGeocode(options) { (placemarks, attribution, error) in
+            
+            XCTAssertEqual(error!.localizedFailureReason, "Not Found")
+            
+            expectation.fulfill()
+        }
+        XCTAssertNotNil(task)
+        
+        waitForExpectations(timeout: 1) { (error) in
+            XCTAssertNil(error, "Error: \(error!)")
+            XCTAssertEqual(task.state, URLSessionTask.State.completed)
+        }
+    }
+    
+    func testInvalidTokenForBatchGeocode() {
+        let invalidToken = "xyz"
+        
+        _ = stub(condition: isHost("api.mapbox.com")
+            && isPath("/geocoding/v5/mapbox.places-permanent/85+2nd+st+san+francisco.json")
+            && containsQueryParams(["access_token": invalidToken])) { _ in
+                let path = Bundle(for: type(of: self)).path(forResource: "permanent_invalid_token", ofType: "json")
+                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+        }
+        
+        let expectation = self.expectation(description: "invalid token use in batch geocoding query should return an error")
+        let geocoder = Geocoder(accessToken: invalidToken)
+        let options = ForwardBatchGeocodeOptions(query: "85 2nd st san francisco")
+        let task = geocoder.batchGeocode(options) { (placemarks, attribution, error) in
+            
+            XCTAssertEqual(error!.localizedFailureReason, "Not Authorized - Invalid Token")
+            
+            expectation.fulfill()
+        }
+        XCTAssertNotNil(task)
+        
+        waitForExpectations(timeout: 1) { (error) in
+            XCTAssertNil(error, "Error: \(error!)")
+            XCTAssertEqual(task.state, URLSessionTask.State.completed)
+        }
+    }
+    
+    func testInvalidTokenScopeForBatchGeocoding() {
+        let incorrectTokenScope = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA"
+        
+        _ = stub(condition: isHost("api.mapbox.com")
+            && isPath("/geocoding/v5/mapbox.places-permanent/85+2nd+st+san+francisco.json")
+            && containsQueryParams(["access_token": incorrectTokenScope])) { _ in
+                let path = Bundle(for: type(of: self)).path(forResource: "permanent_invalid_token_scope", ofType: "json")
+                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+        }
+        
+        let expectation = self.expectation(description: "invalid token use in batch geocoding query should return an error")
+        let geocoder = Geocoder(accessToken: incorrectTokenScope)
+        let options = ForwardBatchGeocodeOptions(query: "85 2nd st san francisco")
+        let task = geocoder.batchGeocode(options) { (placemarks, attribution, error) in
+            
+            XCTAssertEqual(error!.localizedFailureReason, "Permanent geocodes are not enabled for this account. Contact support@mapbox.com to enable this feature.")
             
             expectation.fulfill()
         }
