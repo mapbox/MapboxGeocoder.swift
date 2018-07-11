@@ -230,8 +230,7 @@ class BatchGeocodingTests: XCTestCase {
     func testNoResultsReverseSingleBatchGeocode() {
         _ = stub(condition: isHost("api.mapbox.com")
             
-           // && isPath("/geocoding/v5/mapbox.places-permanent/100,100.json")
-              // The above line is causing the test fo fail for unknown reasons
+            && isPath("/geocoding/v5/mapbox.places-permanent/100.00000,100.00000.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
                 let path = Bundle(for: type(of: self)).path(forResource: "permanent_reverse_single_no_results", ofType: "json")
                 return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
@@ -262,8 +261,7 @@ class BatchGeocodingTests: XCTestCase {
         let expectation = self.expectation(description: "multiple reverse batch geocodes should not return results for invalid locations")
         
         _ = stub(condition: isHost("api.mapbox.com")
-         // && isPath("/geocoding/v5/mapbox.places-permanent/100,100.json")
-         // The above line is causing the test fo fail for unknown reasons
+            && isPath("/geocoding/v5/mapbox.places-permanent/100.00000,100.00000;100.00000,100.00000;100.00000,100.00000.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
                 let path = Bundle(for: type(of: self)).path(forResource: "permanent_reverse_multiple_no_results", ofType: "json")
                 return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
