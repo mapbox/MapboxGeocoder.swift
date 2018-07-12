@@ -1,0 +1,277 @@
+{
+  "type": "FeatureCollection",
+  "query": [
+    -77.01073,
+    38.88887
+  ],
+  "features": [
+    {
+      "id": "address.947761358000488",
+      "type": "Feature",
+      "place_type": [
+        "address"
+      ],
+      "relevance": 1,
+      "properties": {
+        
+      },
+      "text": "South Capitol Circle Southwest",
+      "place_name": "South Capitol Circle Southwest, Washington, District of Columbia 20002, United States",
+      "center": [
+        -77.01128468714641,
+        38.88799842529652
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.01128468714641,
+          38.88799842529652
+        ]
+      },
+      "context": [
+        {
+          "id": "neighborhood.294527",
+          "text": "Capitol Hill"
+        },
+        {
+          "id": "postcode.8356485856998370",
+          "text": "20002"
+        },
+        {
+          "id": "place.7673410831246050",
+          "wikidata": "Q61",
+          "text": "Washington"
+        },
+        {
+          "id": "region.3403",
+          "short_code": "US-DC",
+          "wikidata": "Q61",
+          "text": "District of Columbia"
+        },
+        {
+          "id": "country.3145",
+          "wikidata": "Q30",
+          "short_code": "us",
+          "text": "United States"
+        }
+      ]
+    },
+    {
+      "id": "neighborhood.294527",
+      "type": "Feature",
+      "place_type": [
+        "neighborhood"
+      ],
+      "relevance": 1,
+      "properties": {
+        
+      },
+      "text": "Capitol Hill",
+      "place_name": "Capitol Hill, Washington, District of Columbia 20002, United States",
+      "bbox": [
+        -77.014329,
+        38.876986,
+        -76.983582,
+        38.897326
+      ],
+      "center": [
+        -77.0003,
+        38.889
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0003,
+          38.889
+        ]
+      },
+      "context": [
+        {
+          "id": "postcode.8356485856998370",
+          "text": "20002"
+        },
+        {
+          "id": "place.7673410831246050",
+          "wikidata": "Q61",
+          "text": "Washington"
+        },
+        {
+          "id": "region.3403",
+          "short_code": "US-DC",
+          "wikidata": "Q61",
+          "text": "District of Columbia"
+        },
+        {
+          "id": "country.3145",
+          "wikidata": "Q30",
+          "short_code": "us",
+          "text": "United States"
+        }
+      ]
+    },
+    {
+      "id": "postcode.8356485856998370",
+      "type": "Feature",
+      "place_type": [
+        "postcode"
+      ],
+      "relevance": 1,
+      "properties": {
+        
+      },
+      "text": "20002",
+      "place_name": "Washington, District of Columbia 20002, United States",
+      "bbox": [
+        -77.0124999956368,
+        38.8875859940734,
+        -76.9438559927196,
+        38.9270120045122
+      ],
+      "center": [
+        -77.01,
+        38.89
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.01,
+          38.89
+        ]
+      },
+      "context": [
+        {
+          "id": "place.7673410831246050",
+          "wikidata": "Q61",
+          "text": "Washington"
+        },
+        {
+          "id": "region.3403",
+          "short_code": "US-DC",
+          "wikidata": "Q61",
+          "text": "District of Columbia"
+        },
+        {
+          "id": "country.3145",
+          "wikidata": "Q30",
+          "short_code": "us",
+          "text": "United States"
+        }
+      ]
+    },
+    {
+      "id": "place.7673410831246050",
+      "type": "Feature",
+      "place_type": [
+        "place"
+      ],
+      "relevance": 1,
+      "properties": {
+        "wikidata": "Q61"
+      },
+      "text": "Washington",
+      "place_name": "Washington, District of Columbia, United States",
+      "bbox": [
+        -77.1197609567342,
+        38.79155738,
+        -76.909391,
+        38.99555093
+      ],
+      "center": [
+        -77.0366,
+        38.895
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0366,
+          38.895
+        ]
+      },
+      "context": [
+        {
+          "id": "region.3403",
+          "short_code": "US-DC",
+          "wikidata": "Q61",
+          "text": "District of Columbia"
+        },
+        {
+          "id": "country.3145",
+          "wikidata": "Q30",
+          "short_code": "us",
+          "text": "United States"
+        }
+      ]
+    },
+    {
+      "id": "region.3403",
+      "type": "Feature",
+      "place_type": [
+        "region"
+      ],
+      "relevance": 1,
+      "properties": {
+        "short_code": "US-DC",
+        "wikidata": "Q61"
+      },
+      "text": "District of Columbia",
+      "place_name": "District of Columbia, United States",
+      "bbox": [
+        -77.208138,
+        38.717703,
+        -76.909393,
+        38.995548
+      ],
+      "center": [
+        -76.990513,
+        38.896391
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.990513,
+          38.896391
+        ]
+      },
+      "context": [
+        {
+          "id": "country.3145",
+          "wikidata": "Q30",
+          "short_code": "us",
+          "text": "United States"
+        }
+      ]
+    },
+    {
+      "id": "country.3145",
+      "type": "Feature",
+      "place_type": [
+        "country"
+      ],
+      "relevance": 1,
+      "properties": {
+        "wikidata": "Q30",
+        "short_code": "us"
+      },
+      "text": "United States",
+      "place_name": "United States",
+      "bbox": [
+        -179.9,
+        -14.6528,
+        -64.464198,
+        71.540724
+      ],
+      "center": [
+        -97.922211,
+        39.381266
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97.922211,
+          39.381266
+        ]
+      }
+    }
+  ],
+  "attribution": "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+}
