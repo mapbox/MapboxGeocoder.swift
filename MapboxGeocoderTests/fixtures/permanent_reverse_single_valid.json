@@ -1,12 +1,12 @@
 {
   "type": "FeatureCollection",
   "query": [
-    -77.01073,
-    38.88887
+    -77,
+    38
   ],
   "features": [
     {
-      "id": "address.947761358000488",
+      "id": "address.123",
       "type": "Feature",
       "place_type": [
         "address"
@@ -18,38 +18,38 @@
       "text": "South Capitol Circle Southwest",
       "place_name": "South Capitol Circle Southwest, Washington, District of Columbia 20002, United States",
       "center": [
-        -77.01128468714641,
-        38.88799842529652
+        -77,
+        38
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -77.01128468714641,
-          38.88799842529652
+          -77,
+          38
         ]
       },
       "context": [
         {
-          "id": "neighborhood.294527",
+          "id": "neighborhood.123",
           "text": "Capitol Hill"
         },
         {
-          "id": "postcode.8356485856998370",
+          "id": "postcode.123",
           "text": "20002"
         },
         {
-          "id": "place.7673410831246050",
+          "id": "place.123",
           "wikidata": "Q61",
           "text": "Washington"
         },
         {
-          "id": "region.3403",
+          "id": "region.123",
           "short_code": "US-DC",
           "wikidata": "Q61",
           "text": "District of Columbia"
         },
         {
-          "id": "country.3145",
+          "id": "country.123",
           "wikidata": "Q30",
           "short_code": "us",
           "text": "United States"
@@ -57,7 +57,7 @@
       ]
     },
     {
-      "id": "neighborhood.294527",
+      "id": "neighborhood.123",
       "type": "Feature",
       "place_type": [
         "neighborhood"
@@ -69,14 +69,14 @@
       "text": "Capitol Hill",
       "place_name": "Capitol Hill, Washington, District of Columbia 20002, United States",
       "bbox": [
-        -77.014329,
-        38.876986,
-        -76.983582,
-        38.897326
+        -77,
+        38,
+        -76,
+        38
       ],
       "center": [
-        -77.0003,
-        38.889
+        -77,
+        38
       ],
       "geometry": {
         "type": "Point",
@@ -87,22 +87,22 @@
       },
       "context": [
         {
-          "id": "postcode.8356485856998370",
+          "id": "postcode",
           "text": "20002"
         },
         {
-          "id": "place.7673410831246050",
+          "id": "place",
           "wikidata": "Q61",
           "text": "Washington"
         },
         {
-          "id": "region.3403",
+          "id": "region.123",
           "short_code": "US-DC",
           "wikidata": "Q61",
           "text": "District of Columbia"
         },
         {
-          "id": "country.3145",
+          "id": "country.123",
           "wikidata": "Q30",
           "short_code": "us",
           "text": "United States"
@@ -110,7 +110,7 @@
       ]
     },
     {
-      "id": "postcode.8356485856998370",
+      "id": "postcode.123",
       "type": "Feature",
       "place_type": [
         "postcode"
@@ -122,36 +122,36 @@
       "text": "20002",
       "place_name": "Washington, District of Columbia 20002, United States",
       "bbox": [
-        -77.0124999956368,
-        38.8875859940734,
-        -76.9438559927196,
-        38.9270120045122
+        -77,
+        38,
+        -76,
+        38
       ],
       "center": [
-        -77.01,
-        38.89
+        -77,
+        38
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -77.01,
-          38.89
+          -77,
+          38
         ]
       },
       "context": [
         {
-          "id": "place.7673410831246050",
+          "id": "place.123",
           "wikidata": "Q61",
           "text": "Washington"
         },
         {
-          "id": "region.3403",
+          "id": "region.123",
           "short_code": "US-DC",
           "wikidata": "Q61",
           "text": "District of Columbia"
         },
         {
-          "id": "country.3145",
+          "id": "country.123",
           "wikidata": "Q30",
           "short_code": "us",
           "text": "United States"
@@ -159,7 +159,7 @@
       ]
     },
     {
-      "id": "place.7673410831246050",
+      "id": "place.123",
       "type": "Feature",
       "place_type": [
         "place"
@@ -171,31 +171,31 @@
       "text": "Washington",
       "place_name": "Washington, District of Columbia, United States",
       "bbox": [
-        -77.1197609567342,
-        38.79155738,
-        -76.909391,
-        38.99555093
+        -77,
+        38,
+        -76,
+        38
       ],
       "center": [
-        -77.0366,
-        38.895
+        -77,
+        38
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -77.0366,
-          38.895
+          -77,
+          38
         ]
       },
       "context": [
         {
-          "id": "region.3403",
+          "id": "region.123",
           "short_code": "US-DC",
           "wikidata": "Q61",
           "text": "District of Columbia"
         },
         {
-          "id": "country.3145",
+          "id": "country.123",
           "wikidata": "Q30",
           "short_code": "us",
           "text": "United States"
@@ -203,7 +203,7 @@
       ]
     },
     {
-      "id": "region.3403",
+      "id": "region.123",
       "type": "Feature",
       "place_type": [
         "region"
@@ -216,25 +216,25 @@
       "text": "District of Columbia",
       "place_name": "District of Columbia, United States",
       "bbox": [
-        -77.208138,
-        38.717703,
-        -76.909393,
-        38.995548
+        -77,
+        38,
+        -76,
+        38
       ],
       "center": [
-        -76.990513,
-        38.896391
+        -76,
+        38
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -76.990513,
-          38.896391
+          -76,
+          38
         ]
       },
       "context": [
         {
-          "id": "country.3145",
+          "id": "country.123",
           "wikidata": "Q30",
           "short_code": "us",
           "text": "United States"
@@ -242,7 +242,7 @@
       ]
     },
     {
-      "id": "country.3145",
+      "id": "country.123",
       "type": "Feature",
       "place_type": [
         "country"
@@ -255,20 +255,20 @@
       "text": "United States",
       "place_name": "United States",
       "bbox": [
-        -179.9,
-        -14.6528,
-        -64.464198,
-        71.540724
+        -179,
+        -14,
+        -64,
+        71
       ],
       "center": [
-        -97.922211,
-        39.381266
+        -97,
+        39
       ],
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -97.922211,
-          39.381266
+          -97,
+          39
         ]
       }
     }
