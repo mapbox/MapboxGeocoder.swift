@@ -1,0 +1,35 @@
+[
+ {
+ "type": "FeatureCollection",
+ "query": [
+           100,
+           100
+           ],
+ "features": [
+ 
+ ],
+ "attribution": "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+ },
+ {
+ "type": "FeatureCollection",
+ "query": [
+           100,
+           100
+           ],
+ "features": [
+ 
+ ],
+ "attribution": "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+ },
+ {
+ "type": "FeatureCollection",
+ "query": [
+           100,
+           100
+           ],
+ "features": [
+ 
+ ],
+ "attribution": "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+ }
+ ]

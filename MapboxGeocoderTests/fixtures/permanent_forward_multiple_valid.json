@@ -1,0 +1,716 @@
+[
+  {
+    "type": "FeatureCollection",
+    "query": [
+      "20001"
+    ],
+    "features": [
+      {
+        "id": "postcode.123",
+        "type": "Feature",
+        "place_type": [
+          "postcode"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001",
+        "place_name": "Washington, District of Columbia 20001, United States",
+        "bbox": [
+          -77,
+          38,
+          -77,
+          38
+        ],
+        "center": [
+          -77,
+          38
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -77,
+            38
+          ]
+        },
+        "context": [
+          {
+            "id": "place.123",
+            "wikidata": "Q61",
+            "text": "Washington"
+          },
+          {
+            "id": "region.123",
+            "short_code": "US-DC",
+            "wikidata": "Q61",
+            "text": "District of Columbia"
+          },
+          {
+            "id": "country.123",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      },
+      {
+        "id": "postcode.123",
+        "type": "Feature",
+        "place_type": [
+          "postcode"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001",
+        "place_name": "20001, Donostia, Gipuzkoa, Spain",
+        "bbox": [
+          -1,
+          43,
+          -1,
+          43
+        ],
+        "center": [
+          -1,
+          43
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -1,
+            43
+          ]
+        },
+        "context": [
+          {
+            "id": "place.123",
+            "wikidata": "Q10313",
+            "text": "Donostia"
+          },
+          {
+            "id": "region.123",
+            "short_code": "ES-SS",
+            "wikidata": "Q95010",
+            "text": "Gipuzkoa"
+          },
+          {
+            "id": "country.123",
+            "short_code": "es",
+            "wikidata": "Q29",
+            "text": "Spain"
+          }
+        ]
+      },
+      {
+        "id": "address.123",
+        "type": "Feature",
+        "place_type": [
+          "address"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001 Westside Dr",
+        "place_name": "20001 Westside Dr, Frankford, Missouri 63441, United States",
+        "center": [
+          -91,
+          39
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -91,
+            39
+          ]
+        },
+        "context": [
+          {
+            "id": "postcode.123",
+            "text": "63441"
+          },
+          {
+            "id": "place.123",
+            "wikidata": "Q960791",
+            "text": "Frankford"
+          },
+          {
+            "id": "region.123",
+            "short_code": "US-MO",
+            "wikidata": "Q1581",
+            "text": "Missouri"
+          },
+          {
+            "id": "country.123",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      },
+      {
+        "id": "address.123",
+        "type": "Feature",
+        "place_type": [
+          "address"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001 Painted Cup Dr",
+        "place_name": "20001 Painted Cup Dr, Unionville, Missouri 63565, United States",
+        "center": [
+          -93,
+          40
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -93,
+            40
+          ]
+        },
+        "context": [
+          {
+            "id": "postcode.123",
+            "text": "63565"
+          },
+          {
+            "id": "place.123",
+            "wikidata": "Q598853",
+            "text": "Unionville"
+          },
+          {
+            "id": "region.123",
+            "short_code": "US-MO",
+            "wikidata": "Q1581",
+            "text": "Missouri"
+          },
+          {
+            "id": "country.123",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      },
+      {
+        "id": "address.1",
+        "type": "Feature",
+        "place_type": [
+          "address"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001",
+        "place_name": "20001, Mc Alpin, Florida 32062, United States",
+        "center": [
+          -82,
+          30
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -82,
+            30
+          ]
+        },
+        "context": [
+          {
+            "id": "postcode.123",
+            "text": "32062"
+          },
+          {
+            "id": "place.123",
+            "wikidata": null,
+            "text": "Mc Alpin"
+          },
+          {
+            "id": "region.123",
+            "short_code": "US-FL",
+            "wikidata": "Q812",
+            "text": "Florida"
+          },
+          {
+            "id": "country.123",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      }
+    ],
+    "attribution": "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+  },
+  {
+    "type": "FeatureCollection",
+    "query": [
+      "20001"
+    ],
+    "features": [
+      {
+        "id": "postcode.123",
+        "type": "Feature",
+        "place_type": [
+          "postcode"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001",
+        "place_name": "Washington, District of Columbia 20001, United States",
+        "bbox": [
+          -77,
+          38,
+          -77,
+          38
+        ],
+        "center": [
+          -77,
+          38
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -77,
+            38
+          ]
+        },
+        "context": [
+          {
+            "id": "place.123",
+            "wikidata": "Q61",
+            "text": "Washington"
+          },
+          {
+            "id": "region.123",
+            "short_code": "US-DC",
+            "wikidata": "Q61",
+            "text": "District of Columbia"
+          },
+          {
+            "id": "country.123",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      },
+      {
+        "id": "postcode.123",
+        "type": "Feature",
+        "place_type": [
+          "postcode"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001",
+        "place_name": "20001, Donostia, Gipuzkoa, Spain",
+        "bbox": [
+          -1,
+          43,
+          -1,
+          43
+        ],
+        "center": [
+          -1.972363,
+          43.323461
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -1,
+            43
+          ]
+        },
+        "context": [
+          {
+            "id": "place.123",
+            "wikidata": "Q10313",
+            "text": "Donostia"
+          },
+          {
+            "id": "region.123",
+            "short_code": "ES-SS",
+            "wikidata": "Q95010",
+            "text": "Gipuzkoa"
+          },
+          {
+            "id": "country.123",
+            "short_code": "es",
+            "wikidata": "Q29",
+            "text": "Spain"
+          }
+        ]
+      },
+      {
+        "id": "address.123",
+        "type": "Feature",
+        "place_type": [
+          "address"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001 Westside Dr",
+        "place_name": "20001 Westside Dr, Frankford, Missouri 63441, United States",
+        "center": [
+          -91,
+          39
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -91,
+            39
+          ]
+        },
+        "context": [
+          {
+            "id": "postcode.123",
+            "text": "63441"
+          },
+          {
+            "id": "place.123",
+            "wikidata": "Q960791",
+            "text": "Frankford"
+          },
+          {
+            "id": "region.123",
+            "short_code": "US-MO",
+            "wikidata": "Q1581",
+            "text": "Missouri"
+          },
+          {
+            "id": "country.123",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      },
+      {
+        "id": "address.123",
+        "type": "Feature",
+        "place_type": [
+          "address"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001 Painted Cup Dr",
+        "place_name": "20001 Painted Cup Dr, Unionville, Missouri 63565, United States",
+        "center": [
+          -93,
+          40
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -93,
+            40
+          ]
+        },
+        "context": [
+          {
+            "id": "postcode.123",
+            "text": "63565"
+          },
+          {
+            "id": "place.123",
+            "wikidata": "Q598853",
+            "text": "Unionville"
+          },
+          {
+            "id": "region.123",
+            "short_code": "US-MO",
+            "wikidata": "Q1581",
+            "text": "Missouri"
+          },
+          {
+            "id": "country.123",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      },
+      {
+        "id": "address.123",
+        "type": "Feature",
+        "place_type": [
+          "address"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001",
+        "place_name": "20001, Mc Alpin, Florida 32062, United States",
+        "center": [
+          -82,
+          30
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -82,
+            30
+          ]
+        },
+        "context": [
+          {
+            "id": "postcode.123",
+            "text": "32062"
+          },
+          {
+            "id": "place.123",
+            "wikidata": null,
+            "text": "Mc Alpin"
+          },
+          {
+            "id": "region.123",
+            "short_code": "US-FL",
+            "wikidata": "Q812",
+            "text": "Florida"
+          },
+          {
+            "id": "country.123",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      }
+    ],
+    "attribution": "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+  },
+  {
+    "type": "FeatureCollection",
+    "query": [
+      "20001"
+    ],
+    "features": [
+      {
+        "id": "postcode.123",
+        "type": "Feature",
+        "place_type": [
+          "postcode"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001",
+        "place_name": "Washington, District of Columbia 20001, United States",
+        "bbox": [
+          -77,
+          38,
+          -77,
+          38
+        ],
+        "center": [
+          -77,
+          39
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -77,
+            38
+          ]
+        },
+        "context": [
+          {
+            "id": "place.123",
+            "wikidata": "Q61",
+            "text": "Washington"
+          },
+          {
+            "id": "region.123",
+            "short_code": "US-DC",
+            "wikidata": "Q61",
+            "text": "District of Columbia"
+          },
+          {
+            "id": "country.123",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      },
+      {
+        "id": "postcode.123",
+        "type": "Feature",
+        "place_type": [
+          "postcode"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001",
+        "place_name": "20001, Donostia, Gipuzkoa, Spain",
+        "bbox": [
+          -1,
+          43,
+          -1,
+          43
+        ],
+        "center": [
+          -1,
+          43
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -1,
+            43
+          ]
+        },
+        "context": [
+          {
+            "id": "place.123",
+            "wikidata": "Q10313",
+            "text": "Donostia"
+          },
+          {
+            "id": "region.123",
+            "short_code": "ES-SS",
+            "wikidata": "Q95010",
+            "text": "Gipuzkoa"
+          },
+          {
+            "id": "country.123",
+            "short_code": "es",
+            "wikidata": "Q29",
+            "text": "Spain"
+          }
+        ]
+      },
+      {
+        "id": "address.123",
+        "type": "Feature",
+        "place_type": [
+          "address"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001 Westside Dr",
+        "place_name": "20001 Westside Dr, Frankford, Missouri 63441, United States",
+        "center": [
+          -91,
+          39
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -91,
+            39
+          ]
+        },
+        "context": [
+          {
+            "id": "postcode.123",
+            "text": "63441"
+          },
+          {
+            "id": "place.123",
+            "wikidata": "Q960791",
+            "text": "Frankford"
+          },
+          {
+            "id": "region.123",
+            "short_code": "US-MO",
+            "wikidata": "Q1581",
+            "text": "Missouri"
+          },
+          {
+            "id": "country.123",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      },
+      {
+        "id": "address.123",
+        "type": "Feature",
+        "place_type": [
+          "address"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001 Painted Cup Dr",
+        "place_name": "20001 Painted Cup Dr, Unionville, Missouri 63565, United States",
+        "center": [
+          -93,
+          40
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -93,
+            40
+          ]
+        },
+        "context": [
+          {
+            "id": "postcode.123",
+            "text": "63565"
+          },
+          {
+            "id": "place.123",
+            "wikidata": "Q598853",
+            "text": "Unionville"
+          },
+          {
+            "id": "region.123",
+            "short_code": "US-MO",
+            "wikidata": "Q1581",
+            "text": "Missouri"
+          },
+          {
+            "id": "country.123",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      },
+      {
+        "id": "address.1",
+        "type": "Feature",
+        "place_type": [
+          "address"
+        ],
+        "relevance": 1,
+        "properties": {},
+        "text": "20001",
+        "place_name": "20001, Mc Alpin, Florida 32062, United States",
+        "center": [
+          -82,
+          30
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -82,
+            30
+          ]
+        },
+        "context": [
+          {
+            "id": "postcode.6857120106983010",
+            "text": "32062"
+          },
+          {
+            "id": "place.4536624049214180",
+            "wikidata": null,
+            "text": "Mc Alpin"
+          },
+          {
+            "id": "region.3865",
+            "short_code": "US-FL",
+            "wikidata": "Q812",
+            "text": "Florida"
+          },
+          {
+            "id": "country.3145",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      }
+    ],
+    "attribution": "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+  }
+]

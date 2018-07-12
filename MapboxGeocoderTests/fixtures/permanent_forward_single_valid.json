@@ -1,0 +1,265 @@
+{
+    "type": "FeatureCollection",
+    "query": [
+              "85",
+              "2nd",
+              "st",
+              "san",
+              "francisco"
+              ],
+    "features": [
+                 {
+                 "id": "address.123",
+                 "type": "Feature",
+                 "place_type": [
+                                "address"
+                                ],
+                 "relevance": 1,
+                 "properties": {
+                 
+                 },
+                 "text": "2nd Street",
+                 "place_name": "85 2nd Street, San Francisco, California 94105, United States",
+                 "center": [
+                            -122,
+                            37
+                            ],
+                 "geometry": {
+                 "type": "Point",
+                 "coordinates": [
+                                 -122123,
+                                 37
+                                 ]
+                 },
+                 "address": "85",
+                 "context": [
+                             {
+                             "id": "neighborhood.123",
+                             "text": "South Beach"
+                             },
+                             {
+                             "id": "postcode.123",
+                             "text": "94105"
+                             },
+                             {
+                             "id": "place.123",
+                             "wikidata": "Q62",
+                             "text": "San Francisco"
+                             },
+                             {
+                             "id": "region.123",
+                             "short_code": "US-CA",
+                             "wikidata": "Q99",
+                             "text": "California"
+                             },
+                             {
+                             "id": "country.123",
+                             "short_code": "us",
+                             "wikidata": "Q30",
+                             "text": "United States"
+                             }
+                             ]
+                 },
+                 {
+                 "id": "address.123",
+                 "type": "Feature",
+                 "place_type": [
+                                "address"
+                                ],
+                 "relevance": 1,
+                 "properties": {
+                 
+                 },
+                 "text": "2nd Street",
+                 "place_name": "85 2nd Street, San Francisco Plaza, New Mexico 87830, United States",
+                 "center": [
+                            -108,
+                            33
+                            ],
+                 "geometry": {
+                 "type": "Point",
+                 "coordinates": [
+                                 -108,
+                                 33
+                                 ],
+                 "interpolated": true,
+                 "omitted": true
+                 },
+                 "address": "85",
+                 "context": [
+                             {
+                             "id": "postcode.123",
+                             "text": "87830"
+                             },
+                             {
+                             "id": "place.123",
+                             "wikidata": null,
+                             "text": "San Francisco Plaza"
+                             },
+                             {
+                             "id": "region.123",
+                             "short_code": "US-NM",
+                             "wikidata": "Q1522",
+                             "text": "New Mexico"
+                             },
+                             {
+                             "id": "country.123",
+                             "short_code": "us",
+                             "wikidata": "Q30",
+                             "text": "United States"
+                             }
+                             ]
+                 },
+                 {
+                 "id": "address.123",
+                 "type": "Feature",
+                 "place_type": [
+                                "address"
+                                ],
+                 "relevance": 0.9,
+                 "properties": {
+                 
+                 },
+                 "text": "2nd Street",
+                 "place_name": "85 2nd Street, South San Francisco, California 94080, United States",
+                 "center": [
+                            -122,
+                            37
+                            ],
+                 "geometry": {
+                 "type": "Point",
+                 "coordinates": [
+                                 -122,
+                                 37
+                                 ],
+                 "interpolated": true
+                 },
+                 "address": "85",
+                 "context": [
+                             {
+                             "id": "neighborhood.123",
+                             "text": "El Camino"
+                             },
+                             {
+                             "id": "postcode.123",
+                             "text": "94080"
+                             },
+                             {
+                             "id": "place.123",
+                             "wikidata": "Q927122",
+                             "text": "South San Francisco"
+                             },
+                             {
+                             "id": "region.123",
+                             "short_code": "US-CA",
+                             "wikidata": "Q99",
+                             "text": "California"
+                             },
+                             {
+                             "id": "country.123",
+                             "short_code": "us",
+                             "wikidata": "Q30",
+                             "text": "United States"
+                             }
+                             ]
+                 },
+                 {
+                 "id": "place.123",
+                 "type": "Feature",
+                 "place_type": [
+                                "place"
+                                ],
+                 "relevance": 0.5,
+                 "properties": {
+                 "wikidata": "Q62"
+                 },
+                 "text": "San Francisco",
+                 "place_name": "San Francisco, California, United States",
+                 "bbox": [
+                          -122,
+                          37,
+                          -122,
+                          37
+                          ],
+                 "center": [
+                            -122,
+                            37
+                            ],
+                 "geometry": {
+                 "type": "Point",
+                 "coordinates": [
+                                 -122,
+                                 37
+                                 ]
+                 },
+                 "context": [
+                             {
+                             "id": "region.123",
+                             "short_code": "US-CA",
+                             "wikidata": "Q99",
+                             "text": "California"
+                             },
+                             {
+                             "id": "country.123",
+                             "short_code": "us",
+                             "wikidata": "Q30",
+                             "text": "United States"
+                             }
+                             ]
+                 },
+                 {
+                 "id": "locality.123",
+                 "type": "Feature",
+                 "place_type": [
+                                "locality"
+                                ],
+                 "relevance": 0.5,
+                 "properties": {
+                 
+                 },
+                 "text": "San Francisco",
+                 "place_name": "San Francisco, 4024, Biñan, Laguna, Philippines",
+                 "bbox": [
+                          121,
+                          14,
+                          121,
+                          14
+                          ],
+                 "center": [
+                            121,
+                            14
+                            ],
+                 "geometry": {
+                 "type": "Point",
+                 "coordinates": [
+                                 121,
+                                 14
+                                 ]
+                 },
+                 "context": [
+                             {
+                             "id": "postcode.123",
+                             "text": "4024"
+                             },
+                             {
+                             "id": "place.123",
+                             "wikidata": "Q75961",
+                             "text": "Biñan"
+                             },
+                             {
+                             "id": "region.123",
+                             "short_code": "PH-LAG",
+                             "wikidata": "Q13840",
+                             "text": "Laguna"
+                             },
+                             {
+                             "id": "country.123",
+                             "short_code": "ph",
+                             "wikidata": "Q928",
+                             "text": "Philippines"
+                             }
+                             ]
+                 }
+                 ],
+    "attribution": "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+}

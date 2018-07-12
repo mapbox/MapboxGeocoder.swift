@@ -7,6 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		079F41E820E42EEF007EEB5E /* BatchGeocodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079F41E720E42EEF007EEB5E /* BatchGeocodingTests.swift */; };
+		079F41E920E42EEF007EEB5E /* BatchGeocodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079F41E720E42EEF007EEB5E /* BatchGeocodingTests.swift */; };
+		079F41EA20E42EEF007EEB5E /* BatchGeocodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079F41E720E42EEF007EEB5E /* BatchGeocodingTests.swift */; };
+		07CF859F20F6DE61007B26B6 /* permanent_invalid_token.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF859E20F6DE61007B26B6 /* permanent_invalid_token.json */; };
+		07CF85A020F6DE61007B26B6 /* permanent_invalid_token.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF859E20F6DE61007B26B6 /* permanent_invalid_token.json */; };
+		07CF85A120F6DE61007B26B6 /* permanent_invalid_token.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF859E20F6DE61007B26B6 /* permanent_invalid_token.json */; };
+		07CF85A320F6DED8007B26B6 /* permanent_invalid_token_scope.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85A220F6DED8007B26B6 /* permanent_invalid_token_scope.json */; };
+		07CF85A420F6DED8007B26B6 /* permanent_invalid_token_scope.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85A220F6DED8007B26B6 /* permanent_invalid_token_scope.json */; };
+		07CF85A520F6DED8007B26B6 /* permanent_invalid_token_scope.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85A220F6DED8007B26B6 /* permanent_invalid_token_scope.json */; };
+		07CF85A720F6DF0F007B26B6 /* permanent_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85A620F6DF0E007B26B6 /* permanent_invalid.json */; };
+		07CF85A820F6DF0F007B26B6 /* permanent_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85A620F6DF0E007B26B6 /* permanent_invalid.json */; };
+		07CF85A920F6DF0F007B26B6 /* permanent_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85A620F6DF0E007B26B6 /* permanent_invalid.json */; };
+		07CF85AB20F6DF1E007B26B6 /* permanent_forward_single_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85AA20F6DF1D007B26B6 /* permanent_forward_single_no_results.json */; };
+		07CF85AC20F6DF1E007B26B6 /* permanent_forward_single_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85AA20F6DF1D007B26B6 /* permanent_forward_single_no_results.json */; };
+		07CF85AD20F6DF1E007B26B6 /* permanent_forward_single_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85AA20F6DF1D007B26B6 /* permanent_forward_single_no_results.json */; };
+		07CF85AF20F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85AE20F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json */; };
+		07CF85B020F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85AE20F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json */; };
+		07CF85B120F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85AE20F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json */; };
+		07CF85B320F6DF3C007B26B6 /* permanent_forward_multiple_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85B220F6DF3C007B26B6 /* permanent_forward_multiple_valid.json */; };
+		07CF85B420F6DF3C007B26B6 /* permanent_forward_multiple_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85B220F6DF3C007B26B6 /* permanent_forward_multiple_valid.json */; };
+		07CF85B520F6DF3C007B26B6 /* permanent_forward_multiple_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85B220F6DF3C007B26B6 /* permanent_forward_multiple_valid.json */; };
+		07CF85B720F6DF55007B26B6 /* permanent_forward_single_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85B620F6DF55007B26B6 /* permanent_forward_single_valid.json */; };
+		07CF85B820F6DF55007B26B6 /* permanent_forward_single_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85B620F6DF55007B26B6 /* permanent_forward_single_valid.json */; };
+		07CF85B920F6DF55007B26B6 /* permanent_forward_single_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85B620F6DF55007B26B6 /* permanent_forward_single_valid.json */; };
+		07CF85BB20F6DF76007B26B6 /* permanent_reverse_multiple_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85BA20F6DF76007B26B6 /* permanent_reverse_multiple_valid.json */; };
+		07CF85BC20F6DF76007B26B6 /* permanent_reverse_multiple_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85BA20F6DF76007B26B6 /* permanent_reverse_multiple_valid.json */; };
+		07CF85BD20F6DF76007B26B6 /* permanent_reverse_multiple_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85BA20F6DF76007B26B6 /* permanent_reverse_multiple_valid.json */; };
+		07CF85BF20F6DF86007B26B6 /* permanent_reverse_single_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85BE20F6DF86007B26B6 /* permanent_reverse_single_no_results.json */; };
+		07CF85C020F6DF86007B26B6 /* permanent_reverse_single_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85BE20F6DF86007B26B6 /* permanent_reverse_single_no_results.json */; };
+		07CF85C120F6DF86007B26B6 /* permanent_reverse_single_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85BE20F6DF86007B26B6 /* permanent_reverse_single_no_results.json */; };
+		07CF85C320F6DF93007B26B6 /* permanent_reverse_multiple_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85C220F6DF93007B26B6 /* permanent_reverse_multiple_no_results.json */; };
+		07CF85C420F6DF93007B26B6 /* permanent_reverse_multiple_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85C220F6DF93007B26B6 /* permanent_reverse_multiple_no_results.json */; };
+		07CF85C520F6DF93007B26B6 /* permanent_reverse_multiple_no_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85C220F6DF93007B26B6 /* permanent_reverse_multiple_no_results.json */; };
+		07CF85C720F6DFEB007B26B6 /* permanent_reverse_single_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85C620F6DFEB007B26B6 /* permanent_reverse_single_valid.json */; };
+		07CF85C820F6DFEB007B26B6 /* permanent_reverse_single_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85C620F6DFEB007B26B6 /* permanent_reverse_single_valid.json */; };
+		07CF85C920F6DFEB007B26B6 /* permanent_reverse_single_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CF85C620F6DFEB007B26B6 /* permanent_reverse_single_valid.json */; };
 		35506B8B200F856400629509 /* BridgingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35506B8A200F856400629509 /* BridgingTests.m */; };
 		35506B8C200F856400629509 /* BridgingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35506B8A200F856400629509 /* BridgingTests.m */; };
 		35506B8D200F856400629509 /* BridgingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35506B8A200F856400629509 /* BridgingTests.m */; };
@@ -170,6 +206,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		079F41E720E42EEF007EEB5E /* BatchGeocodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchGeocodingTests.swift; sourceTree = "<group>"; };
+		07CF859E20F6DE61007B26B6 /* permanent_invalid_token.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_invalid_token.json; sourceTree = "<group>"; };
+		07CF85A220F6DED8007B26B6 /* permanent_invalid_token_scope.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_invalid_token_scope.json; sourceTree = "<group>"; };
+		07CF85A620F6DF0E007B26B6 /* permanent_invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_invalid.json; sourceTree = "<group>"; };
+		07CF85AA20F6DF1D007B26B6 /* permanent_forward_single_no_results.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_forward_single_no_results.json; sourceTree = "<group>"; };
+		07CF85AE20F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_forward_multiple_no_results.json; sourceTree = "<group>"; };
+		07CF85B220F6DF3C007B26B6 /* permanent_forward_multiple_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_forward_multiple_valid.json; sourceTree = "<group>"; };
+		07CF85B620F6DF55007B26B6 /* permanent_forward_single_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_forward_single_valid.json; sourceTree = "<group>"; };
+		07CF85BA20F6DF76007B26B6 /* permanent_reverse_multiple_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_reverse_multiple_valid.json; sourceTree = "<group>"; };
+		07CF85BE20F6DF86007B26B6 /* permanent_reverse_single_no_results.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_reverse_single_no_results.json; sourceTree = "<group>"; };
+		07CF85C220F6DF93007B26B6 /* permanent_reverse_multiple_no_results.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_reverse_multiple_no_results.json; sourceTree = "<group>"; };
+		07CF85C620F6DFEB007B26B6 /* permanent_reverse_single_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_reverse_single_valid.json; sourceTree = "<group>"; };
 		35506B8A200F856400629509 /* BridgingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BridgingTests.m; sourceTree = "<group>"; };
 		357B4357202CC90A00735521 /* reverse_address.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = reverse_address.json; sourceTree = "<group>"; };
 		DA1AC0211E5C23B8006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
@@ -402,6 +450,7 @@
 		DDF1E84B1BD6F7BA00C40C78 /* MapboxGeocoderTests */ = {
 			isa = PBXGroup;
 			children = (
+				079F41E720E42EEF007EEB5E /* BatchGeocodingTests.swift */,
 				DA701C001CB1292C00B0E520 /* GeocoderTests.swift */,
 				DA210BAA1CB4BE73008088FD /* ForwardGeocodingTests.swift */,
 				DDF1E84C1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift */,
@@ -416,6 +465,17 @@
 		DDF1E8571BD700EB00C40C78 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				07CF85A220F6DED8007B26B6 /* permanent_invalid_token_scope.json */,
+				07CF859E20F6DE61007B26B6 /* permanent_invalid_token.json */,
+				07CF85A620F6DF0E007B26B6 /* permanent_invalid.json */,
+				07CF85AA20F6DF1D007B26B6 /* permanent_forward_single_no_results.json */,
+				07CF85AE20F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json */,
+				07CF85B220F6DF3C007B26B6 /* permanent_forward_multiple_valid.json */,
+				07CF85B620F6DF55007B26B6 /* permanent_forward_single_valid.json */,
+				07CF85C620F6DFEB007B26B6 /* permanent_reverse_single_valid.json */,
+				07CF85BA20F6DF76007B26B6 /* permanent_reverse_multiple_valid.json */,
+				07CF85BE20F6DF86007B26B6 /* permanent_reverse_single_no_results.json */,
+				07CF85C220F6DF93007B26B6 /* permanent_reverse_multiple_no_results.json */,
 				DA210BAC1CB4BFF7008088FD /* forward_valid.json */,
 				DA58D8A01DB2ADDD00530CBB /* forward_valid_zh.json */,
 				DA210BAE1CB4C5A7008088FD /* forward_invalid.json */,
@@ -726,12 +786,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07CF85B020F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json in Resources */,
+				07CF85A820F6DF0F007B26B6 /* permanent_invalid.json in Resources */,
+				07CF85C020F6DF86007B26B6 /* permanent_reverse_single_no_results.json in Resources */,
 				DA5170B81CF1B1F900CD6DCF /* forward_valid.json in Resources */,
+				07CF85B420F6DF3C007B26B6 /* permanent_forward_multiple_valid.json in Resources */,
+				07CF85AC20F6DF1E007B26B6 /* permanent_forward_single_no_results.json in Resources */,
 				357B4359202CC90A00735521 /* reverse_address.json in Resources */,
+				07CF85C820F6DFEB007B26B6 /* permanent_reverse_single_valid.json in Resources */,
+				07CF85A020F6DE61007B26B6 /* permanent_invalid_token.json in Resources */,
 				DA5170B91CF1B1F900CD6DCF /* forward_invalid.json in Resources */,
 				DA5170BB1CF1B1F900CD6DCF /* reverse_invalid.json in Resources */,
 				DA5170BA1CF1B1F900CD6DCF /* reverse_valid.json in Resources */,
+				07CF85BC20F6DF76007B26B6 /* permanent_reverse_multiple_valid.json in Resources */,
+				07CF85A420F6DED8007B26B6 /* permanent_invalid_token_scope.json in Resources */,
+				07CF85B820F6DF55007B26B6 /* permanent_forward_single_valid.json in Resources */,
 				DA58D8A21DB2ADDD00530CBB /* forward_valid_zh.json in Resources */,
+				07CF85C420F6DF93007B26B6 /* permanent_reverse_multiple_no_results.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -746,12 +817,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07CF85B120F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json in Resources */,
+				07CF85A920F6DF0F007B26B6 /* permanent_invalid.json in Resources */,
+				07CF85C120F6DF86007B26B6 /* permanent_reverse_single_no_results.json in Resources */,
 				DA5170E21CF2542B00CD6DCF /* forward_valid.json in Resources */,
+				07CF85B520F6DF3C007B26B6 /* permanent_forward_multiple_valid.json in Resources */,
+				07CF85AD20F6DF1E007B26B6 /* permanent_forward_single_no_results.json in Resources */,
 				357B435A202CC90A00735521 /* reverse_address.json in Resources */,
+				07CF85C920F6DFEB007B26B6 /* permanent_reverse_single_valid.json in Resources */,
+				07CF85A120F6DE61007B26B6 /* permanent_invalid_token.json in Resources */,
 				DA5170E31CF2542B00CD6DCF /* forward_invalid.json in Resources */,
 				DA5170E51CF2542B00CD6DCF /* reverse_invalid.json in Resources */,
 				DA5170E41CF2542B00CD6DCF /* reverse_valid.json in Resources */,
+				07CF85BD20F6DF76007B26B6 /* permanent_reverse_multiple_valid.json in Resources */,
+				07CF85A520F6DED8007B26B6 /* permanent_invalid_token_scope.json in Resources */,
+				07CF85B920F6DF55007B26B6 /* permanent_forward_single_valid.json in Resources */,
 				DA58D8A31DB2ADDD00530CBB /* forward_valid_zh.json in Resources */,
+				07CF85C520F6DF93007B26B6 /* permanent_reverse_multiple_no_results.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,12 +871,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07CF85AF20F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json in Resources */,
+				07CF85A720F6DF0F007B26B6 /* permanent_invalid.json in Resources */,
+				07CF85BF20F6DF86007B26B6 /* permanent_reverse_single_no_results.json in Resources */,
 				DA210BAD1CB4BFF7008088FD /* forward_valid.json in Resources */,
+				07CF85B320F6DF3C007B26B6 /* permanent_forward_multiple_valid.json in Resources */,
+				07CF85AB20F6DF1E007B26B6 /* permanent_forward_single_no_results.json in Resources */,
 				357B4358202CC90A00735521 /* reverse_address.json in Resources */,
+				07CF85C720F6DFEB007B26B6 /* permanent_reverse_single_valid.json in Resources */,
+				07CF859F20F6DE61007B26B6 /* permanent_invalid_token.json in Resources */,
 				DDF1E85C1BD70E4C00C40C78 /* reverse_invalid.json in Resources */,
 				DDF1E85D1BD70E4C00C40C78 /* reverse_valid.json in Resources */,
 				DA210BAF1CB4C5A7008088FD /* forward_invalid.json in Resources */,
+				07CF85BB20F6DF76007B26B6 /* permanent_reverse_multiple_valid.json in Resources */,
+				07CF85A320F6DED8007B26B6 /* permanent_invalid_token_scope.json in Resources */,
+				07CF85B720F6DF55007B26B6 /* permanent_forward_single_valid.json in Resources */,
 				DA58D8A11DB2ADDD00530CBB /* forward_valid_zh.json in Resources */,
+				07CF85C320F6DF93007B26B6 /* permanent_reverse_multiple_no_results.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -885,6 +978,7 @@
 				DA5170B61CF1B1EF00CD6DCF /* ReverseGeocodingTests.swift in Sources */,
 				DA4D90081DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */,
 				DA5170B41CF1B1EF00CD6DCF /* GeocoderTests.swift in Sources */,
+				079F41E920E42EEF007EEB5E /* BatchGeocodingTests.swift in Sources */,
 				DA5170B51CF1B1EF00CD6DCF /* ForwardGeocodingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -909,6 +1003,7 @@
 				DA5170E11CF2542800CD6DCF /* ReverseGeocodingTests.swift in Sources */,
 				DA4D90091DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */,
 				DA5170DF1CF2542800CD6DCF /* GeocoderTests.swift in Sources */,
+				079F41EA20E42EEF007EEB5E /* BatchGeocodingTests.swift in Sources */,
 				DA5170E01CF2542800CD6DCF /* ForwardGeocodingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -964,6 +1059,7 @@
 				DDF1E84D1BD6F7BA00C40C78 /* ReverseGeocodingTests.swift in Sources */,
 				DA4D90071DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */,
 				DA210BAB1CB4BE73008088FD /* ForwardGeocodingTests.swift in Sources */,
+				079F41E820E42EEF007EEB5E /* BatchGeocodingTests.swift in Sources */,
 				DA701C011CB1292C00B0E520 /* GeocoderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

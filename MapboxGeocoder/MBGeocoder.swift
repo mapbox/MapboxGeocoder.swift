@@ -223,7 +223,17 @@ open class Geocoder: NSObject {
             let decoder = JSONDecoder()
             
             do {
-                let result = try decoder.decode([GeocodeResult].self, from: data)
+                
+                let result: [GeocodeResult]
+                
+                do {
+                    // Decode multiple batch geocoding queries
+                    result = try decoder.decode([GeocodeResult].self, from: data)
+                } catch {
+                    // Decode single batch geocding queries
+                    result = [try decoder.decode(GeocodeResult.self, from: data)]
+                }
+                
                 let placemarks = result.map { $0.placemarks }
                 let attributionsByQuery = result.map { $0.attribution }
                 completionHandler(placemarks, attributionsByQuery, nil)
@@ -250,6 +260,7 @@ open class Geocoder: NSObject {
      */
     fileprivate func dataTaskWithURL(_ url: URL, completionHandler: @escaping (_ data: Data?) -> Void, errorHandler: @escaping (_ error: NSError) -> Void) -> URLSessionDataTask {
         var request = URLRequest(url: url)
+        
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         return URLSession.shared.dataTask(with: request) { (data, response, error) in
 
@@ -257,9 +268,12 @@ open class Geocoder: NSObject {
             let decoder = JSONDecoder()
             
             do {
-                let result = try decoder.decode(GeocodeAPIResult.self, from: data)
-                guard result.message == nil else {
-                    let apiError = Geocoder.descriptiveError(["message": result.message!], response: response, underlyingError: error as NSError?)
+                // Handle multiple batch geocoding queries
+                let result = try decoder.decode([GeocodeAPIResult].self, from: data)
+                
+                // Check if any of the batch geocoding queries failed
+                if let failedResult = result.first(where: { $0.message != nil }) {
+                    let apiError = Geocoder.descriptiveError(["message": failedResult.message!], response: response, underlyingError: error as NSError?)
                     DispatchQueue.main.async {
                         errorHandler(apiError)
                     }
@@ -269,8 +283,26 @@ open class Geocoder: NSObject {
                     completionHandler(data)
                 }
             } catch {
-                DispatchQueue.main.async {
-                    errorHandler(error as NSError)
+                // Handle single & single batch geocoding queries
+                do {
+                    let result = try decoder.decode(GeocodeAPIResult.self, from: data)
+                    // Check if geocoding query failed
+                    if let message = result.message {
+                        let apiError = Geocoder.descriptiveError(["message": message], response: response, underlyingError: error as NSError?)
+                        DispatchQueue.main.async {
+                            errorHandler(apiError)
+                        }
+                        return
+                        
+                    }
+                    DispatchQueue.main.async {
+                        completionHandler(data)
+                    }
+                } catch {
+                    // Handle errors that don't return a message (such as a server/network error)
+                    DispatchQueue.main.async {
+                        errorHandler(error as NSError)
+                    }
                 }
             }
         }
@@ -290,13 +322,7 @@ open class Geocoder: NSObject {
         
         assert(!options.queries.isEmpty, "No query")
         
-        let mode: String
-        if options.queries.count > 1 {
-            mode = "mapbox.places-permanent"
-            assert(options.queries.count <= 50, "Too many queries in a single request.")
-        } else {
-            mode = "mapbox.places"
-        }
+        let mode = options.mode
         
         let queryComponent = options.queries.map {
             $0.replacingOccurrences(of: " ", with: "+")

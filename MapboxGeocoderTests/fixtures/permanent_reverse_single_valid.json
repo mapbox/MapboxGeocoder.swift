@@ -1,0 +1,277 @@
+{
+  "type": "FeatureCollection",
+  "query": [
+    -77,
+    38
+  ],
+  "features": [
+    {
+      "id": "address.123",
+      "type": "Feature",
+      "place_type": [
+        "address"
+      ],
+      "relevance": 1,
+      "properties": {
+        
+      },
+      "text": "South Capitol Circle Southwest",
+      "place_name": "South Capitol Circle Southwest, Washington, District of Columbia 20002, United States",
+      "center": [
+        -77,
+        38
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77,
+          38
+        ]
+      },
+      "context": [
+        {
+          "id": "neighborhood.123",
+          "text": "Capitol Hill"
+        },
+        {
+          "id": "postcode.123",
+          "text": "20002"
+        },
+        {
+          "id": "place.123",
+          "wikidata": "Q61",
+          "text": "Washington"
+        },
+        {
+          "id": "region.123",
+          "short_code": "US-DC",
+          "wikidata": "Q61",
+          "text": "District of Columbia"
+        },
+        {
+          "id": "country.123",
+          "wikidata": "Q30",
+          "short_code": "us",
+          "text": "United States"
+        }
+      ]
+    },
+    {
+      "id": "neighborhood.123",
+      "type": "Feature",
+      "place_type": [
+        "neighborhood"
+      ],
+      "relevance": 1,
+      "properties": {
+        
+      },
+      "text": "Capitol Hill",
+      "place_name": "Capitol Hill, Washington, District of Columbia 20002, United States",
+      "bbox": [
+        -77,
+        38,
+        -76,
+        38
+      ],
+      "center": [
+        -77,
+        38
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77.0003,
+          38.889
+        ]
+      },
+      "context": [
+        {
+          "id": "postcode",
+          "text": "20002"
+        },
+        {
+          "id": "place",
+          "wikidata": "Q61",
+          "text": "Washington"
+        },
+        {
+          "id": "region.123",
+          "short_code": "US-DC",
+          "wikidata": "Q61",
+          "text": "District of Columbia"
+        },
+        {
+          "id": "country.123",
+          "wikidata": "Q30",
+          "short_code": "us",
+          "text": "United States"
+        }
+      ]
+    },
+    {
+      "id": "postcode.123",
+      "type": "Feature",
+      "place_type": [
+        "postcode"
+      ],
+      "relevance": 1,
+      "properties": {
+        
+      },
+      "text": "20002",
+      "place_name": "Washington, District of Columbia 20002, United States",
+      "bbox": [
+        -77,
+        38,
+        -76,
+        38
+      ],
+      "center": [
+        -77,
+        38
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77,
+          38
+        ]
+      },
+      "context": [
+        {
+          "id": "place.123",
+          "wikidata": "Q61",
+          "text": "Washington"
+        },
+        {
+          "id": "region.123",
+          "short_code": "US-DC",
+          "wikidata": "Q61",
+          "text": "District of Columbia"
+        },
+        {
+          "id": "country.123",
+          "wikidata": "Q30",
+          "short_code": "us",
+          "text": "United States"
+        }
+      ]
+    },
+    {
+      "id": "place.123",
+      "type": "Feature",
+      "place_type": [
+        "place"
+      ],
+      "relevance": 1,
+      "properties": {
+        "wikidata": "Q61"
+      },
+      "text": "Washington",
+      "place_name": "Washington, District of Columbia, United States",
+      "bbox": [
+        -77,
+        38,
+        -76,
+        38
+      ],
+      "center": [
+        -77,
+        38
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -77,
+          38
+        ]
+      },
+      "context": [
+        {
+          "id": "region.123",
+          "short_code": "US-DC",
+          "wikidata": "Q61",
+          "text": "District of Columbia"
+        },
+        {
+          "id": "country.123",
+          "wikidata": "Q30",
+          "short_code": "us",
+          "text": "United States"
+        }
+      ]
+    },
+    {
+      "id": "region.123",
+      "type": "Feature",
+      "place_type": [
+        "region"
+      ],
+      "relevance": 1,
+      "properties": {
+        "short_code": "US-DC",
+        "wikidata": "Q61"
+      },
+      "text": "District of Columbia",
+      "place_name": "District of Columbia, United States",
+      "bbox": [
+        -77,
+        38,
+        -76,
+        38
+      ],
+      "center": [
+        -76,
+        38
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76,
+          38
+        ]
+      },
+      "context": [
+        {
+          "id": "country.123",
+          "wikidata": "Q30",
+          "short_code": "us",
+          "text": "United States"
+        }
+      ]
+    },
+    {
+      "id": "country.123",
+      "type": "Feature",
+      "place_type": [
+        "country"
+      ],
+      "relevance": 1,
+      "properties": {
+        "wikidata": "Q30",
+        "short_code": "us"
+      },
+      "text": "United States",
+      "place_name": "United States",
+      "bbox": [
+        -179,
+        -14,
+        -64,
+        71
+      ],
+      "center": [
+        -97,
+        39
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -97,
+          39
+        ]
+      }
+    }
+  ],
+  "attribution": "© 2017 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+}
