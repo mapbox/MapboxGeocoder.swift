@@ -73,6 +73,11 @@ class ReverseGeocodingTests: XCTestCase {
         XCTAssertEqual(region.southWest.longitude, southWest.longitude, accuracy: 0.000000000001)
         XCTAssertEqual(region.northEast.latitude, northEast.latitude, accuracy: 0.000000000001)
         XCTAssertEqual(region.northEast.longitude, northEast.longitude, accuracy: 0.000000000001)
+        
+        let encodedRegion = try! JSONEncoder().encode(region)
+        let decodedRegion = try! JSONDecoder().decode(RectangularRegion.self, from: encodedRegion)
+        
+        XCTAssertEqual(region, decodedRegion)
     }
 
     func testInvalidReverseGeocode() {
