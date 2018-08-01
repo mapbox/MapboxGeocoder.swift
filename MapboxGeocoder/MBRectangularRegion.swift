@@ -2,11 +2,16 @@
  The `RectangularRegion` class defines a rectangular bounding box for a geographic region.
  */
 @objc(MBRectangularRegion)
-open class RectangularRegion: CLRegion {
+open class RectangularRegion: CLRegion, Codable {
     /** Coordinate at the southwest corner. */
     @objc open var southWest: CLLocationCoordinate2D = CLLocationCoordinate2D()
     /** Coordinate at the northeast corner. */
     @objc open var northEast: CLLocationCoordinate2D = CLLocationCoordinate2D()
+    
+    private enum CodingKeys: String, CodingKey {
+        case southWest
+        case northEast
+    }
     
     /**
      Creates a rectangular region with the given southwest and northeast corners.
@@ -32,6 +37,19 @@ open class RectangularRegion: CLRegion {
         super.encode(with: coder)
         coder.encodeValue(ofObjCType: "{dd}", at: &southWest)
         coder.encodeValue(ofObjCType: "{dd}", at: &northEast)
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.southWest = try container.decode(CLLocationCoordinate2D.self, forKey: .southWest)
+        self.northEast = try container.decode(CLLocationCoordinate2D.self, forKey: .northEast)
+        super.init()
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(southWest, forKey: .southWest)
+        try container.encode(northEast, forKey: .northEast)
     }
     
     @objc open override var hashValue: Int {
