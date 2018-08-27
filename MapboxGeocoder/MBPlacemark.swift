@@ -405,6 +405,7 @@ open class GeocodedPlacemark: Placemark {
     
     private enum CodingKeys: String, CodingKey {
         case routableLocations = "routable_points"
+        case relevance
     }
     
     private enum PointsCodingKeys: String, CodingKey {
@@ -421,8 +422,6 @@ open class GeocodedPlacemark: Placemark {
     @objc open var routableLocations: [CLLocation]?
     
     public required init(from decoder: Decoder) throws {
-        try super.init(from: decoder)
-        
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         if let pointsContainer = try? container.nestedContainer(keyedBy: PointsCodingKeys.self, forKey: .routableLocations),
@@ -433,12 +432,16 @@ open class GeocodedPlacemark: Placemark {
                 routableLocations = [CLLocation(coordinate: coordinate)]
             }
         }
+        
+        relevance = try container.decodeIfPresent(Double.self, forKey: .relevance) ?? -1
+        
+        try super.init(from: decoder)
     }
     
     public override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-        
         var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encodeIfPresent(relevance, forKey: .relevance)
         
         if let routableLocations = routableLocations,
             !routableLocations.isEmpty {
@@ -448,6 +451,8 @@ open class GeocodedPlacemark: Placemark {
                                                                   routableLocations[0].coordinate.latitude])
             try coordinatesContainer.encode(routableLocation)
         }
+        
+        try super.encode(to: encoder)
     }
     
     @objc open override var debugDescription: String {
@@ -485,6 +490,13 @@ open class GeocodedPlacemark: Placemark {
     @objc open override var imageName: String? {
         return properties?.maki
     }
+    
+    /**
+     A numerical score from 0 (least relevant) to 0.99 (most relevant) measuring
+     how well each returned feature matches the query. Use this property to
+     remove results that don’t fully match the query.
+     */
+    @objc open var relevance: Double
     
     private var clippedAddressLines: [String] {
         let lines = qualifiedNameComponents
