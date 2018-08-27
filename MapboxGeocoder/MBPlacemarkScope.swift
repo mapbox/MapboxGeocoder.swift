@@ -24,7 +24,6 @@ extension PlacemarkScope: CustomStringConvertible {
                 scope.update(with: .neighborhood)
             case "address":
                 scope.update(with: .address)
-                
             case "poi.landmark":
                 scope.update(with: .landmark)
             case "poi":
