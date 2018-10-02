@@ -125,8 +125,10 @@ open class Placemark: NSObject, Codable {
         }
     }
     
-    @objc open override var hashValue: Int {
-        return identifier.hashValue
+    open override var hash: Int {
+        var hasher = Hasher()
+        hasher.combine(identifier.hashValue)
+        return hasher.finalize()
     }
     
     @objc open override func isEqual(_ object: Any?) -> Bool {
