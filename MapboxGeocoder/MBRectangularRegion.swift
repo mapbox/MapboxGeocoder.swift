@@ -52,6 +52,7 @@ open class RectangularRegion: CLRegion, Codable {
         try container.encode(northEast, forKey: .northEast)
     }
     
+    #if swift(>=4.2)
     open override var hash: Int {
         var hasher = Hasher()
         hasher.combine(southWest.latitude.hashValue)
@@ -60,6 +61,11 @@ open class RectangularRegion: CLRegion, Codable {
         hasher.combine(northEast.longitude.hashValue)
         return hasher.finalize()
     }
+    #else
+    @objc open override var hashValue: Int {
+        return (southWest.latitude.hashValue + southWest.longitude.hashValue + northEast.latitude.hashValue + northEast.longitude.hashValue)
+    }
+    #endif
     
     @objc open override func isEqual(_ object: Any?) -> Bool {
         guard let object = object as? RectangularRegion else {
