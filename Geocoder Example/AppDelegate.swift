@@ -1,9 +1,9 @@
 import UIKit
 
 #if swift(>=4.2)
-fileprivate typealias LaunchOptionsKey = UIApplication.LaunchOptionsKey
+typealias LaunchOptionsKey = UIApplication.LaunchOptionsKey
 #else
-fileprivate typealias LaunchOptionsKey = UIApplicationLaunchOptionsKey
+typealias LaunchOptionsKey = UIApplicationLaunchOptionsKey
 #endif
 
 @UIApplicationMain
