@@ -47,7 +47,7 @@ let userAgent: String = {
         chip = "arm64"
     #elseif arch(i386)
         chip = "i386"
-    #elseif os(watchOS) // Workaround for incorrect arch in machine.h for simulator ⌚️ gen 4
+    #elseif os(watchOS) // Workaround for incorrect arch in machine.h for watch simulator  gen 4
         chip = "i386"
     #else
         chip = "unknown"
