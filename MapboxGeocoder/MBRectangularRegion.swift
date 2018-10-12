@@ -53,14 +53,6 @@ open class RectangularRegion: CLRegion, Codable {
     }
     
     #if swift(>=4.2)
-    open override var hash: Int {
-        var hasher = Hasher()
-        hasher.combine(southWest.latitude.hashValue)
-        hasher.combine(southWest.longitude.hashValue)
-        hasher.combine(northEast.latitude.hashValue)
-        hasher.combine(northEast.longitude.hashValue)
-        return hasher.finalize()
-    }
     #else
     @objc open override var hashValue: Int {
         return (southWest.latitude.hashValue + southWest.longitude.hashValue + northEast.latitude.hashValue + northEast.longitude.hashValue)
