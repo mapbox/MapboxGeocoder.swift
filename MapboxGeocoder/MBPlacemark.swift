@@ -125,9 +125,12 @@ open class Placemark: NSObject, Codable {
         }
     }
     
+    #if swift(>=4.2)
+    #else
     @objc open override var hashValue: Int {
         return identifier.hashValue
     }
+    #endif
     
     @objc open override func isEqual(_ object: Any?) -> Bool {
         if let object = object as? Placemark {
