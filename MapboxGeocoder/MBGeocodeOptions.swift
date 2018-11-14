@@ -248,7 +248,7 @@ open class ReverseBatchGeocodeOptions: ReverseGeocodeOptions, BatchGeocodeOption
     /**
      Initializes a reverse batch geocode options object with the given `CLLocation` objects.
      
-     - parameter location: An array of up to 50 `CLLocation` objects to search for.
+     - parameter locations: An array of up to 50 `CLLocation` objects to search for.
      */
     @objc public convenience init(locations: [CLLocation]) {
         self.init(coordinates: locations.map { $0.coordinate })
