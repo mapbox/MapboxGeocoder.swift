@@ -109,13 +109,14 @@ class ForwardGeocodingTests: XCTestCase {
         
         let geocoder = Geocoder(accessToken: BogusToken)
         var placemark: GeocodedPlacemark! = nil
+        var secondPlacemark: GeocodedPlacemark! = nil
         let options = ForwardGeocodeOptions(query: "hainan")
         options.allowedISOCountryCodes = ["CN"]
         options.locale = Locale(identifier: "zh-Hans")
         let task = geocoder.geocode(options) { (placemarks, attribution, error) in
             XCTAssertEqual(placemarks?.count, 3)
             placemark = placemarks![0]
-            
+            secondPlacemark = placemarks![1]
             XCTAssertEqual(attribution, "NOTICE: © 2016 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained.")
             
             expectation.fulfill()
@@ -153,5 +154,48 @@ class ForwardGeocodingTests: XCTestCase {
         XCTAssertEqual(addressDictionary[MBPostalAddressStateKey] as? String, "内蒙古", "forward geocode should populate state in address dictionary")
         XCTAssertEqual(addressDictionary[MBPostalAddressCountryKey] as? String, "中国", "forward geocode should populate country in address dictionary")
         XCTAssertEqual(addressDictionary[MBPostalAddressISOCountryCodeKey] as? String, "CN", "forward geocode should populate ISO country code in address dictionary")
+        
+        XCTAssertEqual(secondPlacemark.properties?.shortCode, "CN-46")
+        XCTAssertEqual(secondPlacemark.code, "CN")
+    }
+    
+    func testValidHongKongForwardGeocode() {
+        let expectation = self.expectation(description: "forward geocode should return results")
+        
+        _ = stub(condition: isHost("api.mapbox.com")
+            && isPath("/geocoding/v5/mapbox.places/hainan.json")
+            && containsQueryParams(["country": "cn", "language": "zh", "access_token": BogusToken])) { _ in
+                let path = Bundle(for: type(of: self)).path(forResource: "forward_valid_hk", ofType: "json")
+                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+        }
+        
+        let geocoder = Geocoder(accessToken: BogusToken)
+        var placemark: GeocodedPlacemark! = nil
+        var fourthPlacemark: GeocodedPlacemark! = nil
+        let options = ForwardGeocodeOptions(query: "hainan")
+        options.allowedISOCountryCodes = ["CN"]
+        options.locale = Locale(identifier: "zh-Hans")
+        let task = geocoder.geocode(options) { (placemarks, attribution, error) in
+            XCTAssertEqual(placemarks?.count, 6)
+            placemark = placemarks![0]
+            fourthPlacemark = placemarks![3]
+            XCTAssertEqual(attribution, "NOTICE: © 2018 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained.")
+            
+            expectation.fulfill()
+        }
+        XCTAssertNotNil(task)
+        
+        waitForExpectations(timeout: 1) { (error) in
+            XCTAssertNil(error, "Error: \(error!)")
+            XCTAssertEqual(task.state, .completed)
+        }
+        
+        XCTAssertEqual(placemark.properties?.wikidata, "Q8646")
+        XCTAssertEqual(fourthPlacemark.properties?.phoneNumber, "2732 3232")
+        XCTAssertEqual(fourthPlacemark.properties?.address, "2 Science Museum Rd")
+        XCTAssertEqual(fourthPlacemark.properties?.category, "museum")
+        XCTAssertEqual(fourthPlacemark.properties?.landmark, true)
+        XCTAssertEqual(fourthPlacemark.properties?.wikidata, "Q836319")
+        XCTAssertEqual(fourthPlacemark.properties?.maki, "museum")
     }
 }

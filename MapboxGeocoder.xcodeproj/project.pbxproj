@@ -46,6 +46,13 @@
 		35506B8B200F856400629509 /* BridgingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35506B8A200F856400629509 /* BridgingTests.m */; };
 		35506B8C200F856400629509 /* BridgingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35506B8A200F856400629509 /* BridgingTests.m */; };
 		35506B8D200F856400629509 /* BridgingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35506B8A200F856400629509 /* BridgingTests.m */; };
+		355A7B7C21527B700001D2AD /* MBGeocodedPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A7B7B21527B700001D2AD /* MBGeocodedPlacemark.swift */; };
+		355A7B7D21527B700001D2AD /* MBGeocodedPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A7B7B21527B700001D2AD /* MBGeocodedPlacemark.swift */; };
+		355A7B7E21527B700001D2AD /* MBGeocodedPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A7B7B21527B700001D2AD /* MBGeocodedPlacemark.swift */; };
+		355A7B7F21527B700001D2AD /* MBGeocodedPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355A7B7B21527B700001D2AD /* MBGeocodedPlacemark.swift */; };
+		355A7B8121527FAF0001D2AD /* forward_valid_hk.json in Resources */ = {isa = PBXBuildFile; fileRef = 355A7B8021527FAF0001D2AD /* forward_valid_hk.json */; };
+		355A7B8221527FAF0001D2AD /* forward_valid_hk.json in Resources */ = {isa = PBXBuildFile; fileRef = 355A7B8021527FAF0001D2AD /* forward_valid_hk.json */; };
+		355A7B8321527FAF0001D2AD /* forward_valid_hk.json in Resources */ = {isa = PBXBuildFile; fileRef = 355A7B8021527FAF0001D2AD /* forward_valid_hk.json */; };
 		357B4358202CC90A00735521 /* reverse_address.json in Resources */ = {isa = PBXBuildFile; fileRef = 357B4357202CC90A00735521 /* reverse_address.json */; };
 		357B4359202CC90A00735521 /* reverse_address.json in Resources */ = {isa = PBXBuildFile; fileRef = 357B4357202CC90A00735521 /* reverse_address.json */; };
 		357B435A202CC90A00735521 /* reverse_address.json in Resources */ = {isa = PBXBuildFile; fileRef = 357B4357202CC90A00735521 /* reverse_address.json */; };
@@ -223,6 +230,8 @@
 		07CF85C220F6DF93007B26B6 /* permanent_reverse_multiple_no_results.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_reverse_multiple_no_results.json; sourceTree = "<group>"; };
 		07CF85C620F6DFEB007B26B6 /* permanent_reverse_single_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permanent_reverse_single_valid.json; sourceTree = "<group>"; };
 		35506B8A200F856400629509 /* BridgingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BridgingTests.m; sourceTree = "<group>"; };
+		355A7B7B21527B700001D2AD /* MBGeocodedPlacemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBGeocodedPlacemark.swift; sourceTree = "<group>"; };
+		355A7B8021527FAF0001D2AD /* forward_valid_hk.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = forward_valid_hk.json; sourceTree = "<group>"; };
 		357B4357202CC90A00735521 /* reverse_address.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = reverse_address.json; sourceTree = "<group>"; };
 		35D3DE382112410A00B62912 /* CoreLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocation.swift; sourceTree = "<group>"; };
 		DA1AC0211E5C23B8006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
@@ -415,6 +424,7 @@
 				DA2EC05D1CED732F00D4BA5D /* MBGeocodeOptions.swift */,
 				DDC229591A36073B006BE405 /* MBGeocoder.swift */,
 				DA2E03EF1CB0FDB400D1269A /* MBPlacemark.swift */,
+				355A7B7B21527B700001D2AD /* MBGeocodedPlacemark.swift */,
 				DA29C8DE1CEBE90200E48A61 /* MBPlacemarkScope.h */,
 				DA2EC05B1CED72E900D4BA5D /* MBPlacemarkScope.swift */,
 				DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */,
@@ -488,6 +498,7 @@
 				DDF1E85B1BD70E4C00C40C78 /* reverse_valid.json */,
 				DDF1E85A1BD70E4C00C40C78 /* reverse_invalid.json */,
 				357B4357202CC90A00735521 /* reverse_address.json */,
+				355A7B8021527FAF0001D2AD /* forward_valid_hk.json */,
 			);
 			name = Fixtures;
 			path = fixtures;
@@ -793,6 +804,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07CF85B020F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json in Resources */,
+				355A7B8221527FAF0001D2AD /* forward_valid_hk.json in Resources */,
 				07CF85A820F6DF0F007B26B6 /* permanent_invalid.json in Resources */,
 				07CF85C020F6DF86007B26B6 /* permanent_reverse_single_no_results.json in Resources */,
 				DA5170B81CF1B1F900CD6DCF /* forward_valid.json in Resources */,
@@ -824,6 +836,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07CF85B120F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json in Resources */,
+				355A7B8321527FAF0001D2AD /* forward_valid_hk.json in Resources */,
 				07CF85A920F6DF0F007B26B6 /* permanent_invalid.json in Resources */,
 				07CF85C120F6DF86007B26B6 /* permanent_reverse_single_no_results.json in Resources */,
 				DA5170E21CF2542B00CD6DCF /* forward_valid.json in Resources */,
@@ -878,6 +891,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07CF85AF20F6DF2F007B26B6 /* permanent_forward_multiple_no_results.json in Resources */,
+				355A7B8121527FAF0001D2AD /* forward_valid_hk.json in Resources */,
 				07CF85A720F6DF0F007B26B6 /* permanent_invalid.json in Resources */,
 				07CF85BF20F6DF86007B26B6 /* permanent_reverse_single_no_results.json in Resources */,
 				DA210BAD1CB4BFF7008088FD /* forward_valid.json in Resources */,
@@ -970,6 +984,7 @@
 			files = (
 				DA5170B31CF1B1E000CD6DCF /* MBRectangularRegion.swift in Sources */,
 				DA5170B01CF1B1E000CD6DCF /* MBPlacemark.swift in Sources */,
+				355A7B7D21527B700001D2AD /* MBGeocodedPlacemark.swift in Sources */,
 				DA5170AF1CF1B1E000CD6DCF /* MBGeocoder.swift in Sources */,
 				DA5170B21CF1B1E000CD6DCF /* MBPlacemarkScope.swift in Sources */,
 				DA5170AE1CF1B1E000CD6DCF /* MBGeocodeOptions.swift in Sources */,
@@ -996,6 +1011,7 @@
 			files = (
 				DA5170DE1CF2541C00CD6DCF /* MBRectangularRegion.swift in Sources */,
 				DA5170DB1CF2541C00CD6DCF /* MBPlacemark.swift in Sources */,
+				355A7B7E21527B700001D2AD /* MBGeocodedPlacemark.swift in Sources */,
 				DA5170DA1CF2541C00CD6DCF /* MBGeocoder.swift in Sources */,
 				DA5170DD1CF2541C00CD6DCF /* MBPlacemarkScope.swift in Sources */,
 				DA5170D91CF2541C00CD6DCF /* MBGeocodeOptions.swift in Sources */,
@@ -1022,6 +1038,7 @@
 			files = (
 				DA5170F91CF2582F00CD6DCF /* MBRectangularRegion.swift in Sources */,
 				DA5170F61CF2582F00CD6DCF /* MBPlacemark.swift in Sources */,
+				355A7B7F21527B700001D2AD /* MBGeocodedPlacemark.swift in Sources */,
 				DA5170F51CF2582F00CD6DCF /* MBGeocoder.swift in Sources */,
 				DA5170F81CF2582F00CD6DCF /* MBPlacemarkScope.swift in Sources */,
 				DA5170F41CF2582F00CD6DCF /* MBGeocodeOptions.swift in Sources */,
@@ -1044,6 +1061,7 @@
 			files = (
 				DA2EC05E1CED732F00D4BA5D /* MBGeocodeOptions.swift in Sources */,
 				DA2E03F21CB0FE0200D1269A /* MBRectangularRegion.swift in Sources */,
+				355A7B7C21527B700001D2AD /* MBGeocodedPlacemark.swift in Sources */,
 				DDC2295E1A360843006BE405 /* MBGeocoder.swift in Sources */,
 				DA2EC05C1CED72E900D4BA5D /* MBPlacemarkScope.swift in Sources */,
 				DA2E03F01CB0FDB400D1269A /* MBPlacemark.swift in Sources */,
