@@ -31,11 +31,11 @@ For Objective-C targets, it may be necessary to enable the `ALWAYS_EMBED_SWIFT_S
 
 v0.6.3 is the last release of MapboxGeocoder.swift written in Swift 3.2. The `swift3.2` branch corresponds to this release, plus any critical bug fixes that have been applied since. All subsequent releases will be based on the `master` branch, which is written in Swift 4. The Swift examples below are written in Swift 4; see the `swift3.2` branch’s readme for Swift 3.2 examples.
 
-This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). More examples and detailed documentation are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/?language=Swift#geocoding).
+This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). More examples and detailed documentation are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/search/#geocoding).
 
 ## Usage
 
-You will need a [Mapbox access token](https://www.mapbox.com/developers/api/#access-tokens) in order to use the API. If you’re already using the [Mapbox Maps SDK for iOS](https://www.mapbox.com/ios-sdk/) or [Mapbox Maps SDK for macOS](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/macos), MapboxGeocoder.swift automatically recognizes your access token, as long as you’ve placed it in the `MGLMapboxAccessToken` key of your application’s Info.plist file.
+You will need a [Mapbox access token](https://www.mapbox.com/api-documentation/#access-tokens-and-token-scopes) in order to use the API. If you’re already using the [Mapbox Maps SDK for iOS](https://www.mapbox.com/ios-sdk/) or [Mapbox Maps SDK for macOS](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/macos), MapboxGeocoder.swift automatically recognizes your access token, as long as you’ve placed it in the `MGLMapboxAccessToken` key of your application’s Info.plist file.
 
 The examples below are each provided in Swift (denoted with `main.swift`) and Objective-C (`main.m`). For further details, see the [MapboxGeocoder.swift API reference](http://cocoadocs.org/docsets/MapboxGeocoder.swift/).
 
@@ -92,16 +92,16 @@ let task = geocoder.geocode(options) { (placemarks, attribution, error) in
     guard let placemark = placemarks?.first else {
         return
     }
-    
+
     print(placemark.name)
         // 200 Queen St
     print(placemark.qualifiedName)
         // 200 Queen St, Saint John, New Brunswick E2L 2X1, Canada
-    
+
     let coordinate = placemark.location.coordinate
     print("\(coordinate.latitude), \(coordinate.longitude)")
         // 45.270093, -66.050985
-    
+
     #if !os(tvOS)
         let formatter = CNPostalAddressFormatter()
         print(formatter.string(from: placemark.postalAddress!))
@@ -134,11 +134,11 @@ NSURLSessionDataTask *task = [geocoder geocodeWithOptions:options
         // 200 Queen St
     NSLog(@"%@", placemark.qualifiedName);
         // 200 Queen St, Saint John, New Brunswick E2L 2X1, Canada
-    
+
     CLLocationCoordinate2D coordinate = placemark.location.coordinate;
     NSLog(@"%f, %f", coordinate.latitude, coordinate.longitude);
         // 45.270093, -66.050985
-    
+
 #if !TARGET_OS_TV
     CNPostalAddressFormatter *formatter = [[CNPostalAddressFormatter alloc] init];
     NSLog(@"%@", [formatter stringFromPostalAddress:placemark.postalAddress]);
@@ -162,7 +162,7 @@ let task = geocoder.geocode(options) { (placemarks, attribution, error) in
     guard let placemark = placemarks?.first else {
         return
     }
-    
+
     print(placemark.imageName ?? "")
         // telephone
     print(placemark.genres?.joined(separator: ", ") ?? "")
@@ -213,7 +213,7 @@ let task = geocoder.batchGeocode(options) { (placemarksByQuery, attributionsByQu
     guard let placemarksByQuery = placemarksByQuery else {
         return
     }
-    
+
     let nearestSkyline = placemarksByQuery[0][0].location
     let distanceToSkyline = nearestSkyline.distance(from: locationManager.location)
     let nearestGoldStar = placemarksByQuery[1][0].location
@@ -237,7 +237,7 @@ NSURLSessionDataTask *task = [geocoder batchGeocodeWithOptions:options
     if (!placemarksByQuery) {
         return;
     }
-    
+
     MBPlacemark *nearestSkyline = placemarksByQuery[0][0].location;
     CLLocationDistance distanceToSkyline = [nearestSkyline distanceFromLocation:locationManager.location];
     MBPlacemark *nearestGoldStar = placemarksByQuery[1][0].location;
@@ -252,7 +252,7 @@ Batch geocoding is available to Mapbox enterprise accounts. See the [Mapbox Geoc
 
 ## Tests
 
-To run the included unit tests, you need to use [Carthage](https://github.com/Carthage/Carthage/) 0.19 or above to install the dependencies. 
+To run the included unit tests, you need to use [Carthage](https://github.com/Carthage/Carthage/) 0.19 or above to install the dependencies.
 
 1. `carthage bootstrap`
 1. `open MapboxGeocoder.xcodeproj`
