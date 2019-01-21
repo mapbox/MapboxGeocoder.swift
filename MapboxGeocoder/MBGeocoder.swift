@@ -268,7 +268,10 @@ open class Geocoder: NSObject {
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         return URLSession.shared.dataTask(with: request) { (data, response, error) in
 
-            guard let data = data else { return }
+            guard let data = data else { 
+                errorHandler(error)
+                return 
+            }
             let decoder = JSONDecoder()
 
             do {
