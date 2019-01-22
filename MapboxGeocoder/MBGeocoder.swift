@@ -269,8 +269,12 @@ open class Geocoder: NSObject {
         return URLSession.shared.dataTask(with: request) { (data, response, error) in
 
             guard let data = data else { 
-                errorHandler(error)
-                return 
+                if let error = error as? NSError {
+                    errorHandler(error)
+                } else {
+                    errorHandler(NSError(domain: MBGeocoderErrorDomain, code: -1024, userInfo: [NSLocalizedDescriptionKey : "unexpected error", NSDebugDescriptionErrorKey : "this error happens when data task return nil data and nil error, which typically is not possible"])) 
+                }
+                return
             }
             let decoder = JSONDecoder()
 
