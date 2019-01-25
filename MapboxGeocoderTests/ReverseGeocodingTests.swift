@@ -57,6 +57,7 @@ class ReverseGeocodingTests: XCTestCase {
         XCTAssertEqual(pointOfInterestPlacemark.place?.name, "Independence", "reverse geocode should populate place")
         XCTAssertNil(pointOfInterestPlacemark.thoroughfare, "reverse geocode for POI should not populate thoroughfare")
         XCTAssertNil(pointOfInterestPlacemark.subThoroughfare, "reverse geocode for POI should not populate sub-thoroughfare")
+        XCTAssertEqual(pointOfInterestPlacemark.wikidataItemIdentifier, "Q82112")
         
         XCTAssertNotNil(pointOfInterestPlacemark.addressDictionary)
         let addressDictionary = pointOfInterestPlacemark.addressDictionary
