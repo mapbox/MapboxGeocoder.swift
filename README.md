@@ -1,10 +1,7 @@
 # MapboxGeocoder
 
-[📱&nbsp;![iOS Build Status](https://app.bitrise.io/app/6cae401ec4c1d406/status.svg?token=MJnXK0c2x2tmTnmHSPtcFA&branch=master)](https://www.bitrise.io/app/6cae401ec4c1d406) &nbsp;&nbsp;&nbsp;
-[🖥💻&nbsp;![macOS Build Status](https://app.bitrise.io/app/8413a6e577d6aa9a/status.svg?token=N1agv0mw75SOE_SykliueQ&branch=master)](https://www.bitrise.io/app/8413a6e577d6aa9a) &nbsp;&nbsp;&nbsp;
-[📺&nbsp;![tvOS Build Status](https://app.bitrise.io/app/0a8b56775b94f3e3/status.svg?token=UgLmHNS_ALJLjJN8ebd4hA&branch=master)](https://www.bitrise.io/app/0a8b56775b94f3e3) &nbsp;&nbsp;&nbsp;
-[⌚️&nbsp;![watchOS Build Status](https://app.bitrise.io/app/b2a0878fa4bddab4/status.svg?token=4wjvK6K92dNK2bOCuV9-Yg&branch=master)](https://www.bitrise.io/app/b2a0878fa4bddab4) &nbsp;&nbsp;&nbsp;
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) &nbsp;&nbsp;&nbsp;
+[![CircleCI](https://circleci.com/gh/mapbox/MapboxGeocoder.swift.svg?style=svg)](https://circleci.com/gh/mapbox/MapboxGeocoder.swift)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods](https://img.shields.io/cocoapods/v/MapboxGeocoder.swift.svg)](http://cocoadocs.org/docsets/MapboxGeocoder.swift/)
 
 MapboxGeocoder.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the [Mapbox Geocoding API](https://www.mapbox.com/geocoding/). MapboxGeocoder.swift exposes the power of the [Carmen](https://github.com/mapbox/carmen) geocoder through a simple API similar to Core Location’s CLGeocoder.
