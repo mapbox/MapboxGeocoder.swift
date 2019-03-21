@@ -267,13 +267,18 @@ open class Geocoder: NSObject {
 
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         return URLSession.shared.dataTask(with: request) { (data, response, error) in
-
+            let returnQueue = DispatchQueue.main
+            
             guard let data = data else { 
                 if let e = error as NSError? {
-                    errorHandler(e)
+                    returnQueue.async {
+                        errorHandler(e)
+                    }
                 } else {
                     let unexpectedError = NSError(domain: MBGeocoderErrorDomain, code: -1024, userInfo: [NSLocalizedDescriptionKey : "unexpected error", NSDebugDescriptionErrorKey : "this error happens when data task return nil data and nil error, which typically is not possible"])
-                    errorHandler(unexpectedError) 
+                    returnQueue.async {
+                        errorHandler(unexpectedError)
+                    }
                 }
                 return
             }
@@ -286,12 +291,12 @@ open class Geocoder: NSObject {
                 // Check if any of the batch geocoding queries failed
                 if let failedResult = result.first(where: { $0.message != nil }) {
                     let apiError = Geocoder.descriptiveError(["message": failedResult.message!], response: response, underlyingError: error as NSError?)
-                    DispatchQueue.main.async {
+                    returnQueue.async {
                         errorHandler(apiError)
                     }
                     return
                 }
-                DispatchQueue.main.async {
+                returnQueue.async {
                     completionHandler(data)
                 }
             } catch {
@@ -301,18 +306,18 @@ open class Geocoder: NSObject {
                     // Check if geocoding query failed
                     if let message = result.message {
                         let apiError = Geocoder.descriptiveError(["message": message], response: response, underlyingError: error as NSError?)
-                        DispatchQueue.main.async {
+                        returnQueue.async {
                             errorHandler(apiError)
                         }
                         return
 
                     }
-                    DispatchQueue.main.async {
+                    returnQueue.async {
                         completionHandler(data)
                     }
                 } catch {
                     // Handle errors that don't return a message (such as a server/network error)
-                    DispatchQueue.main.async {
+                    returnQueue.async {
                         errorHandler(error as NSError)
                     }
                 }
