@@ -268,12 +268,14 @@ open class Geocoder: NSObject {
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         return URLSession.shared.dataTask(with: request) { (data, response, error) in
 
-            guard let data = data else { 
-                if let e = error as NSError? {
-                    errorHandler(e)
-                } else {
-                    let unexpectedError = NSError(domain: MBGeocoderErrorDomain, code: -1024, userInfo: [NSLocalizedDescriptionKey : "unexpected error", NSDebugDescriptionErrorKey : "this error happens when data task return nil data and nil error, which typically is not possible"])
-                    errorHandler(unexpectedError) 
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    if let e = error as NSError? {
+                        errorHandler(e)
+                    } else {
+                        let unexpectedError = NSError(domain: MBGeocoderErrorDomain, code: -1024, userInfo: [NSLocalizedDescriptionKey : "unexpected error", NSDebugDescriptionErrorKey : "this error happens when data task return nil data and nil error, which typically is not possible"])
+                        errorHandler(unexpectedError)
+                    }
                 }
                 return
             }
