@@ -8,4 +8,5 @@ FOUNDATION_EXPORT double MapboxGeocoderVersionNumber;
 
 FOUNDATION_EXPORT const unsigned char MapboxGeocoderVersionString[];
 
+#import "MBPlacemarkPrecision.h"
 #import "MBPlacemarkScope.h"
