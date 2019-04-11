@@ -485,6 +485,9 @@ open class GeocodedPlacemark: Placemark {
             } else {
                 return "\(houseNumber) \(streetName)"
             }
+        } else if scope == .address, precision == .intersection {
+            // For intersection features, `text` is just the first street name. The first line of the fully qualified address contains the cross street too.
+            return qualifiedNameComponents.first ?? text
         } else {
             return text
         }
