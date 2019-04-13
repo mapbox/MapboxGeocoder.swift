@@ -59,6 +59,8 @@ public let MBPostalAddressCountryKey = "country"
  */
 public let MBPostalAddressISOCountryCodeKey = "ISOCountryCode"
 
+public typealias PlacemarkPrecision = MBPlacemarkPrecision
+
 /**
  A `Placemark` object represents a geocoder result. A placemark associates identifiers, geographic data, and contact information with a particular latitude and longitude. It is possible to explicitly create a placemark object from another placemark object; however, placemark objects are generally created for you via the `Geocoder.geocode(_:completionHandler:)` method.
  */
@@ -376,6 +378,7 @@ internal struct Properties: Codable {
         case phoneNumber = "tel"
         case maki
         case address
+        case precision = "accuracy"
         case category
         case wikidata
     }
@@ -384,6 +387,7 @@ internal struct Properties: Codable {
     let maki: String?
     let phoneNumber: String?
     let address: String?
+    let precision: String?
     let category: String?
     let wikidata: String?
 }
@@ -481,6 +485,9 @@ open class GeocodedPlacemark: Placemark {
             } else {
                 return "\(houseNumber) \(streetName)"
             }
+        } else if scope == .address, precision == .intersection {
+            // For intersection features, `text` is just the first street name. The first line of the fully qualified address contains the cross street too.
+            return qualifiedNameComponents.first ?? text
         } else {
             return text
         }
@@ -579,6 +586,18 @@ open class GeocodedPlacemark: Placemark {
      */
     @objc open override var phoneNumber: String? {
         return properties?.phoneNumber
+    }
+    
+    /**
+     The placemark’s precision.
+     
+     The precision offers a general indication of the potential distance between the `location` property and the feature’s actual real-world location.
+     */
+    @objc open var precision: PlacemarkPrecision? {
+        if let precision = properties?.precision {
+            return PlacemarkPrecision(rawValue: precision)
+        }
+        return nil
     }
 }
 

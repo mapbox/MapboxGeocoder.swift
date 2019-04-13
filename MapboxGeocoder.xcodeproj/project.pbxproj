@@ -113,6 +113,14 @@
 		DA737B011E599C2C00AD2CDE /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA737AFC1E599BB300AD2CDE /* OHHTTPStubs.framework */; };
 		DA737B041E599C4A00AD2CDE /* OHHTTPStubs.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = DA737AFF1E599BD400AD2CDE /* OHHTTPStubs.framework.dSYM */; };
 		DA737B051E599C6B00AD2CDE /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA737AFA1E599B9D00AD2CDE /* OHHTTPStubs.framework */; };
+		DA8B5C07225FB2F400CD1C99 /* MBPlacemarkPrecision.h in Headers */ = {isa = PBXBuildFile; fileRef = DA8B5C05225FB2F400CD1C99 /* MBPlacemarkPrecision.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA8B5C08225FB2F400CD1C99 /* MBPlacemarkPrecision.h in Headers */ = {isa = PBXBuildFile; fileRef = DA8B5C05225FB2F400CD1C99 /* MBPlacemarkPrecision.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA8B5C09225FB2F400CD1C99 /* MBPlacemarkPrecision.h in Headers */ = {isa = PBXBuildFile; fileRef = DA8B5C05225FB2F400CD1C99 /* MBPlacemarkPrecision.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA8B5C0A225FB2F400CD1C99 /* MBPlacemarkPrecision.h in Headers */ = {isa = PBXBuildFile; fileRef = DA8B5C05225FB2F400CD1C99 /* MBPlacemarkPrecision.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA8B5C0B225FB2F400CD1C99 /* MBPlacemarkPrecision.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8B5C06225FB2F400CD1C99 /* MBPlacemarkPrecision.m */; };
+		DA8B5C0C225FB2F400CD1C99 /* MBPlacemarkPrecision.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8B5C06225FB2F400CD1C99 /* MBPlacemarkPrecision.m */; };
+		DA8B5C0D225FB2F400CD1C99 /* MBPlacemarkPrecision.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8B5C06225FB2F400CD1C99 /* MBPlacemarkPrecision.m */; };
+		DA8B5C0E225FB2F400CD1C99 /* MBPlacemarkPrecision.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8B5C06225FB2F400CD1C99 /* MBPlacemarkPrecision.m */; };
 		DAA75ED620DDAD760049807C /* MapboxGeocoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; };
 		DAA75ED720DDAD760049807C /* MapboxGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAF158851D03D81600829B35 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF158841D03D81600829B35 /* Launch Screen.storyboard */; };
@@ -249,6 +257,8 @@
 		DA737AFA1E599B9D00AD2CDE /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/tvOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		DA737AFC1E599BB300AD2CDE /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/Mac/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		DA737AFF1E599BD400AD2CDE /* OHHTTPStubs.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = OHHTTPStubs.framework.dSYM; path = Carthage/Build/Mac/OHHTTPStubs.framework.dSYM; sourceTree = "<group>"; };
+		DA8B5C05225FB2F400CD1C99 /* MBPlacemarkPrecision.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBPlacemarkPrecision.h; sourceTree = "<group>"; };
+		DA8B5C06225FB2F400CD1C99 /* MBPlacemarkPrecision.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBPlacemarkPrecision.m; sourceTree = "<group>"; };
 		DAF158841D03D81600829B35 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		DD342B5019A140EE00219F77 /* Geocoder (Swift).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geocoder (Swift).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD342B5419A140EE00219F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -415,6 +425,8 @@
 				DA2EC05D1CED732F00D4BA5D /* MBGeocodeOptions.swift */,
 				DDC229591A36073B006BE405 /* MBGeocoder.swift */,
 				DA2E03EF1CB0FDB400D1269A /* MBPlacemark.swift */,
+				DA8B5C05225FB2F400CD1C99 /* MBPlacemarkPrecision.h */,
+				DA8B5C06225FB2F400CD1C99 /* MBPlacemarkPrecision.m */,
 				DA29C8DE1CEBE90200E48A61 /* MBPlacemarkScope.h */,
 				DA2EC05B1CED72E900D4BA5D /* MBPlacemarkScope.swift */,
 				DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */,
@@ -502,6 +514,7 @@
 			files = (
 				DA5170AD1CF1B1DB00CD6DCF /* MapboxGeocoder.h in Headers */,
 				DA5170B11CF1B1E000CD6DCF /* MBPlacemarkScope.h in Headers */,
+				DA8B5C08225FB2F400CD1C99 /* MBPlacemarkPrecision.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +524,7 @@
 			files = (
 				DA5170D81CF2541C00CD6DCF /* MapboxGeocoder.h in Headers */,
 				DA5170DC1CF2541C00CD6DCF /* MBPlacemarkScope.h in Headers */,
+				DA8B5C09225FB2F400CD1C99 /* MBPlacemarkPrecision.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +534,7 @@
 			files = (
 				DA5170F31CF2582F00CD6DCF /* MapboxGeocoder.h in Headers */,
 				DA5170F71CF2582F00CD6DCF /* MBPlacemarkScope.h in Headers */,
+				DA8B5C0A225FB2F400CD1C99 /* MBPlacemarkPrecision.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +544,7 @@
 			files = (
 				DA29C8DF1CEBE90200E48A61 /* MBPlacemarkScope.h in Headers */,
 				DDC2295C1A36074F006BE405 /* MapboxGeocoder.h in Headers */,
+				DA8B5C07225FB2F400CD1C99 /* MBPlacemarkPrecision.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -973,6 +989,7 @@
 				DA5170AF1CF1B1E000CD6DCF /* MBGeocoder.swift in Sources */,
 				DA5170B21CF1B1E000CD6DCF /* MBPlacemarkScope.swift in Sources */,
 				DA5170AE1CF1B1E000CD6DCF /* MBGeocodeOptions.swift in Sources */,
+				DA8B5C0C225FB2F400CD1C99 /* MBPlacemarkPrecision.m in Sources */,
 				35D3DE3A2112410A00B62912 /* CoreLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -999,6 +1016,7 @@
 				DA5170DA1CF2541C00CD6DCF /* MBGeocoder.swift in Sources */,
 				DA5170DD1CF2541C00CD6DCF /* MBPlacemarkScope.swift in Sources */,
 				DA5170D91CF2541C00CD6DCF /* MBGeocodeOptions.swift in Sources */,
+				DA8B5C0D225FB2F400CD1C99 /* MBPlacemarkPrecision.m in Sources */,
 				35D3DE3B2112410A00B62912 /* CoreLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1025,6 +1043,7 @@
 				DA5170F51CF2582F00CD6DCF /* MBGeocoder.swift in Sources */,
 				DA5170F81CF2582F00CD6DCF /* MBPlacemarkScope.swift in Sources */,
 				DA5170F41CF2582F00CD6DCF /* MBGeocodeOptions.swift in Sources */,
+				DA8B5C0E225FB2F400CD1C99 /* MBPlacemarkPrecision.m in Sources */,
 				35D3DE3C2112410A00B62912 /* CoreLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1047,6 +1066,7 @@
 				DDC2295E1A360843006BE405 /* MBGeocoder.swift in Sources */,
 				DA2EC05C1CED72E900D4BA5D /* MBPlacemarkScope.swift in Sources */,
 				DA2E03F01CB0FDB400D1269A /* MBPlacemark.swift in Sources */,
+				DA8B5C0B225FB2F400CD1C99 /* MBPlacemarkPrecision.m in Sources */,
 				35D3DE392112410A00B62912 /* CoreLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

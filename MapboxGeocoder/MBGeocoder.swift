@@ -62,11 +62,9 @@ extension CharacterSet {
      Returns the character set including the characters allowed in the “geocoding query” (file name) part of a Geocoding API URL request.
      */
     internal static func geocodingQueryAllowedCharacterSet() -> CharacterSet {
-        // <rdar://problem/26880260> <https://openradar.appspot.com/26880260>
-        return CharacterSet(charactersIn: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
-//        var characterSet = CharacterSet.urlPathAllowed
-//        characterSet.remove(charactersIn: "/;")
-//        return characterSet
+        var characterSet = CharacterSet.urlPathAllowed
+        characterSet.remove(charactersIn: "/;")
+        return characterSet
     }
 }
 
