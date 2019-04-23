@@ -1,0 +1,9 @@
+ignore:
+  - "Geocoder Example"
+  - "MapboxGeocoderTests"
+
+coverage:
+  status:
+    project:
+      default:
+        threshold: 1%
