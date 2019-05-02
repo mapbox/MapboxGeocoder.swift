@@ -8,6 +8,7 @@ public let MBGeocoderErrorDomain = "MBGeocoderErrorDomain"
 /// The Mapbox access token specified in the main application bundle’s Info.plist.
 let defaultAccessToken = Bundle.main.infoDictionary?["MGLMapboxAccessToken"] as? String
 
+
 /// The user agent string for any HTTP requests performed directly within this library.
 let userAgent: String = {
     var components: [String] = []
@@ -138,6 +139,9 @@ open class Geocoder: NSObject {
 
     /// The Mapbox access token to associate the request with.
     internal let accessToken: String
+    
+    internal var lastQuery: String
+    internal let sessionid: String
 
     /**
      Initializes a newly created geocoder object with an optional access token and host.
@@ -155,6 +159,11 @@ open class Geocoder: NSObject {
         baseURLComponents.scheme = "https"
         baseURLComponents.host = host ?? "api.mapbox.com"
         self.apiEndpoint = baseURLComponents.url!
+        
+        self.lastQuery = ""
+        
+        /// Mapbox Session ID is randomly generated
+        self.sessionid = NSUUID().uuidString
     }
 
     /**
@@ -166,6 +175,7 @@ open class Geocoder: NSObject {
      */
     @objc public convenience init(accessToken: String?) {
         self.init(accessToken: accessToken, host: nil)
+        self.initSession()
     }
 
     // MARK: Geocoding a Location
@@ -186,7 +196,7 @@ open class Geocoder: NSObject {
     @objc(geocodeWithOptions:completionHandler:)
     open func geocode(_ options: GeocodeOptions, completionHandler: @escaping CompletionHandler) -> URLSessionDataTask {
         let url = urlForGeocoding(options)
-
+        self.initKeydown(options: options)
         let task = dataTaskWithURL(url, completionHandler: { (data) in
             guard let data = data else { return }
             let decoder = JSONDecoder()
@@ -346,6 +356,113 @@ open class Geocoder: NSObject {
         components.queryItems = params
         return components.url!
     }
+    
+    /**
+     Send a keydown event
+    */
+    func initKeydown(options: GeocodeOptions){
+        if (options.queries.count > 1) {
+            // don't record batch geocodes
+            return
+        }
+        let query = options.queries[0]
+        if (isReverseGeocode(testStr: query)){
+            // don't record reverse geocodes
+            return
+        }
+        if (query == self.lastQuery){
+            // don't duplicate
+            return
+        }
+        if (query == ""){
+            // don't record empty queries
+            return
+        }
+        
+        let lastAction = stringDiff(a: query, b:self.lastQuery)
+        let now =  NSDate().timeIntervalSince1970
+        let keydownData: [String: Any] = [
+            "event": "search.keystroke",
+            "created": now,
+            "sessionIdentifier":sessionid,
+            "queryString": query,
+            "lastAction": lastAction,
+        ]
+        self.mapboxEvent(data: keydownData)
+        self.lastQuery =  query;
+    }
+    
+    /**
+     Check if reverse geocode
+    */
+    func isReverseGeocode(testStr:String) -> Bool {
+        print(testStr)
+        let reverseGeocodeRegex = "\\S+\\d+,\\S+\\d+"
+        
+        let test = NSPredicate(format:"SELF MATCHES %@", reverseGeocodeRegex)
+        return test.evaluate(with: testStr)
+    }
+    
+    func stringDiff(a: String, b:String) -> String{
+        if (a.count < b.count){
+            return "Backspace";
+        }else if (a == b){
+            return "NONE"
+        }else{
+            return String(a.last!)
+        }
+    }
+
+    /**
+        Send a session start event to Mapbox
+    */
+    func initSession(){
+        let now =  NSDate().timeIntervalSince1970
+        let sessionData: [String: Any] = [
+            "event": "search.start",
+            "created": now,
+            "sessionIdentifier":self.sessionid,
+            "queryString": "INIT_SESSION"
+        ]
+        print("SESSION START")
+        self.mapboxEvent(data: sessionData)
+    }
+    
+    func mapboxEvent(data: Dictionary<String, Any>){
+        //        let url = "https://api-events-staging.tilestream.net/events/v2?access_token=" + self.accessToken
+
+        let staging_url = URL(string: "https://api-events-staging.tilestream.net/events/v2?access_token=pk.eyJ1Ijoic2NvdHQtc3RhZ2luZzEiLCJhIjoiY2pwNHNoOXh0MDFlazN3bmtscGoyaTM1MCJ9.WDsA5z3Z8-WWYh9lJ305PA")
+        var request = URLRequest (url: staging_url!)
+        request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: [data], options: .prettyPrinted)
+            request.httpBody = jsonData
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let _ = data,
+                let response = response as? HTTPURLResponse,
+                error == nil else {
+                    print("error", error ?? "Unknown error")
+                    return
+            }
+            
+            guard (204) ~= response.statusCode else {
+                print("response = \(response)")
+                return
+            }
+            print("Event received")
+            // no need to inspect the returned data
+        }
+        task.resume()
+    }
+
+    
 
     /**
      Returns an error that supplements the given underlying error with additional information from the an HTTP response’s body or headers.
