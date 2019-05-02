@@ -430,10 +430,8 @@ open class Geocoder: NSObject {
     }
     
     func mapboxEvent(data: Dictionary<String, Any>){
-        //        let url = "https://api-events-staging.tilestream.net/events/v2?access_token=" + self.accessToken
-
-        let staging_url = URL(string: "https://api-events-staging.tilestream.net/events/v2?access_token=pk.eyJ1Ijoic2NvdHQtc3RhZ2luZzEiLCJhIjoiY2pwNHNoOXh0MDFlazN3bmtscGoyaTM1MCJ9.WDsA5z3Z8-WWYh9lJ305PA")
-        var request = URLRequest (url: staging_url!)
+        let url = URL(string: "https://api.mapbox.com/events/v2?access_token=" + self.accessToken)
+        var request = URLRequest (url: url!)
         request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
