@@ -387,6 +387,7 @@ open class Geocoder: NSObject {
             "sessionIdentifier":sessionid,
             "queryString": query,
             "lastAction": lastAction,
+            "userAgent": userAgent
         ]
         self.mapboxEvent(data: keydownData)
         self.lastQuery =  query;
@@ -422,9 +423,9 @@ open class Geocoder: NSObject {
             "event": "search.start",
             "created": now,
             "sessionIdentifier":self.sessionid,
-            "queryString": "INIT_SESSION"
+            "queryString": "INIT_SESSION",
+            "userAgent": userAgent
         ]
-        print("SESSION START")
         self.mapboxEvent(data: sessionData)
     }
     
