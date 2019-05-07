@@ -5,6 +5,8 @@ typealias JSONDictionary = [String: Any]
 /// Indicates that an error occurred in MapboxGeocoder.
 public let MBGeocoderErrorDomain = "MBGeocoderErrorDomain"
 
+let MBXMapboxSKUTokenKey = "MBXMapboxSKUToken"
+
 /// The Mapbox access token specified in the main application bundle’s Info.plist.
 let defaultAccessToken = Bundle.main.infoDictionary?["MGLMapboxAccessToken"] as? String
 
@@ -328,9 +330,12 @@ open class Geocoder: NSObject {
      The HTTP URL used to fetch the geocodes from the API.
      */
     @objc open func urlForGeocoding(_ options: GeocodeOptions) -> URL {
-        let params = options.params + [
-            URLQueryItem(name: "access_token", value: accessToken),
-        ]
+        var params = options.params
+        params += [URLQueryItem(name: "access_token", value: accessToken)]
+        
+        if let skuToken = UserDefaults.standard.object(forKey: MBXMapboxSKUTokenKey) as? String {
+            params += [URLQueryItem(name: "sku", value: skuToken)]
+        }
 
         assert(!options.queries.isEmpty, "No query")
 
