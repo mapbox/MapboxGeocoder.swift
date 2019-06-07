@@ -1,4 +1,6 @@
 import Foundation
+import CoreLocation
+
 
 typealias JSONDictionary = [String: Any]
 

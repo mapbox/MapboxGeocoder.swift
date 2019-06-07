@@ -27,6 +27,17 @@ step-library:
         command: bash <(curl -s https://codecov.io/bash)
 
 jobs:
+  SPM-job:
+    parameters:
+      xcode:
+        type: string
+    macos:
+      xcode: << parameters.xcode >>
+    steps:
+      - checkout
+      - run:
+          name: SPM
+          command: swift build
   build-job:
     parameters:
       xcode:
@@ -106,3 +117,6 @@ workflows:
           iOS: "9.3"
           tvOS: "12.2"
           watchOS: "5.2"
+      - SPM-job:
+          name: "SPM"
+          xcode: "10.2.1"

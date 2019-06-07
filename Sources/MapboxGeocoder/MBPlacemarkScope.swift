@@ -1,3 +1,9 @@
+import Foundation
+#if SWIFT_PACKAGE
+import CMapboxGeocoder
+#endif
+
+
 public typealias PlacemarkScope = MBPlacemarkScope
 
 extension PlacemarkScope: CustomStringConvertible {

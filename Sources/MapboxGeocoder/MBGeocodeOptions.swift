@@ -1,6 +1,9 @@
+import Foundation
 #if !os(tvOS)
     import Contacts
 #endif
+import CoreLocation
+
 
 /**
  A structure that specifies the criteria for results returned by the Mapbox Geocoding API.

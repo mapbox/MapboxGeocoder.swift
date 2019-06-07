@@ -1,7 +1,12 @@
+import Foundation
 #if !os(tvOS)
     import Contacts
 #endif
 import CoreLocation
+#if SWIFT_PACKAGE
+import CMapboxGeocoder
+#endif
+
 
 // MARK: Postal Address Properties
 

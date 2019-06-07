@@ -8,3 +8,6 @@ xcuserdata
 
 Carthage.pkg
 Carthage/
+
+/.build
+/Packages
