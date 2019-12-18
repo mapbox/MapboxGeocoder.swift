@@ -81,6 +81,19 @@ open class Placemark: NSObject, Codable {
     }
     
     /**
+     Creates a placemark with the given name and identifier.
+     
+     Normally you do not call this method to obtain a placemark. Instead, you call the `Geocoder.geocode(_:completionHandler:)` method, which asynchronously returns placemarks that match certain criteria.
+     
+     - parameter identifier: A string that uniquely identifies the feature.
+     - parameter name: The common name of the placemark.
+     */
+    @objc public init(identifier: String, name: String) {
+        self.identifier = identifier
+        self.name = name
+    }
+    
+    /**
      Creates a placemark from the given [Carmen GeoJSON](https://github.com/mapbox/carmen/blob/master/carmen-geojson.md) feature.
      */
     public required init(from decoder: Decoder) throws {
