@@ -60,6 +60,7 @@ class ReverseGeocodingTests: XCTestCase {
         XCTAssertEqual(pointOfInterestPlacemark.place?.name, "Independence", "reverse geocode should populate place")
         XCTAssertNil(pointOfInterestPlacemark.thoroughfare, "reverse geocode for POI should not populate thoroughfare")
         XCTAssertNil(pointOfInterestPlacemark.subThoroughfare, "reverse geocode for POI should not populate sub-thoroughfare")
+        XCTAssertEqual(pointOfInterestPlacemark.streetAddress, "2850 CR 3100", "reverse geocode for POI should populate street address")
         XCTAssertEqual(pointOfInterestPlacemark.wikidataItemIdentifier, "Q82112")
         
         XCTAssertNotNil(pointOfInterestPlacemark.addressDictionary)
@@ -141,5 +142,6 @@ class ReverseGeocodingTests: XCTestCase {
         
         XCTAssertEqual(addressPlacemark?.name, decodedAddressPlacemark.name)
         XCTAssertEqual(addressPlacemark?.formattedName, decodedAddressPlacemark.formattedName)
+        XCTAssertEqual(addressPlacemark?.streetAddress, "850 Eldorado Street", "reverse geocode should populate street address")
     }
 }

@@ -494,21 +494,14 @@ open class GeocodedPlacemark: Placemark {
     }
     
     @objc open var formattedName: String {
-        let text = super.name
-        // For address features, `text` is just the street name. Look through the fully-qualified address to determine whether to put the house number before or after the street name.
-        if let houseNumber = address, scope == .address {
-            let streetName = text
-            let reversedAddress = "\(streetName) \(houseNumber)"
-            if qualifiedNameComponents.contains(reversedAddress) {
-                return reversedAddress
-            } else {
-                return "\(houseNumber) \(streetName)"
-            }
-        } else if scope == .address, precision == .intersection {
-            // For intersection features, `text` is just the first street name. The first line of the fully qualified address contains the cross street too.
-            return qualifiedNameComponents.first ?? text
+        guard scope == .address else {
+            return name
+        }
+        if precision == .intersection {
+            // For intersection features, `name` is just the first street name. The first line of the fully qualified address contains the cross street too.
+            return qualifiedNameComponents.first ?? name
         } else {
-            return text
+            return streetAddress ?? name
         }
     }
     
@@ -544,6 +537,22 @@ open class GeocodedPlacemark: Placemark {
     
     override var formattedAddressLines: [String] {
         return clippedAddressLines
+    }
+    
+    @objc open var streetAddress: String? {
+        guard scope == .address else {
+            return properties?.address ?? address
+        }
+        guard let address = address else {
+            return name
+        }
+        // For address features, `address` is a house number and `name` is just a street name. Look through the fully-qualified address to determine whether to put the house number after or before the street name (i.e. Chinese addresses).
+        let streetAddress = "\(name) \(address)"
+        if qualifiedNameComponents.contains(streetAddress) {
+            return streetAddress
+        } else {
+            return "\(address) \(name)"
+        }
     }
     
     #if canImport(Contacts)
