@@ -26,7 +26,7 @@ Then `import MapboxGeocoder` or `@import MapboxGeocoder;`.
 
 For Objective-C targets, it may be necessary to enable the `ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES` build setting.
 
-This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). More examples and detailed documentation are available in the [Mapbox API Documentation](https://www.mapbox.com/api-documentation/search/#geocoding).
+This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). The [Mapbox API Documentation](https://www.mapbox.com/api-documentation/search/#geocoding) explains the underlying HTTP request and response format, as well as [relevant limits](https://docs.mapbox.com/api/search/#geocoding-restrictions-and-limits) that also apply when using this library.
 
 ## Usage
 
