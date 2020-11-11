@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/mapbox/MapboxGeocoder.swift.svg?style=svg)](https://circleci.com/gh/mapbox/MapboxGeocoder.swift)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![SPM compatible](https://img.shields.io/badge/SPM-compatible-4BC51D.svg?style=flat)](https://swift.org/package-manager/)
 [![CocoaPods](https://img.shields.io/cocoapods/v/MapboxGeocoder.swift.svg)](http://cocoapods.org/pods/MapboxGeocoder.swift/)
 
 MapboxGeocoder.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the [Mapbox Geocoding API](https://www.mapbox.com/geocoding/). MapboxGeocoder.swift exposes the power of the [Carmen](https://github.com/mapbox/carmen) geocoder through a simple API similar to Core Location’s CLGeocoder.
@@ -22,11 +23,30 @@ Or in your [CocoaPods](http://cocoapods.org/) Podfile:
 pod 'MapboxGeocoder.swift', '~> 0.12'
 ```
 
+Or in your [Swift Package Manager](https://swift.org/package-manager/) Package.swift:
+
+```swift
+.package(url: "https://github.com/mapbox/MapboxGeocoder.swift.git", from: "0.12.0")
+```
+
 Then `import MapboxGeocoder` or `@import MapboxGeocoder;`.
 
 For Objective-C targets, it may be necessary to enable the `ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES` build setting.
 
 This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). The [Mapbox API Documentation](https://www.mapbox.com/api-documentation/search/#geocoding) explains the underlying HTTP request and response format, as well as [relevant limits](https://docs.mapbox.com/api/search/#geocoding-restrictions-and-limits) that also apply when using this library.
+
+## System requirements
+
+* One of the following package managers:
+   * CocoaPods (CocoaPods 1.10 or above if using Xcode 12)
+   * Carthage 0.19 or above (run [this script](https://github.com/mapbox/MapboxGeocoder.swift/blob/main/scripts/wcarthage.sh) instead of `carthage` if using Xcode 12)
+   * Swift Package Manager 5.3 or above
+* Xcode 11 or above (Xcode 12 or above if using Swift Package Manager)
+* One of the following operating systems:
+   * iOS 10.0 or above
+   * macOS 10.12.0 or above
+   * tvOS 10.0 or above
+   * watchOS 3.0 or above
 
 ## Usage
 
@@ -72,7 +92,7 @@ _Forward geocoding_ takes a human-readable query, such as a place name or addres
 
 ```swift
 // main.swift
-#if !os(tvOS)
+#if canImport(Contacts)
     import Contacts
 #endif
 
@@ -97,7 +117,7 @@ let task = geocoder.geocode(options) { (placemarks, attribution, error) in
     print("\(coordinate.latitude), \(coordinate.longitude)")
         // 45.270093, -66.050985
 
-    #if !os(tvOS)
+    #if canImport(Contacts)
         let formatter = CNPostalAddressFormatter()
         print(formatter.string(from: placemark.postalAddress!))
             // 200 Queen St
@@ -252,3 +272,5 @@ To run the included unit tests, you need to use [Carthage](https://github.com/Ca
 1. `carthage bootstrap`
 1. `open MapboxGeocoder.xcodeproj`
 1. Switch to the “MapboxGeocoder iOS” scheme and go to Product ‣ Test.
+
+Alternatively, open Package.swift in Xcode and go to Product ‣ Test, or run `swift test` on the command line.

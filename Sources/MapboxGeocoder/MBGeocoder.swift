@@ -1,4 +1,5 @@
 import Foundation
+import CoreLocation
 
 typealias JSONDictionary = [String: Any]
 
@@ -24,7 +25,7 @@ let userAgent: String = {
     }
 
     let system: String
-    #if os(OSX)
+    #if os(macOS)
         system = "macOS"
     #elseif os(iOS)
         system = "iOS"
@@ -34,6 +35,8 @@ let userAgent: String = {
         system = "tvOS"
     #elseif os(Linux)
         system = "Linux"
+    #else
+        system = "unknown"
     #endif
     let systemVersion = ProcessInfo().operatingSystemVersion
     components.append("\(system)/\(systemVersion.majorVersion).\(systemVersion.minorVersion).\(systemVersion.patchVersion)")
