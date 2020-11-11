@@ -35,6 +35,19 @@ For Objective-C targets, it may be necessary to enable the `ALWAYS_EMBED_SWIFT_S
 
 This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). The [Mapbox API Documentation](https://www.mapbox.com/api-documentation/search/#geocoding) explains the underlying HTTP request and response format, as well as [relevant limits](https://docs.mapbox.com/api/search/#geocoding-restrictions-and-limits) that also apply when using this library.
 
+## System requirements
+
+* One of the following package managers:
+   * CocoaPods (CocoaPods 1.10 or above if using Xcode 12)
+   * Carthage 0.19 or above (run [this script](https://github.com/mapbox/MapboxGeocoder.swift/blob/main/scripts/wcarthage.sh) instead of `carthage` if using Xcode 12)
+   * Swift Package Manager 5.3 or above
+* Xcode 11 or above (Xcode 12 or above if using Swift Package Manager)
+* One of the following operating systems:
+   * iOS 10.0 or above
+   * macOS 10.12.0 or above
+   * tvOS 10.0 or above
+   * watchOS 3.0 or above
+
 ## Usage
 
 You will need a [Mapbox access token](https://www.mapbox.com/api-documentation/#access-tokens-and-token-scopes) in order to use the API. If you’re already using the [Mapbox Maps SDK for iOS](https://docs.mapbox.com/ios/maps/) or [Mapbox Maps SDK for macOS](https://mapbox.github.io/mapbox-gl-native/macos/), MapboxGeocoder.swift automatically recognizes your access token, as long as you’ve placed it in the `MGLMapboxAccessToken` key of your application’s Info.plist file.
