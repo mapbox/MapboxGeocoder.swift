@@ -35,6 +35,8 @@ let userAgent: String = {
         system = "tvOS"
     #elseif os(Linux)
         system = "Linux"
+    #else
+        system = "unknown"
     #endif
     let systemVersion = ProcessInfo().operatingSystemVersion
     components.append("\(system)/\(systemVersion.majorVersion).\(systemVersion.minorVersion).\(systemVersion.patchVersion)")
