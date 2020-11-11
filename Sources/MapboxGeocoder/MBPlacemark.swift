@@ -267,7 +267,6 @@ open class Placemark: NSObject, Codable {
      
      To format the postal address, use a `CNPostalAddressFormatter` object.
      */
-    @available(iOS 9.0, macOS 10.11, *)
     @objc open var postalAddress: CNPostalAddress? {
         return nil
     }
@@ -548,7 +547,6 @@ open class GeocodedPlacemark: Placemark {
     }
     
     #if canImport(Contacts)
-    @available(iOS 9.0, macOS 10.11, *)
     @objc open override var postalAddress: CNPostalAddress? {
         let postalAddress = CNMutablePostalAddress()
         
