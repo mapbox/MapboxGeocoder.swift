@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/mapbox/MapboxGeocoder.swift.svg?style=svg)](https://circleci.com/gh/mapbox/MapboxGeocoder.swift)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![SPM compatible](https://img.shields.io/badge/SPM-compatible-4BC51D.svg?style=flat)](https://swift.org/package-manager/)
 [![CocoaPods](https://img.shields.io/cocoapods/v/MapboxGeocoder.swift.svg)](http://cocoapods.org/pods/MapboxGeocoder.swift/)
 
 MapboxGeocoder.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the [Mapbox Geocoding API](https://www.mapbox.com/geocoding/). MapboxGeocoder.swift exposes the power of the [Carmen](https://github.com/mapbox/carmen) geocoder through a simple API similar to Core Location’s CLGeocoder.
@@ -20,6 +21,12 @@ Or in your [CocoaPods](http://cocoapods.org/) Podfile:
 
 ```podspec
 pod 'MapboxGeocoder.swift', '~> 0.12'
+```
+
+Or in your [Swift Package Manager](https://swift.org/package-manager/) Package.swift:
+
+```swift
+.package(url: "https://github.com/mapbox/MapboxGeocoder.swift.git", from: "0.12.0")
 ```
 
 Then `import MapboxGeocoder` or `@import MapboxGeocoder;`.
@@ -252,3 +259,5 @@ To run the included unit tests, you need to use [Carthage](https://github.com/Ca
 1. `carthage bootstrap`
 1. `open MapboxGeocoder.xcodeproj`
 1. Switch to the “MapboxGeocoder iOS” scheme and go to Product ‣ Test.
+
+Alternatively, open Package.swift in Xcode and go to Product ‣ Test, or run `swift test` on the command line.
