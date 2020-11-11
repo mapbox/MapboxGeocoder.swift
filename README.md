@@ -26,7 +26,7 @@ pod 'MapboxGeocoder.swift', '~> 0.12'
 Or in your [Swift Package Manager](https://swift.org/package-manager/) Package.swift:
 
 ```swift
-.package(url: "https://github.com/mapbox/MapboxGeocoder.swift.git", from: "0.12.0")
+.package(url: "https://github.com/mapbox/MapboxGeocoder.swift.git", .branch("main"))
 ```
 
 Then `import MapboxGeocoder` or `@import MapboxGeocoder;`.
