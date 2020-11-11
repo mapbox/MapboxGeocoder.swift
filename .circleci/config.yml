@@ -27,13 +27,26 @@ step-library:
         command: bash <(curl -s https://codecov.io/bash)
 
 jobs:
+  SPM-job:
+    parameters:
+      xcode:
+        type: string
+    macos:
+      xcode: << parameters.xcode >>
+    environment:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+    steps:
+      - checkout
+      - run: swift build
+      - run: swift test
+
   build-job:
     parameters:
       xcode:
         type: string
       device:
         type: string
-        default: "iPhone 6 Plus"
+        default: "iPhone 8 Plus"
       iOS:
         type: string
         default: "12.1"
@@ -64,10 +77,10 @@ jobs:
       - run:
           name: Dependencies
           command: |
-            carthage bootstrap --platform ios --cache-builds --configuration Debug --no-use-binaries
-            carthage bootstrap --platform tvos --cache-builds --configuration Debug --no-use-binaries
-            carthage bootstrap --platform macos --cache-builds --configuration Debug --no-use-binaries
-            carthage bootstrap --platform watchos --cache-builds --configuration Debug --no-use-binaries
+            ./scripts/wcarthage.sh bootstrap --platform ios --cache-builds --configuration Debug --no-use-binaries
+            ./scripts/wcarthage.sh bootstrap --platform tvos --cache-builds --configuration Debug --no-use-binaries
+            ./scripts/wcarthage.sh bootstrap --platform macos --cache-builds --configuration Debug --no-use-binaries
+            ./scripts/wcarthage.sh bootstrap --platform watchos --cache-builds --configuration Debug --no-use-binaries
       - *save-cache
       - run:
           name: iOS
@@ -88,22 +101,18 @@ jobs:
           command: xcodebuild -project MapboxGeocoder.xcodeproj -scheme 'MapboxGeocoder Mac' clean build<<# parameters.test >> test <</ parameters.test >><<# parameters.codecoverage >>-enableCodeCoverage YES<</ parameters.codecoverage >>
       - run:
           name: watchOS
-          command: xcodebuild -project MapboxGeocoder.xcodeproj -scheme 'MapboxGeocoder watchOS' -destination 'platform=watchOS Simulator,name=Apple Watch Series 4 - 44mm,OS=<< parameters.watchOS >>' clean build
+          command: xcodebuild -project MapboxGeocoder.xcodeproj -scheme 'MapboxGeocoder watchOS' -destination 'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm,OS=<< parameters.watchOS >>' clean build
 
 workflows:
   workflow:
     jobs:
       - build-job:
-          name: "Xcode_10.2_iOS_12"
-          xcode: "10.2.0"
-          iOS: "12.2"
-          tvOS: "12.2"
-          watchOS: "5.2"
+          name: "Xcode_12.0"
+          xcode: "12.0.0"
+          iOS: "14.0"
+          tvOS: "14.0"
+          watchOS: "7.0"
           codecoverage: true
-      - build-job:
-          name: "Xcode_11.3_iOS_13"
-          xcode: "11.3.0"
-          device: "iPhone 8 Plus"
-          iOS: "13.3"
-          tvOS: "13.3"
-          watchOS: "6.1.1"
+      - SPM-job:
+          name: "SPM"
+          xcode: "12.2.0"
