@@ -64,6 +64,10 @@
 		DA2E03F21CB0FE0200D1269A /* MBRectangularRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */; };
 		DA2EC05C1CED72E900D4BA5D /* MBPlacemarkScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC05B1CED72E900D4BA5D /* MBPlacemarkScope.swift */; };
 		DA2EC05E1CED732F00D4BA5D /* MBGeocodeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC05D1CED732F00D4BA5D /* MBGeocodeOptions.swift */; };
+		DA4B402F255BCBA7001A4F30 /* MBPlacemarkPrecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B402E255BCBA7001A4F30 /* MBPlacemarkPrecision.swift */; };
+		DA4B4030255BCBA7001A4F30 /* MBPlacemarkPrecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B402E255BCBA7001A4F30 /* MBPlacemarkPrecision.swift */; };
+		DA4B4031255BCBA7001A4F30 /* MBPlacemarkPrecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B402E255BCBA7001A4F30 /* MBPlacemarkPrecision.swift */; };
+		DA4B4032255BCBA7001A4F30 /* MBPlacemarkPrecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B402E255BCBA7001A4F30 /* MBPlacemarkPrecision.swift */; };
 		DA4C581920E195E300A61B00 /* MapboxGeocoder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DDC2470419A1C3B40054B0C0 /* MapboxGeocoder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA4D90071DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4D90061DD63AEC006EC71A /* PlacemarkScopeTests.swift */; };
 		DA4D90081DD63AEC006EC71A /* PlacemarkScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4D90061DD63AEC006EC71A /* PlacemarkScopeTests.swift */; };
@@ -244,6 +248,7 @@
 		DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBRectangularRegion.swift; sourceTree = "<group>"; };
 		DA2EC05B1CED72E900D4BA5D /* MBPlacemarkScope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBPlacemarkScope.swift; sourceTree = "<group>"; };
 		DA2EC05D1CED732F00D4BA5D /* MBGeocodeOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBGeocodeOptions.swift; sourceTree = "<group>"; };
+		DA4B402E255BCBA7001A4F30 /* MBPlacemarkPrecision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBPlacemarkPrecision.swift; sourceTree = "<group>"; };
 		DA4D90061DD63AEC006EC71A /* PlacemarkScopeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacemarkScopeTests.swift; sourceTree = "<group>"; };
 		DA5170961CF1B18F00CD6DCF /* MapboxGeocoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxGeocoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA51709F1CF1B18F00CD6DCF /* MapboxGeocoderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxGeocoderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -427,13 +432,15 @@
 				DA2E03EF1CB0FDB400D1269A /* MBPlacemark.swift */,
 				DA8B5C05225FB2F400CD1C99 /* MBPlacemarkPrecision.h */,
 				DA8B5C06225FB2F400CD1C99 /* MBPlacemarkPrecision.m */,
+				DA4B402E255BCBA7001A4F30 /* MBPlacemarkPrecision.swift */,
 				DA29C8DE1CEBE90200E48A61 /* MBPlacemarkScope.h */,
 				DA2EC05B1CED72E900D4BA5D /* MBPlacemarkScope.swift */,
 				DA2E03F11CB0FE0200D1269A /* MBRectangularRegion.swift */,
 				DDC2470619A1C3B40054B0C0 /* Supporting Files */,
 				35D3DE382112410A00B62912 /* CoreLocation.swift */,
 			);
-			path = MapboxGeocoder;
+			name = MapboxGeocoder;
+			path = Sources/MapboxGeocoder;
 			sourceTree = "<group>";
 		};
 		DDC246FD19A1C2D20054B0C0 /* Swift */ = {
@@ -477,7 +484,8 @@
 				DDF1E84E1BD6F7BA00C40C78 /* Info.plist */,
 				DDF1E8571BD700EB00C40C78 /* Fixtures */,
 			);
-			path = MapboxGeocoderTests;
+			name = MapboxGeocoderTests;
+			path = Tests/MapboxGeocoderTests;
 			sourceTree = "<group>";
 		};
 		DDF1E8571BD700EB00C40C78 /* Fixtures */ = {
@@ -984,6 +992,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA4B4030255BCBA7001A4F30 /* MBPlacemarkPrecision.swift in Sources */,
 				DA5170B31CF1B1E000CD6DCF /* MBRectangularRegion.swift in Sources */,
 				DA5170B01CF1B1E000CD6DCF /* MBPlacemark.swift in Sources */,
 				DA5170AF1CF1B1E000CD6DCF /* MBGeocoder.swift in Sources */,
@@ -1011,6 +1020,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA4B4031255BCBA7001A4F30 /* MBPlacemarkPrecision.swift in Sources */,
 				DA5170DE1CF2541C00CD6DCF /* MBRectangularRegion.swift in Sources */,
 				DA5170DB1CF2541C00CD6DCF /* MBPlacemark.swift in Sources */,
 				DA5170DA1CF2541C00CD6DCF /* MBGeocoder.swift in Sources */,
@@ -1038,6 +1048,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA4B4032255BCBA7001A4F30 /* MBPlacemarkPrecision.swift in Sources */,
 				DA5170F91CF2582F00CD6DCF /* MBRectangularRegion.swift in Sources */,
 				DA5170F61CF2582F00CD6DCF /* MBPlacemark.swift in Sources */,
 				DA5170F51CF2582F00CD6DCF /* MBGeocoder.swift in Sources */,
@@ -1061,6 +1072,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA4B402F255BCBA7001A4F30 /* MBPlacemarkPrecision.swift in Sources */,
 				DA2EC05E1CED732F00D4BA5D /* MBGeocodeOptions.swift in Sources */,
 				DA2E03F21CB0FE0200D1269A /* MBRectangularRegion.swift in Sources */,
 				DDC2295E1A360843006BE405 /* MBGeocoder.swift in Sources */,
@@ -1148,7 +1160,7 @@
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = MapboxGeocoder/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxGeocoder/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoder;
@@ -1179,7 +1191,7 @@
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = MapboxGeocoder/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxGeocoder/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoder;
@@ -1205,7 +1217,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = MapboxGeocoderTests/Info.plist;
+				INFOPLIST_FILE = Tests/MapboxGeocoderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(PROJECT_DIR)/Carthage/Build/Mac";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoderTests;
 				PRODUCT_NAME = MapboxGeocoderTests;
@@ -1228,7 +1240,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = MapboxGeocoderTests/Info.plist;
+				INFOPLIST_FILE = Tests/MapboxGeocoderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(PROJECT_DIR)/Carthage/Build/Mac";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoderTests;
 				PRODUCT_NAME = MapboxGeocoderTests;
@@ -1253,7 +1265,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = MapboxGeocoder/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxGeocoder/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoder;
@@ -1284,7 +1296,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = MapboxGeocoder/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxGeocoder/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoder;
@@ -1310,7 +1322,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = MapboxGeocoderTests/Info.plist;
+				INFOPLIST_FILE = Tests/MapboxGeocoderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoderTests;
 				PRODUCT_NAME = MapboxGeocoderTests;
@@ -1333,7 +1345,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = MapboxGeocoderTests/Info.plist;
+				INFOPLIST_FILE = Tests/MapboxGeocoderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoderTests;
 				PRODUCT_NAME = MapboxGeocoderTests;
@@ -1357,7 +1369,7 @@
 				DYLIB_CURRENT_VERSION = 17;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = MapboxGeocoder/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxGeocoder/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoder;
@@ -1385,7 +1397,7 @@
 				DYLIB_CURRENT_VERSION = 17;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = MapboxGeocoder/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxGeocoder/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoder;
@@ -1562,7 +1574,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = MapboxGeocoder/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxGeocoder/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mapbox.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1585,7 +1597,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 17;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MapboxGeocoder/Info.plist;
+				INFOPLIST_FILE = Sources/MapboxGeocoder/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mapbox.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1642,7 +1654,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = MapboxGeocoderTests/Info.plist;
+				INFOPLIST_FILE = Tests/MapboxGeocoderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1662,7 +1674,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = MapboxGeocoderTests/Info.plist;
+				INFOPLIST_FILE = Tests/MapboxGeocoderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxGeocoderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

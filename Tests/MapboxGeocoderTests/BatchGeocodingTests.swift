@@ -1,11 +1,14 @@
 import XCTest
 import OHHTTPStubs
+#if SWIFT_PACKAGE
+import OHHTTPStubsSwift
+#endif
 import CoreLocation
 @testable import MapboxGeocoder
 
 class BatchGeocodingTests: XCTestCase {
     override func tearDown() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
         super.tearDown()
     }
     
@@ -19,8 +22,8 @@ class BatchGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places-permanent/85+2nd+st+san+francisco.json")
             && containsQueryParams(["country": "ca", "access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_forward_single_valid", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "permanent_forward_single_valid", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let geocoder = Geocoder(accessToken: BogusToken)
@@ -52,8 +55,8 @@ class BatchGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places-permanent/20001;20001;20001.json")
             && containsQueryParams(["country": "us", "access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_forward_multiple_valid", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "permanent_forward_multiple_valid", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let geocoder = Geocoder(accessToken: BogusToken)
@@ -91,8 +94,8 @@ class BatchGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places-permanent/#M@Pb0X.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_forward_single_no_results", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "permanent_forward_single_no_results", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let expectation = self.expectation(description: "single forward batch geocode should not return results for an invalid location")
@@ -120,8 +123,8 @@ class BatchGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places-permanent/#M@Pb0X;$C00L!.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_forward_multiple_no_results", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "permanent_forward_multiple_no_results", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let expectation = self.expectation(description: "multiple forward batch geocode should not return results for an invalid locations")
@@ -155,8 +158,8 @@ class BatchGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places-permanent/-77.01073,38.88887.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_reverse_single_valid", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "permanent_reverse_single_valid", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let geocoder = Geocoder(accessToken: BogusToken)
@@ -187,8 +190,8 @@ class BatchGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places-permanent/-77.01073,38.88887;-77.01073,38.88887;-77.01073,38.88887.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_reverse_multiple_valid", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "permanent_reverse_multiple_valid", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let geocoder = Geocoder(accessToken: BogusToken)
@@ -232,8 +235,8 @@ class BatchGeocodingTests: XCTestCase {
             
             && isPath("/geocoding/v5/mapbox.places-permanent/100.00000,100.00000.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_reverse_single_no_results", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "permanent_reverse_single_no_results", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let expectation = self.expectation(description: "single reverse batch geocode should not return results for an invalid location")
@@ -263,8 +266,8 @@ class BatchGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places-permanent/100.00000,100.00000;100.00000,100.00000;100.00000,100.00000.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_reverse_multiple_no_results", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "permanent_reverse_multiple_no_results", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let geocoder = Geocoder(accessToken: BogusToken)
@@ -307,8 +310,8 @@ class BatchGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places-permanent////.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_invalid", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "permanent_invalid", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let expectation = self.expectation(description: "invalid batch geocoding query should not return results")
@@ -334,8 +337,8 @@ class BatchGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places-permanent/85+2nd+st+san+francisco.json")
             && containsQueryParams(["access_token": invalidToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_invalid_token", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "permanent_invalid_token", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let expectation = self.expectation(description: "invalid token use in batch geocoding query should return an error")
@@ -361,8 +364,8 @@ class BatchGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places-permanent/85+2nd+st+san+francisco.json")
             && containsQueryParams(["access_token": incorrectTokenScope])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "permanent_invalid_token_scope", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "permanent_invalid_token_scope", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let expectation = self.expectation(description: "invalid token use in batch geocoding query should return an error")

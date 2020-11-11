@@ -72,7 +72,7 @@ _Forward geocoding_ takes a human-readable query, such as a place name or addres
 
 ```swift
 // main.swift
-#if !os(tvOS)
+#if canImport(Contacts)
     import Contacts
 #endif
 
@@ -97,7 +97,7 @@ let task = geocoder.geocode(options) { (placemarks, attribution, error) in
     print("\(coordinate.latitude), \(coordinate.longitude)")
         // 45.270093, -66.050985
 
-    #if !os(tvOS)
+    #if canImport(Contacts)
         let formatter = CNPostalAddressFormatter()
         print(formatter.string(from: placemark.postalAddress!))
             // 200 Queen St

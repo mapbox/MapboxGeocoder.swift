@@ -1,11 +1,14 @@
 import XCTest
 import OHHTTPStubs
+#if SWIFT_PACKAGE
+import OHHTTPStubsSwift
+#endif
 import CoreLocation
 @testable import MapboxGeocoder
 
 class ForwardGeocodingTests: XCTestCase {
     override func tearDown() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
         super.tearDown()
     }
 
@@ -15,8 +18,8 @@ class ForwardGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places/1600+pennsylvania+ave.json")
             && containsQueryParams(["country": "ca", "access_token": BogusToken])) { _ in
-            let path = Bundle(for: type(of: self)).path(forResource: "forward_valid", ofType: "json")
-            return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+            let path = Bundle.module.path(forResource: "forward_valid", ofType: "json")
+            return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let geocoder = Geocoder(accessToken: BogusToken)
@@ -74,8 +77,8 @@ class ForwardGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places/Sandy+Island,+New+Caledonia.json")
             && containsQueryParams(["country": "nc", "types": "region,place,locality,poi", "access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "forward_invalid", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "forward_invalid", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let expectation = self.expectation(description: "forward geocode execute completion handler for invalid query")
@@ -103,8 +106,8 @@ class ForwardGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places/hainan.json")
             && containsQueryParams(["country": "cn", "language": "zh", "access_token": BogusToken])) { _ in
-            let path = Bundle(for: type(of: self)).path(forResource: "forward_valid_zh", ofType: "json")
-            return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+            let path = Bundle.module.path(forResource: "forward_valid_zh", ofType: "json")
+            return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let geocoder = Geocoder(accessToken: BogusToken)

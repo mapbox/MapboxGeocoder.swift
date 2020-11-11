@@ -1,4 +1,5 @@
 import Foundation
+import CoreLocation
 
 typealias JSONDictionary = [String: Any]
 
@@ -24,7 +25,7 @@ let userAgent: String = {
     }
 
     let system: String
-    #if os(OSX)
+    #if os(macOS)
         system = "macOS"
     #elseif os(iOS)
         system = "iOS"

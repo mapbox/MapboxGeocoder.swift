@@ -1,11 +1,14 @@
 import XCTest
 import OHHTTPStubs
+#if SWIFT_PACKAGE
+import OHHTTPStubsSwift
+#endif
 import CoreLocation
 @testable import MapboxGeocoder
 
 class ReverseGeocodingTests: XCTestCase {
     override func tearDown() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
         super.tearDown()
     }
 
@@ -15,8 +18,8 @@ class ReverseGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places/-95.78558,37.13284.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "reverse_valid", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "reverse_valid", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
 
         let geocoder = Geocoder(accessToken: BogusToken)
@@ -85,8 +88,8 @@ class ReverseGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places/0.00000,0.00000.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "reverse_invalid", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "reverse_invalid", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let expectation = self.expectation(description: "reverse geocode execute completion handler for invalid query")
@@ -113,8 +116,8 @@ class ReverseGeocodingTests: XCTestCase {
         _ = stub(condition: isHost("api.mapbox.com")
             && isPath("/geocoding/v5/mapbox.places/-95.78558,37.13284.json")
             && containsQueryParams(["access_token": BogusToken])) { _ in
-                let path = Bundle(for: type(of: self)).path(forResource: "reverse_address", ofType: "json")
-                return OHHTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
+                let path = Bundle.module.path(forResource: "reverse_address", ofType: "json")
+                return HTTPStubsResponse(fileAtPath: path!, statusCode: 200, headers: ["Content-Type": "application/vnd.geo+json"])
         }
         
         let geocoder = Geocoder(accessToken: BogusToken)

@@ -4,6 +4,14 @@ import OHHTTPStubs
 
 let BogusToken = "pk.feedCafeDadeDeadBeef-BadeBede.FadeCafeDadeDeed-BadeBede"
 
+#if !SWIFT_PACKAGE
+extension Bundle {
+    static var module: Bundle {
+        return Bundle(for: GeocoderTests.self)
+    }
+}
+#endif
+
 class GeocoderTests: XCTestCase {
     
     override func setUp() {
@@ -12,7 +20,7 @@ class GeocoderTests: XCTestCase {
     }
     
     override func tearDown() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
         super.tearDown()
     }
     

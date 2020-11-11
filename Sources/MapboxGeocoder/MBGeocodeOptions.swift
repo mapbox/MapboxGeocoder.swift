@@ -1,4 +1,6 @@
-#if !os(tvOS)
+import CoreLocation
+
+#if canImport(Contacts)
     import Contacts
 #endif
 
@@ -32,12 +34,21 @@ open class GeocodeOptions: NSObject {
      */
     @objc open var focalLocation: CLLocation?
     
+    #if SWIFT_PACKAGE
     /**
      The bitmask of placemark scopes, such as country and neighborhood, to include in the results.
      
      The default value of this property is `PlacemarkScope.all`, which includes all scopes.
      */
-    @objc open var allowedScopes: PlacemarkScope = [.all]
+    open var allowedScopes: PlacemarkScope = .all
+    #else
+    /**
+     The bitmask of placemark scopes, such as country and neighborhood, to include in the results.
+     
+     The default value of this property is `PlacemarkScope.all`, which includes all scopes.
+     */
+    @objc open var allowedScopes: PlacemarkScope = .all
+    #endif
     
     /**
      The region in which each resulting placemark must be located.
@@ -146,13 +157,13 @@ open class ForwardGeocodeOptions: GeocodeOptions {
         self.init(queries: [query])
     }
     
-    #if !os(tvOS)
+    #if canImport(Contacts)
     /**
      Initializes a forward geocode options object with the given postal address object.
      
      - parameter postalAddress: A `CNPostalAddress` object to search for.
      */
-    @available(iOS 9.0, OSX 10.11, *)
+    @available(iOS 9.0, macOS 10.11, *)
     @objc public convenience init(postalAddress: CNPostalAddress) {
         let formattedAddress = CNPostalAddressFormatter().string(from: postalAddress)
         self.init(query: formattedAddress.replacingOccurrences(of: "\n", with: ", "))

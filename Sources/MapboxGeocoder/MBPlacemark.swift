@@ -1,4 +1,4 @@
-#if !os(tvOS)
+#if canImport(Contacts)
     import Contacts
 #endif
 import CoreLocation
@@ -58,8 +58,6 @@ public let MBPostalAddressCountryKey = "country"
  - seealso: CNPostalAddressISOCountryCodeKey
  */
 public let MBPostalAddressISOCountryCodeKey = "ISOCountryCode"
-
-public typealias PlacemarkPrecision = MBPlacemarkPrecision
 
 /**
  A `Placemark` object represents a geocoder result. A placemark associates identifiers, geographic data, and contact information with a particular latitude and longitude. It is possible to explicitly create a placemark object from another placemark object; however, placemark objects are generally created for you via the `Geocoder.geocode(_:completionHandler:)` method.
@@ -189,16 +187,25 @@ open class Placemark: NSObject, Codable {
      */
     @objc open var qualifiedName: String?
     
+    #if SWIFT_PACKAGE
+    /**
+     The placemark’s scope.
+     
+     The scope offers a general indication of the size or importance of the feature represented by the placemark – in other words, how local the feature is.
+     */
+    open var scope: PlacemarkScope {
+        return PlacemarkScope(identifier: identifier)
+    }
+    #else
     /**
      The placemark’s scope.
      
      The scope offers a general indication of the size or importance of the feature represented by the placemark – in other words, how local the feature is.
      */
     @objc open var scope: PlacemarkScope {
-        let components = identifier.components(separatedBy: ".")
-        assert(components.count > 0)
-        return PlacemarkScope(descriptions: [components.prefix(2).joined(separator: ".")]) ?? PlacemarkScope(descriptions: [components.first!]) ?? []
+        return PlacemarkScope(identifier: identifier)
     }
+    #endif
     
     /**
      The identifier of the placemark’s [Wikidata](https://www.wikidata.org/) item, if known.
@@ -254,13 +261,13 @@ open class Placemark: NSObject, Codable {
         return nil
     }
     
-    #if !os(tvOS)
+    #if canImport(Contacts)
     /**
      The placemark’s postal address.
      
      To format the postal address, use a `CNPostalAddressFormatter` object.
      */
-    @available(iOS 9.0, OSX 10.11, *)
+    @available(iOS 9.0, macOS 10.11, *)
     @objc open var postalAddress: CNPostalAddress? {
         return nil
     }
@@ -540,8 +547,8 @@ open class GeocodedPlacemark: Placemark {
         return clippedAddressLines
     }
     
-    #if !os(tvOS)
-    @available(iOS 9.0, OSX 10.11, *)
+    #if canImport(Contacts)
+    @available(iOS 9.0, macOS 10.11, *)
     @objc open override var postalAddress: CNPostalAddress? {
         let postalAddress = CNMutablePostalAddress()
         
@@ -601,6 +608,19 @@ open class GeocodedPlacemark: Placemark {
         return properties?.phoneNumber
     }
     
+    #if SWIFT_PACKAGE
+    /**
+     The placemark’s precision.
+     
+     The precision offers a general indication of the potential distance between the `location` property and the feature’s actual real-world location.
+     */
+    open var precision: PlacemarkPrecision? {
+        if let precision = properties?.precision {
+            return PlacemarkPrecision(rawValue: precision)
+        }
+        return nil
+    }
+    #else
     /**
      The placemark’s precision.
      
@@ -612,6 +632,7 @@ open class GeocodedPlacemark: Placemark {
         }
         return nil
     }
+    #endif
 }
 
 /**
