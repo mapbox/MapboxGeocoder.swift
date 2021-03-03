@@ -5,7 +5,9 @@
 [![SPM compatible](https://img.shields.io/badge/SPM-compatible-4BC51D.svg?style=flat)](https://swift.org/package-manager/)
 [![CocoaPods](https://img.shields.io/cocoapods/v/MapboxGeocoder.swift.svg)](http://cocoapods.org/pods/MapboxGeocoder.swift/)
 
-MapboxGeocoder.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the [Mapbox Geocoding API](https://www.mapbox.com/geocoding/). MapboxGeocoder.swift exposes the power of the [Carmen](https://github.com/mapbox/carmen) geocoder through a simple API similar to Core Location’s CLGeocoder.
+MapboxGeocoder.swift makes it easy to connect your iOS, macOS, tvOS, or watchOS application to the [Mapbox Geocoding API](https://docs.mapbox.com/api/search/geocoding/). MapboxGeocoder.swift exposes the power of the [Carmen](https://github.com/mapbox/carmen) geocoder through a simple API similar to Core Location’s CLGeocoder.
+
+Note that use of the Geocoding API via MapboxGeocoder.swift is billed by API requests. For more information, see the [Geocoding API pricing documentation](https://docs.mapbox.com/api/search/geocoding/#geocoding-api-pricing).
 
 MapboxGeocoder.swift pairs well with [Mapbox Directions for Swift](https://github.com/mapbox/mapbox-directions-swift/), [MapboxStatic.swift](https://github.com/mapbox/MapboxStatic.swift), and the [Mapbox Maps SDK for iOS](https://docs.mapbox.com/ios/maps/) or the [Mapbox Maps SDK for macOS](https://mapbox.github.io/mapbox-gl-native/macos/).
 
@@ -33,7 +35,7 @@ Then `import MapboxGeocoder` or `@import MapboxGeocoder;`.
 
 For Objective-C targets, it may be necessary to enable the `ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES` build setting.
 
-This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). The [Mapbox API Documentation](https://www.mapbox.com/api-documentation/search/#geocoding) explains the underlying HTTP request and response format, as well as [relevant limits](https://docs.mapbox.com/api/search/#geocoding-restrictions-and-limits) that also apply when using this library.
+This repository includes example applications written in both Swift and Objective-C showing use of the framework (as well as a comparison of writing apps in either language). The [Mapbox API Documentation](https://docs.mapbox.com/api/search/geocoding/) explains the underlying HTTP request and response format, as well as [relevant limits](https://docs.mapbox.com/api/search/#geocoding-restrictions-and-limits) that also apply when using this library.
 
 ## System requirements
 
@@ -50,7 +52,7 @@ This repository includes example applications written in both Swift and Objectiv
 
 ## Usage
 
-You will need a [Mapbox access token](https://www.mapbox.com/api-documentation/#access-tokens-and-token-scopes) in order to use the API. If you’re already using the [Mapbox Maps SDK for iOS](https://docs.mapbox.com/ios/maps/) or [Mapbox Maps SDK for macOS](https://mapbox.github.io/mapbox-gl-native/macos/), MapboxGeocoder.swift automatically recognizes your access token, as long as you’ve placed it in the `MGLMapboxAccessToken` key of your application’s Info.plist file.
+You will need a [Mapbox access token](https://docs.mapbox.com/api/overview/#access-tokens-and-token-scopes) in order to use the API. If you’re already using the [Mapbox Maps SDK for iOS](https://docs.mapbox.com/ios/maps/) or [Mapbox Maps SDK for macOS](https://mapbox.github.io/mapbox-gl-native/macos/), MapboxGeocoder.swift automatically recognizes your access token, as long as you’ve placed it in the `MGLMapboxAccessToken` key of your application’s Info.plist file.
 
 The examples below are each provided in Swift (denoted with `main.swift`) and Objective-C (`main.m`). For further details about each class and method, use the Quick Help feature inside Xcode.
 
@@ -263,7 +265,7 @@ NSURLSessionDataTask *task = [geocoder batchGeocodeWithOptions:options
 }];
 ```
 
-Batch geocoding is available to Mapbox enterprise accounts. See the [Mapbox Geocoding](https://www.mapbox.com/geocoding/) website for more information.
+Batch geocoding is available to Mapbox enterprise accounts. See the [Mapbox Geocoding](https://docs.mapbox.com/api/search/geocoding/) website for more information.
 
 ## Tests
 
