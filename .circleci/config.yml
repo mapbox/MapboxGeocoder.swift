@@ -112,7 +112,7 @@ workflows:
           iOS: "14.0"
           tvOS: "14.0"
           watchOS: "7.0"
-          codecoverage: true
+          codecoverage: false
       - SPM-job:
           name: "SPM"
           xcode: "12.2.0"
