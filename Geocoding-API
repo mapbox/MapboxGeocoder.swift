@@ -1,0 +1,888 @@
+Geocoding
+On this page
+Endpoints
+Data types
+Forward geocoding
+Reverse geocoding
+Batch geocoding
+Geocoding response object
+Worldviews
+Language coverage
+Intersection search support
+Point of interest category coverage
+Geocoding API errors
+Geocoding restrictions and limits
+Geocoding API pricing
+The Mapbox Geocoding API does two things: forward geocoding and reverse geocoding.
+
+Forward geocoding converts location text into geographic coordinates, turning 2 Lincoln Memorial Circle NW into -77.050,38.889.
+
+Reverse geocoding turns geographic coordinates into place names, turning -77.050, 38.889 into 2 Lincoln Memorial Circle NW. These location names can vary in specificity, from individual addresses to states and countries that contain the given coordinates.
+
+For more background information on the Mapbox Geocoding API and how it works, see the How geocoding works guide.
+
+PLAYGROUND
+Geocoding API playground
+Try forward and reverse geocoding queries and see the results on a map.
+
+Endpoints
+The geocoding API includes two different endpoints: mapbox.places and mapbox.places-permanent.
+
+mapbox.places
+Requests to the mapbox.places endpoint must be triggered by user activity. Any results must be displayed on a Mapbox map and cannot be stored permanently, as described in Mapbox’s terms of service and included service terms.
+
+mapbox.places-permanent
+The mapbox.places-permanent endpoint gives you access to two services: permanent geocoding and batch geocoding. If you're interested in using the mapbox.places-permanent endpoint for these use cases, contact Mapbox sales. It's important to speak with an Account Manager on the Sales team prior to making requests to the mapbox.places-permanent endpoint, as unsuccessful requests made by an account that does not have access to the endpoint may be billable.
+
+Note that the mapbox.places-permanent endpoint does not include point-of-interest (POI) features. The data available for other feature types may vary slightly compared to the data available in the mapbox.places endpoint.
+
+Data types
+Various types of geographic features are available in the Mapbox geocoder. Any type might appear as a top-level response, as context in a top-level response, or as a filtering option using the types parameter. Not all features are available or relevant in all parts of the world. New types are occasionally added as necessary to correctly capture global administrative hierarchies.
+
+The data types available in the geocoder, listed from the largest to the most granular, are:
+
+Data type	Description
+country	Generally recognized countries or, in some cases like Hong Kong, an area of quasi-national administrative status that has been given a designated country code under ISO 3166-1.
+region	Top-level sub-national administrative features, such as states in the United States or provinces in Canada or China.
+postcode	Postal codes used in country-specific national addressing systems.
+district	Features that are smaller than top-level administrative features but typically larger than cities, in countries that use such an additional layer in postal addressing (for example, prefectures in China).
+place	Typically these are cities, villages, municipalities, etc. They’re usually features used in postal addressing, and are suitable for display in ambient end-user applications where current-location context is needed (for example, in weather displays).
+locality	Official sub-city features present in countries where such an additional administrative layer is used in postal addressing, or where such features are commonly referred to in local parlance. Examples include city districts in Brazil and Chile and arrondissements in France.
+neighborhood	Colloquial sub-city features often referred to in local parlance. Unlike locality features, these typically lack official status and may lack universally agreed-upon boundaries.
+address	Individual residential or business addresses.
+poi	Points of interest. These include restaurants, stores, concert venues, parks, museums, etc.
+A note about multi-typing: A small number of geographic features have multiple data types assigned to them. This mainly occurs between the country and region data types, as well as the region and place data types, to match duplicate ISO-3166-1 codes. Approximately 26 subdivisions have their own ISO 3166-1 codes. For example, the island of Puerto Rico is multi-typed as country,region, meaning that it could be returned as a standalone country data type, or as a region data type.
+
+Forward geocoding
+GET
+/geocoding/v5/{endpoint}/{search_text}.json
+The forward geocoding query type allows you to look up a single location by name and returns its geographic coordinates.
+
+Required parameters	Description
+endpoint	One of mapbox.places or mapbox.places-permanent, as described in the Endpoints section.
+search_text	The feature you’re trying to look up. This could be an address, a point of interest name, a city name, etc. When searching for points of interest, it can also be a category name (for example, “coffee shop”). For information on categories, see the Point of interest category coverage section. The search text should be expressed as a URL-encoded UTF-8 string, and must not contain the semicolon character (either raw or URL-encoded). Your search text, once decoded, must consist of at most 20 words and numbers separated by spacing and punctuation, and at most 256 characters.
+
+The accuracy of coordinates returned by a forward geocoding request can be impacted by how the addresses in the query are formatted. Learn more about address formatting best practices in the Address geocoding format guide.
+You can further refine the results of a forward geocoding query with the following optional parameters:
+
+Optional parameters	Description
+autocomplete	Specify whether to return autocomplete results (true, default) or not (false). When autocomplete is enabled, results will be included that start with the requested string, rather than just responses that match it exactly. For example, a query for India might return both India and Indiana with autocomplete enabled, but only India if it’s disabled.
+
+When autocomplete is enabled, each user keystroke counts as one request to the Geocoding API. For example, a search for "coff" would be reflected as four separate Geocoding API requests. To reduce the total requests sent, you can configure your application to only call the Geocoding API after a specific number of characters are typed.
+bbox	Limit results to only those contained within the supplied bounding box. Bounding boxes should be supplied as four numbers separated by commas, in minLon,minLat,maxLon,maxLat order. The bounding box cannot cross the 180th meridian.
+country	Limit results to one or more countries. Permitted values are ISO 3166 alpha 2 country codes separated by commas.
+fuzzyMatch	Specify whether the Geocoding API should attempt approximate, as well as exact, matching when performing searches (true, default), or whether it should opt out of this behavior and only attempt exact matching (false). For example, the default setting might return Washington, DC for a query of wahsington, even though the query was misspelled.
+language	Specify the user’s language. This parameter controls the language of the text supplied in responses, and also affects result scoring, with results matching the user’s query in the requested language being preferred over results that match in another language. For example, an autocomplete query for things that start with Frank might return Frankfurt as the first result with an English (en) language parameter, but Frankreich (“France”) with a German (de) language parameter.
+
+Options are IETF language tags comprised of a mandatory ISO 639-1 language code and, optionally, one or more IETF subtags for country or script.
+
+More than one value can also be specified, separated by commas, for applications that need to display labels in multiple languages.
+
+For more information on which specific languages are supported, see the language coverage section.
+limit	Specify the maximum number of results to return. The default is 5 and the maximum supported is 10.
+proximity	Bias the response to favor results that are closer to this location, provided as two comma-separated coordinates in longitude,latitude order.
+routing	Specify whether to request additional metadata about the recommended navigation destination corresponding to the feature (true) or not (false, default). Only applicable for address features.
+
+For example, if routing=true the response could include data about a point on the road the feature fronts. Response features may include an array containing one or more routable points. Routable points cannot always be determined. Consuming applications should fall back to using the feature’s normal geometry for routing if a separate routable point is not returned.
+types	Filter results to include only a subset (one or more) of the available feature types. Options are country, region, postcode, district, place, locality, neighborhood, address, and poi. Multiple options can be comma-separated. Note that poi.landmark is a deprecated type that, while still supported, returns the same data as is returned using the poi type.
+
+For more information on the available types, see the data types section.
+worldview	Available worldviews are: cn,in,jp,us. If a worldview is not set, us worldview boundaries will be returned. For more information on using worldviews, see the worldviews section.
+Example request: Forward geocoding
+# A basic forward geocoding request
+# Find Los Angeles
+
+$ curl "https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ"
+
+# Find a town called 'Chester' in a specific region
+# Add the proximity parameter with local coordinates
+# This ensures the town of Chester, New Jersey is in the results
+
+$ curl "https://api.mapbox.com/geocoding/v5/mapbox.places/chester.json?proximity=-74.70850,40.78375&access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ"
+
+# Specify types=country to search only for countries named Georgia
+# Results will exclude the American state of Georgia
+
+$ curl "https://api.mapbox.com/geocoding/v5/mapbox.places/georgia.json?types=country&access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ"
+
+# Search for "Starbucks" in Washington, D.C.
+# Use a bounding box to limit results to within the district
+
+$ curl "https://api.mapbox.com/geocoding/v5/mapbox.places/starbucks.json?bbox=-77.083056,38.908611,-76.997778,38.959167&access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ"
+
+# Limit the results to two results using the limit option
+# Even though there are many possible matches
+# for "Washington", this query will only return two results.
+
+$ curl "https://api.mapbox.com/geocoding/v5/mapbox.places/Washington.json?limit=2&access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ"
+
+# Search for the Place feature "Kaaleng" in the Ilemi Triangle. Specifying the cn worldview will return the country value South Sudan. Not including leaving the worldview parameter would default to the us worldview and return the country value Kenya.
+
+$ curl "https://api.mapbox.com/geocoding/v5/mapbox.places/Kaaleng.json?worldview=cn&access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ"
+Response: Forward geocoding
+The API response for a forward geocoding query returns a GeoJSON feature collection in Mapbox Geocoding Response format. For more details on how a response from the Geocoding API is formatted, see the Geocoding API response object section.
+
+Supported libraries: Forward geocoding
+Mapbox wrapper libraries help you integrate Mapbox APIs into your existing application. The following SDKs support this endpoint:
+
+Mapbox Python CLI
+MapboxGeocoder.swift (Objective-C and Swift)
+Mapbox Java SDK
+Mapbox JavaScript SDK
+Mapbox Ruby SDK
+See the SDK documentation for details and examples of how to use the relevant methods to query this endpoint.
+
+Reverse geocoding
+GET
+/geocoding/v5/{endpoint}/{longitude},{latitude}.json
+The reverse geocoding query type allows you to look up a single pair of coordinates and returns the geographic feature or features that exist at that location.
+
+Required parameters	Description
+endpoint	One of mapbox.places or mapbox.places-permanent, as described in the Endpoints section.
+longitude,latitude	A longitude,latitude pair that specifies the location being queried.
+You can further refine the results of a reverse geocoding query with the following optional parameters:
+
+Optional parameters	Description
+country	Limit results to one or more countries. Permitted values are ISO 3166 alpha 2 country codes separated by commas.
+language	Specify the user’s language. This parameter controls the language of the text supplied in responses.
+
+Options are IETF language tags comprised of a mandatory ISO 639-1 language code and, optionally, one or more IETF subtags for country or script.
+
+More than one value can also be specified, separated by commas, for applications that need to display labels in multiple languages.
+
+For more information on which specific languages are supported, see the language coverage section.
+limit	Specify the maximum number of results to return. The default is 1 and the maximum supported is 5.
+
+The default behavior in reverse geocoding is to return at most one feature at each of the multiple levels of the administrative hierarchy (for example, one address, one region, one country). Increasing the limit allows returning multiple features of the same type, but only for one type (for example, multiple address results). Consequently, setting limit to a higher-than-default value requires specifying exactly one types parameter.
+reverseMode	Decides how results are sorted in a reverse geocoding query if multiple results are requested using a limit other than 1. Options are distance (default), which causes the closest feature to always be returned first, and score, which allows high-prominence features to be sorted higher than nearer, lower-prominence features.
+routing	Specify whether to request additional metadata about the recommended navigation destination corresponding to the feature (true) or not (false, default). Only applicable for address features.
+
+For example, if routing=true the response could include data about a point on the road the feature fronts. Response features may include an array containing one or more routable points. Routable points cannot always be determined. Consuming applications should fall back to using the feature’s normal geometry for routing if a separate routable point is not returned.
+types	Filter results to include only a subset (one or more) of the available feature types. Options are country, region, postcode, district, place, locality, neighborhood, address, and poi. Multiple options can be comma-separated. Note that poi.landmark is a deprecated type that, while still supported, returns the same data as is returned using the poi type.
+
+For more information on the available types, see the data types section.
+worldview	Returns features that are defined differently by audiences that belong to various regional, cultural, or political groups. Available worldviews are cn (China),in (India),jp (Japan), and us (United States). If worldview is not set, the us worldview boundaries are returned by default. For more information about using the worldview parameter, see the worldviews section.
+Example request: Reverse geocoding
+# A basic reverse geocoding request
+# Retrieve places near a specific location
+
+$ curl "https://api.mapbox.com/geocoding/v5/mapbox.places/-73.989,40.733.json?access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ"
+
+# Filter results to only include points of interest
+
+$ curl "https://api.mapbox.com/geocoding/v5/mapbox.places/-73.989,40.733.json?types=poi&access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ"
+
+# Query within the Ilemi Triangle to return features for the us worldview
+
+$ curl "https://api.mapbox.com/geocoding/v5/mapbox.places/35.4628,4.8975.json&worldview=us&access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ"
+Response: Reverse geocoding
+The API response for a reverse geocoding query returns a GeoJSON feature collection in Mapbox Geocoding Response format. For more details on how a response from the Geocoding API is formatted, see the Geocoding API response object section.
+
+Supported libraries: Reverse geocoding
+Mapbox wrapper libraries help you integrate Mapbox APIs into your existing application. The following SDKs support this endpoint:
+
+Mapbox Python CLI
+MapboxDirections.swift (Objective-C and Swift)
+Mapbox Java SDK
+Mapbox JavaScript SDK
+Mapbox Ruby SDK
+See the SDK documentation for details and examples of how to use the relevant methods to query this endpoint.
+
+Batch geocoding
+GET
+/geocoding/v5/{endpoint}/{search_text_1};{search_text_2};{search_text_N}.json
+The batch geocoding query type allows you to have multiple forward or reverse geocoding queries in a single request. Batch geocoding is only available using the mapbox.places-permanent endpoint. If you are interested in using mapbox.places-permanent to perform batch geocodes, contact Mapbox sales.
+
+Batch geocoding requests are formatted similarly to ordinary forward or reverse geocoding requests, but with multiple search queries one after another, separated by semicolons. Each query should be URL encoded, but the ; character should not be encoded and should be included verbatim.
+
+Billing for batch geocoding requests
+Each individual semicolon-separated search in a batch geocoding request counts as one request. A batch forward geocoding request with three search strings, for example Juneau,Alaska;Fresno,CA;Phoenix,Arizona, would count as three requests. These three requests would count against your rate limit. They would also be billed as three individual requests, which would be reflected on your statistics graph and your bill.
+
+A batch forward geocoding request can be made using an HTTP GET request:
+
+https://api.mapbox.com/geocoding/v5/mapbox.places-permanent/{search_text_1};{search_text_2}[;{search_text_N};...].json?parameters
+A batch reverse geocoding request can be made using an HTTP GET request:
+
+https://api.mapbox.com/geocoding/v5/mapbox.places-permanent/{lon_1},{lat_1};{lon_2},{lat_2}[;{lon_N},{lat_N};...].json?parameters
+Required parameters	Description
+search_text_N	For batch forward queries. The features to look up (addresses, point of interest names, city names, etc.). They should be expressed as URL-encoded UTF-8 strings, and must not contain the semicolon character (either raw or URL-encoded), as this is the delimiter between search items. Each search text, once decoded, must consist of at most 20 words and numbers separated by spacing and punctuation, and at most 256 characters. You may supply at most 50 search texts within one request.
+{lon_N},{lat_N}	For batch reverse queries. The longitude and latitude, respectively, of the locations being queried. You may supply at most 50 longitude-latitude coordinate pairs within one request.
+access_token	All geocoding requests must include an access token.
+For batch forward queries, you may use any optional parameters that are available for single forward queries, and they will apply to all search texts. Likewise, for reverse queries, you may use any optional parameters that apply to single reverse queries.
+
+Example request: Batch geocoding
+$ curl "https://api.mapbox.com/geocoding/v5/mapbox.places-permanent/20001;20009;22209.json?access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ"
+Response: Batch geocoding
+The response from a batch geocoding query is an array of results in GeoJSON feature collection format. The order of the semi-colon separated list of queries in the request determines the order of corresponding objects in the returned array. If there are no results returned for a particular query within the batch, the features array for that query is empty ( "features": []  ).
+
+Here's an example request in which the list of three queries is fairbanks,alaska;aslkdjf;juno,alaska.
+
+https://api.mapbox.com/geocoding/v5/mapbox.places-permanent/fairbanks,alaska;aslkdjf;juno,alaska.json?access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ&limit=1
+The parameter limit=1 was set in the request, so each query returns a maximum of one result in the response. Notice that in the response, the results are in same the order as the queries in the request, where the second query aslkdjf doesn't return a result but still exists in the second position of the array:
+
+[
+  {
+    "type": "FeatureCollection",
+    "query": [
+      "fairbanks",
+      "alaska"
+    ],
+    "features": [
+      {
+        "id": "place.16619084287168120",
+        "type": "Feature",
+        "place_type": [
+          "place"
+        ],
+        "relevance": 1,
+        "properties": {
+          "wikidata": "Q79638"
+        },
+        "text": "Fairbanks",
+        "place_name": "Fairbanks, Alaska, United States",
+        "bbox": [
+          -152.082261679596,
+          63.9388459884296,
+          -143.884791986593,
+          68.0041310199992
+        ],
+        "center": [
+          -147.7164,
+          64.8378
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -147.7164,
+            64.8378
+          ]
+        },
+        "context": [
+          {
+            "id": "region.9053016009778630",
+            "short_code": "US-AK",
+            "wikidata": "Q797",
+            "text": "Alaska"
+          },
+          {
+            "id": "country.9053006287256050",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      }
+    ],
+    "attribution": "© 2018 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+  },
+  {
+    "type": "FeatureCollection",
+    "query": [
+      "aslkdjf"
+    ],
+    "features": [],
+    "attribution": "© 2018 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+  },
+  {
+    "type": "FeatureCollection",
+    "query": [
+      "juno",
+      "alaska"
+    ],
+    "features": [
+      {
+        "id": "region.9053016009778630",
+        "type": "Feature",
+        "place_type": [
+          "region"
+        ],
+        "relevance": 0.5,
+        "properties": {
+          "short_code": "US-AK",
+          "wikidata": "Q797"
+        },
+        "text": "Alaska",
+        "place_name": "Alaska, United States",
+        "bbox": [
+          -179.9,
+          51.075286,
+          -129.974167,
+          71.540724
+        ],
+        "center": [
+          -150,
+          64
+        ],
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -150,
+            64
+          ]
+        },
+        "context": [
+          {
+            "id": "country.9053006287256050",
+            "short_code": "us",
+            "wikidata": "Q30",
+            "text": "United States"
+          }
+        ]
+      }
+    ],
+    "attribution": "© 2018 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service. (https://www.mapbox.com/about/maps/)"
+  }
+]
+Geocoding response object
+The response to a Geocoding API request is an object that contains the following properties:
+
+Property	Description
+type	"FeatureCollection", a GeoJSON type from the GeoJSON specification.
+query	Forward geocodes: An array of space and punctuation-separated strings from the original query.
+Reverse geocodes: An array containing the coordinates being queried.
+features	An array of feature objects.
+Forward geocodes: Returned features are ordered by relevance.
+Reverse geocodes: Returned features are ordered by index hierarchy, from most specific features to least specific features that overlap the queried coordinates.
+
+Read the Search result prioritization guide to learn more about how returned features are organized in the Geocoding API response.
+attribution	A string that attributes the results of the Mapbox Geocoding API to Mapbox.
+Mapbox's geocoding data is constantly being updated and improved. This means that the values of properties in the response object are not guaranteed and may change within the same version of the API. Properties may be added to, but will not be removed from, the response within the same API version.
+
+Each feature object in the features array may have the properties described below:
+
+Property	Description
+id	A feature ID in the format {type}.{id} where {type} is the lowest hierarchy feature in the place_type field. The {id} suffix of the feature ID is unstable and may change within versions.
+type	"Feature", a GeoJSON type from the GeoJSON specification.
+place_type	An array of feature types describing the feature. Options are country, region, postcode, district, place, locality, neighborhood, address, and poi. Most features have only one type, but if the feature has multiple types, all applicable types will be listed in the array. (For example, Vatican City is a country, region, and place.)
+relevance	Indicates how well the returned feature matches the user's query on a scale from 0 to 1. 0 means the result does not match the query text at all, while 1 means the result fully matches the query text. You can use the relevance property to remove results that don’t fully match the query. Learn more about textual relevance in the Search result prioritization guide.
+address
+(optional)	A string of the house number for the returned address feature. Note that unlike the address property for poi features, this property is outside the properties object.
+properties	An object describing the feature. The properties object may change with data improvements. Your implementation should check for the presence of these values in a response before it attempts to use them.
+properties.accuracy
+(optional)	A point accuracy metric for the returned address feature. Can be one of rooftop, parcel, point, interpolated, intersection, street. Note that this list is subject to change. See below for details
+properties.address
+(optional)	A string of the full street address for the returned poi feature. Note that unlike the address property for address features, this property is inside the properties object.
+properties.category
+(optional)	A string of comma-separated categories for the returned poi feature.
+properties.maki
+(optional)	The name of a suggested Maki icon to visualize a poi feature based on its category.
+properties.landmark
+(optional)	Describes whether or not the feature is in the poi.landmark data type. This data type is deprecated, and this property will be present on all poi features for backwards compatibility reasons but will always be true.
+properties.wikidata
+(optional)	The Wikidata identifier for the returned feature.
+properties.short_code
+(optional)	The ISO 3166-1 country and ISO 3166-2 region code for the returned feature.
+properties.tel
+(deprecated)	A formatted string of the telephone number for the returned poi feature.
+text	A string representing the feature in the requested language, if specified.
+place_name	A string representing the feature in the requested language, if specified, and its full result hierarchy.
+matching_text
+(optional)	A string analogous to the text field that more closely matches the query than results in the specified language. For example, querying Köln, Germany with language set to English (en) might return a feature with the text Cologne and the matching_text Köln.
+
+Category matches will not appear as matching_text. For example, a query for coffee, Köln with language set to English (en) would return a poi Café Reichard, but this feature will not include a matching_text field.
+matching_place_name
+(optional)	A string analogous to the place_name field that more closely matches the query than results in the specified language. For example, querying Köln, Germany with language set to English (en) might return a feature with the place_name Cologne, Germany and a matching_place_name of Köln, North Rhine-Westphalia, Germany.
+
+Category matches will not appear in the matching_place_name field. For example, a query for coffee, Köln with language set to English (en) would return a matching_place_name of Café Reichard, Unter Fettenhennen 11, Köln, North Rhine-Westphalia 50667, Germany instead of a matching_place_name of coffee, Unter Fettenhennen 11, Köln, North Rhine-Westphalia 50667, Germany.
+text_{language}
+(optional)	A string analogous to the text field that matches the query in the requested language. This field is only returned when multiple languages are requested using the language parameter, and will be present for each requested language.
+place_name_{language}
+(optional)	A string analogous to the place_name field that matches the query in the requested language. This field is only returned when multiple languages are requested using the language parameter, and will be present for each requested language.
+language
+(optional)	A string of the IETF language tag of the query’s primary language.
+language_{language}
+(optional)	A string of the IETF language tag of the query’s fallback language. This field is only returned when multiple languages are requested using the language parameter, and will be present for each requested language.
+bbox	A bounding box array in the form [minX,minY,maxX,maxY].
+center	The coordinates of the feature’s center in the form [longitude,latitude]. This may be the literal centroid of the feature’s geometry, or the center of human activity within the feature (for example, the downtown area of a city).
+geometry	An object describing the spatial geometry of the returned feature.
+geometry.type	"Point", a GeoJSON type from the GeoJSON specification.
+geometry.coordinates	An array in the format [longitude,latitude] at the center of the specified bbox.
+geometry.interpolated
+(optional)	If present, indicates that an address is interpolated along a road network. The geocoder can usually return exact address points, but if an address is not present the geocoder can use interpolated data as a fallback. In edge cases, interpolation may not be possible if surrounding address data is not present, in which case the next fallback will be the center point of the street feature itself.
+geometry.omitted
+(optional)	If present, indicates an out-of-parity match. This occurs when an interpolated address is not in the expected range for the indicated side of the street.
+context	An array representing the hierarchy of encompassing parent features. Each parent feature may include any of the above properties.
+routable_points
+(optional)	An object with the routable points for the feature.
+routable_points.points
+(optional)	An array of points in the form of [{ coordinates: [lon, lat] }], or null if no points were found.
+properties.accuracy
+
+Accuracy	Description
+rooftop	Result is for a specific building/entrance
+parcel	Result is derived from a parcel centroid
+point (default)	Result is a known address point but has no specific accuracy
+interpolated	Result has been interpolated from an address range
+intersection	Result is for a block or intersection
+approximate	Result is an approximate location
+street	Result is a street centroid
+Example response: Forward geocoding
+{
+    "type": "FeatureCollection",
+    "query": [
+        "825",
+        "s",
+        "milwaukee",
+        "ave",
+        "deerfield",
+        "il",
+        "60015"
+    ],
+    "features": [{
+            "id": "address.4356035406756260",
+            "type": "Feature",
+            "place_type": [
+                "address"
+            ],
+            "relevance": 1,
+            "properties": {},
+            "text": "Milwaukee Ave",
+            "place_name": "825 Milwaukee Ave, Deerfield, Illinois 60015, United States",
+            "matching_text": "South Milwaukee Avenue",
+            "matching_place_name": "825 South Milwaukee Avenue, Deerfield, Illinois 60015, United States",
+            "center": [
+                -87.921434,
+                42.166602
+            ],
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -87.921434,
+                    42.166602
+                ],
+                "interpolated": true,
+                "omitted": true
+            },
+            "address": "825",
+            "context": [{
+                    "id": "neighborhood.287187",
+                    "text": "Lake Cook Road"
+                },
+                {
+                    "id": "postcode.13903677306297990",
+                    "text": "60015"
+                },
+                {
+                    "id": "place.5958304312090910",
+                    "wikidata": "Q287895",
+                    "text": "Deerfield"
+                },
+                {
+                    "id": "region.3290978600358810",
+                    "short_code": "US-IL",
+                    "wikidata": "Q1204",
+                    "text": "Illinois"
+                },
+                {
+                    "id": "country.9053006287256050",
+                    "short_code": "us",
+                    "wikidata": "Q30",
+                    "text": "United States"
+                }
+            ]
+        },
+        {
+            "id": "address.7464624790403620",
+            "type": "Feature",
+            "place_type": [
+                "address"
+            ],
+            "relevance": 0.5,
+            "properties": {},
+            "text": "Milwaukee Ave",
+            "place_name": "825 Milwaukee Ave, Wheeling, Illinois 60090, United States",
+            "matching_text": "South Milwaukee Avenue",
+            "matching_place_name": "825 South Milwaukee Avenue, Wheeling, Illinois 60090, United States",
+            "center": [
+                -87.910299,
+                42.144504
+            ],
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -87.910299,
+                    42.144504
+                ],
+                "interpolated": true
+            },
+            "address": "825",
+            "context": [{
+                    "id": "neighborhood.287187",
+                    "text": "Lake Cook Road"
+                },
+                {
+                    "id": "postcode.9418633295906190",
+                    "text": "60090"
+                },
+                {
+                    "id": "place.9902190947082220",
+                    "wikidata": "Q935043",
+                    "text": "Wheeling"
+                },
+                {
+                    "id": "region.3290978600358810",
+                    "short_code": "US-IL",
+                    "wikidata": "Q1204",
+                    "text": "Illinois"
+                },
+                {
+                    "id": "country.9053006287256050",
+                    "short_code": "us",
+                    "wikidata": "Q30",
+                    "text": "United States"
+                }
+            ]
+        },
+        {
+            "id": "address.6472754353404224",
+            "type": "Feature",
+            "place_type": [
+                "address"
+            ],
+            "relevance": 0.5,
+            "properties": {},
+            "text": "Milwaukee Avenue",
+            "place_name": "825 Milwaukee Avenue, Glenview, Illinois 60025, United States",
+            "matching_text": "South Milwaukee Avenue",
+            "matching_place_name": "825 South Milwaukee Avenue, Glenview, Illinois 60025, United States",
+            "center": [
+                -87.852677,
+                42.071152
+            ],
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -87.852677,
+                    42.071152
+                ]
+            },
+            "address": "825",
+            "context": [{
+                    "id": "neighborhood.275266",
+                    "text": "Northfield Woods"
+                },
+                {
+                    "id": "postcode.3787740186211610",
+                    "text": "60025"
+                },
+                {
+                    "id": "place.10211845459386970",
+                    "wikidata": null,
+                    "text": "Glenview"
+                },
+                {
+                    "id": "region.3290978600358810",
+                    "short_code": "US-IL",
+                    "wikidata": "Q1204",
+                    "text": "Illinois"
+                },
+                {
+                    "id": "country.9053006287256050",
+                    "short_code": "us",
+                    "wikidata": "Q30",
+                    "text": "United States"
+                }
+            ]
+        },
+        {
+            "id": "address.1225436500189372",
+            "type": "Feature",
+            "place_type": [
+                "address"
+            ],
+            "relevance": 0.5,
+            "properties": {},
+            "text": "Milwaukee Ave",
+            "place_name": "825 Milwaukee Ave, Buffalo Grove, Illinois 60089, United States",
+            "matching_text": "South Milwaukee Avenue",
+            "matching_place_name": "825 South Milwaukee Avenue, Buffalo Grove, Illinois 60089, United States",
+            "center": [
+                -87.917484,
+                42.158084
+            ],
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -87.917484,
+                    42.158084
+                ],
+                "interpolated": true
+            },
+            "address": "825",
+            "context": [{
+                    "id": "neighborhood.287187",
+                    "text": "Lake Cook Road"
+                },
+                {
+                    "id": "postcode.11727721238210580",
+                    "text": "60089"
+                },
+                {
+                    "id": "place.8589721255665070",
+                    "wikidata": "Q967086",
+                    "text": "Buffalo Grove"
+                },
+                {
+                    "id": "region.3290978600358810",
+                    "short_code": "US-IL",
+                    "wikidata": "Q1204",
+                    "text": "Illinois"
+                },
+                {
+                    "id": "country.9053006287256050",
+                    "short_code": "us",
+                    "wikidata": "Q30",
+                    "text": "United States"
+                }
+            ]
+        },
+        {
+            "id": "address.240107872738130",
+            "type": "Feature",
+            "place_type": [
+                "address"
+            ],
+            "relevance": 0.5,
+            "properties": {},
+            "text": "Milwaukee Avenue",
+            "place_name": "825 Milwaukee Avenue, Wheeling, Illinois 60090, United States",
+            "matching_text": "South Milwaukee Avenue",
+            "matching_place_name": "825 South Milwaukee Avenue, Wheeling, Illinois 60090, United States",
+            "center": [
+                -87.898319,
+                42.126289
+            ],
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -87.898319,
+                    42.126289
+                ],
+                "interpolated": true,
+                "omitted": true
+            },
+            "address": "825",
+            "context": [{
+                    "id": "neighborhood.287189",
+                    "text": "Milwaukee Avenue"
+                },
+                {
+                    "id": "postcode.9418633295906190",
+                    "text": "60090"
+                },
+                {
+                    "id": "place.9902190947082220",
+                    "wikidata": "Q935043",
+                    "text": "Wheeling"
+                },
+                {
+                    "id": "region.3290978600358810",
+                    "short_code": "US-IL",
+                    "wikidata": "Q1204",
+                    "text": "Illinois"
+                },
+                {
+                    "id": "country.9053006287256050",
+                    "short_code": "us",
+                    "wikidata": "Q30",
+                    "text": "United States"
+                }
+            ]
+        }
+    ],
+    "attribution": "NOTICE: © 2018 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained. POI(s) provided by Foursquare."
+}
+Worldviews
+Use the optional worldview parameter to identify geographic features whose characteristics are defined differently by audiences belonging to various regional, cultural, or political groups. The Geocoding API only supports worldviews for the country and region data types, but may expand to additional data types in the future.
+
+Available worldviews
+The Geocoding API supports the following values for the worldview parameter:
+
+Value	Description
+cn	Features for a mainland Chinese audience
+in	Features for an Indian audience
+jp	Features for a Japanese audience
+us	Features for an American audience
+Returned features are not officially approved for use by the above countries' respective governments.
+
+Each query supports a maximum of one worldview. Attempting to query for multiple worldviews in one search will result in an error message. When no worldview is selected, the Geocoding API returns features for the us worldview.
+
+Using the worldview parameter
+Be cautious when combining worldview with the country parameter, since these indices are only loosely coupled.
+
+For example, consider the Ilemi Triangle, which borders Eastern Equatoria (South Sudan) and Turkana (Kenya). While the Geocoding API returns several place features inside this disputed region, this example focuses on Kaaleng. Depending on the worldview selected, this location will be returned in different country contexts:
+
+If worldview=cn, Kaaleng, Eastern Equatoria, South Sudan will be returned.
+If worldview=us, Kaaleng, Turkana, Kenya will be returned.
+This means that if you use wordlview=cn worldview with the Kenya (ke) country filter, a search for Kaaleng, Kenya will not be successful. Instead, you would need to use worldview=cn in combination with the South Sudan (ss) country filter.
+
+For a visual example of how changing the worldview value impacts the boundaries shown on a map, see the companion Maps boundary service.
+
+Language coverage
+Translation availability also varies by language and region. We provide the following tiers of language support:
+
+Global coverage
+These languages are almost always present for country, region, and prominent place features.
+
+Language		
+de German	en English	fr French
+it Italian	nl Dutch	—
+Local coverage
+These languages may lack global coverage but are almost always present for country, region, and prominent place features where they are widely used.
+
+Language		
+ca Catalan	cs Czech	fi Finnish
+he Hebrew	hu Hungarian	is Icelandic
+ja Japanese	ka Georgian	ko Korean
+lv Latvian	nb Norwegian Bokmål	pl Polish
+pt Portuguese	sk Slovak	sl Slovenian
+sr Serbian	th Thai	tl Tagalog
+zh-Hans Simplified Chinese	zh-Hant Traditional Chinese	—
+Limited coverage
+These languages are sometimes present but coverage tends to be inconsistent or geographically constrained.
+
+Language		
+ar Arabic	bg (Bulgarian)	bs (Bosnian)
+da (Danish)	es Spanish	id (Indonesian)
+kk Kazakh	mn (Mongolian)	sq Albanian
+ro (Romanian)	sv (Swedish)	tr Turkish
+zh (Chinese)	—	—
+Intersection search support
+GET
+/geocoding/v5/{endpoint}/{street_1}%20and%20{street_2}.json
+Intersection search allows users to search for a point where two streets intersect, without a precise address. Intersection search requests are made by inserting an and or & between the two street names.
+
+Required parameters	Description
+street_1	The first street name in the intersection of two streets, expressed as a URL-encoded UTF-8 string. The street name should include the street abbreviation (e.g. ave st rd), and the ordinal, if applicable.
+street_2	The second street name in the intersection of two streets, expressed as a URL-encoded UTF-8 string. The street name should include the street abbreviation (e.g. ave st rd), and the ordinal, if applicable.
+endpoint	One of mapbox.places or mapbox.places-permanent, as described in the Endpoints section.
+types	For intersection search, the value of types must be set to addresses.
+proximity	Two comma-separated coordinates in longitude,latitude order, which will bias the response to favor results that are closer to this location.
+Example request: Intersection search
+Intersection search requests made by inserting and:
+
+$ curl "https://api.mapbox.com/geocoding/v5/mapbox.places/Market%20Street%20and%20Fremont%20Street.json?types=address&proximity=-122.39738575285674,37.7925147111369453&access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ"
+Intersection search requests made by inserting &:
+
+$ curl "https://api.mapbox.com/geocoding/v5/mapbox.places/Market%20Street%20&%20Fremont%20Street.json?types=address&proximity=-122.39738575285674,37.7925147111369453&access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ"
+Response: Intersection search
+The response from an intersection search query is a GeoJSON feature collection with the accuracy property set to intersection. For example, a search for the intersection Market Street and Fremont Street in San Francisco would look like:
+
+https://api.mapbox.com/geocoding/v5/mapbox.places/Market%20Street%20and%20Fremont%20Street.json?types=address&proximity=-122.39738575285674,37.792514711136945&access_token=pk.eyJ1IjoicXVhbnRvbXBoYW50b201NzMiLCJhIjoiY2p2eTZkMWpxMDhmZzQzcDFrbjRobXY2YiJ9.cJqSyyaC5iXcDT1O4ztrQQ
+The corresponding GeoJSON response would be:
+
+{
+    "type": "FeatureCollection",
+    "query": [
+        "market",
+        "street",
+        "and",
+        "fremont",
+        "street"
+    ],
+    "features": [
+        {
+            "id": "address.8797576262039554",
+            "type": "Feature",
+            "place_type": [
+                "address"
+            ],
+            "relevance": 1,
+            "properties": {
+                "accuracy": "intersection"
+            },
+            "text": "Fremont Street",
+            "place_name": "Market Street and Fremont Street, San Francisco, California 94105, United States",
+            "center": [
+                -122.3982976,
+                37.791734
+            ],
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -122.3982976,
+                    37.791734
+                ]
+            },
+            "context": [
+                {
+                    "id": "neighborhood.293324",
+                    "text": "South Beach"
+                },
+                {
+                    "id": "postcode.17577055718678700",
+                    "text": "94105"
+                },
+                {
+                    "id": "place.15734669613361910",
+                    "wikidata": "Q62",
+                    "text": "San Francisco"
+                },
+                {
+                    "id": "region.11319063928738010",
+                    "short_code": "US-CA",
+                    "wikidata": "Q99",
+                    "text": "California"
+                },
+                {
+                    "id": "country.9053006287256050",
+                    "short_code": "us",
+                    "wikidata": "Q30",
+                    "text": "United States"
+                }
+            ]
+        }
+    ]
+}
+Find more details about the format and properties of Geocoding API responses in the response object section.
+
+Point of interest category coverage
+This feature is in preview.
+The Geocoding API's POI category search feature is constantly being updated, and the current list of POI categories is subject to change. Since this is the case, data may change and should not be considered canonical.
+
+POI category search supports forward geocoding requests of poi feature types in a queried category. Using the proximity query parameter with POI category search returns points of interest local to a provided location (for example, restaurants near a user). Any category that is returned in the properties.category property of the response object is supported.
+
+Expand to see a list of the most common POI categories:
+Geocoding API errors
+Response body message	HTTP error code	Description
+Not Authorized - No Token	401	No token was used in the query.
+Not Authorized - Invalid Token	401	Check the access token you used in the query.
+Forbidden	403	There may be an issue with your account. Check your Account page for more details.
+
+In some cases, using an access tokens with URL restrictions can also result in a 403 error. For more information, see our Token management guide.
+Not Found	404	Check the endpoint you used in the query.
+Not Found	404	No search_text was provided in the query.
+BBox is not valid. Must be an array of format [minX, minY, maxX, maxY]	422	Check the format for bbox, where the first coordinate pair should refer to the southwestern corner of the box and the second pair should refer to the northeastern corner of the box.
+BBox {minX/maxX} value must be a number between -180 and 180	422	Check the format of minX and maxX for bbox.
+BBox {minY/maxY} value must be a number between -90 and 90	422	Check the format of minY and maxY for bbox.
+BBox {minX/minY} value cannot be greater than {maxX/maxY} value	422	Check the values of the coordinate pairs used in bbox.
+Type "{input}" is not a known type. Must be one of: country, region, place, district, postcode, locality, neighborhood, address, poi, poi.landmark	422	Check the type you used in the query.
+Stack "{input}" is not a known stack. Must be one of: …	422	The country parameter must be a valid ISO 3166 alpha 2 country code.
+Batch queries must include 50 queries or less	422	Your batch geocode request cannot contain more than 50 queries.
+Query too long {query length}/256 characters	422	Your query cannot contain more than 256 characters.
+Query too long - {query tokens length}/20 tokens	422	Your query cannot contain more than 20 word boundary-delimited strings (also known as tokens).
+Proximity must be an array in the form [lon, lat]	422	The proximity parameter must contain two comma-separated values.
+Proximity lon value must be a number between -180 and 180	422	Check the proximity parameter's longitude value.
+Proximity lat value must be a number between -90 and 90	422	Check the proximity parameter's latitude value.
+"{input}" is not a valid language code	422	The language parameter must be a valid IETF language tag comprised of a mandatory ISO 639-1 language code and, optionally, one or more IETF subtags for country or script.
+options.language should be a list of no more than 20 languages	422	Your query's language parameter cannot contain more than 20 language codes.
+options.language should be a list of unique language codes	422	The comma-separated values in language must be unique.
+limit must be combined with a single type parameter when reverse geocoding	422	If you make a reverse geocoding request with the limit parameter, you must also use the type parameter.
+Rate limit exceeded	429	You have exceeded your set rate limit. Check your Account page for more details.
+Geocoding restrictions and limits
+Geocoding API rate limits are enforced on a per-account basis.
+The Geocoding API rate limit is 600 requests per minute. If you require a higher rate limit, contact us.
+Geocoding API pricing
+Billed by requests
+See rates and discounts per Geocoding API request in the pricing page's Search section
+Usage of the Geocoding API is measured in API requests. Details about the number of requests included in the free tier and the cost per request beyond what is included in the free tier are available on the pricing page. You may only use responses from the Geocoding API in conjunction with a Mapbox map.
+
+Autocomplete and pricing
+The Geocoding API's autocomplete parameter is enabled by default. If you are using the API with autocomplete enabled, you will likely accumulate one API request per keystroke. For example, if you have autocomplete turned on and you set up your application to make a Geocoding API request every time a user types a character into a search bar, then a user typing "coff" looking for "coffee shops" will be making four Geocoding API requests, one for each letter.
+
+To reduce the number of requests made while autocomplete is enabled, you can wait to begin making API requests until a specific number of characters are entered. The Geocoding API doesn't have a parameter for limiting requests built in, but you can use the Mapbox GL Geocoder, which does have that option, or you can write it into your application directly.
+
+Batch geocoding and pricing
+Batch geocoding allows you to have multiple geocoding queries in a single request. Each individual semicolon-separated search in a batch geocoding request counts as one request. For example, a request that contains three semicolon-separated search strings would count as three requests and be billed as such. These three requests would be reflected on your statistics graph and your bill.
+
+Batch geocoding is only available using the mapbox.places-permanent endpoint, which is not available by default for all accounts. Requests from accounts without access to the mapbox.places-permanent endpoint may still be billable requests, so contact Mapbox sales to discuss your use case prior to testing with this endpoint.
