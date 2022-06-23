@@ -56,6 +56,10 @@
 		8AC85EB928650EFF003F8FC8 /* OHHTTPStubs.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AC85EB828650EFF003F8FC8 /* OHHTTPStubs.xcframework */; };
 		8AC85EBA28650F07003F8FC8 /* OHHTTPStubs.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AC85EB828650EFF003F8FC8 /* OHHTTPStubs.xcframework */; };
 		8AC85EBB28650F0B003F8FC8 /* OHHTTPStubs.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AC85EB828650EFF003F8FC8 /* OHHTTPStubs.xcframework */; };
+		8AC85EBD28651DCB003F8FC8 /* MapboxMobileEvents.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AC85EBC28651DCB003F8FC8 /* MapboxMobileEvents.xcframework */; };
+		8AC85EBE28651DCB003F8FC8 /* MapboxMobileEvents.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8AC85EBC28651DCB003F8FC8 /* MapboxMobileEvents.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8AC85EBF28651E78003F8FC8 /* MapboxMobileEvents.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AC85EBC28651DCB003F8FC8 /* MapboxMobileEvents.xcframework */; };
+		8AC85EC028651E78003F8FC8 /* MapboxMobileEvents.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8AC85EBC28651DCB003F8FC8 /* MapboxMobileEvents.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA1AC0221E5C23B8006DF1D6 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1AC0211E5C23B8006DF1D6 /* Contacts.framework */; };
 		DA1AC0241E5C2425006DF1D6 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1AC0231E5C2425006DF1D6 /* Contacts.framework */; };
 		DA1AC0261E5C2436006DF1D6 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1AC0251E5C2436006DF1D6 /* Contacts.framework */; };
@@ -193,6 +197,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				DA4C581920E195E300A61B00 /* MapboxGeocoder.framework in Embed Frameworks */,
+				8AC85EC028651E78003F8FC8 /* MapboxMobileEvents.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -204,6 +209,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				DAA75ED720DDAD760049807C /* MapboxGeocoder.framework in Embed Frameworks */,
+				8AC85EBE28651DCB003F8FC8 /* MapboxMobileEvents.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -227,6 +233,7 @@
 		357B4357202CC90A00735521 /* reverse_address.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = reverse_address.json; sourceTree = "<group>"; };
 		35D3DE382112410A00B62912 /* CoreLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocation.swift; sourceTree = "<group>"; };
 		8AC85EB828650EFF003F8FC8 /* OHHTTPStubs.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OHHTTPStubs.xcframework; path = Carthage/Build/OHHTTPStubs.xcframework; sourceTree = "<group>"; };
+		8AC85EBC28651DCB003F8FC8 /* MapboxMobileEvents.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MapboxMobileEvents.xcframework; path = Carthage/Build/MapboxMobileEvents.xcframework; sourceTree = "<group>"; };
 		DA1AC0211E5C23B8006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		DA1AC0231E5C2425006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/Contacts.framework; sourceTree = DEVELOPER_DIR; };
 		DA1AC0251E5C2436006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.1.sdk/System/Library/Frameworks/Contacts.framework; sourceTree = DEVELOPER_DIR; };
@@ -322,6 +329,7 @@
 			files = (
 				DAA75ED620DDAD760049807C /* MapboxGeocoder.framework in Frameworks */,
 				DA737AEE1E5999C900AD2CDE /* Mapbox.framework in Frameworks */,
+				8AC85EBD28651DCB003F8FC8 /* MapboxMobileEvents.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +346,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA737AF51E599AB300AD2CDE /* Mapbox.framework in Frameworks */,
+				8AC85EBF28651E78003F8FC8 /* MapboxMobileEvents.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +364,7 @@
 		DA737AF01E5999D500AD2CDE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8AC85EBC28651DCB003F8FC8 /* MapboxMobileEvents.xcframework */,
 				8AC85EB828650EFF003F8FC8 /* OHHTTPStubs.xcframework */,
 				DA1AC0251E5C2436006DF1D6 /* Contacts.framework */,
 				DA1AC0231E5C2425006DF1D6 /* Contacts.framework */,
@@ -919,12 +929,10 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Mapbox.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/MapboxMobileEvents.framework",
 			);
 			name = "Copy Frameworks";
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Mapbox.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/MapboxMobileEvents.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -937,7 +945,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Mapbox.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/MapboxMobileEvents.framework",
 			);
 			name = "Copy Frameworks";
 			outputPaths = (
