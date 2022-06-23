@@ -61,8 +61,6 @@
 		8AC85EBF28651E78003F8FC8 /* MapboxMobileEvents.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AC85EBC28651DCB003F8FC8 /* MapboxMobileEvents.xcframework */; };
 		8AC85EC028651E78003F8FC8 /* MapboxMobileEvents.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8AC85EBC28651DCB003F8FC8 /* MapboxMobileEvents.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA1AC0221E5C23B8006DF1D6 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1AC0211E5C23B8006DF1D6 /* Contacts.framework */; };
-		DA1AC0241E5C2425006DF1D6 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1AC0231E5C2425006DF1D6 /* Contacts.framework */; };
-		DA1AC0261E5C2436006DF1D6 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA1AC0251E5C2436006DF1D6 /* Contacts.framework */; };
 		DA210BAB1CB4BE73008088FD /* ForwardGeocodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA210BAA1CB4BE73008088FD /* ForwardGeocodingTests.swift */; };
 		DA210BAD1CB4BFF7008088FD /* forward_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = DA210BAC1CB4BFF7008088FD /* forward_valid.json */; };
 		DA210BAF1CB4C5A7008088FD /* forward_invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = DA210BAE1CB4C5A7008088FD /* forward_invalid.json */; };
@@ -235,8 +233,6 @@
 		8AC85EB828650EFF003F8FC8 /* OHHTTPStubs.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OHHTTPStubs.xcframework; path = Carthage/Build/OHHTTPStubs.xcframework; sourceTree = "<group>"; };
 		8AC85EBC28651DCB003F8FC8 /* MapboxMobileEvents.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MapboxMobileEvents.xcframework; path = Carthage/Build/MapboxMobileEvents.xcframework; sourceTree = "<group>"; };
 		DA1AC0211E5C23B8006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
-		DA1AC0231E5C2425006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/Contacts.framework; sourceTree = DEVELOPER_DIR; };
-		DA1AC0251E5C2436006DF1D6 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.1.sdk/System/Library/Frameworks/Contacts.framework; sourceTree = DEVELOPER_DIR; };
 		DA210BAA1CB4BE73008088FD /* ForwardGeocodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForwardGeocodingTests.swift; sourceTree = "<group>"; };
 		DA210BAC1CB4BFF7008088FD /* forward_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = forward_valid.json; sourceTree = "<group>"; };
 		DA210BAE1CB4C5A7008088FD /* forward_invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = forward_invalid.json; sourceTree = "<group>"; };
@@ -255,10 +251,6 @@
 		DA58D8A01DB2ADDD00530CBB /* forward_valid_zh.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = forward_valid_zh.json; sourceTree = "<group>"; };
 		DA701C001CB1292C00B0E520 /* GeocoderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocoderTests.swift; sourceTree = "<group>"; };
 		DA737AED1E5999C900AD2CDE /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox.framework; path = Carthage/Build/iOS/Mapbox.framework; sourceTree = "<group>"; };
-		DA737AF81E599B5800AD2CDE /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
-		DA737AFA1E599B9D00AD2CDE /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/tvOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
-		DA737AFC1E599BB300AD2CDE /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/Mac/OHHTTPStubs.framework; sourceTree = "<group>"; };
-		DA737AFF1E599BD400AD2CDE /* OHHTTPStubs.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = OHHTTPStubs.framework.dSYM; path = Carthage/Build/Mac/OHHTTPStubs.framework.dSYM; sourceTree = "<group>"; };
 		DA8B5C05225FB2F400CD1C99 /* MBPlacemarkPrecision.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBPlacemarkPrecision.h; sourceTree = "<group>"; };
 		DA8B5C06225FB2F400CD1C99 /* MBPlacemarkPrecision.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBPlacemarkPrecision.m; sourceTree = "<group>"; };
 		DAF158841D03D81600829B35 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -288,7 +280,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA1AC0241E5C2425006DF1D6 /* Contacts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,7 +310,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA1AC0261E5C2436006DF1D6 /* Contacts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,13 +356,7 @@
 			children = (
 				8AC85EBC28651DCB003F8FC8 /* MapboxMobileEvents.xcframework */,
 				8AC85EB828650EFF003F8FC8 /* OHHTTPStubs.xcframework */,
-				DA1AC0251E5C2436006DF1D6 /* Contacts.framework */,
-				DA1AC0231E5C2425006DF1D6 /* Contacts.framework */,
 				DA1AC0211E5C23B8006DF1D6 /* Contacts.framework */,
-				DA737AFC1E599BB300AD2CDE /* OHHTTPStubs.framework */,
-				DA737AFF1E599BD400AD2CDE /* OHHTTPStubs.framework.dSYM */,
-				DA737AFA1E599B9D00AD2CDE /* OHHTTPStubs.framework */,
-				DA737AF81E599B5800AD2CDE /* OHHTTPStubs.framework */,
 				DA737AED1E5999C900AD2CDE /* Mapbox.framework */,
 			);
 			name = Frameworks;
@@ -1122,10 +1106,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 19;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Sources/MapboxGeocoder/Info.plist;
@@ -1157,10 +1137,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 19;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Sources/MapboxGeocoder/Info.plist;
@@ -1189,10 +1165,6 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/MapboxGeocoderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1217,10 +1189,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/MapboxGeocoderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1248,10 +1216,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 19;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Sources/MapboxGeocoder/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1282,10 +1246,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 19;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Sources/MapboxGeocoder/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1312,10 +1272,6 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/MapboxGeocoderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1338,10 +1294,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/MapboxGeocoderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1687,10 +1639,6 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/MapboxGeocoderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1711,10 +1659,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/MapboxGeocoderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
