@@ -24,7 +24,10 @@ step-library:
   - &publish-codecov
       run:
         name: Publish code coverage
-        command: bash <(curl -s https://codecov.io/bash)
+        command: |
+          curl -Os https://uploader.codecov.io/v0.1.0_4653/linux/codecov
+          chmod +x codecov
+          ./codecov
 
 jobs:
   SPM-job:
@@ -112,7 +115,7 @@ workflows:
           iOS: "14.0"
           tvOS: "14.0"
           watchOS: "7.0"
-          codecoverage: false
+          codecoverage: true
       - SPM-job:
           name: "SPM"
           xcode: "12.2.0"
