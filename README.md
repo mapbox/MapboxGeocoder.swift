@@ -40,10 +40,10 @@ This repository includes example applications written in both Swift and Objectiv
 ## System requirements
 
 * One of the following package managers:
-   * CocoaPods (CocoaPods 1.10 or above if using Xcode 12)
+   * CocoaPods 1.10 or above
    * Carthage 0.38 or above
    * Swift Package Manager 5.3 or above
-* Xcode 11 or above (Xcode 12 or above if using Swift Package Manager)
+* Xcode 12 or above
 * One of the following operating systems:
    * iOS 12.0 or above
    * macOS 10.14 or above
