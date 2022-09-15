@@ -91,7 +91,7 @@ jobs:
             - *publish-codecov
       - run:
           name: tvOS
-          command: xcodebuild -project MapboxGeocoder.xcodeproj -scheme 'MapboxGeocoder tvOS' -destination 'platform=tvOS Simulator,name=Apple TV 4K (at 1080p),OS=<< parameters.tvOS >>' clean build <<# parameters.test >>test <</ parameters.test >> <<# parameters.codecoverage >>-enableCodeCoverage YES<</ parameters.codecoverage >>
+          command: xcodebuild -project MapboxGeocoder.xcodeproj -scheme 'MapboxGeocoder tvOS' -destination 'platform=tvOS Simulator,name=Apple TV 4K (at 1080p) (2nd generation),OS=<< parameters.tvOS >>' clean build <<# parameters.test >>test <</ parameters.test >> <<# parameters.codecoverage >>-enableCodeCoverage YES<</ parameters.codecoverage >>
       - when:
           condition: << parameters.codecoverage >>
           steps:
@@ -107,12 +107,12 @@ workflows:
   workflow:
     jobs:
       - build-job:
-          name: "Xcode_12.0"
-          xcode: "12.0.0"
-          iOS: "14.0"
-          tvOS: "14.0"
-          watchOS: "7.0"
+          name: "Xcode_12.5.1"
+          xcode: "12.5.1"
+          iOS: "14.5"
+          tvOS: "14.5"
+          watchOS: "7.4"
           codecoverage: false
       - SPM-job:
           name: "SPM"
-          xcode: "12.2.0"
+          xcode: "12.5.1"
