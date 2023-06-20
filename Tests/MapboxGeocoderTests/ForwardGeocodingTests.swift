@@ -63,6 +63,7 @@ class ForwardGeocodingTests: XCTestCase {
         XCTAssertEqual(addressPlacemark.place?.name, "Wasaga Beach", "forward geocode should populate locality")
         XCTAssertEqual(addressPlacemark.thoroughfare, "Pennsylvania Ave", "forward geocode should populate thoroughfare")
         XCTAssertNil(addressPlacemark.subThoroughfare, "forward geocode should not populate sub-thoroughfare for street-only result")
+        XCTAssertEqual(addressPlacemark.streetAddress, "Pennsylvania Ave", "forward geocode should populate street address")
         
         XCTAssertNotNil(addressPlacemark.addressDictionary)
         let addressDictionary = addressPlacemark.addressDictionary!
