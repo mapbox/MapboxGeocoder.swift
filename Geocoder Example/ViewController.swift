@@ -15,6 +15,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     var resultsLabel: UILabel!
     var geocoder: Geocoder!
     var geocodingDataTask: URLSessionDataTask?
+    var geocodedAnnotation: MGLPointAnnotation?
     
     // MARK: - Setup
 
@@ -47,12 +48,21 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, regionDidChangeAnimated animated: Bool) {
         geocodingDataTask?.cancel()
+        if let geocodedAnnotation = geocodedAnnotation {
+            mapView.removeAnnotation(geocodedAnnotation)
+            self.geocodedAnnotation = nil
+        }
         let options = ReverseGeocodeOptions(coordinate: mapView.centerCoordinate)
         geocodingDataTask = geocoder.geocode(options) { [unowned self] (placemarks, attribution, error) in
             if let error = error {
                 NSLog("%@", error)
             } else if let placemarks = placemarks, !placemarks.isEmpty {
-                self.resultsLabel.text = placemarks[0].qualifiedName
+                let placemark = placemarks[0]
+                self.resultsLabel.text = placemark.qualifiedName
+                let annotation = MGLPointAnnotation()
+                annotation.coordinate = placemark.location.coordinate
+                self.mapView.addAnnotation(annotation)
+                self.geocodedAnnotation = annotation
             } else {
                 self.resultsLabel.text = "No results"
             }

@@ -15,6 +15,7 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 @property (nonatomic) UILabel *resultsLabel;
 @property (nonatomic) MBGeocoder *geocoder;
 @property (nonatomic) NSURLSessionDataTask *geocodingDataTask;
+@property (nonatomic) MGLPointAnnotation *geocodedAnnotation;
 
 @end
 
@@ -54,13 +55,22 @@ NSString *const MapboxAccessToken = @"<# your Mapbox access token #>";
 
 - (void)mapView:(MGLMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
     [self.geocodingDataTask cancel];
+    if (self.geocodedAnnotation) {
+        [self.mapView removeAnnotation:self.geocodedAnnotation];
+        self.geocodedAnnotation = nil;
+    }
     MBReverseGeocodeOptions *options = [[MBReverseGeocodeOptions alloc] initWithCoordinate:self.mapView.centerCoordinate];
     options.allowedScopes = MBPlacemarkScopeAll;
     [self.geocoder geocodeWithOptions:options completionHandler:^(NSArray<MBGeocodedPlacemark *> * _Nullable placemarks, NSString * _Nullable attribution, NSError * _Nullable error) {
         if (error) {
             NSLog(@"%@", error);
         } else if (placemarks.count > 0) {
-            self.resultsLabel.text = placemarks[0].qualifiedName;
+            MBGeocodedPlacemark *placemark = placemarks[0];
+            self.resultsLabel.text = placemark.qualifiedName;
+            MGLPointAnnotation *annotation = [[MGLPointAnnotation alloc] init];
+            annotation.coordinate = placemark.location.coordinate;
+            [self.mapView addAnnotation:annotation];
+            self.geocodedAnnotation = annotation;
         } else {
             self.resultsLabel.text = @"No results";
         }
